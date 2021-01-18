@@ -31,7 +31,7 @@ Nesta sentencia establecemos o directorio de traballo actual. O [WORKDIR](https:
 Agora instalamos o software que precisamos:
 
 ```dockerfile
-RUN apt-get update -y && apt-get -y install python-pip python-dev build-essential git
+RUN apt-get update -y && apt-get -y install python3-pip
 ```
 
 A sentencia [RUN](https://docs.docker.com/engine/reference/builder/#run) corre un comando dentro dun contedor e almacena os resultados (a capa de contedor) na imaxe que se está a construir.
@@ -51,13 +51,13 @@ WORKDIR /home/catweb
 Esta aplicación ten un ficheiro **requirements.txt** que nos indica qué dependencias de Python se precisan para que funcione. Imos executa-lo [pip](https://pypi.org/project/pip/) para instalar o necesario:
 
 ```dockerfile
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 ```
 
 Por último imos establecer o comando de arranque:
 
 ```dockerfile
-CMD ["python", "app..py"]
+CMD ["python3", "app..py"]
 ```
 
 A sentencia [CMD](https://docs.docker.com/engine/reference/builder/#cmd) permítenos establecer un **único comando de arranque por Dockerfile**.
@@ -73,15 +73,15 @@ FROM ubuntu
 
 WORKDIR /home
 
-RUN apt-get update -y && apt-get -y install python-pip python-dev build-essential git
+RUN apt-get update -y && apt-get -y install python3-pip git
 
 RUN git clone https://github.com/prefapp/catweb.git
 
 WORKDIR /home/catweb
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-CMD ["python", "app..py"]
+CMD ["python3", "app..py"]
 ```
 
 Poñéndonos no directorio do Dockerfile, construímo-la imaxe:
