@@ -107,12 +107,13 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    port: ["6379"]
+    port:
+      - "6379"
     networks:
       - rede-privada
 
   bbdd:
-    image: postgress:9.4
+    image: postgres:9.4
     container_name: bbdd
     valumes:
       - "bbdd-datos:/var/lib/postgresql/data"
@@ -154,7 +155,7 @@ Pasamos agora á definición do **servizo de votacións**:
 services:
 
   votacions:
-    image: prefapp/votacions_votar
+    image: prefapp/votacion_votar
     command: python app.py
     ports:
       - "8000:80"
@@ -173,7 +174,7 @@ Por último, imos ver o **servizo de resultados**:
 services:
 
   resultados:
-    image: prefapp/votacions_resultados
+    image: prefapp/votacion_resultados
     command: nodemon server.js
     ports:
       - "8001:80"
