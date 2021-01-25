@@ -9,7 +9,7 @@
   - [Namespaces en profundidade](./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade.md)
   - [Cgroups: Xestión e utilidades](./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades.md)
   - [Cuestionario](./01_que_e_un_contedor_de_software/10_cuestionario.md)
-  - [📝 Actividades](./05_actividades/01_modulo_1.md)
+  - [📝 Actividades](./00_actividades/01_modulo_1.md)
 
 - Docker
   - [Docker](./02_docker/01_docker.md)
@@ -22,7 +22,7 @@
   - [Paso de argumentos ó contedor](./02_docker/08_paso_de_argumentos_o_contedor.md)
   - [Xestión de volumes](./02_docker/09_xestion_de_volumes.md)
   - [Portainer](./02_docker/10_portainer.md)
-  - [📝 Actividades](./05_actividades/02_modulo_2.md)
+  - [📝 Actividades](./00_actividades/02_modulo_2.md)
 
 - Xestión de imaxes e contedores
   - [Objectivos](./03_xestion_de_imaxes_e_contedores/01_obxectivos.md)
@@ -36,7 +36,7 @@
   - [Comandos de xestión básica das imaxes](./03_xestion_de_imaxes_e_contedores/09_comandos_de_xestion_basica_das_imaxes.md)
   - [Repositorio privado de imaxes: o Docker registry](./03_xestion_de_imaxes_e_contedores/10_repositorio_privado_de_imaxes_o_docker_registry.md)
   - [Cuestionario final](./03_xestion_de_imaxes_e_contedores/11_cuestironario_final.md)
-  - [📝 Actividades](./05_actividades/03_modulo_3.md)
+  - [📝 Actividades](./00_actividades/03_modulo_3.md)
 
 - Aplicacións e servizos multi-contedor
   - [Introdución](./04_aplicacions_e_servizos_multicontedor/01_introducion.md)
@@ -47,3 +47,4 @@
   - [O Docker-Compose: fundamentos](./04_aplicacions_e_servizos_multicontedor/06_o_docker-compose_fundamentos.md)
   - [Ciclo de vida dunha aplicación de compose](./04_aplicacions_e_servizos_multicontedor/07_cilo_de_vida_dunha_aplicacion_de_compose.md)
   - [Práctica guiada: Nesquik vs ColaCao](./04_aplicacions_e_servizos_multicontedor/08_practica_guiada_nesquik_vs_colacao.md)
+  - [📝 Actividades](./00_actividades/04_modulo_4.md)
