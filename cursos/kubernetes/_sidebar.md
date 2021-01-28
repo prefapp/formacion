@@ -12,3 +12,8 @@
   - [Artefactos en Kubernetes: o Service](./02_kubernetes/05_arquitectura_kubernetes_service.md)
   - [A identificación dos artefactos: nomes, espazos de nomes e etiquetas](./02_kubernetes/06_identificacion_artefactos.md)
   - [📝 Actividades](./00_actividades/02_modulo_2.md)
+
+- Configuración
+  - [Configuracións en Kubernetes](./03_configuracion/01_Configuracions_en_Kubernetes.md)
+  - [Controlando os pods: límites e sondas](./03_configuracion/02_Controlando_os_pods.md)
+  - [Persistencia en K8s: os volumes](./03_configuracion/03_Persistencia_en_K8s.md)
