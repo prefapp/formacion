@@ -23,5 +23,3 @@ spec:
        - name: SERVIZO_INTERNO
          value: "80"
      restartPolicy: Always
-
-
