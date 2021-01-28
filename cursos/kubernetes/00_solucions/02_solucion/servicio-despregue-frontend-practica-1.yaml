@@ -1,0 +1,16 @@
+# servicio-practica-1.yaml
+ 
+ kind: Service
+ apiVersion: v1
+ metadata:
+   name: servizo-frontend-practica-1
+ spec:
+   selector:
+     app: proxy
+   ports:
+   - protocol: TCP
+     port: 8080
+     targetPort: 8080
+
+
+
