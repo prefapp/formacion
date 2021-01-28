@@ -17,3 +17,4 @@
   - [Configuracións en Kubernetes](./03_configuracion/01_Configuracions_en_Kubernetes.md)
   - [Controlando os pods: límites e sondas](./03_configuracion/02_Controlando_os_pods.md)
   - [Persistencia en K8s: os volumes](./03_configuracion/03_Persistencia_en_K8s.md)
+  - [📝 Actividades](./00_actividades/03_modulo_3.md)
