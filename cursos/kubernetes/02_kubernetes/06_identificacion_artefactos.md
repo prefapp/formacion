@@ -148,22 +148,4 @@ microk8s.kubectl get pods 'entorno in (probas, evaluacion)'
 
 # asemade temos o adverbio 'notin'
 microk8s.kubectl get pods 'entorno notin (evaluacion)'
-``
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
