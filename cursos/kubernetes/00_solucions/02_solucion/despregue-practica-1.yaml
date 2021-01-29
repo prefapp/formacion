@@ -9,6 +9,7 @@ metadata:
     app: cont
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: cont
@@ -23,7 +24,7 @@ spec:
         command: ["npm", "run", "iniciar"]
         env:
           - name: PUERTO_APP
-            value: "80"
+            value: "8080"
         ports:
-          - containerPort: 80
+          - containerPort: 8080
       restartPolicy: Always

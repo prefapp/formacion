@@ -6,8 +6,8 @@
    name: servizo-frontend-practica-1
  spec:
    selector:
-     app: proxy
+     app: servicio-despregue1
    ports:
    - protocol: TCP
      port: 8080
-     targetPort: 8080
+     targetPort: 80
