@@ -1,0 +1,13 @@
+# servicio-despregue-practica-1.yaml
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-despregue1
+spec:
+  selector:
+    app: cont
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
