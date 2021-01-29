@@ -18,8 +18,8 @@ spec:
      - name: proxy
        image: frmadem/catro-eixos-k8s-proxy
        ports:
-        - containerPort: 8080
+        - containerPort: 80
        env:
        - name: SERVIZO_INTERNO
-         value: "80"
+         value: "servicio-despregue1:80"
      restartPolicy: Always
