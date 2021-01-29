@@ -1,0 +1,25 @@
+# despregue-frontend-practica-1.yaml
+
+apiVersion: apps/v1
+kind: Deployment  # esta parte define o Deployment
+metadata:
+  name: frontend-practica-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicio-despregue1
+  template:
+   metadata:
+     labels:
+       app: servicio-despregue1
+   spec:
+     containers:
+     - name: proxy
+       image: frmadem/catro-eixos-k8s-proxy
+       ports:
+        - containerPort: 80
+       env:
+       - name: SERVIZO_INTERNO
+         value: "servicio-despregue1:80"
+     restartPolicy: Always
