@@ -2,7 +2,7 @@
 
 ## Instalando Kubernetes na nosa máquina local
 
-Como falaramos na parte [expositiva](../02_kubernetes/01_que_e_kubernetes.md), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
+Como falaramos na parte [expositiva](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
 
 No curso, recomendamos [microk8s](https://microk8s.io/) que é un excelente traballo da xente de Canonical e que nos permite, a través de [snap](https://snapcraft.io/), instalar e xestionar un minuclúster de Kubernetes (realmente o "master" e o "nodo" son virtuais e todo corre na nosa Ubuntu local) para facer as prácticas, desenvolver aplicacións, etc...
 
@@ -58,7 +58,7 @@ E teríamos o sistema detido.
 
 ### c) Habilitando os servizos
 
-Por defecto, microk8s instálase sen o servizo de dns, fundamental para traballar con [servizos](../02_kubernetes/05_arquitectura_kubernetes_service.md).
+Por defecto, microk8s instálase sen o servizo de dns, fundamental para traballar con [servizos](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service).
 
 Para habilitalo, basta con facer:
 
@@ -156,7 +156,7 @@ O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado p
 
 Nesta tarefa imos revisar os conceptos sobre Kubernetes (k8s).
 
-Compre ler a [documentación](../02_kubernetes/) que temos no módulo.
+Compre ler a [documentación](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes) que temos no módulo.
 
 Esta tarefa non ten entrega.
 
@@ -192,7 +192,7 @@ Imos a montar unha sinxela aplicación escrita en nodejs que fai o seguinte:
 
 ### a) Despregue en pod
 
-Para comezar, imos despregar a nosa aplicación nun [pod](../02_kubernetes/03_arquitectura_kubernetes_pod.md):
+Para comezar, imos despregar a nosa aplicación nun [pod](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/03_arquitectura_kubernetes_pod):
 - A imaxe a montar será "frmadem/catro-eixos-k8s-ej1", co tag "v1", esto é: "frmadem/catro-eixos-k8s-ej1:v1".
 - O pod terá como nome "pod-practica-1".
 - Executará como comando "npm" "run" "iniciar".
@@ -219,7 +219,7 @@ Vemos a **versión** da aplicación, o **hostname** (o nome do pod onde está a 
 
 ### b) Montando un deploy
 
-Se queremos correr a nosa aplicación con réplicas e control das mesmas compre que empreguemos un [deploy](../02_kubernetes/04_arquitectura_kubernetes_deployment.md).
+Se queremos correr a nosa aplicación con réplicas e control das mesmas compre que empreguemos un [deploy](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/04_arquitectura_kubernetes_deployment).
 
 Para montar o noso despregue temos que cumprir unha serie de requisitos:
 - O despregue terá como nome "**despregue-practica-1**".
@@ -246,7 +246,7 @@ Agora, temos un deploy que ten réplicas e queremos que poida dar resposta calqu
 
 Para iso, compre montar un servizo.
 
-O [servizo](./02_kubernetes/05_arquitectura_kubernetes_service.md) que expón o noso deploy ten que ter novamente unha serie de características:
+O [servizo](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) que expón o noso deploy ten que ter novamente unha serie de características:
 - O servizo terá como nome "**servizo-practica-1**".
 - O porto do servizo será o 80
 - Conectará cos pods no porto 8080.

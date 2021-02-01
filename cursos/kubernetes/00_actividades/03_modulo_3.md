@@ -1,8 +1,8 @@
 # Mellorando a nosa aplicación.
 
-Para facer esta tarefa, primeiro compre ler a documentación sobre "[avanzando en Kubernetes](https://formacion.4eixos.com/k8s/tema3/)".
+Para facer esta tarefa, primeiro compre ler a documentación sobre "[avanzando en Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes)".
 
-Imos mellorar o noso despregue de aplicación da tarefa [2.3](https://formacion.4eixos.com/k8s/actividades/2/correndo_a_nosa_primeira_aplicacin_en_kubernetes.html).
+Imos mellorar o noso despregue de aplicación da tarefa [2.3](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes).
 
 Polo tanto, é necesario ter rematada esa tarefa antes de acometer a de este módulo.
 
@@ -148,7 +148,7 @@ ___
 
 Imos correr a nosa aplicación nun clúster real de Kubernetes.
 
-Para facer isto compre revisar a documentación [sobre usuarios e roles](https://formacion.4eixos.com/k8s/tema_3_addenda/index.html).
+Para facer isto compre revisar a documentación [sobre usuarios e roles](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes).
 
 O administrador do clúster vainos pedir unha serie de elementos:
 * Un certificado xerado por nós para poder traballar contra a API do clúster.
@@ -168,7 +168,7 @@ Esos obxectos e o certificado **deberán ir nun tar** que remitiremos ó adminis
 
 ## A) Xerar as nosas credenciais
 
-Para xerar as nosas credenciais compre seguir esta [guía](https://formacion.4eixos.com/k8s/guias/xeracion-certificados/).
+Para xerar as nosas credenciais compre seguir esta [guía](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/00_Guia_cert).
 
 Copiamos á nosa ruta de tar o certificado .csr (por exemplo f.maseda.csr).
 
@@ -282,7 +282,7 @@ Partindo da imaxe fonte:
 * Lanzar o servidor web.
 
 Pasos:
-1. **Consultar** e **analizar** a documentación sobre [imaxes e contedores](https://formacion.4eixos.com/tema_3_web/index.html).
+1. **Consultar** e **analizar** a documentación sobre imaxes e contedores.
 2. Nun pdf, os capturas de pantalla de todo o necesario para:
 	2.1. **Crear unha imaxe** a partir da oficial de registry co seguinte nome: #nome-registry, sendo #nome o nome de pila do alumno.
 	2.2. **Lanzar unha instancia** do registry coa imaxe creada, esta instancia ten que reuni-los seguintes requisitos:

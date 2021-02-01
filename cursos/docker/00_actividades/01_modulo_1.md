@@ -2,7 +2,7 @@
 
 ## Comprender e empregar a tecnoloxía de namespaces
 
-> Os [namespaces](https://prefapp.github.io/formacion/docker/#/01_que_e_un_contedor_de_software/08_namespaces_en_profundidade) son un dos pilares básicos para a construcción de contedores, a posibilidade de crear "vistas" privadas so SO para un proceso ou conxunto de procesos aporta unha flexibilidade moi grande para a execución de procesos.
+> Os [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade) son un dos pilares básicos para a construcción de contedores, a posibilidade de crear "vistas" privadas so SO para un proceso ou conxunto de procesos aporta unha flexibilidade moi grande para a execución de procesos.
 
 Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
 
@@ -64,7 +64,7 @@ Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores 
 
 Pasos:
 
-1. **Consultar** e **analizar** a documentación sobre [cgroups: grupos de control de procesos](https://formacion.4eixos.com/tema_1_web_addenda_cgroups/cgroups_xestin_e_utilidades.html).
+1. **Consultar** e **analizar** a documentación sobre [cgroups: grupos de control de procesos](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades).
 
 2. **Traballar** cos comandos de xestión de cgroups:
 - Como script de test podes empregar este:
@@ -135,7 +135,7 @@ done
 
 ## Crear os primeiros contedores de software
 
-> Montando un contedor - Empregando [as tecnoloxías que vimos nesta tema (unshare, mount...)](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade.md) vamos a crear un contedor de software de xeito "artesanal"
+> Montando un contedor - Empregando [as tecnoloxías que vimos nesta tema (unshare, mount...)](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidaded) vamos a crear un contedor de software de xeito "artesanal"
 
 O contedor ten que reunir as seguintes características:
 
@@ -143,7 +143,7 @@ O contedor ten que reunir as seguintes características:
 
 - O contedor ten que montar este [sistema de ficheiros](https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz).
 
-- Ten que estás illado nos seguintes [namespaces](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade.md): (pids, mounts, UTS, network, ipc)
+- Ten que estás illado nos seguintes [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade): (pids, mounts, UTS, network, ipc)
 
 - Ten que ter montado un /proc propio
 
@@ -156,7 +156,7 @@ O contedor ten que reunir as seguintes características:
  - Como probar que o UTS está realmente illado?
  - Como podemos saber cal é o proceso init do contedor?
  - Como lle daríamos conectividade ó exterior ó contedor?  Pista ([veth](http://man7.org/linux/man-pages/man4/veth.4.html)).
- - Sabendo o que son os [cgroups](../01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades.md), limita a memoria do contedor a ```512 MB```.
+ - Sabendo o que son os [cgroups](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita a memoria do contedor a ```512 MB```.
 
 ---
 
