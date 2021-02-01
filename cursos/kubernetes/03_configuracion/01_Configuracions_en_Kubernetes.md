@@ -19,14 +19,14 @@ Estos elementos son repositorios de información que poden ser empregados polos 
 * Como ficheiros que se montan nalgures dentro do sistema de archivos do contedor. 
 * Como directorios de acceso restrinxido.
 
-## A) Xestionando información non confidencial: Os configmaps 
+## Xestionando información non confidencial: Os configmaps 
 
 Un ConfigMap é un artefacto de Kubernetes que contén información de configuración:
 
 * Ó ser un artefacto, pódese interactuar con él a través do Kubectl para crealo, destruilo, editalo e clonalo
 * Centraliza configuracións que poden ser empregadas polos pods para xestionar o seu propio comportamento. 
 
-### A.1) Creando un ConfigMap
+### a) Creando un ConfigMap
 
 Existen diversos xeitos para crear un ConfigMap. 
 
@@ -105,7 +105,7 @@ Input
 microk8s.kubectl delete configmap configuracion-exemplo
 ```
 
-### A.2) Empregando o noso configmap
+### b) Empregando o noso configmap
 
 Imaxinémonos que queremos empregar un pequeno programa escrito en nodeJS que precisa dunha configuración sinxela:
 
@@ -253,12 +253,51 @@ Se aplicamos este artefacto, obteríamos o seguinte:
 
 Asemade, existen en Kubernetes xeitos de crear ConfigMaps a partir de [ficheiros e directorios](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) e os novísimos [ConfigMap Generators](https://github.com/kubernetes-sigs/kustomize/blob/master/examples/configGeneration.md).
 
-## B) Xestionando información confidencial e crítica: Os segredos
+## Xestionando información confidencial e crítica: Os segredos
 
 Un [segredo](https://kubernetes.io/docs/concepts/configuration/secret/#overview-of-secrets) é un artefacto de Kubernetes que empregamos para xestionar e conter información sensible: passwords, tokens de acceso ou claves ssh.  
 Os segredos xestionanse de xeito que poden ser empregados polos pods pero como artefactos independentes. 
 
-### B.2) Empregando segredos nos pods
+### a) Creando un segredo
+
+Existen diversos xeitos de crear un segredo, pero ó final, todo resulta nun artefacto que ten a seguinte estrutura:
+
+```yaml
+# o_meu_segredo.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: meu-segredo
+type: Opaque
+data: # aquí van os datos
+  username: YWRtaW4=
+  password: Y29udHJhc2luYWwK
+Na sección "data" do artefacto, temos a información en formato clave-valor. Os valores estarán codificados en base64. 
+```
+
+Se creamos este segredo no noso k8s:
+
+```shell
+microk8s.kubectl apply -f o_meu_segredo.yaml
+```
+Teremos un artefacto novo no sistema que podemos controlar como sempre:
+
+```shell
+# podemos listalo
+microk8s.kubectl get secrets
+
+NAME                                                TYPE                                  DATA   AGE
+meu-segredo                                         Opaque                                1      80s
+
+# podemos borralo
+microk8s.kubectl delete secret meu-segredo
+
+secret "meu-segredo" deleted
+```
+
+Os segredos están securizados dentro da api de Kubernetes. Pódese, asemade, limitar ó acceso ós mesmos para os usuarios do clúster. 
+
+### b) Empregando segredos nos pods
 
 Os segredos poden ser empregados nos pods como volumes a montar no seu sistema de ficheiros ou como variables de contorna a inxectar no sistema. 
 

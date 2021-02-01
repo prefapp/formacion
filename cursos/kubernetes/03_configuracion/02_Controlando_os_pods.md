@@ -13,7 +13,7 @@ Por outro lado, os nosos pods deberían poder ter "extremos" ou "buracos" especi
 
 Estos dous problemas resólvense en Kubernetes mediante os límites e as sondas.
 
-## A) Límites e requests nos pods
+## a) Límites e requests nos pods
 
 ![pod3](../_media/03/pod3.png)
 
@@ -26,7 +26,7 @@ Nun pod, hai que establecer dúas medidas moi claras:
  
 Polo tanto un pod pódese expresar en función dos recursos que solicita do seguinte xeito:
 
-![pod4](../media/03/pod4.png)
+![pod4](../_media/03/pod4.png)
 
 Obviamente, cando falamos de "recursos", nos estamos a referir a:
 
@@ -46,7 +46,7 @@ Polo tanto, podemos pensar que o scheduler crea unha especie de "bolsa de recurs
 
 ![pod5.png](../_media/03/pod5.png)
 
-### A.1) Emprego de limits e requests nos pods
+### i) Emprego de limits e requests nos pods
 
 A expresión de requests e limits son os seguintes formatos:
 
@@ -79,7 +79,7 @@ Como vemos, estamos a establecer uns requests (a cantidade mínima de recursos) 
 
 Os limits están fixados en 128Mi de RAM e 500m ou 500 milicores. 
 
-## B) Sondas nos pods
+## b) Sondas nos pods
 
 Como dixeramos ó principio desta unidade, K8s debe saber dun pod:
 
@@ -97,7 +97,7 @@ Existen dous tipos esenciais de sondas:
 * Readiness probe: sonda para determinar si o contedor do pod está listo ou non para recibir peticions. 
 * Liveness probe: sonda que determina a "saúde" do contedor, si está a funcionar correctamente. 
 
-### B.1) Definición dunha sonda
+### i) Definición dunha sonda
 
 As sondas, como dixemos, son programas a executar ou peticións http a realizar. 
 
@@ -206,7 +206,7 @@ pod-sonda-live                            1/1     Running            1          
 
 E vemos que hai un restart do noso contedor (no momento en que eliminamos o ficheiro). Cando se reinicie, o ficheiro volverá a estar no seu sitio por mor de que está incluído na imaxe. 
 
-### B.2) Definición dunha sonda de tipo petición http
+### ii) Definición dunha sonda de tipo petición http
 
 Neste caso, imos crear unha sonda de ready (pod preparado) mediante unha petición http.
 
@@ -240,3 +240,12 @@ As sondas live e ready son moi importantes cando se traballa con deploy que teñ
 * Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de ready seguirá sen recibir peticións a través do servizo. 
  
 Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable.
+
+### iii) Emprego de sondas con servizos e deploys
+
+As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
+
+- Cada vez que se inicia unha nova réplica, o pod non recibirá peticións a través do servizo mentres non esté en estado **ready**, é dicir: mentres a sonda (readinessProbe) non devolva ok. 
+- Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de **ready** seguirá sen recibir peticións a través do servizo. 
+
+Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable. 

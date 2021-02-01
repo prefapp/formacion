@@ -4,7 +4,7 @@ Para ser quen despregar e controlar as aplicacións en Kubernetes, póñense á 
 
 O que segue é unha descrición dos principais elementos e da súa relación co resto do sistema.
 
-## A. Pod
+## Pod
 
 Un [pod](https://kubernetes.io/docs/concepts/workloads/pods/) é o elemento mínimo ou atómico dentro de Kubernetes.
 
