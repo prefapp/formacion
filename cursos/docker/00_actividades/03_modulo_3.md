@@ -6,7 +6,7 @@
 
 \**Nota - Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
 
-1. **Consultar** e **analizar** a documentación sobre  [imaxes e contedores](https://formacion.4eixos.com/tema_3_web/index.html).
+1. **Consultar** e **analizar** a documentación sobre  [imaxes e contedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_imaxes_e_contedores/01_obxectivos).
 2. **Crear** unha conta en [Dockerhub](https://hub.docker.com/). A pesares de que non é necesario estar rexistrado no Dockerhub para poder descargar imaxes, sí que imos precisar ter conta para poder subir as nosas imaxes.
 
 Cree unha conta no dockerhub. É gratuito e a imos empregar para subir os nosos traballos e distribuilos.
@@ -45,7 +45,7 @@ Para realizar esta tarefa, compre crear un documento onde iremos rexistrando os 
 
 Pasos:
 
-1. **Consultar** e **analizar** a documentación sobre [imaxes e contedores](https://formacion.4eixos.com/tema_3_web/index.html).
+1. **Consultar** e **analizar** a documentación sobre [imaxes e contedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_imaxes_e_contedores/01_obxectivos).
 2. **Investigar** e **compilar** as opcións do comando docker images
  1. O comando expón unha axuda (docker images --help) ou pódese consultar na [documentación oficial](https://docs.docker.com/engine/reference/commandline/images/).
  2. No pdf, crear unha sección "1" onde se expoñerán as opcións do comando docker images e un resumo sobre a súa función.

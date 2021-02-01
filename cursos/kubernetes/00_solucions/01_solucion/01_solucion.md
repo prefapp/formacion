@@ -1,6 +1,6 @@
 # Ejercicio Kubernetes 2
 
-[link](https://formacion.4eixos.com/k8s/actividades/2/correndo_a_nosa_primeira_aplicacin_en_kubernetes.html) al ejercicio.
+[link](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes) al ejercicio.
 
 Cuando despliego el Deploy y el servicio hago un curl a la direccion ip del serivicio y no devuelve nada.
 
