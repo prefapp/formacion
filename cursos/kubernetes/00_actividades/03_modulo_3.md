@@ -1,3 +1,4 @@
+##  Módulo 3: Vogando por augas procelosas: Kubernetes avanzado
 # Mellorando a nosa aplicación.
 
 Para facer esta tarefa, primeiro compre ler a documentación sobre "[avanzando en Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes)".
@@ -6,7 +7,7 @@ Imos mellorar o noso despregue de aplicación da tarefa [2.3](https://prefapp.gi
 
 Polo tanto, é necesario ter rematada esa tarefa antes de acometer a de este módulo.
 
-## A) Mellorando o noso pod
+### a) Mellorando o noso pod
 
 Unha vez lida a documentación, sacamos en conclusión que unha das melloras que podemos facer ós nosos pods é a de dotalos de sondas que nos permitan determinar:
 * Cando está listo para recibir peticións (readinessProbe).
@@ -34,7 +35,7 @@ Unha vez feito teríamos o seguinte:
 
 ![tpod1.png](../_media/03/tpod1.png)
 
-## A) Agregando persistencia
+### b) Agregando persistencia
 
 Resulta que a nosa aplicación tiña logs!!
 
@@ -107,6 +108,8 @@ Unha vez tes todo preparado:
 7. Borra os tres artefactos mediante o emprego de labels non de names.
 
 ---
+## Evaluación
+
 
 **Evidencias da adquición dos desempeños**:
 * Envío dun pdf cos contidos necesarios para realizar os puntos do a) ó c) segundo estes.
@@ -223,6 +226,9 @@ Lanzamos o configmap, deploy e service do **apartado c)** da tarefa anterior.
 
 Avisamos por mensaxe privada ó administrador de que temos o sistema instalado no clúster.
 
+---
+## Evaluación
+
 **Evidencias da adquición dos desempeños**:
 * Envío dun tar por email cos contidos necesarios para realizar os puntos do **a)** e **b)** segundo estes.
 
@@ -252,88 +258,111 @@ Se tes algunha dúbida ou consulta sobre como realizar a tarefa formúlaa no [Fo
 * Peso desta tarefa na cualificación final ........................................ 40 puntos
 * Peso desta tarefa no seu tema ...................................................... 40 %
 
-# Familiarizarse e traballar cos Dockerfiles
+----
 
-Nesta tarefa, imos adicar o noso tempo a traballar co sistema de Dockerfiles e crear as nosas imaxes de contedores.
+# Conectando a nosa aplicación con ingress
 
-Para poder traballar coas nosas imaxes imos comezar por construir o noso propio [registry](https://hub.docker.com/_/registry/) de imaxes. Neste senso, empregaremos o software de registry de Docker. Podedes atopar información de despregue aquí.
+Para poder facer esta práctica compre:
+- Revisar o tema que deixamos neste módulo, sobre todo a sección sobre ingress.
+- Compre ter activado o ingress no microk8s. 
 
-Logo de ter creado o noso registry propio, imos almacenar nel as imaxes que produciremos para o proxecto de docker-meiga.
+Para activar ingress:
+`microk8s.enable ingress`
 
-## O proxecto docker-meiga
+Lembrade que o ingress está conectado ó porto 80. Polo que é necesario ter ese porto libre na máquina virtual para que todo funcione correctamente. Podemos comprobalo facilmente:
+![actividades31](./../_media/01/actividades31.png)
 
-Temos un proxecto que se chama [docker-meiga](https://github.com/prefapp/docker-meiga), trátase dunha web en html5 cun motor en PHP.
+Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
 
-O proxecto vaise despregar nun contedor, e hai que construi-lo Dockerfile da imaxe.
+Deste xeito:
+- En /v1 imos ter a versión 1 da nosa aplicación (a que empregamos nas tarefas dos dous módulos anteriores)
+- En /v2 imos ter a versión 2 da mesma. 
 
-## Requisitos
 
-* A imaxe para a versión 1 (a que temos agora) precisa de PHP.
-* Pódemos emprega-la imaxe oficial de [php](https://hub.docker.com/_/php/) que hai en dockerhub (php:7.2).
-* Como servidor web usarémo-lo [interno de PHP](https://www.php.net/manual/es/features.commandline.webserver.php).
-* A aplicación precisa de dúas variables de entorno definidas (CURSO e DOCENTE).
+## a) Creando a nosa infraestrutura
+Partiremos do estrutura básica do módulo 2:
+ - Imos ter un deploy
+   - Empregará a imaxe frmadem/catro-eixos-k8s-ej1
+   - A tag será v1
+   - O nome do deploy será practica-4-v1
+   - Non fan falla nin sondas nin limits
+   - O comando a executar e npm run iniciar
+   - Estará nun ficheiro deploy_practica_4_v1.yaml
+- Exporemos un servizo
+  - Conectará cos pods do deploy no porto 8080
+  - O seu porto será o 80
+  - Terá de nome practica-4-v1
+  - Estará nun ficheiro servizo_practica4_v1.yaml
+- Teremos outro deploy
+  - Empregará a imaxe frmadem/catro-eixos-k8s-ej1
+  - A tag será v2
+  - O nome do deploy será practica-4-v2
+  - Estará nun ficheiro deploy_practica_4_v2.yaml
+  - Non fan falla nin sondas nin limits
+  - O comando a executar é npm run iniciar
+- Teremos outro servizo
+  - Conectará cos pods nos porto 8080
+  - O seu porto será tamén o 80
+  - O seu nome será practica-4-v2
+  - Estará nun ficheiro servizo_practica4_v2.yam
 
-## Procedemento de construcción
+Quedaría unha estrutura como a que segue:
+![actividades32](./../_media/01/actividades32.png)
 
-Partindo da imaxe fonte:
-* Hai que instala-lo software necesario para clona-lo repo.
-* Establece-lo como ruta de traballo.
-* Defini-lo entorno que sexa preciso (docente co seu nome, nome de este curso...).
-* Lanzar o servidor web.
+Agora desplegamos esta estrutura. 
 
-Pasos:
-1. **Consultar** e **analizar** a documentación sobre imaxes e contedores.
-2. Nun pdf, os capturas de pantalla de todo o necesario para:
-	2.1. **Crear unha imaxe** a partir da oficial de registry co seguinte nome: #nome-registry, sendo #nome o nome de pila do alumno.
-	2.2. **Lanzar unha instancia** do registry coa imaxe creada, esta instancia ten que reuni-los seguintes requisitos:
-		* O nome do contedor será #nome-registry-formacion, sendo #nome o nome de pila do alumno.
-		* O registry ten que correr no porto 5050.
-		* Precisamos que teña almacenamento persistente, nun directorio da máquina anfitrión.
-	2.3. Crear unha imaxe para o docker-meiga:
-		* Dockerfile de construcción da imaxe de docker meiga segundo os requisitos establecidos.
-		* O comando de construcción da imaxe (a imaxe ténse que chamar docker-meiga).
-		* O comando de subida da imaxe ó rexistro privado de imaxes do punto anterior.
-	2.4. O comando de lanzamento dun contedor baseado na imaxe de docker-meiga:
-		* Ten que correr como un demonio.
-		* O porto de conexión ten que ser o 8000.
-		* O nome do contedor será "meiga-v1".
-		* Aportar unha captura do navegador coa aplicación web funcionando.
-3. **Mellorando** o Dockerfile:
-	* No pdf aportar un dockerfile que reduza o tamaño da imaxe final.
-4. **Permitir** varias ramas no Dockerfile:
-	* Aportar un novo Dockerfile onde se poidan establecer distintas ramas do repo coincidindo con distintas versión da aplicación. A versión a construir pasaráse como un argumento no momento de construí-la imaxe. O nome do argumento será a rama.
+## b) Aplicando regras de ingress para conectar todo
 
-**Evidencias da adquisición dos desempeños**: Pasos 2, 3 e 4 correctamente realizado segundo estes...
+Imos crear unha regra de ingress de tal xeito que:
 
-**Indicadores de logro**: debes...
-1. Entregar un pdf cos
-	1.1. comandos para montar o registry privado.
-	1.2. o Dockerfile de creación da imaxe.
-	1.3. os comandos para correr un contedor coa imaxe.
-	1.4. o Dockerfile de mellora.
-	1.5. o Dockerfile con ramas.
+- A artefacto terá de nome practica-4-ingress
+- Definirá dous paths:
+  - /v1 => que levará ó servizo practica-4-v1
+  - /v2 => que levará ó servizo practica-4-v2
+
+Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no clúster de microk8s. 
+
+Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da vm) faremos no navegador
+
+`localhost:<porto redirixido>/v1`
+![actividades33](./../_media/01/actividades33.png)
+
+`localhost:<porto redirixido>/v2`
+![actividades34](./../_media/01/actividades34.png)
+
+
+## Evaluación
+
+**Evidencias da adquición dos desempeños**:
+- Envío dun pdf cos contidos necesarios para realizar os puntos do a) e b) segundo estes.
+
+**Indicadores de logro**: Deberías ter...
+- Artefactos cos yaml para crear os deploys e os servizos v1 e v2 segundo os requisitos do **punto a)** e captura dos comandos necesarios para:
+  - Arrancar os yaml 
+  - Comprobar que os pods están a correr (e a súa saída)
+  - Comprobar que os services e deploys están creados no k8s.
+- Artefacto co ingress segundo os requisitos do **punto b)** e os comandos necesarios para
+  - Arrancar a estrutura
+  - Comprobar que está creada no sistema (e a súa saída)
+- Capturas do navegador coa saída das rutas v1 e v2
+
+
+ 
 
 **Criterios de corrección**:
-* Registry privado (máx 10 puntos):
-	* **2 puntos** de ter creada a imaxe do registry.
-	* **4 puntos** se o comando de arranque do registry privado é correcto.
-	* **4 puntos** se a configuración da persistencia é correcta.
-* Imaxe e contedor de docker-meiga (max de 20 puntos):
-	* **6 puntos** se o Dockerfile de construcción da imaxe de meiga é correcto.
-	* **2 puntos** se o comando de construcción da imaxe é correcto. 
-	* **2 puntos** se os comandos de subida da imaxe ó registry privado son correctos.
-	* **8 puntos** se o comando de arranque do contedor é correcto. 
-	* **2 puntos** se hai adxunta unha imaxe do navegador coa aplicación correndo.
-* Imaxe mellorada:
-	* **5 puntos** se a imaxe do Dockerfile reduce o tamaño da imaxe do punto anterior.
-* Imaxe con ramas:
-	* **5 puntos** se o Dockerfile acepta rama.
+- ata 20 puntos do apartado a)
+  - 5 puntos se os yaml de creación do deploy e service v1 están correctos
+  - 5 puntos se os yaml de creación do deploy e service v2 están correctos
+  - 2 puntos por cada comando ou grupo de comandos para arrancar e listar os artefactos. 
+- ata 10 puntos do apartado b)
+  - 8 puntos se o yaml de creación do ingress é correcto
+  - 1 punto  polo comando de creación e listado do artefacto de ingress
+- ata 10 puntos
+  - 5 puntos por cada unha das capturas de pantalla do navegador para v1 e v2
 
-**Autoavaliación: Autoavalíate aplicando os indicadores de logro e mesmo os criterios de corrección**.
 
-**Heteroavaliación**: A titoría avaliará e cualificará a tarefa.
+**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
 
 **Peso na cualificación**:
-
-Peso desta tarefa na cualificación final ........................................ 40 puntos
-Peso desta tarefa no seu tema ...................................................... 40 %
+Peso desta tarefa na cualificación final ...................................... 40 puntos
+Peso desta tarefa no seu tema .................................................... 40 %

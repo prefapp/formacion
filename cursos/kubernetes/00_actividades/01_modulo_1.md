@@ -1,6 +1,6 @@
-# Módulo 1: A problemática da orquestración de contedores de software
+## A problemática da orquestración de contedores de software
 
-## Instalar unha aplicación multicontedor
+# Instalar unha aplicación multicontedor
 Este exercicio basease neste exemplo do repositorio de [exemplos de docker](https://github.com/dockersamples/example-voting-app).
 
 ### Explicación do proxecto
@@ -162,8 +162,9 @@ Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os
 - Peso desta tarefa na cualificación final ........................................ 70 puntos
 - Peso desta tarefa no seu tema ...................................................... 70 %
 
+---
 
-## Identificar os problemas das aplicacións multicontedor correndo sobre un clúster de nodos
+# Identificar os problemas das aplicacións multicontedor correndo sobre un clúster de nodos
 
 Vamos a darlle unha volta agora a aplicación anterior, e en vez de desplegala na nosa máquina docker, vamos a desplegala sobre un cluster de nodos docker (docker swarm).
 

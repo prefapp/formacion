@@ -1,6 +1,6 @@
-# Módulo 2: Kubernetes: navegando nun océano de contedores
+## Módulo 2: Kubernetes: navegando nun océano de contedores
 
-## Instalando Kubernetes na nosa máquina local
+# Instalando Kubernetes na nosa máquina local
 
 Como falaramos na parte [expositiva](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
 
@@ -152,7 +152,9 @@ O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado p
 - Peso desta tarefa na cualificación final ........................................ 30 puntos
 - Peso desta tarefa no seu tema ...................................................... 30 %
 
-## Os elementos básicos de Kubernetes
+---
+
+# Os elementos básicos de Kubernetes
 
 Nesta tarefa imos revisar os conceptos sobre Kubernetes (k8s).
 
@@ -177,7 +179,9 @@ Esta tarefa non ten entrega.
 Peso desta tarefa na cualificación final ........................................ 20 puntos
 Peso desta tarefa no seu tema ...................................................... 20 %
 
-## Correndo a nosa primeira aplicación en Kubernetes
+----
+
+# Correndo a nosa primeira aplicación en Kubernetes
 
 Imos comezar a nosa andaina con Kubernetes.
 
