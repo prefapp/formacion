@@ -25,7 +25,7 @@ O servizo define principalmente:
 
 ![Servizo2](./../_media/02/servizo2.png)
 
-## a) Creación dun servizo
+## Creación dun servizo
 
 Para crear servizos podemos acudir ó DSL de K8s.
 

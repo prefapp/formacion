@@ -5,9 +5,9 @@
 - Infraestrutura: estamos a nos referir o conxunto de servidores que constitúen o clúster de K8s.
 - Compoñentes: falaremos dos distintos programas e ferramentas que garanten o funcionamento interno de K8s.
 
-## 1. Infraestrutura de K8s
+## a) Infraestrutura de K8s
 
-### A. Nodos
+### Nodos
 
 Kubernetes vaise despregar sobre **nodos**, puidendo ser un nodo:
 
@@ -24,7 +24,7 @@ Os nodos, tamén chamados **workers**, son os elementos de composición do clús
 
 A arquitectura de K8s é, por tanto, escalable, no sentido de que pódese adaptar ás necesidades da organización mediante o engadido ou supresión de nodos ó sistema. Esta arquitectura baseada nun escalado horizontal é unha das claves de Kubernetes. 
 
-### B. O máster
+### O máster
 
 Existe unha máquina ou nodo especial ó que dan en chamar "**master**" no mundo de K8s.
 
@@ -38,11 +38,11 @@ Co máster, podemos completar o noso diagrama da arquitectura de Kubernetes como
 
 ![LinuxContanirs](./../_media/02/nodo2.png)
 
-## 2. Compoñentes de Kubernetes
+## b) Compoñentes de Kubernetes
 
 Os compoñentes básicas de K8s distribúense entre o **máster** e os **nodos**.
 
-### A. Nodos
+### Nodos
 
 Nos nodos atopamos os seguintes compoñentes:
 
@@ -61,7 +61,7 @@ Queda, polo tanto, un esquema do nodo deste xeito:
 
 O nodo recibe ordes do máster e as executa mediante o Kubelet e o Kube-proxy comunicándose co motor de contedores instalado na máquina.
 
-## B. Máster
+## Máster
 
 En concordancia coas tres misións fundamentais do máster de Kubernetes, existen tres grandes compoñentes que corren neste nodo especial:
 
