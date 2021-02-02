@@ -2,9 +2,9 @@
 
 Sabemos que o pod é a unidade mínima de construcción, o bloque co que facemos as nosas aplicacións. 
 
-Sen embargo, e ata agora, non falamos dunha serie de funcionalidades que nos va a permitir traballar moito mellos cos nosos pods. 
+Sen embargo, e ata agora, non falamos dunha serie de funcionalidades que nos va a permitir traballar moito mellor cos nosos pods. 
 
-Dunha banda, Kubernetes traballa aloxando as nosas cargas de traballo (en forma de pods) nos nodos dispoñibles, isto implica que, dalgún xeito o K8s debería ser informado de a carga que pode esperar do pod así como de o límite máximo que debe permitir para cada un deles. 
+Dunha banda, Kubernetes traballa aloxando as nosas cargas de traballo (en forma de pods) nos nodos dispoñibles, isto implica que, dalgún xeito o K8s debería ser informado da carga que pode esperar do pod así como de o límite máximo que debe permitir para cada un deles. 
 
 Por outro lado, os nosos pods deberían poder ter "extremos" ou "buracos" especiais para poder informar ó K8s de dúas cousas:
 
@@ -51,7 +51,7 @@ Polo tanto, podemos pensar que o scheduler crea unha especie de "bolsa de recurs
 A expresión de requests e limits son os seguintes formatos:
 
 * Memoria: pódese empregar E, P, T, G, M, K para expresar a cantidade de memoria ou os seus equivalentes en potencias de dous (Ei, Pi, Ti, Gi, Mi, Ki.)
-* CPU: mídese en unidades de CPU (independientemente do número de cores) así 200m, implicaría 200 milicores. Hai unha explicación máis detallada neste artigo.
+* CPU: mídese en unidades de CPU (independientemente do número de cores) así 200m, implicaría 200 milicores. Hai unha explicación máis detallada neste [artigo](https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b).
 
 Na template do pod, reflectise deste xeito:
 
