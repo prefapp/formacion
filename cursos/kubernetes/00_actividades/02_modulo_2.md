@@ -1,6 +1,6 @@
-## Módulo 2: Kubernetes: navegando nun océano de contedores
+# Módulo 2: Kubernetes: navegando nun océano de contedores
 
-# Instalando Kubernetes na nosa máquina local
+## Instalando Kubernetes na nosa máquina local
 
 Como falaramos na parte [expositiva](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
 
@@ -133,7 +133,7 @@ O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado p
 
 ### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - Captura de pantalla da versión de microk8s instalada (ver parágrafo a).
 - Captura de pantalla do estado do microk8s, co dns (parágrafo c) e o dashboard (parágrafo e) habilitados.
 
@@ -154,7 +154,7 @@ O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado p
 
 ---
 
-# Os elementos básicos de Kubernetes
+## Os elementos básicos de Kubernetes
 
 Nesta tarefa imos revisar os conceptos sobre Kubernetes (k8s).
 
@@ -164,7 +164,7 @@ Esta tarefa non ten entrega.
 
 ### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - test feito.
 
 **Indicadores de logro**: Deberías ter...
@@ -181,7 +181,7 @@ Peso desta tarefa no seu tema ..................................................
 
 ----
 
-# Correndo a nosa primeira aplicación en Kubernetes
+## Correndo a nosa primeira aplicación en Kubernetes
 
 Imos comezar a nosa andaina con Kubernetes.
 
@@ -192,7 +192,7 @@ Imos a montar unha sinxela aplicación escrita en nodejs que fai o seguinte:
 - Cando recibe unha petición, amosa por pantalla a seguinte información:
   - Versión da aplicación.
   - O hostname.
-  - O uptime da aplicación en horas:minutos:segundos.
+  - O uptime da aplicación en horas : minutos : segundos.
 
 ### a) Despregue en pod
 
@@ -297,7 +297,7 @@ Se recargamos o noso navegador, veremos que o pod que nos responde é diferente 
 
 ### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - Envío dun pdf cos contidos necesarios para realizar os puntos do a) ó e) segundo estes.
 
 **Indicadores de logro**: Deberías ter...

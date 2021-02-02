@@ -8,7 +8,7 @@ Para poder dotar de persistencia ós nosos pods, Kubernetes ofrece unha solució
 
 Un volume é un recurso de Kubernetes que é externo ós contedores dos nosos pods e que polo tanto non segue o seu ciclo de vida:
 
-* Non se borra cando se borran ou reinician os contedores dun un pod. 
+* Non se borra cando se borran ou reinician os contedores dun pod. 
 * Os pods poden acceder a él e montalo como unha ruta máis do seu sistema de ficheiros. 
 * Os volumes poden xestionarse dun xeito totalmente independiente ós pods, deploys e services (volumes persistentes) 
 
@@ -18,7 +18,7 @@ Asemade, os volumes poden ser elementos externos ó propio clúster de Kubernete
 * Poder ser un volume iscsi. 
 * Hai posibilidade de conectar elementos propios de proveedores de nube privada e pública. 
 
-Aquí pódese atopar unha lista extensa de sistemas de almacenamento que pode empregar Kubernetes como base para crear volumes. 
+[Aquí](https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes) pódese atopar unha lista extensa de sistemas de almacenamento que pode empregar Kubernetes como base para crear volumes. 
 
 ![pod7.png](../_media/03/pod7.png)
 

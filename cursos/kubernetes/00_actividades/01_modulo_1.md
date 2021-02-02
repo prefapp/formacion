@@ -1,6 +1,6 @@
-## A problemática da orquestración de contedores de software
+# A problemática da orquestración de contedores de software
 
-# Instalar unha aplicación multicontedor
+## Instalar unha aplicación multicontedor
 Este exercicio basease neste exemplo do repositorio de [exemplos de docker](https://github.com/dockersamples/example-voting-app).
 
 ### Explicación do proxecto
@@ -134,7 +134,7 @@ Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os
 
 ### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - Pasos 1 ao 4 correctamente realizados segundo estes...
 
 **Indicadores de logro**: 
@@ -164,13 +164,13 @@ Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os
 
 ---
 
-# Identificar os problemas das aplicacións multicontedor correndo sobre un clúster de nodos
+## Identificar os problemas das aplicacións multicontedor correndo sobre un clúster de nodos
 
 Vamos a darlle unha volta agora a aplicación anterior, e en vez de desplegala na nosa máquina docker, vamos a desplegala sobre un cluster de nodos docker (docker swarm).
 
 Para lanzar este cluster de nodos temos varias opcións:
 
-#### Opcion 1: A máis sinxela. [Play with Docker](https://labs.play-with-docker.com/).
+### Opcion 1: A máis sinxela. [Play with Docker](https://labs.play-with-docker.com/).
 
 [Play with docker](https://labs.play-with-docker.com/) é unha ferramenta online para prácticar con Docker, sen necesidade de instalar nada no noso equipo local. Para empregalo e construir un cluster de swarm, só temos que facer Login cos nosos datos de [dockerhub](https://hub.docker.com/)  (precisa que teñamos unha conta de hub.docker.com, podedes crear unha totalmente gratuita dende a [páxina de rexistro](https://hub.docker.com/signup)).
 
@@ -204,7 +204,7 @@ docker swarm join --token SWMTKN-1-1ma2gywbmnr8nwf8dr9hg7etrsc5sx0q1wrgwhde5d5v7
 ![actividades15](./../_media/01/actividades15.png)
 
 
-#### Opción 2: Docker-machine e Virtualbox
+### Opción 2: Docker-machine e Virtualbox
 
 se estamos a usar virtualbox, docker dispón dunha utilidade para crear nodos swarm (**docker-machine**) empregando varias plataformas de virtualización, entre elas VirtualBox ou HyperV:
 
@@ -256,7 +256,7 @@ E finalmente quedaría facer o deploy desta stack e executar contra el o comando
 
 ### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - Pasos correctamente realizados segundo estes...
 
 **Indicadores de logro**: 

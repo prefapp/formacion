@@ -1,5 +1,5 @@
-##  Módulo 3: Vogando por augas procelosas: Kubernetes avanzado
-# Mellorando a nosa aplicación.
+# Módulo 3: Vogando por augas procelosas: Kubernetes avanzado
+## Mellorando a nosa aplicación.
 
 Para facer esta tarefa, primeiro compre ler a documentación sobre "[avanzando en Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes)".
 
@@ -62,7 +62,7 @@ O sistema agora, quedaría como segue:
 
 ![tpod2.png](../_media/03/tpod2.png)
 
-## C) Engandindo un deploy, un configmap e un servizo
+### c) Engandindo un deploy, un configmap e un servizo
 
 Agora que temos o pod ben preparado, imos a metelo dentro dun deploy que o controle.
 
@@ -108,10 +108,11 @@ Unha vez tes todo preparado:
 7. Borra os tres artefactos mediante o emprego de labels non de names.
 
 ---
-## Evaluación
+
+### Evaluación
 
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 * Envío dun pdf cos contidos necesarios para realizar os puntos do a) ó c) segundo estes.
 
 **Indicadores de logro**: Deberías ter...
@@ -147,7 +148,7 @@ Unha vez tes todo preparado:
 
 ___
 
-# Montar a nosa aplicación nun clúster de Kubernetes
+## Montar a nosa aplicación nun clúster de Kubernetes
 
 Imos correr a nosa aplicación nun clúster real de Kubernetes.
 
@@ -169,13 +170,13 @@ O administrador do clúster vainos pedir unha serie de elementos:
 
 Esos obxectos e o certificado **deberán ir nun tar** que remitiremos ó administrador mediante email (para Francisco Maseda ou Javier Gómez).
 
-## A) Xerar as nosas credenciais
+### a) Xerar as nosas credenciais
 
 Para xerar as nosas credenciais compre seguir esta [guía](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/00_Guia_cert).
 
 Copiamos á nosa ruta de tar o certificado .csr (por exemplo f.maseda.csr).
 
-## B) Crear os artefactos de namespace, Role e RoleBinding
+### b) Crear os artefactos de namespace, Role e RoleBinding
 
 O administrador tamén nos pide que declaremos os artefactos necesarios para crear:
 * Namespace:
@@ -198,11 +199,11 @@ O administrador tamén nos pide que declaremos os artefactos necesarios para cre
 
 Os tres yaml (namespace.yaml, role.yaml, role_binding.yaml) introduciránse no tar a enviar.
 
-## C) Envío ós administradores do clúster
+### c) Envío ós administradores do clúster
 
 O tar enviarase ó administrador (Francisco Maseda ou Javier Gómez) mediante email. Responderán cun certificado.
 
-## D) Instalación do certificado no microk8s.kubectl
+### d) Instalación do certificado no microk8s.kubectl
 
 Unha vez obtemos o certificado dos administradores:
 * Agregamos unha nova configuración para o clúster.
@@ -218,7 +219,7 @@ Unha vez obtemos o certificado dos administradores:
 
 Listamos os contexts que temos. 
 
-## E) Creación do noso despliegue da tarefa 3.1 no clúster
+### e) Creación do noso despliegue da tarefa 3.1 no clúster
 
 Poñemos o current-context a "contexto-platega".
 
@@ -227,9 +228,10 @@ Lanzamos o configmap, deploy e service do **apartado c)** da tarefa anterior.
 Avisamos por mensaxe privada ó administrador de que temos o sistema instalado no clúster.
 
 ---
-## Evaluación
 
-**Evidencias da adquición dos desempeños**:
+### Evaluación
+
+**Evidencias da adquisición dos desempeños**:
 * Envío dun tar por email cos contidos necesarios para realizar os puntos do **a)** e **b)** segundo estes.
 
 **Indicadores de logro**: Deberías ter:
@@ -260,7 +262,7 @@ Se tes algunha dúbida ou consulta sobre como realizar a tarefa formúlaa no [Fo
 
 ----
 
-# Conectando a nosa aplicación con ingress
+## Conectando a nosa aplicación con ingress
 
 Para poder facer esta práctica compre:
 - Revisar o tema que deixamos neste módulo, sobre todo a sección sobre ingress.
@@ -270,7 +272,7 @@ Para activar ingress:
 `microk8s.enable ingress`
 
 Lembrade que o ingress está conectado ó porto 80. Polo que é necesario ter ese porto libre na máquina virtual para que todo funcione correctamente. Podemos comprobalo facilmente:
-![actividades31](./../_media/01/actividades31.png)
+![actividades31](./../_media/03/actividades31.png)
 
 Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
 
@@ -279,7 +281,7 @@ Deste xeito:
 - En /v2 imos ter a versión 2 da mesma. 
 
 
-## a) Creando a nosa infraestrutura
+### a) Creando a nosa infraestrutura
 Partiremos do estrutura básica do módulo 2:
  - Imos ter un deploy
    - Empregará a imaxe frmadem/catro-eixos-k8s-ej1
@@ -307,11 +309,11 @@ Partiremos do estrutura básica do módulo 2:
   - Estará nun ficheiro servizo_practica4_v2.yam
 
 Quedaría unha estrutura como a que segue:
-![actividades32](./../_media/01/actividades32.png)
+![actividades32](./../_media/03/actividades32.png)
 
 Agora desplegamos esta estrutura. 
 
-## b) Aplicando regras de ingress para conectar todo
+### b) Aplicando regras de ingress para conectar todo
 
 Imos crear unha regra de ingress de tal xeito que:
 
@@ -325,15 +327,16 @@ Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no cl�
 Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da vm) faremos no navegador
 
 `localhost:<porto redirixido>/v1`
-![actividades33](./../_media/01/actividades33.png)
+![actividades33](./../_media/03/actividades33.png)
 
 `localhost:<porto redirixido>/v2`
-![actividades34](./../_media/01/actividades34.png)
+![actividades34](./../_media/03/actividades34.png)
 
+---
 
-## Evaluación
+### Evaluación
 
-**Evidencias da adquición dos desempeños**:
+**Evidencias da adquisición dos desempeños**:
 - Envío dun pdf cos contidos necesarios para realizar os puntos do a) e b) segundo estes.
 
 **Indicadores de logro**: Deberías ter...
@@ -346,8 +349,6 @@ Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da
   - Comprobar que está creada no sistema (e a súa saída)
 - Capturas do navegador coa saída das rutas v1 e v2
 
-
- 
 
 **Criterios de corrección**:
 - ata 20 puntos do apartado a)

@@ -243,7 +243,7 @@ spec:
 
 Se aplicamos este artefacto, obteríamos o seguinte:
 
-![pod2.png](../_media/03/pod_2.png)
+![pod2.png](../_media/03/pod2.png)
 
 Á primeira vista, o emprego de ConfigMaps pode facer pensar que é moito máis verboso e que complica os nosos pods, nembargantes:
 

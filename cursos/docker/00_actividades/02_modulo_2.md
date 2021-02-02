@@ -61,7 +61,7 @@ Para esto  montar un contedor que:
 
 ---
 
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
 
 **Indicadores de logro**:  
 
@@ -136,7 +136,7 @@ docker restart <nome_container_php>
 
 4.2 Apagar todos os contedores dende [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer). Antes de esto descargar unha copia sql da base de datos, dende o phpmyadmin.
 
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
 
 **Indicadores de logro**:  
 

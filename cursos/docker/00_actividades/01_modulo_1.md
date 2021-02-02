@@ -26,7 +26,7 @@ O namespace de redes permite, entre outras cousas, conectar procesos que se atop
 
 ---
 
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
 
 **Indicadores de logro**:  
 
@@ -110,7 +110,7 @@ done
 
 ---
 
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
 
 **Indicadores de logro**:  
 
@@ -160,7 +160,7 @@ O contedor ten que reunir as seguintes características:
 
 ---
 
-**Evidencias da adquición dos desempeños**: Pasos 1 correctamente realizado segundo estes...
+**Evidencias da adquisición dos desempeños**: Pasos 1 correctamente realizado segundo estes...
 
 **Indicadores de logro**: O teu contedor deberá...
 
