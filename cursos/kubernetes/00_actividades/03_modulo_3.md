@@ -272,7 +272,7 @@ Para activar ingress:
 `microk8s.enable ingress`
 
 Lembrade que o ingress está conectado ó porto 80. Polo que é necesario ter ese porto libre na máquina virtual para que todo funcione correctamente. Podemos comprobalo facilmente:
-![actividades31](./../_media/01/actividades31.png)
+![actividades31](./../_media/03/actividades31.png)
 
 Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
 
@@ -309,7 +309,7 @@ Partiremos do estrutura básica do módulo 2:
   - Estará nun ficheiro servizo_practica4_v2.yam
 
 Quedaría unha estrutura como a que segue:
-![actividades32](./../_media/01/actividades32.png)
+![actividades32](./../_media/03/actividades32.png)
 
 Agora desplegamos esta estrutura. 
 
@@ -327,10 +327,10 @@ Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no cl�
 Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da vm) faremos no navegador
 
 `localhost:<porto redirixido>/v1`
-![actividades33](./../_media/01/actividades33.png)
+![actividades33](./../_media/03/actividades33.png)
 
 `localhost:<porto redirixido>/v2`
-![actividades34](./../_media/01/actividades34.png)
+![actividades34](./../_media/03/actividades34.png)
 
 ---
 
