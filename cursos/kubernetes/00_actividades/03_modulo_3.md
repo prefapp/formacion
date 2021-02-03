@@ -152,7 +152,7 @@ ___
 
 Imos correr a nosa aplicación nun clúster real de Kubernetes.
 
-Para facer isto compre revisar a documentación [sobre usuarios e roles](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes).
+Para facer isto compre revisar a documentación [sobre usuarios e roles](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/04_Namespaces_usuarios_e_roles).
 
 O administrador do clúster vainos pedir unha serie de elementos:
 * Un certificado xerado por nós para poder traballar contra a API do clúster.
@@ -274,7 +274,7 @@ Para activar ingress:
 Lembrade que o ingress está conectado ó porto 80. Polo que é necesario ter ese porto libre na máquina virtual para que todo funcione correctamente. Podemos comprobalo facilmente:
 ![actividades31](./../_media/03/actividades31.png)
 
-Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
+Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
 
 Deste xeito:
 - En /v1 imos ter a versión 1 da nosa aplicación (a que empregamos nas tarefas dos dous módulos anteriores)
