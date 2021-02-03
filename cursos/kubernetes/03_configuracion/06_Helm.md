@@ -1,6 +1,6 @@
 # Helm: o marionetista de Kubernetes
 
-![helm1](./../_media/03/helm1.png)
+![helm1](./../_media/03/helm1.jpg)
 
 [Helm](https://helm.sh/) é un dos proxectos máis interesantes dentro da comunidade de Kubernetes. 
 
