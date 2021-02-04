@@ -2,7 +2,6 @@
 
 [link](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes) al ejercicio.
 
-
 COMANDOS EJECUCION
 - microk8s kubectl apply -f despregue-practica-1.yaml 
 
