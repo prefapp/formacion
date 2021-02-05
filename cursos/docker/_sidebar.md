@@ -54,4 +54,5 @@
   - [Conceptos e caracteristicas do enxame](./05_docker_swarm/02_conceptos_e_caracteristicas_do_enxame.md)
   - [Accións básicas](./05_docker_swarm/03_accions_basicas.md)
   - [Montando o primeiro cluster swarm](./05_docker_swarm/04_montando_o_primeiro_cluster_swarm.md)
-  - [Practica guiada Nesquik vs Colaco](./05_docker_swarm/05_practica_guiada_nesquik_vs_colacao.mm)
+  - [Practica guiada Nesquik vs Colaco](./05_docker_swarm/05_practica_guiada_nesquik_vs_colacao.md)
+  - [📝 Actividades](./00_actividades/05_modulo_5.md)
