@@ -6,6 +6,7 @@
 
 - Charts de Helm
   - [De los valores y su interpolación](./02_helm_charts/01_valores_y_su_interpolacion.md)
+  - [Práctica guiada: Proxecto Meiga en Helm](./02_helm_charts/02_practica_guiada_meiga.md)
   - [📝 Actividades](./00_actividades/02_modulo_2.md)
 
 
