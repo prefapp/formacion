@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# Chapter 1
-
-## Section 3
-=======
 # De la instalación de releases
 
 Como sabemos, Helm crea instalaciones (releases) de aplicaciones mediante la interpolación de la configuración que deseemos en un conjunto de plantillas que reciben el nombre de charts. 
@@ -25,4 +20,4 @@ Prueba a entrar en helm hub y busca las siguientes charts:
 Existen, como hemos visto, repositorios públicos de charts de Helm que podemos usar. 
 
 No obstante, y al igual que ocurre con las imágenes de docker, Helm necesita descargar la chart al sistema para poder emplearla. 
->>>>>>> feature/tema1-helm
+

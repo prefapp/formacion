@@ -21,7 +21,7 @@ En este caso, el chart de **MariaDB** puede recibir ciertos parámetros de confi
 - La contraseña del usuario **root** será el nombre del tutor.
 - En cuanto a la base de datos a crear:
   - Tendrá como nombre: datos-maria
-  - Contará con un usuario, cuyo nombre y contraseña tengan el formato: <Inicial nombre>-<1º Apellido>
+  - Contará con un usuario, cuyo nombre y contraseña tengan el formato: `{Inicial_nombre}-{1º_Apellido}`
 - Se deshabilitará la persistencia para el **master** y el **slave**.
 
 ### c) Creando la release
