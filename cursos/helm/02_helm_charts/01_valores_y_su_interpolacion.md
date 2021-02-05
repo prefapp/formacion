@@ -4,7 +4,7 @@ Uno de los componentes básicos de Helm es su potente motor de plantillas.
 
 Como vimos en la lección anterior, Helm emplea [go templates](https://golang.org/pkg/text/template/) para realizar la interpolación de valores y producir manifiestos. 
 
-Por lo tanto, lo primero que debemos analizar es qué valores maneja las plantillas de Helm y cómo podemos emplearlos para construir nuestras propias charts. 
+Por lo tanto, lo primero que debemos analizar es qué valores manejan las plantillas de Helm y cómo podemos emplearlos para construir nuestras propias charts. 
 
 ## a) Los valores
 El conjunto de datos que son modificables por parte del usuario aparecen dentro de una chart de Helm bajo un objeto muy especial que se conoce con el nombre de **Values**.
@@ -85,7 +85,9 @@ No obstante, esto que tenemos aquí es perfectamente válido para helm.
 De hecho, si ejecutamos [helm template](https://helm.sh/docs/helm/helm_template/) (comando que renderiza toda la chart en un manifiesto único) obtendremos lo siguiente:
 
 
-```yaml
+```shell
+~/ejemplo1$ helm template . 
+---
 # Source: ejemplo1/templates/pod.yaml
 # templates/pod.yaml
 
@@ -102,9 +104,7 @@ spec:
           containerPort: 80
           protocol: TCP
 ```
-```shell
-~/ejemplo1  helm template . 
-```
+
 
 Helm nos ha renderizado nuestro `pod.yaml` sin interpolar nada. 
 
@@ -119,15 +119,16 @@ Cuando diseñamos una chart, uno de los primeros elementos en los que hay que ce
 
 Este fichero, que pondremos en el directorio raíz de la chart (al nivel del fichero Chart.yaml) nos permite establecer valores por defecto. Estos valores son los que empleará Helm para renderizar nuestras releases *salvo que el usuario estableza otros diferentes*. 
 
-Como dijimos al principio, vamos a permitir que la imagen de nginx sea definible por el usuario. Esta imagen la vamos a poner en nuestros **Values** con una clave. por ejemplo, la clave `imagen`. 
+Como dijimos al principio, vamos a permitir que la imagen de nginx sea definible por el usuario. Esta imagen la vamos a poner en nuestros **Values** con una clave, por ejemplo, la clave `imagen`. 
 
-Vamos, pues, a crear, nuestro fichero de values con el siguiente contenido:
+Vamos pues, a crear nuestro fichero de values con el siguiente contenido:
 ```yaml
 # ejemplo1/values.yaml
 imagen: nginx
 ```
 
-Al declarar esto, nuestros datos tienen un primer par clave-valor (imagen: nginx), este es el esquema de datos de nuestra chart:
+Al declarar esto, nuestros datos tienen un primer par clave-valor `imagen: nginx`.
+Este es el esquema de datos de nuestra chart:
 
 ![Valores2](./../_media/02/valores2.png)
 
@@ -154,7 +155,9 @@ La línea interesante es la número 10. Básicamente no estamos usando un valor 
 - Las sentencias de plantilla en Helm van rodeadas de `{{ }}`. 
 
 Si ejecutamos de nuevo helm template:
-```yaml
+```shell
+~/ejemplo1$ helm template .
+---
 # Source: ejemplo1/templates/pod.yaml
 # templates/pod.yaml
 
@@ -172,9 +175,7 @@ spec:
           protocol: TCP
 ```
 
-```shell
-~/ejemplo1 helm template .
-```
+
 
 Vemos que hemos obtenido el mismo resultado de la ejecución anterior, pero con una diferencia crucial: el valor de "image" no está puesto en la plantilla, se ha obtenido de los datos que ha recibido la aplicación en el momento de su renderizado. 
 
@@ -182,7 +183,7 @@ Vemos que hemos obtenido el mismo resultado de la ejecución anterior, pero con 
 
 ### c) Sobreescribiendo los valores por defecto
 
-Como vimos en las sección anterior, los valores por defecto que acepta nuestra chart deben venir establecidos en el fichero `values.yaml`.  Obviamente, cuando queramos crear nuestras releases, tendremos que poder establecer valores que sean distintos de los que se hayan definido por defecto: tiene que haber, por tanto, un orden de prelación a la hora de definir valores. 
+Como vimos en la sección anterior, los valores por defecto que acepta nuestra chart deben venir establecidos en el fichero `values.yaml`.  Obviamente, cuando queramos crear nuestras releases, tendremos que poder establecer valores que sean distintos de los que se hayan definido por defecto: tiene que haber, por tanto, un orden de prelación a la hora de definir valores. 
 
 De forma general, podemos pasar valores a nuestra Chart de dos formas diferentes:
 - Mediante ficheros (en formato yaml) con definiciones de valores. 
@@ -199,7 +200,9 @@ imagen: nginx:1.19.1
 
 Ahora, procedemos a renderizar nuestra Chart, pasando el flag `-f <ruta del fichero de valores>`:
 
-```yaml
+```shell
+~/ejemplo1 helm template . -f mis_valores.yaml
+---
 # Source: ejemplo1/templates/pod.yaml
 # templates/pod.yaml
 
@@ -216,9 +219,7 @@ spec:
           containerPort: 80
           protocol: TCP
 ```
-```shell
-~/ejemplo1 helm template . -f mis_valores.yaml
-```
+
 
 Como podemos ver, el resultado es el esperado: la imagen de nginx es la 1.19.1 y no la definida por defecto. 
 

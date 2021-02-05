@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# Chapter 1
-
-## Section 2
-=======
 # Empleo básico de Helm
 
 ## De la instalación de Helm
@@ -91,4 +86,3 @@ El comando elimina completamente la presencia de la release (borra todos los art
 ### d) Instalación de releases
 A esta parte dedicaremos la sección siguiente de la presente lección. 
 
->>>>>>> feature/tema1-helm
