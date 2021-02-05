@@ -48,3 +48,10 @@
   - [Ciclo de vida dunha aplicación de compose](./04_aplicacions_e_servizos_multicontedor/07_cilo_de_vida_dunha_aplicacion_de_compose.md)
   - [Práctica guiada: Nesquik vs ColaCao](./04_aplicacions_e_servizos_multicontedor/08_practica_guiada_nesquik_vs_colacao.md)
   - [📝 Actividades](./00_actividades/04_modulo_4.md)
+
+- Orquestación de contedores e clustering - Entornos de producción
+  - [O docker Swarm](./05_docker_swarm/01_o_docker_swarm.md)
+  - [Conceptos e caracteristicas do enxame](./05_docker_swarm/02_conceptos_e_caracteristicas_do_enxame.md)
+  - [Accións básicas](./05_docker_swarm/03_accions_basicas.md)
+  - [Montando o primeiro cluster swarm](./05_docker_swarm/04_montando_o_primeiro_cluster_swarm.md)
+  - [Practica guiada Nesquik vs Colaco](./05_docker_swarm/05_practica_guiada_nesquik_vs_colacao.mm)
