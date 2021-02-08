@@ -1,0 +1,14 @@
+# configmap.yaml
+#
+apiVersion: v1
+kind: ConfigMap # o tipo de artefacto
+metadata:
+  name: meiga-config # ten un nome
+  labels:
+    tipo: "configuracions"  # podemoslle meter labels
+data:
+  CURSO: {{ .Values.curso.nombrecurso }} # aquí temos clave=valor como configuración
+  DOCENTE: {{ .Values.curso.docente }}
+  MYSQL_HOST: {{ .Values.mysql.host }}
+  MYSQL_USER: {{ .Values.mysql.user }}
+  MYSQL_DATABASE: {{ .Values.mysql.database }}
