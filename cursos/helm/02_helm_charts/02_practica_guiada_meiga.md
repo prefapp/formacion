@@ -5,6 +5,7 @@ Vamos a coger la aplicación **docker-meiga** del módulo 4 del curso de Docker 
 Para realizar esta práctica necesitamos tener todos los artefactos de Kubernetes que necesita nuestra aplicación. Ya que aprender Kubernetes no es la finalidad de este curso, en este [enlace]((https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-k8s)) puedes obtener todos los artefactos necesarios para realizar esta práctica.
 
 La aplicación [**Meiga**](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-k8s) tiene la siguiente arquitectura dentro de Kubernetes:
+
 ![PracticaGuiada1](./../_media/02/practica_guiada1.png)
 
 Vamos a probar que todo funciona antes de pasarla a Helm:
@@ -17,7 +18,6 @@ Hacemos un port-forward:
 
 Y vamos al navegador a comprobar que todo funciona correctamente:
 ![PracticaGuiada4](./../_media/02/practica_guiada4.png)
-
 
 
 ## Probando Helm
@@ -133,5 +133,6 @@ $ helm install mimeiga meiga-project/ -f misvalores.yaml
 ```
 
 Si tienes algún problema con esta práctica guiada puedes ver el proyecto solución completo [aquí](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-helm).
+
 
 

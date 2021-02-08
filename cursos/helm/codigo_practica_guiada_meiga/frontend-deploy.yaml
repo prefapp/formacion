@@ -1,0 +1,60 @@
+# deployment_1.yaml
+apiVersion: apps/v1
+kind: Deployment  # esta parte define o Deployment
+metadata:
+  name: despregue-meiga-php
+  labels:
+    app: meiga-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meiga-frontend
+  template: # a partir de aquí definimos o pod
+    metadata:
+      labels:
+        app: meiga-frontend
+    spec:
+      containers:
+      - name: meiga-frontend
+        image: elberto/meiga-php-lite
+        env:
+          - name: "CURSO"
+            valueFrom:
+              configMapKeyRef:
+                name: "meiga-config"
+                key: "CURSO"
+
+          - name: "DOCENTE"
+            valueFrom:
+              configMapKeyRef:
+                name: "meiga-config"
+                key: "DOCENTE"
+
+          - name: "MYSQL_HOST"
+            valueFrom:
+              configMapKeyRef:
+                name: "meiga-config"
+                key: "MYSQL_HOST"
+
+          - name: "MYSQL_USER"
+            valueFrom:
+              configMapKeyRef:
+                name: "meiga-config"
+                key: "MYSQL_USER"
+
+          - name: "MYSQL_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: meiga-secrets
+                key: root-password
+
+          - name: "MYSQL_DATABASE"
+            valueFrom:
+              configMapKeyRef:
+                name: "meiga-config"
+                key: "MYSQL_DATABASE"
+
+        command: ["php", "-S", "0.0.0.0:80"]
+        ports:
+        - containerPort: 80
