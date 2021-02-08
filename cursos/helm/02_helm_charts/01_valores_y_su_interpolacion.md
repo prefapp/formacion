@@ -6,7 +6,7 @@ Como vimos en la lección anterior, Helm emplea [go templates](https://golang.or
 
 Por lo tanto, lo primero que debemos analizar es qué valores manejan las plantillas de Helm y cómo podemos emplearlos para construir nuestras propias charts. 
 
-## a) Los valores
+## Los valores
 El conjunto de datos que son modificables por parte del usuario aparecen dentro de una chart de Helm bajo un objeto muy especial que se conoce con el nombre de **Values**.
 
 El hecho de ser un objeto ([mapa](https://blog.golang.org/maps) en GO) implica que nos vamos a encontrar con claves a las que tenemos asociados valores. A su vez, por supuesto, el valor puede ser otro objeto (y así sucesivamente). 
