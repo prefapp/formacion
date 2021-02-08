@@ -1,0 +1,13 @@
+# bbdd-service.yaml
+
+kind: Service
+apiVersion: v1
+metadata:  # esta é a parte de identificación do servizo
+  name: servizo-meiga-php
+spec:
+  selector:   # esta é a parte de selección
+    app: meiga-frontend
+  ports:  # esta é a parte de especificación propia
+  - protocol: TCP
+    port: {{ .Values.puertos.servicio.frontend }}
+    targetPort: 80

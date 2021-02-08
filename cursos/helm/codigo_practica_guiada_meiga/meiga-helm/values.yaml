@@ -1,0 +1,21 @@
+# meigs-project/values.yaml
+imagenes: 
+  frontend: elberto/meiga-php-lite
+  bbdd: mysql:5.7
+
+puertos:
+  servicio:
+    frontend: 80
+
+curso:
+  nombrecurso: "Aprende Helm"
+  docente: "EstudianteA"
+
+mysql:
+  host: "servizo-meiga-bbdd:3306"
+  user: "root"
+  database: "meiga"
+
+secreto: Y29udHJhc2luYWw=
+
+    
