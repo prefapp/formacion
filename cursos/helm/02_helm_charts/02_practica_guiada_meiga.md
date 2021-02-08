@@ -132,6 +132,6 @@ o pasar un fichero de configuración como parámetro:
 $ helm install mimeiga meiga-project/ -f misvalores.yaml 
 ```
 
-Si tienes algún problema con esta práctica guiada puedes ver el proyecto solución completo [aquí](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-k8s).
+Si tienes algún problema con esta práctica guiada puedes ver el proyecto solución completo [aquí](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-helm).
 
 
