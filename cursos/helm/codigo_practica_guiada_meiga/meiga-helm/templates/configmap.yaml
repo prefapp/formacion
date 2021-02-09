@@ -3,6 +3,7 @@
 apiVersion: v1
 kind: ConfigMap # o tipo de artefacto
 metadata:
+<<<<<<< HEAD
   name: {{ .Release.Name }}-config # ten un nome
   labels:
     tipo: "configuracions"  # podemoslle meter labels
@@ -25,3 +26,14 @@ data:
   #MYSQL_HOST: servizo-{{ .Release.Name }}-bbdd
   #MYSQL_USER: {{ .Values.mysql.user }}
   #MYSQL_DATABASE: {{ .Values.mysql.database }}
+=======
+  name: meiga-config # ten un nome
+  labels:
+    tipo: "configuracions"  # podemoslle meter labels
+data:
+  CURSO: {{ .Values.curso.nombrecurso }} # aquí temos clave=valor como configuración
+  DOCENTE: {{ .Values.curso.docente }}
+  MYSQL_HOST: {{ .Values.mysql.host }}
+  MYSQL_USER: {{ .Values.mysql.user }}
+  MYSQL_DATABASE: {{ .Values.mysql.database }}
+>>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85

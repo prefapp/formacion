@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # bbdd-deploy.yaml
+=======
+# deployment_1.yaml
+>>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
 apiVersion: apps/v1
 kind: Deployment  # esta parte define o Deployment
 metadata:

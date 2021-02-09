@@ -19,7 +19,6 @@ Y vamos al navegador a comprobar que todo funciona correctamente:
 ![PracticaGuiada4](./../_media/02/practica_guiada4.png)
 
 
-
 ## Probando Helm
 Ahora que ya estamos familiarizados con el k8s-meiga, vamos a crear desde cero una chart de Helm para nuestro proyecto.
 

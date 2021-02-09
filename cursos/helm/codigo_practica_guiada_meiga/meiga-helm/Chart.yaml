@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 apiVersion: v2
+=======
+apiVersion: v3.5
+>>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
 name: meiga-project
 description: A Helm chart for Kubernetes
 type: application

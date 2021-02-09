@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # meiga-project/values.yaml
+=======
+# meigs-project/values.yaml
+>>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
 imagenes: 
   frontend: elberto/meiga-php-lite
   bbdd: mysql:5.7
@@ -7,6 +11,7 @@ puertos:
   servicio:
     frontend: 80
 
+<<<<<<< HEAD
 #variables de env que modifican el frontend
 env:
   CURSO: "Aprende Helm"
@@ -18,5 +23,17 @@ mysql:
 
 secretos:
   rootpass: contrasinal
+=======
+curso:
+  nombrecurso: "Aprende Helm"
+  docente: "EstudianteA"
+
+mysql:
+  host: "servizo-meiga-bbdd:3306"
+  user: "root"
+  database: "meiga"
+
+secreto: Y29udHJhc2luYWw=
+>>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
 
     
