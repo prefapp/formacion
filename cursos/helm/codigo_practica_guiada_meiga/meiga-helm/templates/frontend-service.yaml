@@ -3,7 +3,7 @@
 kind: Service
 apiVersion: v1
 metadata:  # esta é a parte de identificación do servizo
-  name: servizo-meiga-php
+  name: servizo-{{ .Release.Name }}-php
 spec:
   selector:   # esta é a parte de selección
     app: meiga-frontend

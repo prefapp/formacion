@@ -1,4 +1,4 @@
-# deployment_1.yaml
+# frontend-deploy.yaml
 apiVersion: apps/v1
 kind: Deployment  # esta parte define o Deployment
 metadata:
@@ -19,41 +19,14 @@ spec:
       - name: meiga-frontend
         image: elberto/meiga-php-lite
         env:
-          - name: "CURSO"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "CURSO"
-
-          - name: "DOCENTE"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "DOCENTE"
-
-          - name: "MYSQL_HOST"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_HOST"
-
-          - name: "MYSQL_USER"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_USER"
-
           - name: "MYSQL_PASSWORD"
             valueFrom:
               secretKeyRef:
                 name: meiga-secrets
                 key: root-password
-
-          - name: "MYSQL_DATABASE"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_DATABASE"
+        envFrom:
+          - configMapRef: 
+              name: meiga-config
 
         command: ["php", "-S", "0.0.0.0:80"]
         ports:

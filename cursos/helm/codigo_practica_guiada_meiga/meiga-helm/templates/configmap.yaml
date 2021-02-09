@@ -3,12 +3,25 @@
 apiVersion: v1
 kind: ConfigMap # o tipo de artefacto
 metadata:
-  name: meiga-config # ten un nome
+  name: {{ .Release.Name }}-config # ten un nome
   labels:
     tipo: "configuracions"  # podemoslle meter labels
 data:
-  CURSO: {{ .Values.curso.nombrecurso }} # aquí temos clave=valor como configuración
-  DOCENTE: {{ .Values.curso.docente }}
-  MYSQL_HOST: {{ .Values.mysql.host }}
+  MYSQL_HOST: servizo-{{ .Release.Name }}-bbdd
   MYSQL_USER: {{ .Values.mysql.user }}
   MYSQL_DATABASE: {{ .Values.mysql.database }}
+  # En vez de coger una a una todas las variables de entorno que modifican 
+  # la aplicacion, las definimos en Values.env. Si hace falta añadir alguna
+  # no tenemos que tocar el artefacto, solo añadir una propiedad en Values.env
+  {{ .Values.env | toYaml | nindent 2}}
+
+  
+  
+  
+  
+  
+  #CURSO: {{ .Values.env.CURSO }} # aquí temos clave=valor como configuración
+  #DOCENTE: {{ .Values.env.DOCENTE }}
+  #MYSQL_HOST: servizo-{{ .Release.Name }}-bbdd
+  #MYSQL_USER: {{ .Values.mysql.user }}
+  #MYSQL_DATABASE: {{ .Values.mysql.database }}

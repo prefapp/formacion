@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment  # esta parte define o Deployment
 metadata:
-  name: despregue-meiga-bbdd
+  name: despregue-{{ .Release.Name }}-bbdd
   labels:
     app: meiga-mysql
 spec:
@@ -22,13 +22,13 @@ spec:
           - name: "MYSQL_ROOT_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: meiga-secrets
+                name: {{ .Release.Name }}-secrets
                 key: root-password
             
           - name: "MYSQL_DATABASE"
             valueFrom:
               configMapKeyRef:
-                name: "meiga-config"
+                name: {{ .Release.Name }}-config
                 key: "MYSQL_DATABASE"
         ports:
         - containerPort: 3306

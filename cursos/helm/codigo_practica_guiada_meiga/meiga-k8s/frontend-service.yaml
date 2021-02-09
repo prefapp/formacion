@@ -1,4 +1,4 @@
-# bbdd-service.yaml
+# frontend-service.yaml
 
 kind: Service
 apiVersion: v1
