@@ -2,11 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment  # esta parte define o Deployment
 metadata:
-<<<<<<< HEAD
   name: despregue-{{ .Release.Name }}-php
-=======
-  name: despregue-meiga-php
->>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
   labels:
     app: meiga-frontend
 spec:
@@ -23,7 +19,6 @@ spec:
       - name: meiga-frontend
         image: {{ .Values.imagenes.frontend }}
         env:
-<<<<<<< HEAD
           - name: "MYSQL_PASSWORD"
             valueFrom:
               secretKeyRef:
@@ -32,43 +27,6 @@ spec:
         envFrom:
           - configMapRef: 
               name: {{ .Release.Name }}-config
-=======
-          - name: "CURSO"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "CURSO"
-
-          - name: "DOCENTE"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "DOCENTE"
-
-          - name: "MYSQL_HOST"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_HOST"
-
-          - name: "MYSQL_USER"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_USER"
-
-          - name: "MYSQL_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: meiga-secrets
-                key: root-password
-
-          - name: "MYSQL_DATABASE"
-            valueFrom:
-              configMapKeyRef:
-                name: "meiga-config"
-                key: "MYSQL_DATABASE"
->>>>>>> 02142c9ff036ec5a38a4ead91cd7592bba1fdd85
 
         command: ["php", "-S", "0.0.0.0:80"]
         ports:
