@@ -7,8 +7,8 @@ metadata:
   labels:
     tipo: "configuracions"  # podemoslle meter labels
 data:
-  CURSO: "nomeCurso" # aquí temos clave=valor como configuración
-  DOCENTE: "nomeDocente"
-  MYSQL_HOST: "servizo-meiga-bbdd:3306"
+  CURSO: "nomeCurso"
+  DOCENTE: "nomeAlumno"
+  MYSQL_HOST: servizo-meiga-bbdd
   MYSQL_USER: "root"
   MYSQL_DATABASE: "meiga"

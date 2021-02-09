@@ -3,7 +3,7 @@
 kind: Service
 apiVersion: v1
 metadata:  # esta é a parte de identificación do servizo
-  name: servizo-meiga-bbdd
+  name: servizo-{{ .Release.Name }}-bbdd
 spec:
   selector:   # esta é a parte de selección
     app: meiga-mysql
