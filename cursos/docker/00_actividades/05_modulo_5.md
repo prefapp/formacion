@@ -88,7 +88,7 @@ unha stack con [Wordpress](https://hub.docker.com/_/wordpress/), tamén con pers
 	- O ficheiro de compose e os comandos empregados para lanzar sobre este cluster unha stack de Ghost con persistencia sobre mysql.
 	- Conectar o portainer contra este cluster e despregar outra stack, esta vez ca aplicación de Wordpress.
 
-__ \*Se o preferides, podedes entregar un screencast da consola, con asciinema.org __
+**\*Se o preferides, podedes entregar un screencast da consola, con asciinema.org**
 
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
@@ -187,7 +187,7 @@ Tede en conta, para apuntar un dominio local ao cluster e poder validalo dende o
 	* Os comandos necesarios para configurar o cliente de docker para que fale co nodo manager do cluster, leve a cabo o deploy da stack, e como visualizar que ese depregue se está executando correctamente.
 	* A configuración necesaria de traefik para servir a aplicación dende o porto 80 (http)
 
-__ \*Se o preferides, podedes entregar un screencast da consola, con asciinema.org __
+**\*Se o preferides, podedes entregar un screencast da consola, con asciinema.org**
  
 
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
