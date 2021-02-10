@@ -1,6 +1,6 @@
 # Práctica guiada: Proyecto Meiga en Helm
 
-Vamos a coger la aplicación **docker-meiga** del módulo 4 del curso de Docker y la vamos a migrar a un cluster de Kubernetes con la ayuda de Helm. Al final de esta guía tendremos un chart de Helm que nos permitirá desplegar la aplicación completa con los ajustes que gustemos lanzando un simple comando.
+Vamos a coger la aplicación [**docker-meiga** del módulo 4](https://prefapp.github.io/formacion/cursos/docker/#/./00_actividades/04_modulo_4?id=deseñar-e-implantar-unha-solución-co-docker-compose-para-docker-meiga) del curso de Docker y la vamos a migrar a un cluster de Kubernetes con la ayuda de Helm. Al final de esta guía tendremos un chart de Helm que nos permitirá desplegar la aplicación completa con los ajustes que gustemos lanzando un simple comando.
 
 Para realizar esta práctica necesitamos tener todos los artefactos de Kubernetes que necesita nuestra aplicación. Ya que aprender Kubernetes no es la finalidad de este curso, en este [enlace](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-k8s) puedes obtener todos los artefactos necesarios para realizar esta práctica.
 
@@ -249,5 +249,7 @@ $ helm install mimeiga meiga-project/ -f misvalores.yaml
 ```
 
 Si tienes algún problema con esta práctica guiada puedes ver el proyecto solución completo [aquí](https://github.com/prefapp/formacion/tree/master/cursos/helm/codigo_practica_guiada_meiga/meiga-helm).
+
+Recuerda que para hacer debugging puedes utilizar `helm template` para visualizar las *templates* renderizadas y comprobar que tu *chart* está funcionando correctamente.
 
 
