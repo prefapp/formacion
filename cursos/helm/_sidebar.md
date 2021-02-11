@@ -8,6 +8,7 @@
   - [De los valores y su interpolación](./02_helm_charts/01_valores_y_su_interpolacion.md)
   - [De la creación de Charts](./02_helm_charts/02_creacion_de_charts.md)  
   - [Práctica guiada: Proyecto Meiga en Helm](./02_helm_charts/03_practica_guiada_meiga.md)
+  - [Práctica guiada 2: Mejorando Meiga](./02_helm_charts/04_practica_guiada_2.md)
   - [📝 Actividades](./00_actividades/02_modulo_2.md)
 
 
