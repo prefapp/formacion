@@ -142,12 +142,12 @@ $ helm lint <directorioChart>
 La salida de este comando indicará `1 chart(s) linted, 0 chart(s) failed`, podemos pensar que solo se ha pasado el linter a `Chart.yaml`, pero realmente se le ha pasado a todo el proyecto.
 
 #### --debug
-Al añadir la opcion `--debug` tanto a `helm install` como `helm template` obtendremos una salida más verbosa que nos puede ayudar a la hora de depurar nuestras charts
+Al añadir la opcion `--debug` tanto a `helm install` como `helm template` obtendremos una salida más verbosa que nos puede ayudar a la hora de depurar nuestras charts.
 
 #### --dry-run vs template
 Como ya sabemos, si ejecutamos el comando `helm template <dir>` renderizaremos toda la chart en un manifiesto único. Esto es muy útil para poder visualizar los cambios que Helm realiza en nuestras plantillas. 
 
-Si ejecutamos un `helm install <name> <dir> --dry-run` obtendremos un resultado muy similar al del comando `helm template`, en vez de instalarse se nos monstrará el manifiesto renderizado. La diferencia es que el comando *install --dry-run* se comunica con el cluster de Kubernetes mientras que *template* no lo hace.
+Si ejecutamos un `helm install <name> <dir> --dry-run` obtendremos un resultado muy similar al del comando `helm template`, en vez de instalarse, se nos monstrará el manifiesto renderizado. La diferencia es que el comando *install --dry-run* se comunica con el cluster de Kubernetes mientras que *template* no lo hace.
 
 #### get manifest
 Si ejecutamos el comando:
@@ -159,24 +159,24 @@ Se nos mostrará el manifiesto de la release que tenemos instalada, muy útil pa
 #### Comentar los YAML
 En aquellas ocasiones en las que queremos ver como Helm está inyectando información en las plantillas pero nos salta un error en el parseado del YAML, podemos comentar aquellas líneas que continen *go templates*.
 
-´´´yaml
+```yaml
 apiVersion: v2
 # some: problem section
 # {{ .Values.foo | quote }}
-´´´
+```
 
-´´´yaml
+```yaml
 apiVersion: v2
 # some: problem section
 #  "bar"
-´´´
+```
 
 Aunque esté comentanda la línea en el YAML, Helm sigue renderizando toda la plantilla, de forma que podemos ver los cambios aunque estos interfieran con la estructura del YAML (Helm inyecta la información en una línea comentada).
 
 
 
 ## Finalizar y distribuír nuestra Chart
-Ahora que ya estamos curtidos en la creación de *Charts* vamos a rematar nuestro proyecto añadiendo una función con pipelining y a distribuir la Chart utilizando `helm package`.
+Ahora que ya estamos curtidos en la creación de *Charts*, vamos a rematar nuestro proyecto añadiendo una función con pipelining y a distribuir la Chart utilizando `helm package`.
 
 Modificaremos nuestra template `pod.yaml` para que coja la imagen desde nuestro `values.yaml`:
 ```yaml
