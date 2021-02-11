@@ -178,6 +178,7 @@ Aunque esté comentanda la línea en el YAML, Helm sigue renderizando toda la pl
 ## Finalizar y distribuír nuestra Chart
 Ahora que ya estamos curtidos en la creación de *Charts*, vamos a rematar nuestro proyecto añadiendo una función con pipelining y a distribuir la Chart utilizando `helm package`.
 
+
 Modificaremos nuestra template `pod.yaml` para que coja la imagen desde nuestro `values.yaml`:
 ```yaml
 #values. yaml
