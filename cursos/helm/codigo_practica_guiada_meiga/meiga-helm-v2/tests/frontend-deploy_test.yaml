@@ -1,0 +1,27 @@
+suite: test para frontend-deploy
+templates:
+  - frontend-deploy.yaml
+tests:
+  - it: test base deploy frontend
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: ^despregue-.+-php$
+      - isNotNull:
+          path: metadata.labels.app
+      - equal:
+          path: spec.selector.matchLabels.app
+          value: meiga-frontend
+  - it: test pod deploy frontend
+    asserts:
+      - isNotNull: 
+          path: spec.template.spec.containers[0].command 
+      - matchRegex:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          pattern: ^.+-secrets$
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 80

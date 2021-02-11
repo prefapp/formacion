@@ -1,0 +1,33 @@
+
+apiVersion: apps/v1
+kind: Deployment  # esta parte define o Deployment
+metadata:
+  name: despregue-{{ .Release.Name }}-php
+  labels:
+    app: meiga-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meiga-frontend
+  template: # a partir de aquí definimos o pod
+    metadata:
+      labels:
+        app: meiga-frontend
+    spec:
+      containers:
+      - name: meiga-frontend
+        image: {{ .Values.imagenes.frontend }}
+        env:
+          - name: "MYSQL_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secrets
+                key: root-password
+        envFrom:
+          - configMapRef: 
+              name: {{ .Release.Name }}-config
+
+        command: ["php", "-S", "0.0.0.0:80"]
+        ports:
+        - containerPort: 80

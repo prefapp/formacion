@@ -1,0 +1,47 @@
+# meiga-project/values.yaml
+#SUBCHART mysql
+mysql:
+  image:
+    tag: 5.7
+  auth:
+    rootPassword: &rootpass contrasinal 
+    database: &database "meiga"  
+
+
+ingress-nginx:
+  controller:
+    scope:
+      enabled: true # defaults to .Release.Namespace
+#Ajustes para Google Cloud 
+    service:
+      internal:
+        enabled: true
+        annotations:
+          # Create internal LB
+          cloud.google.com/load-balancer-type: "Internal"
+          # Any other annotation can be declared here.
+
+
+
+#CHART meiga-project
+imagenes: 
+  frontend: elberto/meiga-php-lite
+  #bbdd: mysql:5.7
+
+puertos:
+  servicio:
+    frontend: 80
+
+#variables de env que modifican el frontend
+env:
+  CURSO: "Aprende Helm"
+  DOCENTE: "EstudianteA"
+
+datamysql:
+  user: "root"
+  database: *database
+
+secretos:
+  rootpass: *rootpass
+
+    
