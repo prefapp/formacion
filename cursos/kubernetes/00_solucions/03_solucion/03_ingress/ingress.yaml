@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: practica-4-ingress
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: "/"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /v1
+        backend:
+          serviceName: service-practica-4-v1
+          servicePort: 80
+      - path: /v2
+        backend:
+          serviceName: service-practica-4-v2
+          servicePort: 80
