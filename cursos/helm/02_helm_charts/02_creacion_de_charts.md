@@ -98,7 +98,7 @@ Como veis, podemos utilizar la misma sintaxis que usamos en las *templates* para
 
 En esta [web](https://helm.sh/docs/chart_template_guide/builtin_objects/) puedes encontrar todas los objetos que Helm nos expone para modificar nuestra plantillas.
 
-## La potencia: Template functions y Pipelines
+## Template functions y Pipelines
 En el capítulo [anterior](https://prefapp.github.io/formacion/cursos/helm/#/./02_helm_charts/01_valores_y_su_interpolacion) hemos visto como añadir información de nuestro `values.yaml` en nuestras plantillas. Esta información era introducida en la plantilla sin modificación alguna. En ocasiones resulta útil operar y transformar la información antes de inyectarla. Para esto Helm nos permite utilizar las [Go templates](https://godoc.org/text/template) junto con la librería [Sprig](https://masterminds.github.io/sprig/). Helm cuenta con más de 60 funciones, puedes verlas en este [enlace](https://helm.sh/docs/chart_template_guide/function_list/).
 
 Ejemplo:
@@ -124,10 +124,9 @@ Las pipelines no son más que una secuencia de transformaciones. Veamos un ejemp
 
 ### Funciones más comunes
 - **b64enc** y **b64dec**: Para codificar los secretos, por ejemplo.
-- **quote**: Para asegurarnos de que el yaml trata como String a nuesta variable
+- **quote**: Para asegurarnos de que el yaml trata como String a nuesta variable.
 - **upper**: Para las variables de entorno.
 - **default**: Por si se omite un valor.
-- **toYaml**+**indent**: Introduce directamente los pares en la plantilla.
 - **lookup**: Consultar en este [enlace](https://helm.sh/docs/chart_template_guide/functions_and_pipelines/#using-the-lookup-function)
 
 Puedes ver todas las funciones disponibles [aquí](https://helm.sh/docs/chart_template_guide/function_list/)
@@ -135,14 +134,49 @@ Puedes ver todas las funciones disponibles [aquí](https://helm.sh/docs/chart_te
 
 ## Debugging
 
-> Work in progress, in the future this section will have:
->  - helm lint
->  - helm install --debug
->  - Difference between helm install --dry-run and helm template
+#### helm lint
+Si tenemos un error durante la instalación de nuestra *Chart* es muy probable que se deba a que los `.yaml` tengan algún error en su estructura. Para comprobar que nuestro proyecto tiene todos los *YAML* sintácticamente correctos podemos emplear el comando:
+```shell
+$ helm lint <directorioChart>
+```
+La salida de este comando indicará `1 chart(s) linted, 0 chart(s) failed`, podemos pensar que solo se ha pasado el linter a `Chart.yaml`, pero realmente se le ha pasado a todo el proyecto.
+
+#### --debug
+Al añadir la opcion `--debug` tanto a `helm install` como `helm template` obtendremos una salida más verbosa que nos puede ayudar a la hora de depurar nuestras charts
+
+#### --dry-run vs template
+Como ya sabemos, si ejecutamos el comando `helm template <dir>` renderizaremos toda la chart en un manifiesto único. Esto es muy útil para poder visualizar los cambios que Helm realiza en nuestras plantillas. 
+
+Si ejecutamos un `helm install <name> <dir> --dry-run` obtendremos un resultado muy similar al del comando `helm template`, en vez de instalarse se nos monstrará el manifiesto renderizado. La diferencia es que el comando *install --dry-run* se comunica con el cluster de Kubernetes mientras que *template* no lo hace.
+
+#### get manifest
+Si ejecutamos el comando:
+```shell
+$ helm get manifest <release>
+```
+Se nos mostrará el manifiesto de la release que tenemos instalada, muy útil para ver los cambios que Helm ha hecho en nuestras templates de unos artefactos que ya están desplegados.
+
+#### Comentar los YAML
+En aquellas ocasiones en las que queremos ver como Helm está inyectando información en las plantillas pero nos salta un error en el parseado del YAML, podemos comentar aquellas líneas que continen *go templates*.
+
+´´´yaml
+apiVersion: v2
+# some: problem section
+# {{ .Values.foo | quote }}
+´´´
+
+´´´yaml
+apiVersion: v2
+# some: problem section
+#  "bar"
+´´´
+
+Aunque esté comentanda la línea en el YAML, Helm sigue renderizando toda la plantilla, de forma que podemos ver los cambios aunque estos interfieran con la estructura del YAML (Helm inyecta la información en una línea comentada).
+
 
 
 ## Finalizar y distribuír nuestra Chart
-Ahora que ya estamos curtidos en la creación de *Charts* vamos a rematar nuestro proyecto añadiendo una función con pipeline y a distribuir la Chart utilizando `helm package`.
+Ahora que ya estamos curtidos en la creación de *Charts* vamos a rematar nuestro proyecto añadiendo una función con pipelining y a distribuir la Chart utilizando `helm package`.
 
 Modificaremos nuestra template `pod.yaml` para que coja la imagen desde nuestro `values.yaml`:
 ```yaml
