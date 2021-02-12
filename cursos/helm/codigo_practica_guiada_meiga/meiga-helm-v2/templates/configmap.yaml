@@ -1,0 +1,15 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap # o tipo de artefacto
+metadata:
+  name: {{ .Release.Name }}-config # ten un nome
+  labels:
+    tipo: "configuracions"  # podemoslle meter labels
+data:
+  MYSQL_HOST: {{ .Release.Name }}-mysql
+  MYSQL_USER: {{ .Values.datamysql.user }}
+  MYSQL_DATABASE: {{ .Values.datamysql.database }}
+  # En vez de coger una a una todas las variables de entorno que modifican 
+  # la aplicacion, las definimos en Values.env. Si hace falta añadir alguna
+  # no tenemos que tocar el artefacto, solo añadir una propiedad en Values.env
+  {{ .Values.env | toYaml | nindent 2}}

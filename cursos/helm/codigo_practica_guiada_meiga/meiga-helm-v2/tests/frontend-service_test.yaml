@@ -1,0 +1,18 @@
+suite: test para frontend-service
+templates:
+  - frontend-service.yaml
+tests:
+  - it: test servicio frontend
+    values:
+      - ../values.yaml
+    asserts:
+      - isKind:
+          of: Service
+      - matchRegex:
+          path: metadata.name
+          pattern: ^servizo-.+-php$
+      - notContains:
+          path: spec.ports
+          content:
+            protocol: TCP
+            targetPort: 8080

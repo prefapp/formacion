@@ -1,0 +1,3 @@
+***INSTRUCCIONES***
+  Puedes acceder a la web Meiga-php en la dirección proporcionada por el ingress:
+  $ kubectl describe ing {{ .Release.Name }}-ingress -n {{ .Release.Namespace }}

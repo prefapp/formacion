@@ -1,0 +1,16 @@
+suite: test para ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: test reglas ingress 
+    values:
+      - ../values.yaml
+    asserts:
+      - isKind:
+          of: Ingress
+      - matchRegex:
+          path: metadata.name
+          pattern: ^.+-ingress$
+      - equal:
+          path: metadata.annotations
+          value: {kubernetes.io/ingress.class: nginx}

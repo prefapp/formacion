@@ -1,0 +1,14 @@
+suite: test para configMap
+templates:
+  - configmap.yaml
+tests:
+  - it: test configmap meiga
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - isNotNull:
+          path: metadata.labels.tipo
+      - matchRegex:
+          path: data.MYSQL_HOST
+          pattern: ^.+-mysql$
+      
