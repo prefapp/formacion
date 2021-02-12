@@ -120,6 +120,7 @@ Debemos seguir los siguiente pasos para configurar todo correctamente:
   ```
   En nuesto caso estamos redireccionando cualquier path al servidor meiga, pues no tenemos ningún otro servicio, pero podríamos crear reglas de reverse-proxy mucho más complejas utilizando hostname, paths y diferentes *services*.
 
+
 1. Por último, antes de hacer el `helm install` de nuestro proyecto debemos lanzar el comando:
   ```shell
   $ helm dependency update
