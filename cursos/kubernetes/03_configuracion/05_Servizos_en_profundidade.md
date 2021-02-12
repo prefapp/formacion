@@ -1,8 +1,15 @@
-# Servizos en detalle
+# Servizos en profundidade
 
-> # Este capítulo atópase en estado WIP
+No [anterior tema](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos a importancia dos *services* como abstracción dos pods backend para unha aplicación cliente. Mediante os services, calqueira aplicación cliente pode "despreocuparse" de onde se están realmente a facer as chamadas a programas ou aplicacións que lle serven de backend.
 
-Imos  despregar o seguinte deploy e expoñelo empregando diferentes servizos para ver as diferencias entre cada *service kind* : 
+![Servizo2](./../_media/02/servizo2.png)
+
+Neste capítulo imos ver os seguintes tipos de *Service*, cos seus casos de uso e as súas debilidades:
+- ClusterIp
+- NodePort
+- LoadBalancer
+
+Despregaremos o seguinte deploy para ilo expoñendo con cada tipo de servizo e apreciar así as diferencias entre cada *service kind* : 
 ```yaml
 #deploy.yaml
 apiVersion: apps/v1
@@ -30,10 +37,12 @@ spec:
           - containerPort: 80
 ```
 
-Non é mais que un servidor web que mostra unha pequena mensaxe co nome do servidor e a máquina que sirve os datos.
+Non é mais que un servidor web que mostra unha pequena mensaxe coa versión do servidor e a máquina que sirve os datos.
 
 Se facemos un apply do noso `deploy.yaml`. Teremos 5 pods correndo o servidor web.
 
+
+## ClusterIp
 Para expoñer o noso deploy imos empregar primeiramente un servicio de tipo `ClusterIp` que é o tipo por defecto nos *services* de kubernetes:
 ```yaml
 # clusterip-service.yaml
@@ -49,12 +58,15 @@ spec:
     targetPort: 80
 ```
 
-Se facemos un curl desde dentro veremos que van rotando os pods que devolvena peticion, sin embargo si facemos un port-forward do noso servizo para acceder desde o exterior podemos comprobar que sempre nos devolve o mesmo pod.
+Se facemos un curl desde dentro veremos que van rotando os pods que devolven a petición: 
+![Servizo1](./../_media/03/servizo1.png)
 
-** IMAXE DUN CURL INTERNO
-** IMAXE DUN PORT-FORWARD
+Sin embargo si facemos un `port-forward` do noso servizo para acceder desde o exterior podemos comprobar que sempre se nos devolve o mesmo pod. 
+![Servizo2](./../_media/03/servizo2.png)
 
-Sin embargo si utilizamos un servizo do tipo `Nodeport`:
+
+## NodePort
+O comando `port-forward`, ainda que lle indiquemos un servizo vai a expoñernos un pod, o primeiro que atope a través do servizo. Se queremos expoñer o servizo temos que utilizar un servizo de tipo `Nodeport`:
 ```yaml
 # nodeport-service.yaml
 kind: Service
@@ -70,17 +82,18 @@ spec:
     targetPort: 80
     nodePort: 31415   
 ```
-Podemos expoñer a IP dun dos nodos do cluster que nos conectará a traves do porto `nodePort`co noso servizo.
+
+NodePort, como o nome indica, abre un porto específico en todos os nodos do cluster e todo o tráfico que se envía a este porto (`nodePort: 31415`) reenvíase ao servizo.
  
-** IMAXE OBTENDO A IP DO NODO E O PORTO DO SERVIZO
-** IMAXE DO SERVICIO ROTANDO OS PODS
+![Servizo3](./../_media/03/servizo3.png)
 
 Esta opcion ten varios problemas:
-- Solo podes ter un servizo por porto
-- Solo se poden empregar os portos 30000–32767
-- Debemos ter un mecanismo de axuste por se cambia a IP do nodo 
+- Solo podes ter un servizo por porto.
+- Solo se poden empregar os portos 30000–32767.
+- Debemos ter un mecanismo de axuste por se cambia a IP do nodo.
 
-Aparece enton un servizo máis avanzado para solventar o noso problema:
+## LoadBalancer
+Para solventar as carencias do *Nodeport* aparece un servizo máis avanzado que permite expoñer o noso servizo a través dunha IP pública propia. Para empregar este servicio necesitas un proveedor de Kubernetes, pois o seu despregue proporcionache unha IP externa desde a que acceder ao teu servizo.
 ```yaml
 # loadbalancer-service.yaml
 kind: Service
@@ -95,9 +108,10 @@ spec:
   - port: 6000
     targetPort: 80
 ```
-Para empregar este servicio necesitas un proveedor de Kubernetes, pois o seu despregue proporcionache unha IP externa desde a que acceder ao teu servizo.
 
-Se desexa expoñer directamente un servizo, este é o método predeterminado. Todo o tráfico do porto que especifique será reenviado ao servizo. Non hai filtrado, nin enrutamento, etc. Isto significa que pode enviarche case calquera tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC ou calquera outra cousa.
-A gran desvantaxe é que cada servizo que expón cun LoadBalancer recibirá o seu propio enderezo IP e terá que pagar un LoadBalancer por un servizo exposto, o que pode resultar caro.
+![Servizo4](./../_media/03/servizo4.png)
 
-Se estas a empregar tráfico HTTP, un Ingress permitirache facer routing por path e subdominio, como veremos no seguinte capítulo do tema.
+Si se desexa expoñer directamente un servizo, este é o método predeterminado. Todo o tráfico do porto especificado será reenviado ao servizo. Non hai filtrado, nin enrutamento, etc. Isto significa que poden enviarche case calquera tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC ou calquera outra cousa.
+A gran desvantaxe é que cada servizo que se expón cun *LoadBalancer* recibirá o seu propio enderezo IP e teremos que pagar por cada servizo exposto, o que pode resultar caro.
+
+Se estas a empregar tráfico HTTP, un Ingress permitirache empregar unha sola IP e facer routing por path e subdominio, como veremos no [seguinte capítulo](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico) do tema.
