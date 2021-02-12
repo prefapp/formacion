@@ -18,7 +18,7 @@
   - [Controlando os pods: límites e sondas](./03_configuracion/02_Controlando_os_pods.md)
   - [Persistencia en K8s: os volumes](./03_configuracion/03_Persistencia_en_K8s.md)
   - [Namespaces, usuarios e roles](./03_configuracion/04_Namespaces_usuarios_e_roles.md)
-  - [Servicos en profundidade](./03_configuracion/05_Servizos_en_profundidade.md)
+  - [Servizos en profundidade](./03_configuracion/05_Servizos_en_profundidade.md)
   - [Ingress: controlando o tráfico de entrada](/03_configuracion/06_Ingress_controlando_o_trafico.md)
   - [Helm: o marionetista de Kubernetes](/03_configuracion/07_Helm.md)
   - [📝 Actividades](./00_actividades/03_modulo_3.md)
