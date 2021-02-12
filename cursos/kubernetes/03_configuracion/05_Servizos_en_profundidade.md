@@ -1,4 +1,4 @@
-# Servizos en detalle
+# Servizos en profundidade
 
 No [anterior tema](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos a importancia dos *services* como abstracción dos pods backend para unha aplicación cliente. Mediante os services, calqueira aplicación cliente pode "despreocuparse" de onde se están realmente a facer as chamadas a programas ou aplicacións que lle serven de backend.
 
