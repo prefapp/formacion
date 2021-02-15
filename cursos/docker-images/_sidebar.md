@@ -5,3 +5,4 @@
   - [O Dockerfile](./01_creacion_de_imaxes/04_o_dockerfile.md)
   - [O Dockerfile: construíndo a imaxe do "gatiño do día"](./01_creacion_de_imaxes/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia.md)
   - [Mellorando o Dockerfile da web "gatiño do día"](./01_creacion_de_imaxes/06_mellorando_o_dockerfile_de_web_gatinho_do_dia.md)
+  - [📝 Actividades](./00_actividades/01_modulo_1.md)
