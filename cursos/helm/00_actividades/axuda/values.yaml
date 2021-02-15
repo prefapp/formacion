@@ -1,0 +1,55 @@
+#values.yaml
+
+data:
+  name: "wordpress"
+spec_service:
+  ports:
+  selector:
+    tier: frontend
+
+spec:
+  tier: frontend
+  strategy:
+    type: Recreate
+labels:
+  tier: frontend
+
+  
+  
+ports:
+  containerport_wordpress: 80
+  containerPort_mysql: 3306
+  protocol: TCP
+  port_service_wordpress: 8080
+  targetport_service_wordpress: 80
+
+
+  ## Namespace
+namespace: p-sanchez
+
+
+  ## Disabling MariaDB
+mariadb:
+  enabled: false
+
+
+
+  ## Env wordpress
+env_wordpress:
+  name: WORDPRESS_DB_HOST
+  value: wordpress-mysql
+  wordpressdbhost: mysql
+
+
+  ## Env Mysql
+mysql:
+  name: MYSQL_ROOT_PASSWORD
+  user: pablo
+  database: wordpress
+
+  ## Images
+images:
+  wordpress: wordpress
+  wtag: 4.8-apache
+  mysql: mysql
+  mtag: 5.6

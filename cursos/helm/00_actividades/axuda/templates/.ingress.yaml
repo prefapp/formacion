@@ -1,0 +1,17 @@
+# ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: p-sanchez
+  name: practica-wordpress
+  annotations:
+    # If the class annotation is not specified it defaults to "gce".
+    #kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: wordpress-service
+          servicePort: 8080
