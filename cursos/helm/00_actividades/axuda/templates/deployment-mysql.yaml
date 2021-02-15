@@ -28,10 +28,16 @@ spec:
               name: {{ .Release.Name }}-secrets
               key: password
         - name: MYSQL_USER
-          MYSQL_USER: {{ .Release.Name }}-config
+          valueFrom:
+            configMapKeyRef:
+              MYSQL_USER: {{ .Release.Name }}-config
+              key: "MYSQL_USER"
         - name: MYSQL_DATABASE
-          MYSQL_DATABASE: {{ .Release.Name }}-config
-          
+          valueFrom:
+            configMapKeyRef:
+              MYSQL_DATABASE: {{ .Release.Name }}-config
+              key: "MYSQL_DATABASE"
+         
         ports:
         - containerPort: {{ .Values.ports.containerPort_mysql }}
           name: mysql
