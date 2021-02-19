@@ -1,4 +1,4 @@
-Wordpress en alta disponivilidad
+Wordpress en alta disponibilidad
 ----
 
 Este ejemplo esta pensado para una web basada en wordpress que pueda aguantar bastantes visitas, en este caso los pods de php de wordpress comparten la carpeta wp-config a través de un sistema de ficheros nfs con filestore de google, el servicio de base de datos sería recomendable usar el propio sistema de google pero en este caso creamos una base de datos mysql con un volumen de datos persistente (PVC). 
