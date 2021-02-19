@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: wordpress-{{ .Release.Name }}-configmap
+  namespace: "{{ .Values.namespace }}"
+data:
+  DB_HOST: service-{{ .Release.Name }}-mysql
+  DB_BBDD: {{ .Values.mysql.DB_BBDD }}
+  DB_USER: {{ .Values.mysql.DB_USER }}
+  DB_PASSWORD: {{ .Values.mysql.DB_PASSWORD }}
+  DB_ROOT_PASSWORD: {{ .Values.mysql.DB_ROOT_PASSWORD }}

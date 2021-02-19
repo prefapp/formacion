@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: wordpress-volume
+spec:
+ storageClassName: storage-nfs
+ capacity:
+   storage: {{ .Values.nfs.storage }}
+ accessModes:
+ - ReadWriteMany
+ nfs:
+   path: "{{ .Values.nfs.wordpress.path }}"
+   server: "{{ .Values.nfs.wordpress.ip }}"
