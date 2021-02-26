@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Release.Name }}-ingress
+  annotations:
+          #kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /{{ .Release.Name }}
+        backend:
+          serviceName: {{ .Release.Name }}-service
+          servicePort: 80

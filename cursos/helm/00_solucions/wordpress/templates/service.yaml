@@ -1,0 +1,16 @@
+#service-wordpress.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Release.Name }}-service
+  labels:
+    app: {{ .Release.Name }}-wp
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+  selector:
+    app: {{ .Release.Name }}-wp
+    tier: frontend

@@ -1,0 +1,16 @@
+#service-wordpress.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .configmap.metadata.namespace }}
+  name: {{ .Release.Name }}_service
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  ports:
+          - protocol: {{ .configmap.spec_service.ports.protocol }}:
+      port: {{ .configmap.spec_service.ports.port }}
+      targetPort: {{ .configmap.spec_service.ports.targetport }}
+  selector:
+    app: {{ .Release.Name }}
+    tier: {{ .configmap.spec_service.selector.tier }}
