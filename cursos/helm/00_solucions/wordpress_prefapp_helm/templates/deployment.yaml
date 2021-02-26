@@ -1,0 +1,27 @@
+#deploy wordpress
+{{- define "my.wordpress.data" -}}
+
+name: {{ .Release.Name }}-wp
+labels:
+  app: {{ .Release.Name }}-wp
+selector: {{ .Values.selector | toYaml | nindent 2 }}
+  app: {{ .Release.Name }}-wp
+strategy:
+  type: Recreate
+containers:
+- image: {{ .Values.images.wordpress }}:{{ .Values.images.wtag }}
+  name: {{ .Release.Name }}-wp
+  env_literal:
+  - name: {{ .Values.env_wordpress.name }}
+  - name: WORDPRESS_DB_PASSWORD
+  env_values_secret:
+    - secret: {{ .Release.Name}}-secrets
+      values:
+        key: password
+  ports:
+  - pod: 80
+    name: {{ .Release.Name }}-wp
+
+{{- end -}}
+
+{{ include "ph.deployment.render" (include "my.wordpress.data" . | fromYaml ) }}

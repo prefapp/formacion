@@ -1,0 +1,14 @@
+#service-mysql.yaml
+{{ define "servicemysql.service.data"  }}
+
+name: service-{{ .Release.Name }}-mysql
+labels: 
+  app: {{ .Release.Name }}-wp
+selector:
+  app: {{ .Release.Name }}-wp
+  tier: mysql
+ports:
+  - port: {{ .Values.ports.containerPort_mysql  }}
+
+{{- end }}
+{{ include "ph.service.render" (include "servicemysql.service.data" . | fromYaml )  }}

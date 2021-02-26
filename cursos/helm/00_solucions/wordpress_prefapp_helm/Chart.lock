@@ -1,0 +1,9 @@
+dependencies:
+- name: prefapp-helm
+  repository: https://prefapp.github.io/prefapp-helm
+  version: 0.0.4
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx#
+  version: 3.23.0
+digest: sha256:a01c798da9130cb9c3fe2392f1851bdce7967e63399dec62629e85415dd2711c
+generated: "2021-02-23T21:46:52.978992288+01:00"
