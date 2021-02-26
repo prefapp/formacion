@@ -1,0 +1,21 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: deploy-{{ .Release.Name }}-configmap
+  #namespace: default
+data:
+  bucket: {{ .Values.google_cloud_storage.bucket }}
+  type: "service_account"
+  project_id: "formacion-303709"
+  private_key_id: "dc89e2c040de23af08b852fac2398bcc2a80c125"
+  client_email: "ghost-958@formacion-303709.iam.gserviceaccount.com"
+  client_id: "115464853491810634196"
+  auth_uri: "https://accounts.google.com/o/oauth2/auth"
+  token_uri: "https://oauth2.googleapis.com/token"
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/ghost-958%40formacion-303709.iam.gserviceaccount.com"
+  database__client: mysql
+  database__connection__host: {{ .Release.Name }}-mysql
+  database__connection__user: {{ .Values.mysql.auth.username }}
+  database__connection__password: {{ .Values.mysql.auth.password }}
+  database__connection__database: {{ .Values.mysql.auth.database }}
