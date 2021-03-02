@@ -1,0 +1,43 @@
+#mysql-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name}}-mysql
+  labels:
+    app: {{ .Release.Name }}-wp
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-wp
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-wp
+        tier: mysql
+    spec:
+      containers:
+      - image: {{ .Values.images.mysql }}:{{ .Values.images.mtag }}
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secrets
+              key: password
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: "MYSQL_USER"
+        - name: "MYSQL_DATABASE"
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: "MYSQL_DATABASE"
+
+        ports:
+        - containerPort: {{ .Values.ports.containerPort_mysql }}
+          name: mysql

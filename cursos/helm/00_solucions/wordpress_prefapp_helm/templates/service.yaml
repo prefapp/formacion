@@ -1,0 +1,11 @@
+{{ define "servicew.service.data"  }}
+
+name: {{ .Release.Name }}-service
+labels:
+  app: {{ .Release.Name }}-wp
+selector: {{ .Values.selector | toYaml | nindent 2 }}
+  app: {{ .Release.Name }}-wp
+ports: {{ .Values.frontend_ports | toYaml | nindent 2 }}
+
+{{- end }}
+{{ include "ph.service.render" (include "servicew.service.data" . | fromYaml )  }}

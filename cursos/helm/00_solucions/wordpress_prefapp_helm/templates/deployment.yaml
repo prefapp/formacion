@@ -1,0 +1,44 @@
+{{- define "my.wordpress.data" -}}
+
+name: {{ .Release.Name }}-wp
+labels:
+  app: {{ .Release.Name }}-wp
+selector: {{ .Values.selector | toYaml | nindent 2 }}
+  app: {{ .Release.Name }}-wp
+strategy:
+  type: Recreate
+containers:
+  - name: {{ .Release.Name }}-wp
+    image: {{ .Values.images.wordpress }}:{{ .Values.images.wtag }}
+    env_literal:
+      - name: {{ .Values.env_wordpress.name }}
+      - name: WORDPRESS_DB_PASSWORD
+    env_values_secret:
+      - secret: {{ .Release.Name}}-secrets
+        values:
+          key: password
+    ports:
+      - pod: 80
+        name: {{ .Release.Name }}-wp
+
+  - name: {{ .Release.Name }}-mysql
+    image: {{ .Values.images.mysql }}:{{ .Values.images.mtag }}
+    env_literal:
+      - name: MYSQL_ROOT_PASSWORD
+    env_values_secret:
+      - secret: {{ .Release.Name }}-secrets
+        values:
+          key: password
+    env_values_configmap:
+      - configmap: {{ .Release.Name }}-config
+        values:
+          var1: "MYSQL_USER"
+          var2: "MYSQL_DATABASE"
+    ports:
+      - pod: 3306
+        name: mysql
+
+
+{{- end -}}
+
+{{ include "ph.deployment.render" (include "my.wordpress.data" . | fromYaml ) }}

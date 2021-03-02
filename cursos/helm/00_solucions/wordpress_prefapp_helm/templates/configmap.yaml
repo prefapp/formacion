@@ -1,0 +1,12 @@
+{{ define "configmap.data"  }}
+name: {{ .Release.Name }}-config
+labels:
+  tipo: "config"        
+data:
+  MYSQL_HOST: service-{{ .Release.Name }}-mysql
+  MYSQL_USER: {{ .Values.mysql.user }}
+  MYSQL_DATABASE: {{ .Values.mysql.database }}
+
+env: {{ .Values.env | toYaml | nindent 2 }}
+{{- end }}
+{{ include "ph.configmap.render" (include "configmap.data" . | fromYaml )  }}

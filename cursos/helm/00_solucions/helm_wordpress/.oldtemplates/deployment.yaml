@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      tier: {{ .values.spec.tier }}
+  strategy:
+    type: {{ .values.spec.strategy.type }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        tier: {{ .values.labels.tier }}
+    spec:
+      containers:
+      - image: {{ .values.containers.image}} {{.values.containers.tag }}
+        name: {{ .Release.Name }}
+        env:
+        - name: {{ .values.env.name }}
+          value: {{ .values.env.value }}
+        - name: {{ .secret.data.password }}
+        ports:
+        - containerPort: {{ .values.ports.containerport }}
+          name: {{ .Release.Name }}

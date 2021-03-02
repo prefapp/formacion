@@ -1,0 +1,33 @@
+#configmap
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+{{ include "toYaml" .values| indent 2 }}
+#  namespace: {{ .misvalues.namespace }}
+#  name: {{ .Release.Name }}--configmap
+#service_name: {{  .misvalues.service_name }}a
+#data:
+#  name: {{ .misvalues.data.name }}
+#spec_service:
+#  ports:
+#    protocol: {{ .misvalues.spec_service.ports.protocol }}
+#    port: {{ .misvalues.spec_service.ports.port }}
+#    targetport: {{ .misvalues.spec_service.ports.targetport }}
+#  selector:
+#    tier: {{ .misvalues.spec_service.selector.tier }}
+#
+#spec:
+#  tier: {{ .misvalues.spec.tier }}
+#  strategy:
+#    type: {{ .misvalues.spec.strategy.type }}
+#labels:
+#  tier: {{ .misvalues.labels.tier }}
+#env:
+#  name:  {{ .misvalues.env.name }}
+#  value:  {{ .misvalues.env.value }}
+#ports:
+#  containerport: {{ .misvalues.ports.containerport }}
+#containers:
+#  image: {{ .misvalues.containers.image }}:
+#  tag: {{ .misvalues.containers.tag }}
+#

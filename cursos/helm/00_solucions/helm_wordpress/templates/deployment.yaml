@@ -1,0 +1,35 @@
+#deploy wordpress
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: p-sanchez
+  name: {{ .Release.Name }}-wp
+  labels:
+    app: {{ .Release.Name }}-wp
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-wp
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-wp
+        tier: frontend
+    spec:
+      containers:
+      - image: {{ .Values.images.wordpress }}:{{ .Values.images.wtag }}
+        name: {{ .Release.Name }}-wp
+        env:
+        - name: {{ .Values.env_wordpress.name }}
+          value: service-{{ .Release.Name }}-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name}}-secrets
+              key: password
+        ports:
+        - containerPort: 80
+          name: {{ .Release.Name }}-wp
