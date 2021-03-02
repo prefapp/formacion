@@ -1,4 +1,3 @@
-#service-wordpress.yaml
 {{ define "servicew.service.data"  }}
 
 name: {{ .Release.Name }}-service

@@ -1,10 +1,10 @@
-# ingress.yaml
-{{ define "myingress.ingress.data"  }}
+
+{{- define "myingress.ingress.data" -}}
 name: {{ .Release.Name }}-ingress
-paths:
-  - path: /{{ .Release.Name }}
-    backend:
-      serviceName: {{ .Release.Name }}-service
-      servicePort: 80
-{{- end }}
+host: {{ .Release.Name }}
+rules_path:
+- path: /{{ .Release.Name }}
+  service: {{ .Release.Name }}-service
+  port: 80
+{{- end -}}
 {{ include "ph.ingress.render" (include "myingress.ingress.data" . | fromYaml )  }}
