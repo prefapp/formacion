@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-{{ .Release.Name }}-apache
+  namespace: "{{ .Values.namespace }}"
+spec:
+  selector:
+    app: wordpress-frontend
+  ports:
+  - protocol: TCP
+    port: 80
