@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  deploy-{{ .Release.Name }}-wordpress
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    app:  wordpress-frontend
+spec:
+  selector:
+    matchLabels:
+      app: wordpress-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  wordpress-frontend
+    spec:
+      containers:
+      - name:  apache-wordpress
+        image:  {{ .Values.images.wordpress }}
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /readme.html
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        env:
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-{{ .Release.Name }}-configmap
+              key: DB_HOST
+        - name: BBDD
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-{{ .Release.Name }}-configmap
+              key: DB_BBDD
+        - name: USER
+          valueFrom:
+            configMapKeyRef:
+              name: wordpress-{{ .Release.Name }}-configmap
+              key: DB_USER
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wordpress-{{ .Release.Name }}-secret
+              key: DB_PASSWORD
+        ports:
+        - containerPort:  80
+        volumeMounts:
+        - name: wordpress-data-app
+          mountPath: /var/www/html/wp-content/
+
+      volumes:
+        - name: wordpress-data-app
+          persistentVolumeClaim: #con esta opcion reclamamos o espazo persistente que asignamos ao filestore creado anteriormente. 
+            claimName: "{{ .Values.volumes.wordpress }}"
+            readOnly: false
+#          hostPath:
+#            path: /root/wordpress
+      restartPolicy: Always

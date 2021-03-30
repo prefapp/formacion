@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: "{{ .Values.volumes.wordpress }}"
+spec:
+ accessModes:
+ - ReadWriteMany
+ storageClassName: storage-nfs
+ resources:
+  requests:
+   storage: {{ .Values.nfs.storage }}
