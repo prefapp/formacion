@@ -28,7 +28,7 @@ FROM ubuntu
 LABEL maintainer=fmaseda@4eixos.com
 
 # Actualizamos as sources
-RUN apt-get-update
+RUN apt-get update
 
 # Instalamos o nginx
 RUN apt-get install -y nginx
