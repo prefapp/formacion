@@ -108,11 +108,13 @@ RUN apk add --update py-pip
 
 RUN pip install --upgrade pip
 
-COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+RUN apk add git
 
-COPY app.py /usr/src/app/
-COPY templates/index.html /usr/src/app/templates/
+RUN mkdir -p /usr/src/app/templates
+
+RUN git clone https://github.com/prefapp/catweb.git /home/catweb && cp /home/catweb/requirements.txt /usr/src/app/ && cp /home/catweb/app.py /usr/src/app/ && cp /home/catweb/templates/index.html /usr/src/app/templates/
+
+RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 
 EXPOSE 5000
 
