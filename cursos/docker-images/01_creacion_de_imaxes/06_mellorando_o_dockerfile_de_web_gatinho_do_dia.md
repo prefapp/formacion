@@ -48,14 +48,14 @@ FROM ubuntu:16.04 as builder
 
 # Instalamos o software necesario
 RUN apt-get update && \
-    apt-geet install -y libssl-dev libffi-dev \
+    apt-get install -y libssl-dev libffi-dev \
     git python-dev build-essential \
     python-pip python-virtualenv
 
 # Montamos o pipenv e clonamos o repo dos gatiños
 RUN bash -c "virtualenv /venv && \
-    source /venv/in/activate && \
-    git cone https://github.com/prefapp/catweb.git /venv/catweb &&
+    source /venv/bin/activate && \
+    git clone https://github.com/prefapp/catweb.git /venv/catweb &&
     pip install -r /venv/catweb/requirements.txt"
 
 # Final: stage final (todo o stage anterior desaparece, salvo odirectorio /venv)
