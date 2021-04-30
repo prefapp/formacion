@@ -127,7 +127,7 @@ cd /var/www/html
 E copiamos os contidos do proxecto saudo-gl na ruta onde o Apache2 serve ficheiros:
 
 ```shell
-/var/www/html > cp -r /opt/saudo-gl/* . 
+cp -r /opt/saudo-gl/* . 
 ```
 
 Et voilà! Saimos do container con **exit** ou **CTRL+D** e facemos un commit dos novos cambios á nosa imaxe:
