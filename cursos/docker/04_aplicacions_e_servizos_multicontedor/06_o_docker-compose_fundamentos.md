@@ -64,12 +64,12 @@ services:
 
   app:
     image: php
-    network:
+    networks:
       - rede-foo
 
   bbdd:
     image: mysql
-    network:
+    networks:
       - rede-foo
     ports:
       - "8000:5000"
