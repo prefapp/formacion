@@ -57,7 +57,7 @@ RUN pip3 install -r requirements.txt
 Por último imos establecer o comando de arranque:
 
 ```dockerfile
-CMD ["python3", "app..py"]
+CMD ["python3", "app.py"]
 ```
 
 A sentencia [CMD](https://docs.docker.com/engine/reference/builder/#cmd) permítenos establecer un **único comando de arranque por Dockerfile**.
@@ -81,7 +81,7 @@ WORKDIR /home/catweb
 
 RUN pip3 install -r requirements.txt
 
-CMD ["python3", "app..py"]
+CMD ["python3", "app.py"]
 ```
 
 Poñéndonos no directorio do Dockerfile, construímo-la imaxe:
