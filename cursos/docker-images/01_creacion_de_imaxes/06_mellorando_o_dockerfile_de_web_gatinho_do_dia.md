@@ -118,7 +118,7 @@ RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "/usr/src/app/app.py"]
+CMD ["/usr/bin/python3", "/usr/src/app/app.py"]
 ```
 
 Con este Dockerfile e clonando o [repo](https://github.com/prefapp/catweb) en local, podemos ter unha imaxe de "gatiño do día" de 60MB!!!!
