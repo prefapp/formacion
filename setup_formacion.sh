@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Instructions: Accept name as parameter
+
 NOMBRE=$1
 REG_NAME=$NOMBRE-registry
 REG_PORT='5000'
