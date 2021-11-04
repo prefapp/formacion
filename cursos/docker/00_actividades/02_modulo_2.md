@@ -109,7 +109,7 @@ Cursos ( id INT PRIMARY KEY, nome VARCHAR(120), codigo VARCHAR(20), data_comezo 
 - Montará un volumen co código da vosa aplicación en ```/var/www/html```.
 - Exportará o porto 80 do container no porto 8080 das interfaces da máquina virtual.
 
-\**Nota - Podedes empregar como exemplo este código de StackOverflow.
+\**Nota - Podedes empregar como exemplo este código de [StackOverflow](https://stackoverflow.com/questions/17902483/show-values-from-a-mysql-database-table-inside-a-html-table-on-a-webpage).
 
 **A ter en conta**: a imaxe de php (php:7.2-apache) a partir da cal se lanza o container non ten as librarías de mysql instaladas. 
 E preciso agregalas antes de poder emplear as funcións de mysqli_* na vosa aplicación.

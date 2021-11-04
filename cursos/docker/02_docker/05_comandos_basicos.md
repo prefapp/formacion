@@ -80,4 +80,4 @@ docker rm <uuid do contedo>
 ```
 
 **Ligazóns de interese**
-- Docker cheat-sheet
+- Docker [cheat-sheet](https://dockerlux.github.io/pdf/cheat-sheet-v2.pdf)

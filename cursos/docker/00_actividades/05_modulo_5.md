@@ -1,208 +1,160 @@
-# Construindo un entorno clusterizado para o despregue de aplicacións conterizadas
+# Módulo 4: Aplicacións e servizos multi-contedor
 
-##construir o noso cluster de Docker swarm cumprindo os requisitos.
+## Deseñar e implantar unha solución co docker-compose para docker-meiga
 
-Para a creación dun primeiro cluster de nodos con Docker Swarm, vamos a usar 3 máquinas virtuais correndo no propio VirtualBox que temos instalado localmente.
+> Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
 
-Poderíamos realizar esta tarefa clonando a máquina actual **docker-platega**, ou instalando de novo 3 servidores virtuais co seu SO Linux e agregándolle o docker engine como vimos no tema 2, pero Docker nos provee dunha ferramenta moi axeitada para esta labor:
+Imos mellorá-la nosa aplicación de docker-meiga (a do tema 3) engadíndolle estado. 
 
-### Docker machine
+A versión 2 da nosa meiga ten varias características novas con respecto a v1:
 
-[Docker Machine](https://docs.docker.com/machine/) é unha ferramenta [opensource](https://github.com/docker/machine) mantida pola empresa Docker Inc e pola comunidade de docker, que permite instalar e xestionar, dende o noso equipo local, nodos Docker (servidores físicos ou virtuais co docker-engine instalado) tanto en máquinas virtuais locais (HyperV, VirtualBox, VMWare Player) como en proveedores remotos (AWS, Azure, DigitalOcean ...). Podedes ver [aquí a lista de drivers que actualmente ten dispoñible](https://docs.docker.com/machine/drivers/) para despregar e xestionar un nodo docker.
+- Conéctase a unha bbdd para ter estado.
+- A aplicación agora reconta o número de visitas. 
+- Tamén controla o tamaño da lúa que pode menguar ou crecer. 
 
-Para crear o noso primeiro cluster Swarm, vamos a empregar esta ferramenta, ca que crearemos 2 novas máquinas virtuais correndo no noso VirtualBox. As cais van a formar o noso cluster Swarm. 
+### Nova infraestructura
 
-Para isto  é necesario realizar os seguintes pasos:
+Na nova infraestructura da nosa aplicación teremos que construir:
 
-#### 0) Instalar docker-machine
+A) Servizo de bbdd
 
-```sh
-curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
-chmod +x /tmp/docker-machine && \
-sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
-```
+Terá:
 
-Se estamos nun sistema operativo diferente de **linux** (windows, mac), para poder dispoñer de docker-machine é recomendable instalar o paquete de [Docker Toolbox](https://docs.docker.com/toolbox/overview/), xa que aínda que está actualmente marcado como legacy, é o que menos problemática xenera co VirtualBox.
-Actualmente o método máis axeitado para Windows 10 e Mac, é instalar docker-machine directamente, sen o toolbox.
+- Imaxe de [mysql oficial](https://hub.docker.com/_/mysql/) (a de dockerhub) versión 5.7. 
+- Esa imaxe contrólase por variables de entorno:
+  - MYSQL_ROOT_PASSWORD: determina-lo password do root do Mysql.
+  - MYSQL_DATABASE: crea esta bbdd se non existe ó arranca-lo contedor. 
+- O servizo deberá arrancar cunha base de datos definida, de nome meiga. 
 
-```sh
-$ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
-  mkdir -p "$HOME/bin" &&
-  curl -L $base/docker-machine-Windows-x86_64.exe > "$HOME/bin/docker-machine.exe" &&
-  chmod +x "$HOME/bin/docker-machine.exe"
-```
+B) Servizo de Aplicación
 
-\*\*No caso de windows precisa ter instalado [git-bash](https://gitforwindows.org/) previamente.
+A aplicación de docker-meiga é a versión [v2](https://github.com/prefapp/docker-meiga.git).
 
-De tódolos xeitos tedes [ná páxina da documentación de docker-machine](https://docs.docker.com/machine/install-machine/), máis detalles dos diferentes métodos de instalación dispoñibles.
+As súas características:
 
-#### Crear a primeira máquina virtual con docker-machine
+- A imaxe a empregar será a do [v2](https://hub.docker.com/r/prefapp/docker-meiga/) (en dockerhub)  prefapp/docker-meiga:v2
+- Ten tódalas variables de entorno da v1 (ver tarefa 3.4 do módulo anterior)
+- Presenta, ademáis, novas variables:
+  - MYSQL_HOST: o host onde realiza-la conexión.
+  - MYSQL_USER: o usuario da bbdd. 
+  - MYSQL_PASSWORD: o contrasinal de acceso.
+  - MYSQL_DATABASE: o nome da bbdd de traballo. 
+- A aplicación, ó iniciarse, realizará a creación das táboas que precise, de non existir, de xeito idempotente. 
 
-```sh
-docker-machine create -d virtualbox vbox01
-```
+### O docker-compose
 
-Con **-d** se especifica o driver a empregar,  **vbox01** será o nome da vm xenerada.
+No docker-compose terán que existir estes dous servizos. Ademáis, compre definir as variables de entorno que controlen a bbdd e establecer tamén esas credencias de acceso no servizo de app (o de php). 
 
-Este comando descarga unha imaxen de Virtualbox dunha distribución moi lixeira de Linux (boot2docker) co demonio de Docker instalado, e crea a máquina virtual co demonio de Docker arrancado.
+Existirán dúas redes, unha privada (**rede-meiga**) na que estarán conectados o contedor de bbdd e o de aplicación, e unha público (**rede-publica**) onde estará únicamente o contedor de php. 
 
-#### 2) Crear a segunda máquina virtual con docker-machine
+Compre establecer un volume (**datos-meiga**) para darlle persistencia ós datos do mysql.
 
-```sh
-docker-machine create -d virtualbox vbox02
-```
+Pasos:
 
-#### 3) Iniciar o swarm nunha delas (por exemplo na vbox1)
+1. **Planificar e crear** un docker-compose.yaml que cumpla coas especificacións referidas.
+- Nun pdf entregar o docker-compose.yaml creado ou adxuntar na tarefa o ficheiro do docker-compose.yaml.
+2. **Lanzar** unha instancia do docker-meiga v2. 
+- No pdf amosar os comandos necesarios para arrincar a instancia ou o asciinema do mesmo. 
+- No pdf ou adxuntar á tarefa unha captura do navegador coa web funcionando.
+  - A lúa ten que estar chea (pista: sucesivos clicks na lúa a fan avanzar no seu ciclo)
+  - Ten que verse o nome do docente (contrólase mediante variable de entorno)
+3. **Mostrar** nunha sección do pdf ou en asciinema os comandos necesarios para:
+- Reiniciar tódolos servizos sen pérdida de datos. 
+- Poder ver os logs .
+- Reiniciar só o servizo da aplicación e non o de bbdd. 
+- Destruir completamente a aplicación, os seus contedores e o volume de datos. 
+4. **Revisar** a creación de imaxes, nunha sección do pdf ou en ficheiro aparte, remitir o Dockerfile necesario para:
+- Crear a imaxe de docker-meiga v2
+  - partir da imaxe de php.
+  - hai que instalar git e clona-lo proxecto de [docker-meiga](https://github.com/prefapp/docker-meiga.git) na rama v2
+  - compre instalar o módulo mysqli (pista: ver os [comandos auxiliares](https://hub.docker.com/_/php/) que ofrece a imaxe para extensións).
+5. **Modificar** o docker-compose orixinal para permitir o [build](https://docs.docker.com/compose/compose-file/#build) da imaxe dende o mesmo. Adxuntar mellora en ficheiro ou nunha nova sección do pdf.
 
-```sh
-docker-machine ssh vbox01 "docker swarm init --advertise-addr <MANAGER-IP>"
-```
+**Evidencias de adquisición dos desempeños**: pasos 1 a 5.
 
-A MANAGER-IP  é a ip que ten configurada o nodo na interfaz que se vai  a usar para conectarse  cos demais nodos
+**Indicadores de logro**: deberás ter:
 
-#### 4) Unir a outra máquina ao swarm
-
-```sh
-docker-machine ssh vbox02 "docker swarm join --token xxxxxxxxxxxxxx <MANAGER-IP>:2377"
-```
-
-O token para unir a máquina ao swarm nolo indican no anterior punto 3, ao facer o swarm init.
-
-E listo, con estos 4 pasos xa temos un cluster swarm creado, composto por 2 máquinas host de docker. Agora podemos agregar máis máquinas ao cluster, ou lanzar sobre él unha aplicación.
-
-Con base a esta ferramenta docker machine,  construamos un cluster swarm de 3 nodos, con un deles actuando de nodo Manager e á vez de Worker, e despreguemos sobre este cluster varias stacks de coñecidas aplicacións web open-source :
-
-unha stack de [Ghost](https://hub.docker.com/_/ghost) **con persistencia sobre mysql**
-unha stack con [Wordpress](https://hub.docker.com/_/wordpress/), tamén con persistencia nun contedor de mysql, empregando a ferramenta de [portainer](https://formacion.4eixos.com/tema_2_web_addenda_portainer/).
-
----
-
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
-
-**Indicadores de logro**:
-
-* Entregar un documento* cas capturas de pantalla que mostren:
-	- Os pasos seguidos para levar a cabo a creación de 3 nodos Docker e a configuración dun cluster docker swarm entre eles.
-		* Debe haber 1 nodo cos roles de manager e worker, e 2 nodos solo workers.
-		* ¿Que comando debemos podemos empregar para configurar o noso cliente de docker e que conecte co nodo manager do cluster?
-	- O ficheiro de compose e os comandos empregados para lanzar sobre este cluster unha stack de Ghost con persistencia sobre mysql.
-	- Conectar o portainer contra este cluster e despregar outra stack, esta vez ca aplicación de Wordpress.
-
-**\*Se o preferides, podedes entregar un screencast da consola, con asciinema.org**
+- PDF ou zip con:
+  - docker-compose de aplicación docker-meiga v2 segundo as especificacións fornecidas.
+  - capturas ou asciinema dos comandos necesarios para:
+    - lanzar unha nova instancia.
+  - captura do navegador coa web funcionando:
+    - a lúa ten que estar chea.
+    - o nome do docente tense que ver.
+ - capturas ou asciinema dos comandos necesarios para:
+   - reiniciar tódolos servizos sen pérdida de datos. 
 
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
 **Criterios de corrección**:
 
-* Realizar a correcta configuración, de 3 nodos locais nun cluster de docker swarm con docker-machine (**20 puntos**)
-	* Se crean correctamente os 3 nodos (**5 puntos**)
-	* Se forma o cluster swarm entre eles e cumple cas especificacións (**10 puntos**)
-	* Se facilita o comando para conectar o docker cli local contra o nodo master do cluster (**5 puntos**)
-* Executar o primeiro stack sobre o cluster ca aplicación de ghost, con persistencia sobre mysql (**10 puntos**)
-* Conectar o portainer ao cluster seguindo os pasos indicados na documentación e despregar a stack de wordpress (**10 puntos**)
+1. Paso 1
+- Docker compose correcto segundo as especificacións (max. 10 puntos)
+2. Paso 2
+- Comandos para lanzar a instancia segundo as especificacións (max. 5 puntos)
+- Captura da web funcionando (max. 5 puntos)
+3. Paso 3
+- Comandos de control da instancia (2.5 puntos cada un ata un máx de 10 puntos)
+4. Paso 4
+- Dockerfile de creación da v2 de meiga correcto (max. 15 puntos)
+5. Paso 5
+- Build dentro do dockerfile (max. 5 puntos)
 
 **Peso na cualificación**:
 
-* Peso desta tarefa no seu tema............................................... 40%
+Peso desta tarefa no seu tema............................................... 50%
 
-## Nesquik vs Colacao distribuida sobre un cluster swarm como o construido no exercicio anterior
+## Empregar a ferramenta docker-compose para a orquestación de contedores
 
-Basándonos no cluster swarm construido no apartado anterior despreguemos sobre él a aplicación de [nesquik vs colacao vista no módulo 4](https://formacion.4eixos.com/tema_4_web/prctica_guiada_nesquik_vs_colacao.html).
+> Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
 
-### 1. Para comezar vamos a adaptar o [docker-compose.yaml da aplicación anterior]()https://s3-eu-west-1.amazonaws.com/formacion.4eixos.com/solucions/nesquik_vs_colacao_docker-compose.yml, ao formato v3, preparado para o lanzamento nun swarm, cunha serie de melloras á hora de dar un servicio máis confiable.
+### Web do "gatinho do día"
 
-Podedes descargar unha copia de exemplo do docker-compose da aplicación de nesquik vs colacao aqui.
+Para esta tarefa compre ter construida a imaxe dos "[gatinhos do día](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_imaxes/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia)". Tarefa do módulo 3.
 
-Para esto imos ir servizo a servizo agregándolle configuración extra.
+Pasos:
 
-O primeiro que temos que facer e cambiar a versión da especificación de docker-compose, para usar polo menos a 3. (A última revisión do formato é a 3.7)
+1. **Instala** o docker-compose na túa máquina seguindo estas [instruccións](https://docs.docker.com/compose/install/#install-compose):
+ - Nun pdf amosa a captura do comando "docker-compose version".
+2. **Experimenta** co docker-compose. No pdf, amosa as capturas dos comandos para que:
+ - Arrancar a web-gatinhos en primeiro plano e demonizada. 
+ - Os comandos para deter e rearrancar a web **sen borrar os contedores**. 
+ - Cómo borrarías os contedores creados unha vez lanzado o compose?
+3. **Investiga** as opcións de construcción de imaxe do compose.
+ - Poderíase solicitar o build da imaxe dende o docker-compose? De ser o caso, adxunta un docker-compose no que se constrúa a imaxe. 
+ - Como se borrarían as imaxes creadas localmente a partir do compose?
 
-Básicamente todas as configuracións relativas ao modo swarm están concentradas, dentro de cada servicio, no apartado de **deploy**, de tal maneira que o único comando que interpreta estas opcións é  
-**docker stack deploy**, e tanto docker-compose up como docker-compose run simplemente evitan esta sección.
+**Evidencias da adquisición dos desempeños**: Paso 1 a 3.
 
-	1. Redis
+**Indicadores de logro**: deberás ter.
 
-No caso do servicio de redis, só queremos que teña unha única replica, e unha política de reinicio:
-
-* En caso de fallo do container, o cluster de Swarm debe encargarse de levantalo de novo, e que o intente polo menos 3 veces, con 10s entre cada intento, nunha ventá de tempo de 120s
-
-	1. Postgresql
-
-No caso do servicio de base de datos, como é algo bastante crítico QUE NECESITA PERSISTENCIA, os datos da mesma se teñen que almacenar nun volumen DEPENDENTE DO ANFITRIÓN* onde corre o contedor.
-
-Por eso, non podemos permitir que o scheduler do Swarm nos mova a base de datos a outro nodo diferente de onde se arrincaou a primeira vez, e onde van a estar os datos da mesma.
-
-Para esto vamos a agregar unha restricción de xeito que ese servicio só se execute no nodo **Manager**.
-
-_ \*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen **plugins de rede**, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin). _
-
-	1. Votacions
-
-Para o servicio de votacións, como é unha aplicación que non garda estado en si mesma, e está tendo moita demanda ;) vamos a escalalo a 2 replicas, de xeito que o cluster se encargue de balancear as peticións entre cada unha delas.
-
-Ademáis cando faga falta actualizar o servicio, queremos que se execute a actualización das 2 replicas á vez, e por suposto, se se cae que automáticamente se volva a arrincar soa.
-
-	1. Worker
-
-Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e admeáis agregarmoes unha política de restart on-failure.
-
-	1. Resultados:
-
-Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de votacions.
-
-### 1. Unha vez completado esto só queda facer o deploy de esta stack 
-
-	1.  Para esto o primeiro sería preparar ó cliente de docker para que fale contra o nodo Manager.
-
-	1. E finalmente quedaría facer o deploy desta stack
-
-	1. ¿Como podemos  comprobar como o cluster vai lanzando os servicios e tasks correspondentes?
-
-### 1. Para rematar, e como tarefa extra, vamos a colocar un  proxy inverso que nos permita servir multiples aplicacións dende o noso cluster swarm, nun porto estandard 80, 443, e ademáis sexa dinámico para ser capaz de saber en cada momento cales son os contedores asociados aos servicios web.
-
-Para lograr esto podemos conectar un proxy inverso diante da nosa aplicación , [seguindo este exemplo](https://braybaut.com/utilizando-traefik-como-dinamic-reverse-proxy-en-docker-swarm-sobre-aws/). Empregaremos un dos sistemas de proxy inverso máis recoñecidos na actualidade para o uso nos entornos de contedores: [traefik](https://traefik.io/)
-
-O obxectivo desta última tarefa e poñer a convivir 2 aplicacións (a de Wordpress ou Ghost do exemplo anterior) ca de Nesquik vs Colacao, no mesmo cluster, atendendo as peticións no porto estandard http (80) 
-
-Tede en conta, para apuntar un dominio local ao cluster e poder validalo dende o navegador, vades a ter que facer uso do [ficheiro hosts](https://es.wikipedia.org/wiki/Archivo_hosts) ao que van chequear previamente as aplicacións do equipo (como o navegador) antes de ir a consultar ó servidor dns.
-
-```sh
-# Liña de exemplo do /etc/hosts:
-```
-
-```sh
-92.168.99.100     vota.local resultados.local
-```
-
-[Pasos para modificar o /etc/hosts en windows 10](https://planetared.com/2016/08/editar-archivo-hosts-en-windows-10/).
-
----
-
-**Evidencias de adquición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
-
-**Indicadores de logro**:
-
-* Entregar un documento\* con:
-	* O ficheiro compose onde se foron aplicando as diferentes modificacións indicadas.
-	* Os comandos necesarios para configurar o cliente de docker para que fale co nodo manager do cluster, leve a cabo o deploy da stack, e como visualizar que ese depregue se está executando correctamente.
-	* A configuración necesaria de traefik para servir a aplicación dende o porto 80 (http)
-
-**\*Se o preferides, podedes entregar un screencast da consola, con asciinema.org**
- 
+- Instalado o docker-compose.
+- PDF adxunto con:
+  - Captura de version do docker-compose.
+  - Sección cos:
+    - Comandos para arrancar a web en primeiro plano e demonizado.
+    - Deter a web sen borrar os contedores e rearrancala.
+    - Deter a web e borrar os contedores asociados.
+  - Sección cos comandos e compose para:
+    - Facer un build da imaxe .
+    - Comando para borrar as imaxes locais.
 
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
 **Criterios de corrección**:
 
-* Adaptacións indicadas no 1.1 ao 1.5 completadas correctamente (25 puntos)
-	* Redis
-	* Postgresql
-	* Votacions
-	* Worker
-	* Resultados
-* Comandos necesarios para o apartado 2 correctamente indicados (10 puntos)
-* Configuración axeitada de traefik para servir a aplicación nos portos estandard (15 puntos)
+- Paso 1
+  - Ter instalado correctamente o docker-compose (**max. 10 puntos**).
+- Paso 2
+  - Sección no pdf coas capturas dos comandos para (**max. 15 puntos**).
+    - Arrancar o compose en primeiro plano e demonizado (5 puntos).
+    - Deter o compose sen borrar contedores e rearrancalo (5 puntos).
+    - Deter o compose e borrar os contedores (5 puntos).
+- Paso 3
+  - Sección no pdf coas capturas dos comandos e o compose necesario para (**max 15 puntos**).
+    - Construir a imaxe de "o gatinho do día dende o compose" (10 puntos).
+    - Borrar as imaxes locales construidas polo compose (5 puntos).
 
 **Peso na cualificación**:
+- Peso desta tarefa no seu tema .............................40%
 
-* Peso desta tarefa no seu tema............................................... 50%
