@@ -1,4 +1,4 @@
-# Módulo 4: Aplicacións e servizos multi-contedor
+# Módulo 5: Aplicacións e servizos multi-contedor
 
 ## Deseñar e implantar unha solución co docker-compose para docker-meiga
 
