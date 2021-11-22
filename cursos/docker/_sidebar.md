@@ -56,7 +56,7 @@
   - [O Docker-Compose: fundamentos](./05_aplicacions_e_servizos_multicontedor/06_o_docker-compose_fundamentos.md)
   - [Ciclo de vida dunha aplicación de compose](./05_aplicacions_e_servizos_multicontedor/07_cilo_de_vida_dunha_aplicacion_de_compose.md)
   - [Práctica guiada: Nesquik vs ColaCao](./05_aplicacions_e_servizos_multicontedor/08_practica_guiada_nesquik_vs_colacao.md)
-  - [📝 Actividades](./00_actividades/05_modulo_4.md)
+  - [📝 Actividades](./00_actividades/05_modulo_5.md)
 
 - Orquestación de contedores e clustering - Entornos de producción
   - [O docker Swarm](./06_docker_swarm/01_o_docker_swarm.md)
