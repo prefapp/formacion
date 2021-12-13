@@ -90,7 +90,7 @@ done
 ```
 
 3. **Explorar** o control de cpu nos cgroups.
-- Hai unha información excelente nesta [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu). Tamén temos un bó exempo [neste enlace](https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups) empregando as ferramentas de libcgroup.
+- Hai unha información excelente nesta [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu). Tamén temos un bó exemplo [neste enlace](https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups) empregando as ferramentas de libcgroup.
 - Para testear unha aplicación de uso extensivo de cpu, recoméndase matho-primes:
  - Baixar o paquete https://launchpad.net/ubuntu/+source/mathomatic/16.0.5-1.
  - Descomprimir. 
