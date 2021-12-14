@@ -69,7 +69,7 @@ Para esto  montar un contedor que:
  - 1. Os pasos seguidos para levar a cabo a instalación de docker escollida no entorno  de traballo.
  - 2. O comando docker executado para obter a saída  "Ola Mundo!".
  - 3. Os comandos escollidos para crear un servidor de mysql 5.7 dentro dun docker cunha base de datos que reúna tódolos requisitos indicados.
- - 4. Os comandos necesarios crear un novo contedor de mysql,  dar conectividade co exterior ao servizo de mysql, e facer un backup da base de datos co ```mysqldump```.
+ - 4. Os comandos necesarios crear un novo contedor de mysql,  dar conectividade co exterior ao servizo de mysql, e facer un backup da base de datos co ```mysqldump```. [Neste enlace](https://support.hostway.com/hc/en-us/articles/360000220190-How-to-backup-and-restore-MySQL-databases-on-Linux) temos unha guía de cómo usar o mysqldump
 
 \**Nota - Se o preferides, podedes entregar un screencast da consola, con ```asciinema.org```.
 
@@ -105,7 +105,7 @@ Cursos ( id INT PRIMARY KEY, nome VARCHAR(120), codigo VARCHAR(20), data_comezo 
 3. Desenvolver **unha aplicación php** que mostre nunha taboa html os datos que ten almacenados a táboas mysql de Alumnos e de Cursos (ou un erro en caso de non haber conectividade), tendo en conta que:
 
 - A aplicación debe recibir os datos de conexión ca base de datos polo entorno.
-- Empregará a imaxen de php:7.2-apache do repo oficial de php de Dockerhub.
+- Empregará a imaxen de php:7.2-apache do repo oficial de php de Dockerhub. É recomendable revisar a [documentación oficial das imaxes de php](https://hub.docker.com/_/php), posto que teñen múltiples versiones con diferentes servizos. No caso de apache, podemos obter a versión da imaxe oficial co nome da seguinte maneira php:<version>-apache . No noso caso imos utilizar php:7.2-apache .
 - Montará un volumen co código da vosa aplicación en ```/var/www/html```.
 - Exportará o porto 80 do container no porto 8080 das interfaces da máquina virtual.
 
