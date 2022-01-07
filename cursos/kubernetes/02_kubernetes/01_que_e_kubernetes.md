@@ -24,8 +24,7 @@ De feito, a meirande parte do tempo, trabállase con plataformas baseadas en Kub
  - Minishift.
  - DockerDesktop.
  - MicroK8s.
- - (Listado completo [aquí](https://kubernetes.io/docs/setup/pick-right-solution/#local-machine-solutions)).
-- E, por suposto, existen tamén [solucións](https://kubernetes.io/docs/setup/pick-right-solution/#on-premises-turnkey-cloud-solutions) para facer un despregue de Kubernetes en CPDs ou clouds privados ou "on premise".
+- Neste artigo podemos ver con máis profundidade [diferentes solucións](https://betterprogramming.pub/choose-the-right-kubernetes-hosting-solution-a842878fc594) para diferentes tipos de despregues incluíndo Kubernetes en CPDs ou clouds privados ou "on premise".
 
 A flexibilidade que permite o enfoque de framework de Kubernetes posibilita un gran conxunto de escenarios onde se pode empregar.
 
