@@ -55,7 +55,7 @@ RUN apt-get update && \
 # Montamos o pipenv e clonamos o repo dos gatiños
 RUN bash -c "virtualenv /venv && \
     source /venv/bin/activate && \
-    git clone https://github.com/prefapp/catweb.git /venv/catweb &&
+    git clone https://github.com/prefapp/catweb.git /venv/catweb && \
     pip install -r /venv/catweb/requirements.txt"
 
 # Final: stage final (todo o stage anterior desaparece, salvo odirectorio /venv)
