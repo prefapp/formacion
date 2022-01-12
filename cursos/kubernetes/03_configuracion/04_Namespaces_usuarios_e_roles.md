@@ -6,6 +6,27 @@ Os namespaces teñen outro papel fundamental: o de limitar o acceso dos usuarios
 
 Todo esto é o obxecto da presente unidade.
 
+Podes pensar nun namespace como un cluster virtual dentro do teu cluster de kubernetes. Pódense ter varios namespaces dentro dun só cluster de kubernetes, e todos están aislados entre sí.
+
+### Creando namespaces
+
+Co shell:
+
+```shell
+kubectl create namespace <nome namespace>
+```
+
+Ou tamén podemos crealo cun archivo .yaml e aplicar
+```yaml
+#test.yaml
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: test
+  labels:
+    name: test
+```
+
 ## Usuarios
 
 Kubernetes é un sistema pensado para xestionar grandes clúster de máquinas e facer un tratamento delas como si de unha soa se tratase. 
