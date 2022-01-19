@@ -265,7 +265,7 @@ Se tes algunha dúbida ou consulta sobre como realizar a tarefa formúlaa no [Fo
 ## Conectando a nosa aplicación con ingress
 
 Para poder facer esta práctica compre:
-- Revisar o tema que deixamos neste módulo, sobre todo a sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/05_Ingress_controlando_o_trafico).
+- Revisar o tema que deixamos neste módulo, sobre todo a sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/06_Ingress_controlando_o_trafico).
 - Compre ter activado o ingress no microk8s. 
 
 Para activar ingress:
