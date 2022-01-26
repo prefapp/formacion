@@ -1,11 +1,21 @@
 ![logo](_media/icon.png)
 
+<<<<<<< HEAD
 # Terraform <small>🚢</small>
 
 > Aprovisionamiento con terraform
 
 - Foo
 - Lol
+=======
+# Terraform <small>🌏</small>
+
+> Complete container solution
+
+- Infraestructura como código
+- Estados en terraform
+- Providers & Recursos
+>>>>>>> b450b43a5f2679d4b700cfb898f5b22ed35caa02
 
 [GitHub](https://github.com/prefapp/formacion/tree/master/cursos/terraform)
 [Plataforma](https://prefapp.github.io/formacion/)
