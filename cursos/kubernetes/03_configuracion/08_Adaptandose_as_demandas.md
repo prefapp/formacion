@@ -11,6 +11,19 @@ Como vemos no diagrama, un aumento da carga de traballo, leva parello un aumento
 
 De ahí o nome de horizontal: non incrementamos os recursos asignados a un pod concreto, aumentamos o número de pods dese tipo puidendo superar as limitacións dun nodo de k8s e as propias dunha unidad simple de execución. 
 
+## Xestionando a carga co HPA
+
+
+O HPA constitúe un artefacto independente de kubernetes: pódemolo expresar nun arquivo de YAML e vai ter unhas especificacións. 
+
+Conéctase directamente o ReplicaSet que implementa o Deployment para incrementar ou decrementar o **número de réplicas**.
+
+Esta arquitectura presenta moitas vantaxes:
+
+* O feito de ser un artefacto independiente permite xestional
+
+
+
 
 
 
