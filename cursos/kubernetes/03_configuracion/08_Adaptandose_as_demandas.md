@@ -18,9 +18,61 @@ O HPA constitúe un artefacto independente de kubernetes: pódemolo expresar nun
 
 Conéctase directamente o ReplicaSet que implementa o Deployment para incrementar ou decrementar o **número de réplicas**.
 
-Esta arquitectura presenta moitas vantaxes:
+Esta arquitectura presenta importantes vantaxes:
 
-* O feito de ser un artefacto independiente permite xestional
+* O feito de ser un artefacto independiente permite a súa xestión como os demáis elementos da maquinaria de k8s. 
+* Pódese despregar/modificar/borrar de xeito independente ó resto da definición dos nosos servizos. 
+
+Polo tanto, a definición dun HPA, implica a creación dun novo artefacto de kubernetes:
+
+```yaml
+
+apiVersion: autoscaling/v2 # hai varias versións en funcionamento a día de hoxe
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: o-meu-hpa  
+  # podería levar as súas annotations e labels
+
+spec: 
+
+  #-------------------------------------------------
+  # Esta é a parte de selección de pods a escalar
+  #-------------------------------------------------
+  scaleTargetRef: 
+    kind: Deployment
+    name: o-meu-deployment
+
+
+  #-------------------------------------------------
+  # Nesta parte establecemos os límites do escalado
+  #-------------------------------------------------
+  minReplicas: 1
+  maxReplicas: 10
+
+  
+  #---------------------------------------------------
+  # Nesta sección definimos os criterios (métricas)
+  # segundo as que escalar
+  #---------------------------------------------------
+
+  metrics:
+  - type: Resource
+    name: cpu
+    target:
+      type: Utilization
+      averageUtilization: 50  
+
+```
+
+Como podemos comprobar un HPA ten tres seccións fundamentais nas súas especificacións:
+
+1. Unha sección de **Selección**
+2. Unha sección de **Límites**
+3. Unha sección de **Criterios ou Métricas**
+
+
+
 
 
 
