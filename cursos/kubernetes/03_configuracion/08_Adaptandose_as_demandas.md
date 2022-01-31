@@ -27,7 +27,9 @@ Polo tanto, a definición dun HPA, implica a creación dun novo artefacto de kub
 
 ```yaml
 
-apiVersion: autoscaling/v2 # hai varias versións en funcionamento a día de hoxe
+# Definición completa en: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#horizontalpodautoscaler-v2beta2-autoscaling
+
+apiVersion: autoscaling/v2beta2 # hai varias versións en funcionamento a día de hoxe
 kind: HorizontalPodAutoscaler
 
 metadata:
@@ -55,13 +57,13 @@ spec:
   # Nesta sección definimos os criterios (métricas)
   # segundo as que escalar
   #---------------------------------------------------
-
   metrics:
   - type: Resource
-    name: cpu
-    target:
-      type: Utilization
-      averageUtilization: 50  
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  
 
 ```
 
@@ -70,6 +72,23 @@ Como podemos comprobar un HPA ten tres seccións fundamentais nas súas especifi
 1. Unha sección de **Selección**
 2. Unha sección de **Límites**
 3. Unha sección de **Criterios ou Métricas**
+
+### O emprego de métricas no HPA
+
+As métricas nas que o noso HPA pode basear o seu traballo son de [tres tipos fundamentais](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-metrics-apis):
+
+1. Tipo Recurso (Fundamentalmente CPU/memoria) que podense expoñer normalmente a través do [metrics-server](https://github.com/kubernetes-sigs/metrics-server).
+2. Tipo Custom, que toman valores de servicios de métricas aportados polo vendor (Cloud Monitoring, Cloud Watch...) Serven para que os pods poidan escalar segundo métricas distintas das súas propias. 
+3. Tipo External: para escalar os nosos pods segundo o estado se servizos externos ó noso (por exemplo unha cola de mensaxes)
+
+Estos tres grupos de métricas expóñense a través de APIs específicas:
+
+1. Para métricas de tipo Recurso: metrics.k8s.io. 
+2. Para métricas de tipo Custom: custom.metrics.k8s.io. 
+3. Para métricas de tipo Externo: external.metrics.k8s.io. 
+
+
+
 
 
 
