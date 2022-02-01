@@ -124,6 +124,85 @@ Por estas razóns non asemella aconsellable na maioría dos casos empregar a mem
 
 ### A sección behavior: a xestión "polo míudo" do noso HPA. 
 
+A sección __behavior__ do noso HPA permitenos establecer políticas de escalado/descalado ante cambios no número de réplicas a aplicar. 
+
+Trátase dun elemento introducido a partir da versión v2beta1 do HPA. A documentación oficial pódese consultar [aquí](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior).
+
+Podemos, polo tanto, establecer dous grupos de politicas:
+
+* **scaleDown**: para controlar o descalado do noso sistema. 
+* **scaleUp**: para a xestión do noso incremento de réplicas.
+
+Se vemos un exemplo de política:
+
+```yaml
+behavior:
+  scaleDown:
+    policies:
+    - type: Pods
+      value: 4
+      periodSeconds: 60
+    - type: Percent
+      value: 10
+      periodSeconds: 60
+
+```
+
+Para empezar vemos que hai dúas políticas de desescalado:
+
+* O primeiro a ter en conta en caso de varias políticas é que **sempre se aplica a que comporte maior cambio**.
+
+* Na primeira política exprésase que é posible desescalar ata un máximo de 4 pods por minuto. 
+
+* Na segunda política que é posible desescalar ata un 10% do número de pods nun minuto de tempo. 
+
+Cal primará? Como dixemos dependerá do número de pods en cada iteración e sempre que sexa certo: 10% Numero Pods > 4.
+
+Por outra banda, poderíamos cambiar o sesgo de decisión das políticas, abondaría con declarar o campo **selectPolicy** a Min.
+
+
+```yaml
+behavior:
+  scaleDown:
+    selectPolicy: Min # mudamos o sesgo á escolla da política con menor impacto
+    policies:
+    - type: Pods
+      value: 4
+      periodSeconds: 60
+    - type: Percent
+      value: 10
+      periodSeconds: 60
+```
+
+Por último, existe a posilibidade de que o HPA "revise" as últimas escollas que fixo nunha ventana dada de tempo.
+
+Por exemplo:
+
+```yaml
+behavior:
+  scaleDown:
+    stabilizationWindowSeconds: 300  # ventana de 5 min
+    policies:
+    - type: Pods
+      value: 4
+      periodSeconds: 60
+    - type: Percent
+      value: 10
+      periodSeconds: 60
+```
+
+Co campo stabilizationWindowSeconds aseguramos que o valor máis alto aplicado nos últimos 5 minutos sexa o que prevalezca (podería ser o mínimo de cambiar o sesgo). 
+
+O obxectivo e evitar
+
+
+
+
+
+
+
+
+
 
 
 
