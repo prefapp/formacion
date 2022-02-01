@@ -193,7 +193,11 @@ behavior:
 
 Co campo stabilizationWindowSeconds aseguramos que o valor máis alto aplicado nos últimos 5 minutos sexa o que prevalezca (podería ser o mínimo de cambiar o sesgo). 
 
-O obxectivo e evitar
+O obxectivo e evitar os chamados "flapping pods" ou pods que se están a se levantar e tirar constantemente. 
+
+
+
+
 
 
 
