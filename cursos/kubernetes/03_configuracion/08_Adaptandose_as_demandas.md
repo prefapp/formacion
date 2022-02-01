@@ -87,6 +87,44 @@ Estos tres grupos de métricas expóñense a través de APIs específicas:
 2. Para métricas de tipo Custom: custom.metrics.k8s.io. 
 3. Para métricas de tipo Externo: external.metrics.k8s.io. 
 
+Polo tanto, e segundo o resultado desexado, basearemos o noso HPA nun tipo de métricas ou outras. 
+
+### A interpretación das métricas por parte do HPA
+
+O algoritmo que emprega o HPA para interpretar as métricas funciona segundo o que está explicado nesta [sección da documentación oficial](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details). 
+
+A idea básica é a de determinar o número de replicas mediante unha sinxela operación matemática:
+
+```
+
+Número de Rèplicas de Pods = Redondeo (valorActualMetrica / valorIdealMetrica )
+
+```
+
+Isto quere decir que:
+
+1. O algoritmo calcula o valor actual da métrica (se é unha porcentaxe fai a media de ese valor entre tódolos pods existentes)
+  1.a Se a métrica e de tipo **resource** (CPU ou Memoria) o valor individual de cada pod áchase partindo da utilización actual con respecto ós requests especificados no pod. 
+2. Toma o valor ideal (tal e como está declarado no manifesto do artefacto)
+3. O producto do número actual de réplicas polo cociente entre a métrica actual e a ideal resultará no número de réplicas a manter. 
+
+En exemplos:
+
+* Utilización de cpu 400, ideal 100 implica un incremento do pods = 400 / 100 == 4.0
+* Ítems en cola 500, ideal de 300, implica un incremento de pods = 500 / 300 = 2.0 (1.6 redondeado) 
+
+#### O problema do emprego de memoria como criterio de escalado/desescalado co HPA
+
+A memoria pódese empregar como métrica nun HPA, sen embargo resulta problemática:
+
+1. Moitas linguaxes de programación e runtimes liberan a memoria mou pouco a pouco (ou non liberan, directamente)
+2. A utilización de memoria non é en moitos casos unha medida do nivel de "carga" dun proceso por culpa das reservas que fan algúns frameworks ó iniciarse.
+
+Por estas razóns non asemella aconsellable na maioría dos casos empregar a memoria como criterio de escalado / desescalado de pods. 
+
+### A sección behavior: a xestión "polo míudo" do noso HPA. 
+
+
 
 
 
