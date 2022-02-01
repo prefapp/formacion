@@ -21,5 +21,5 @@
   - [Servizos en profundidade](./03_configuracion/05_Servizos_en_profundidade.md)
   - [Ingress: controlando o tráfico de entrada](/03_configuracion/06_Ingress_controlando_o_trafico.md)
   - [Helm: o marionetista de Kubernetes](/03_configuracion/07_Helm.md)
-  - [HPA: exprimindo o rendemento do noso k8s](/03_configuracion/08_Adaptandose_as_demandas.md)
+  - [🧮HPA: exprimindo o rendemento do noso k8s](/03_configuracion/08_Adaptandose_as_demandas.md)
   - [📝 Actividades](./00_actividades/03_modulo_3.md)
