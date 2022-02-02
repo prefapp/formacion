@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    image: prefapp/intensive-cpu-task
+    ports:
+      - '8084:8080'
+    volumes:
+      - .:/home/app
+
