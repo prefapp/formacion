@@ -42,6 +42,7 @@ spec:
   # Esta é a parte de selección de pods a escalar
   #-------------------------------------------------
   scaleTargetRef: 
+    apiVersion: apps/v1
     kind: Deployment
     name: o-meu-deployment
 
@@ -196,7 +197,7 @@ Co campo stabilizationWindowSeconds aseguramos que o valor máis alto aplicado n
 O obxectivo e evitar os chamados "flapping pods" ou pods que se están a se levantar e tirar constantemente. Así, se unha estabilización pasada tivo un valor maior/menor segundo o sesgo á presente, esta última non se aplica. 
 
 
-
+Na seguinte sección, faremos unha práctica guiada sobre o HPA. 
 
 
 
