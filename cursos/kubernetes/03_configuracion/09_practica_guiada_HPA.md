@@ -217,7 +217,7 @@ Con isto comenzará a xerar tráfico o noso servidor.
 
 ```bash
 # este comando mantennos informados do estado
-kubectl get hpa -n hpa -w                                                                          (kind-kind/default)
+kubectl get hpa -n hpa -w                                                                          
 
 NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          7m55s
@@ -268,10 +268,99 @@ O HPA tardou aproximadamente 5 min e volver a poñer as réplicas a 1. Podemos m
 
 4. A sección behavior: o control "fino" do noso HPA 🔬
 
-**Nota:**: para poder facer esta sección, compre ter unha versión de K8s >= 1.22
+**Nota:**: para poder facer esta sección, compre ter unha versión de K8s que o permita. Para comprobalo abonda con facer:
+
+```yaml
+# comprobar que está autoscaling/v2beta2
+
+kubectl api-versions | grep autoscaling/v2beta2
+
+autoscaling/v2beta2
+
+```
+
+E metemos os seguintes cambios na definición do noso HPA:
+
+```yaml
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: o-meu-hpa  
+
+spec: 
+
+  #-------------------------------------------------
+  # Esta é a parte de selección de pods a escalar
+  #-------------------------------------------------
+  scaleTargetRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cpu-intensive
 
 
+  #-------------------------------------------------
+  # Nesta parte establecemos os límites do escalado
+  #-------------------------------------------------
+  minReplicas: 1
+  maxReplicas: 10
 
+  
+  #---------------------------------------------------
+  # Nesta sección definimos os criterios (métricas)
+  # segundo as que escalar
+  #---------------------------------------------------
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  
+
+  #
+  # Control da desescalada
+  #
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 30
+      policies:
+      - type: Pods
+        value: 5
+        periodSeconds: 15
+
+```
+
+
+Nesta sección:
+
+1. Establecemos unha política que permite baixar de 5 en 5 pods cada 15 seg. 
+2. A ventá de estabilización a baixamos a 30 seg. 
+
+Agora, e co novo behavior que puxemos, o HPA é quen de baixar a escalóns de 5 pod en períodos de 15 segundos. 
+
+Despois de parchear o noso HPA con este behavior. 
+
+Lanzamos carga ata que escale a 8 réplicas (co curl anterior). 
+
+Cortamos o curl!. 
+
+Se vemos o comportamento:
+
+```bash
+kubectl get hpa -n hpa -w                                                                        
+
+NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+o-meu-hpa   Deployment/cpu-intensive   47%/50%   1         10        8          2m13s
+o-meu-hpa   Deployment/cpu-intensive   42%/50%   1         10        8          2m19s
+o-meu-hpa   Deployment/cpu-intensive   5%/50%    1         10        8          2m34s
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        7          2m49s
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        2          3m5s
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          3m25s
+
+```
+
+Como vemos baixou a 1 réplica nun minuto de tempo.
 
 
 
