@@ -90,10 +90,18 @@ Para esta práctica imos empregar métricas de tipo resource. Polo tanto necesit
 
 Un elemento que nos pode servir é o [metrics server](https://github.com/kubernetes-sigs/metrics-server).
 
-Para instalalo abonda con facer isto:
+Para instalalo imos empregar [Helm]():
 
 ```yaml
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# instalar helm (se non o está instalado)
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# empregamos o chart para lanzar o metrics-server
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+
+helm upgrade --install metrics-server metrics-server/metrics-server --set args="{--kubelet-insecure-tls}"
+
 ```
 
 Se todo vai ben poderemos facer xa consultas ó api do noso cluster de probas (en Kind):
@@ -245,5 +253,26 @@ o-meu-hpa   Deployment/cpu-intensive   47%/50%    1         10        7         
 Se paramos o curl que xera tráfico, o pouco tempo vemos que o número de réplicas baixa:
 
 ```bash
+NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+o-meu-hpa   Deployment/cpu-intensive   45%/50%   1         10        8          20m
+o-meu-hpa   Deployment/cpu-intensive   32%/50%   1         10        8          20m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        8          20m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        8          25m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        6          25m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        4          25m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        2          26m
+o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          26m
 
 ```
+O HPA tardou aproximadamente 5 min e volver a poñer as réplicas a 1. Podemos modificar este comportamento cunha sección __behavior__. 
+
+4. A sección behavior: o control "fino" do noso HPA 🔬
+
+**Nota:**: para poder facer esta sección, compre ter unha versión de K8s >= 1.22
+
+
+
+
+
+
+
