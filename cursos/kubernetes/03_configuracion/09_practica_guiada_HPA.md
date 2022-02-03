@@ -160,6 +160,7 @@ spec:
   # Esta é a parte de selección de pods a escalar
   #-------------------------------------------------
   scaleTargetRef: 
+    apiVersion: apps/v1
     kind: Deployment
     name: cpu-intensive
 
