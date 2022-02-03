@@ -60,7 +60,7 @@ metadata:
 spec:
   selector:
     app: cpu-intensive
-		concern: test
+    concern: test
   ports:
     - protocol: TCP
       port: 80
@@ -134,7 +134,7 @@ Xa temos un xeito de obter métricas (CPU/Memoria) dos nosos pods!
 
 É o momento de arrancar un HPA para a nosa app. 
 
-## 3. Definindo o HPA
+## 3. Definindo o HPA 📃
 
 A nosa app fai un uso intensivo de CPU polo tanto é a métrica clave para a controlar.
 
@@ -242,3 +242,8 @@ o-meu-hpa   Deployment/cpu-intensive   52%/50%    1         10        7         
 o-meu-hpa   Deployment/cpu-intensive   47%/50%    1         10        7          12m
 ``` 
 
+Se paramos o curl que xera tráfico, o pouco tempo vemos que o número de réplicas baixa:
+
+```bash
+
+```
