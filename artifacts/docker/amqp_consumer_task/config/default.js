@@ -1,7 +1,7 @@
 module.exports = {  
 
     amqp : {
-        server: process.env["AMQP_SERVER"] || "rabbitmq",
+        server: process.env["AMQP_SERVER"] || "amqps:rabbitmq",
 
         user: process.env["AMQP_USER"] || "user",
         

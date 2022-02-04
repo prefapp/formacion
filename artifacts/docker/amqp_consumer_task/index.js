@@ -4,10 +4,10 @@ const amqp = require('amqplib')
 const config = require("config")
 
 const opt = { 
-  credentials: amqp.credentials.plain(config.amqp.user, config.amqp.password) 
+  credentials: amqp.credentials.plain(config.get("amqp.user"), config.get("amqp.password")) 
 }
 
-amqp.connect(config.amqp.server, opt, function(err, connection) {
+amqp.connect(config.get("amqp.server"), opt, function(err, connection) {
   if (err) {
     throw err;
   }
@@ -18,7 +18,7 @@ amqp.connect(config.amqp.server, opt, function(err, connection) {
       throw error;
     }
 
-    const queue = config.amqp.queue;
+    const queue = config.get("amqp.queue")
 
     channel.assertQueue(queue, {
       durable: true
@@ -28,13 +28,13 @@ amqp.connect(config.amqp.server, opt, function(err, connection) {
 
     channel.consume(queue, function(msg) {
 
-      console.log("Recibido '%s'", msg.content.toString());
+      console.log("Recibido '%s'", msg.content.toString())
 
       setTimeout(function() {
   
         channel.ack(msg);
   
-      }, config.amqp.consume_rate);
+      }, config.get("amqp.consume_rate"))
   
     });
   
