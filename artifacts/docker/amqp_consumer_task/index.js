@@ -1,33 +1,42 @@
-const express = require("express")
 
-const app = express()
+const amqp = require('amqplib')
 
-function fibo(n){
+const config = require("config")
 
-  if(n < 2){
-    return 1
-  }
-  else{
-    return fibo(n-2) + fibo(n-1)
-  }
+const opt = { 
+  credentials: amqp.credentials.plain(config.amqp.user, config.amqp.password) 
 }
 
-app.get("/fibo/:number", function(req, res){
-
-  console.log(req.params)
-
-  const num = parseInt(req.params.number)
-
-  if(num){
-    res.json({num: fibo(num)})
+amqp.connect(config.amqp.server, opt, function(err, connection) {
+  if (err) {
+    throw err;
   }
-  else{
+  
+  connection.createChannel(function(error, channel) {
+  
+    if (error) {
+      throw error;
+    }
 
-    res.status(400)
-    res.end("")
-  }
-    
+    const queue = config.amqp.queue;
 
-})
+    channel.assertQueue(queue, {
+      durable: true
+    });
 
-app.listen("8080")
+    channel.prefetch(1);
+
+    channel.consume(queue, function(msg) {
+
+      console.log("Recibido '%s'", msg.content.toString());
+
+      setTimeout(function() {
+  
+        channel.ack(msg);
+  
+      }, 1000);
+  
+    });
+  
+  });
+});
