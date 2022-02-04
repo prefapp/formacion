@@ -9,7 +9,7 @@ module.exports = {
         
         queue: process.env["AMQP_QUEUE"] || "rabbit-queue",
         
-        consume_rate: process.env["AMQP_CONSUME_RATE"] 
+        consume_rate: process.env["AMQP_CONSUME_RATE"] || 1000
     }
 
 }
