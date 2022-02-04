@@ -34,7 +34,7 @@ amqp.connect(config.amqp.server, opt, function(err, connection) {
   
         channel.ack(msg);
   
-      }, 1000);
+      }, config.amqp.consume_rate);
   
     });
   
