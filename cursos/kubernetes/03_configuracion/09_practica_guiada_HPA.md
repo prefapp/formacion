@@ -12,7 +12,7 @@ kubectl create namespace hpa
 
 ```
 
-- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu onde definimos os recursos de cpu
+- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu onde definimos os recursos da cpu
 
 ```yaml
 
