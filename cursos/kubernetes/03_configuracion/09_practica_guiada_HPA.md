@@ -12,7 +12,7 @@ kubectl create namespace hpa
 
 ```
 
-- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu onde definimos os recursos da cpu
+- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu. Para que poida facer a media, compre definir unha sección resources.requests para saber cal e o consumo esperado de CPU / Memoria. De non ter estes valores o hpa non poderá facer os cálculos.
 
 ```yaml
 
@@ -44,11 +44,8 @@ spec:
         ports:
         - containerPort: 8080
         resources:
-          limits:
-            cpu: 500m
           requests:
-            cpu: 250m
-
+            cpu: 0.25
 
 ```
 - Abrimoslle tráfico mediante un service:
