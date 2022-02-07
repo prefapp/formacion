@@ -12,7 +12,7 @@ kubectl create namespace hpa
 
 ```
 
-- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu
+- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu onde definimos os recursos de cpu
 
 ```yaml
 
@@ -43,6 +43,12 @@ spec:
         image: frmadem/k8s-training-cpu-intensive-app:v1
         ports:
         - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 250m
+
 
 ```
 - Abrimoslle tráfico mediante un service:
@@ -169,7 +175,7 @@ spec:
   # Nesta parte establecemos os límites do escalado
   #-------------------------------------------------
   minReplicas: 1
-  maxReplicas: 2
+  maxReplicas: 10
 
   
   #---------------------------------------------------
