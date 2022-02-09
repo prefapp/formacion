@@ -1,5 +1,7 @@
 # Módulo 1: Primeiros pasos, configuración e instalación
-Nesta tarefa imos a preparar o noso sistema antes de empezar ca nosa infraestructura cloud, todo isto dende cero con [AWS](https://aws.amazon.com/) e [Terraform](https://www.terraform.io/).
+Nesta tarefa imos a preparar o noso sistema antes de empezar ca nosa infraestrutura
+
+tura cloud, todo isto dende cero con [AWS](https://aws.amazon.com/) e [Terraform](https://www.terraform.io/).
 
 Para poder traballar co provider [AWS](https://aws.amazon.com/) precisamos da creación dunha conta na que faremos uso de [free tier](https://aws.amazon.com/free) do que dispoñemos no Basic plan.
 Con este [free tier](https://aws.amazon.com/free) temos un ano de uso completamente gratuito nos servicios especificados sempre con certas limitacións.
@@ -100,7 +102,7 @@ Temos toda a información referida ós providers na propia páxina de [providers
 
 Durante toda a actividade vamos a estar facendo referencia ás **documentacións oficiais** e iremos traballando por bloques, facendo uso das configuración exemplo que a propia docu nos ofrece. Ésta é unha maneira moi áxil, cómoda e eficaz de traballar, xa que nos libra de redactar de máis, nos facilita a tarefa da definición dos diferentes recursos e eliminanos gran parte dos erros de sintaxe.
 
-### 1. Definindo o noso provider
+### 1. Definindo a versión e o provider
 No noso caso o noso provider vai a ser AWS e traballaermos ca conta creada previamente, polo que vamos á paxina de [providers de Terraform](https://registry.terraform.io/browse/providers), entramos en [AWS](https://registry.terraform.io/providers/hashicorp/aws/latest), e no apartado de [Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) buscamos a configuración de noso provider, que neste caso sería a seguinte:
 ```terraform
 terraform {
@@ -117,7 +119,9 @@ Aquí vemos que definimos o noso encabezado con provider requerido e a versión.
 > ⚠️ O óptimo e fixarse nos custos e locallización á hora de escoller unha rexión para traballar, xa que estas mesmas varían unhas das outras. Para a nosa actividade escolleremos **us-east-1** para homoxeneizar tódolos pasos. Deixo aquí unha interesante e breve análise de cálculo de custos na páxina [openupthecloud](https://openupthecloud.com/which-aws-region-cheapest/) entre as diferentes rexións e os principais servizos.
 
 ### 2. Asignando as nosas credenciais
-No seguinte paso iremos a configurar a autenticación. Polo momento [hardcodearemos](https://en.wikipedia.org/wiki/Hard_coding) as nosas keys para centrarnos nos aspectos máis básico. Este é un proceso delicado que trataremos máis adiante co sea propio apartado.
+No seguinte paso iremos a configurar a autenticación mediante [access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html): As access keys son credenciais de acceso para users IAM ou root. Podemos usalas para identificarnos sen user/pass e xerar acceso os servizos AWS e APIs, como cando usamos o AWS CLI.
+
+Polo momento [hardcodearemos](https://en.wikipedia.org/wiki/Hard_coding) as nosas keys para centrarnos nos aspectos máis básico. Este é un proceso delicado que trataremos máis adiante co sea propio apartado.
 
 ```terraform
 # Definimos o noso provider AWS cas credenciais
@@ -129,7 +133,7 @@ provider "aws" {
 ```
 Para conseguir as nosas [credenciais](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) teremos que crealas en primer lugar, polo que imos a:
 
-`AWS` -> `nome_usuario` -> `My Security Credentials` -> `Access keys (access key ID and secret access key)` -> `Create New Access Key`
+`AWS` -> `nome_usuario` -> `Security Credentials` -> `Access keys (access key ID and secret access key)` -> `Create New Access Key`
 
 Facemos click e creamos a nosa **access key** co seu **secret** que empregaríamos na definición do noso provider para poder conectar. Temos a opción de descargar as nosas keys en formato [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) o cal nos facilita a tarefa para telas dispoñibles.
 
@@ -206,7 +210,11 @@ terraform destroy
 ```
 Previo a eliminación da nosa instancia, ó igual que co resto de comandos móstrasenos unha pantalla cos cambios a acomenter e pídesenos unha confirmación previa á destruir. Ésta información é moi útil xa que nos permite ter un vistazo rápido e directo de todas as modificacións.
 
-> ⚠️ Por defecto `terraform destroy` destrúe toda a nosa infraestructura e non é unha técnica que vaiamos a utilizar frecuentemente, senón que é máis usual ir facendo `terraform apply` e ir modificando a nosa infraestructura.
+> ⚠️ Por defecto `terraform destroy` destrúe toda a nosa infraestrutura
+
+tura e non é unha técnica que vaiamos a utilizar frecuentemente, senón que é máis usual ir facendo `terraform apply` e ir modificando a nosa infraestrutura
+
+tura.
 
 A técnica máis usual para borrar artefactos é borrando no noso ficheiro Terraform o recurso e realizando un `terraform apply`.
 
