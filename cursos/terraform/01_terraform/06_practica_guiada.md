@@ -401,7 +401,11 @@ Agora imos a conectar por SSH e para iso na páxina da instancia temos un botón
 
 ![SSH](./../_media/proba3_openssh.png)
 
-> Para Windows teríamos que facer uso do cliente [Putty](https://www.putty.org/)
+Para Windows teríamos que facer uso do cliente [Putty](https://www.putty.org/)
+
+> ⚠️ Unha vez teñamos toda a práctica feita podemos tirar todo abaixo co `terraform destroy`. Compre saber que aínda que estamos co free tier de Amazon sempre temos limitacións. É mellor sempre non ter activo o que non vaiamos a usar ou non precisemos.
+>
+> Ó ficheiro de Terraform darémoslle uso nos seguintes módulos de prácticas.
 
 ### Evaluación
 
