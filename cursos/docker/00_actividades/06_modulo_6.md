@@ -160,7 +160,7 @@ Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de
 
 ### 1. Para rematar, e como tarefa extra, vamos a colocar un  proxy inverso que nos permita servir multiples aplicacións dende o noso cluster swarm, nun porto estandard 80, 443, e ademáis sexa dinámico para ser capaz de saber en cada momento cales son os contedores asociados aos servicios web.
 
-Para lograr esto podemos conectar un proxy inverso diante da nosa aplicación , [seguindo este exemplo](https://braybaut.com/utilizando-traefik-como-dinamic-reverse-proxy-en-docker-swarm-sobre-aws/). Empregaremos un dos sistemas de proxy inverso máis recoñecidos na actualidade para o uso nos entornos de contedores: [traefik](https://traefik.io/)
+Para lograr esto podemos conectar un proxy inverso diante da nosa aplicación , [seguindo este exemplo](https://braybaut.dev/posts/utilizando-traefik-como-dynamic-reverse-proxy-en-docker-swarm-sobre-aws/). Empregaremos un dos sistemas de proxy inverso máis recoñecidos na actualidade para o uso nos entornos de contedores: [traefik](https://traefik.io/)
 
 O obxectivo desta última tarefa e poñer a convivir 2 aplicacións (a de Wordpress ou Ghost do exemplo anterior) ca de Nesquik vs Colacao, no mesmo cluster, atendendo as peticións no porto estandard http (80) 
 
