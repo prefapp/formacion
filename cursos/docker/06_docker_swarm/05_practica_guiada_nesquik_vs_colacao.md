@@ -28,7 +28,7 @@ Para esto vamos a agregar unha restricción de xeito que ese servicio só se exe
 
 _\*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen plugins de rede, e os que proveen plugins para a xestión de volumenes. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin)_.
 
-![img](../_media/05_docker_swarm/swarm07.png)
+![img](../_media/05_docker_swarm/swarm08.png)
 
 Tamen e necesario engadir as variables para a configuración de usuario e contrasinal de postgres:
 
@@ -46,7 +46,7 @@ Para o servicio de votacións, como é unha aplicación que non garda estado en 
 
 Ademáis cando faga falta actualizar o servicio, queremos que se execute a actualización das 2 replicas á vez, e por suposto, se se cae que automáticamente se volva a arrincar soa.
 
-![img](../_media/05_docker_swarm/swarm08.png)
+![img](../_media/05_docker_swarm/swarm09.png)
 
 Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel correo non soporta máis, e unha política de restart on-failure.
 
