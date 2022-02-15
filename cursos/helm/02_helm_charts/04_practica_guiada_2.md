@@ -18,7 +18,7 @@ Nosotros vamos a añadir una [Subchart de mysql](https://artifacthub.io/packages
 
 1. Borramos de nuestra carpeta `/templates` los archivos `bbdd-service.yaml` y `bbdd-deploy.yaml`.
 
-1. Añadimos al archivo `Chart.yaml`  la siguiente dependencia:
+2. Añadimos al archivo `Chart.yaml`  la siguiente dependencia:
   ```yaml
   #meiga-project/Chart.yaml
   apiVersion: v2
@@ -34,7 +34,7 @@ Nosotros vamos a añadir una [Subchart de mysql](https://artifacthub.io/packages
     repository: https://charts.bitnami.com/bitnami
   ```
 
-1. Modificamos nuestro `values.yaml` para editar la configuración de la *Subchart*:
+3. Modificamos nuestro `values.yaml` para editar la configuración de la *Subchart*:
 
   ```yaml
   # meiga-project/values.yaml
@@ -49,7 +49,17 @@ Nosotros vamos a añadir una [Subchart de mysql](https://artifacthub.io/packages
   ```
   Aquellos valores del `values.yaml` raíz que se encuentren dentro de "mysql:" machacarán los *Values* de la subchart. Al hacer el install, todo lo que se encuentra dentro de "mysql:" en el `values.yaml` raíz se utilizará para crear un archivo *values* que se le pasa a la *Subchart mysql* cambiando así sus valores por defecto.
 
-1. Ejecutamos el siguiente comando para bajarnos del repo la *Subchart* indicada en `Chart.yaml`:
+4. Por último tenemos que volver a editar el _MYSQL_HOST_ nuestro configmap para apuntar nuestro nuevo service creado en la *Subchart*:
+
+```yaml
+...
+data:
+  MYSQL_HOST: {{ .Release.Name }}-mysql
+...
+```
+> Lo más importante es fijarnos el nombre del service que nos crea la *Subchart*, que en este caso es el arriba indicado, pero puede diferir según la chart que empleemos.
+
+5. Ejecutamos el siguiente comando para bajarnos del repo la *Subchart* indicada en `Chart.yaml`:
   ```shell
   $ helm dependency build
   ```
