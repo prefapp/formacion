@@ -76,13 +76,13 @@ mkdir /sys/fs/cgroup/grupo1
 
 Se listamos a nova carpeta, veremos que o kernel creou tódolos ficheiros necesarios para xestionar as controladoras que especificamos na raíz.
 
-Pódese consultar que controladoras están dispoñibles nunha carpeta consultando a seu ficheiro cgroup.controllers:
+Pódese consultar que controladoras están dispoñibles nunha carpeta consultando a seu ficheiro `cgroup.controllers`:
 
 ```bash
 cat /sys/fs/cgroup/grupo1/cgroup.controllers
 ```
 
-Agora que xa temos o grupo creado, comezamos establecendo limitacións na memoria. Para isto, actualizaremos o ficheiro memory.max. Por exemplo, para limitar a memoria solicitable por un proceso a 100MB, utilizaríamos:
+Agora que xa temos o grupo creado, comezamos establecendo limitacións na memoria. Para isto, actualizaremos o ficheiro `memory.max`. Por exemplo, para limitar a memoria solicitable por un proceso a 100MB, utilizaríamos:
 
 ```bash
 echo 100000000 > /sys/fs/cgroup/grupo1/memory.max
@@ -90,7 +90,7 @@ echo 100000000 > /sys/fs/cgroup/grupo1/memory.max
 
 Agora que xa temos o grupo creado e a limitación configurada, imos ver como teríamos que facer para engadir un proceso a este grupo. 
 
-Para isto, teríamos que localizar o pid do proceso e engadilo ó ficheiro cgroup.procs do cgroup. Por exemplo, se temos un proceso co pid 1441, faríamos o seguinte para metelo no grupo de control:
+Para isto, teríamos que localizar o pid do proceso e engadilo ó ficheiro `cgroup.procs` do cgroup. Por exemplo, se temos un proceso co pid 1441, faríamos o seguinte para metelo no grupo de control:
 
 ```bash
 echo 1441 > /sys/fs/cgroup/grupo1/cgroup.procs
