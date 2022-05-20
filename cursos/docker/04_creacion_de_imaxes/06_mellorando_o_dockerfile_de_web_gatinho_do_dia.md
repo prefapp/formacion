@@ -44,27 +44,27 @@ Se o vemos nun Dockerfile:
 
 ```dockerfile
 # Constructor: stage de produción do /venv con todo o necesario para o noso proxecto
-FROM ubuntu:16.04 as builder
+FROM ubuntu:20.04 as builder
 
 # Instalamos o software necesario
 RUN apt-get update && \
     apt-get install -y libssl-dev libffi-dev \
-    git python-dev build-essential \
-    python-pip python-virtualenv
+    git python3-pip build-essential \
+    python3-venv
 
 # Montamos o pipenv e clonamos o repo dos gatiños
-RUN bash -c "virtualenv /venv && \
+RUN bash -c "python3 -m venv /venv && \
     source /venv/bin/activate && \
     git clone https://github.com/prefapp/catweb.git /venv/catweb && \
     pip install -r /venv/catweb/requirements.txt"
 
 # Final: stage final (todo o stage anterior desaparece, salvo odirectorio /venv)
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 COPY --from=builder /venv /venv
 
 RUN apt-get update && \
-    apt-get install -y python-virtualenv && \
+    apt-get install -y python3-venv && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -73,7 +73,7 @@ ENV PATH="/venv/bin:${PATH}" \
 
 EXPOSE 5000
 
-# COmando de arranque do contedor
+# Comando de arranque do contedor
 CMD ["python", "/venv/catweb/app.py"]
 ```
 
