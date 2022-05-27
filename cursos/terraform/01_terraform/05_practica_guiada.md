@@ -238,6 +238,6 @@ A técnica máis usual para borrar artefactos é borrando no noso ficheiro Terra
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
 **Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 15 puntos
-- Peso desta tarefa no seu tema ....................................................... 15 %
+- Peso desta tarefa na cualificación final ........................................ 25 puntos
+- Peso desta tarefa no seu tema ....................................................... 25 %
 ---

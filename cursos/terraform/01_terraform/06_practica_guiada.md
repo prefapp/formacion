@@ -73,8 +73,8 @@ Vemos como a nosa subnet apunta á nosa VPC que nomeamos `production`, e que ten
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
 **Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 10 puntos
-- Peso desta tarefa no seu tema ....................................................... 10 %
+- Peso desta tarefa na cualificación final ........................................ 25 puntos
+- Peso desta tarefa no seu tema ....................................................... 25 %
 ---
 
 # Módulo 4: Ficheiros de Terraform
@@ -427,6 +427,6 @@ Para Windows teríamos que facer uso do cliente [Putty](https://www.putty.org/)
 **Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
 
 **Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 15 puntos
-- Peso desta tarefa no seu tema ....................................................... 15 %
+- Peso desta tarefa na cualificación final ........................................ 40 puntos
+- Peso desta tarefa no seu tema ....................................................... 40 %
 ---
