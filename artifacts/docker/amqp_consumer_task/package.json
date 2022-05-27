@@ -1,0 +1,31 @@
+{
+  "name": "prefapp-amqp-consumer-task",
+  "version": "0.1.0",
+  "description": "an example application for consuming messages of a amqp server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start-producer": "node producer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prefapp/formacion.git"
+  },
+  "keywords": [
+    "prefapp",
+    "k8s",
+    "example"
+  ],
+  "author": "Francisco Maseda Muiño <francisco.maseda@prefapp.es>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prefapp/formacion/issues"
+  },
+  "homepage": "https://github.com/prefapp/formacion#readme",
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "config": "^3.3.7",
+    "express": "^4.17.2"
+  }
+}

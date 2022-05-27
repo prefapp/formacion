@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    image: prefapp/amqp_consumer_task
+    ports:
+      - '8084:8080'
+    volumes:
+      - .:/home/app
+    environment:
+      AMQP_SERVER: amqp://rabbitmq:5672
+      AMQP_USER: user
+      AMQP_PASSWORD: "foofoo123"
+      AMQP_QUEUE: "test"
+  rabbitmq:
+    image: docker.io/bitnami/rabbitmq:3.9
+    ports:
+      - '4369:4369'
+      - '5551:5551'
+      - '5552:5552'
+      - '5672:5672'
+      - '25672:25672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_USERNAME: user
+      RABBITMQ_PASSWORD: foofoo123
+
