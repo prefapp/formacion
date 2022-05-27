@@ -67,6 +67,26 @@ Pasos:
 1. **Consultar** e **analizar** a documentación sobre [cgroups: grupos de control de procesos](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades).
 
 2. **Traballar** cos comandos de xestión de cgroups:
+- Os pasos a seguir serán distintos en función de se o sistema usa cgroups v1 ou cgroups v2. Pódese comprobar a versión lanzando o seguinte comando:
+
+```bash
+grep cgroup /proc/filesystems
+```
+
+O sistema terá soporte para cgroups v2 se o resultado é:
+
+```bash
+nodev    cgroup
+nodev    cgroup2
+```
+
+Pola contra, soportará únicamente cgroups v1 se o resultado é:
+
+```bash
+nodev    cgroup
+```
+
+
 - Como script de test podes empregar este:
 
 ```bash
@@ -89,8 +109,15 @@ done
 /var/log/messages
 ```
 
+Ou, se non existe este ficheiro:
+
+```bash
+/var/log/syslog
+```
+
 3. **Explorar** o control de cpu nos cgroups.
 - Hai unha información excelente nesta [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu). Tamén temos un bó exemplo [neste enlace](https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups) empregando as ferramentas de libcgroup.
+- No caso de cgroups v2, podédesvos guiar pola seguinte [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_monitoring_and_updating_the_kernel/using-cgroups-v2-to-control-distribution-of-cpu-time-for-applications_managing-monitoring-and-updating-the-kernel).
 - Para testear unha aplicación de uso extensivo de cpu, recoméndase matho-primes:
  - Baixar o paquete https://launchpad.net/ubuntu/+source/mathomatic/16.0.5-1.
  - Descomprimir. 
@@ -104,7 +131,7 @@ done
 
 - Nun pdf, mostrar as sentencias necesarias para:
  1. Crear un grupo de control de emprego de cpu. 
- 2. Introducir limitacións de cpu_shares.
+ 2. Introducir limitacións de `cpu_shares` en caso de usar cgroups v1, ou de `cpu.weight` en caso de usar cgroups v2.
  3. Establecer unha ratio de limitación de 2:1
  4. Lanzar 3 instancias do programa de test e mostrar co top as limitación de cpu. 
 

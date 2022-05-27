@@ -7,17 +7,19 @@ Existen diversos xeitos para interactuar co sistema de cgroups:
 - Mediante as ferramentas cgcreate, cgexec e cgclassify do paquete [libcgroup](http://libcg.sourceforge.net/html/main.html).
 - Mediante outras ferramentas tales como [lxc](https://linuxcontainers.org/) ou o propio [systemd](https://es.wikipedia.org/wiki/Systemd).
 
-A - Control dos cgroups mediante manipulación directa do sistema de ficheiros de cgroup
+Para comprender o seu funcionamento, ímonos centrar no control dos cgroups mediante manipulación directa do sistema de ficheiros de cgroup.
 
-O kernel monta o sistema de ficheiros de cgroups na ruta ```/sys/fs/cgroup```. Dado que se trata de un sistema de ficheiros, pódese interactuar con él a través das ferramentas "tradicionais" dos sistemas de tipo UNIX. 
+O kernel monta o sistema de ficheiros de cgroups na ruta ```/sys/fs/cgroup```. Dado que se trata de un sistema de ficheiros, pódese interactuar con él a través das ferramentas "tradicionais" dos sistemas de tipo UNIX.
 
-Así, pódese crear un novo grupo:
+Dado que a estructura das carpetas é distinta en función á versión de cgroups utilizada, a continuación imos diferenciar como se faría a configuración en cada unha delas.
+
+## Xestión de recursos con cgroups v1
+
+Para crear un novo grupo, creamos unha nova carpeta co nome que queiramos darlle:
 
 ```bash
 mkdir /sys/fs/cgroup/memory/grupo1
 ```
-
-Con esto creamos un grupo (de nome "grupo1").
 
 Se listamos o seu contido (mediante ```ls```) veremos que o Kernel creou unha morea de elementos, en forma de ficheiros, que controlan diversos parámetros de execución dos procesos que estén dentro do grupo.
 
@@ -42,10 +44,66 @@ Se queremos comprobar que realmente está correndo dentro dese grupo de control,
 ps -o cgroup 1441
 ```
 
-O sistema permite tamén monitorizar o consumo de memoria dun proceso que esté dentro do grupo. Así, mediante esta sentencia:
+O sistema permite tamén monitorizar o consumo de memoria do conxunto de procesos que estén dentro do grupo. Así, mediante esta sentencia:
 
 ```bash
 cat /sys/fs/cgroup/memory/grupo1/memory.usage_in_bytes
 ```
 
 Poderíamos saber a memoria en bytes que está a empregar o noso proceso (e tódolos seus procesos descendentes).
+
+## Xestión de recursos con cgroups v2
+
+Para comezar, comprobamos que os controladores que nos interesan (neste caso cpu e memory) se atopan no ficheiro /sys/fs/cgroup/cgroup.subtree_control:
+
+```bash
+cat /sys/fs/cgroup/cgroup.subtree_control
+```
+
+En caso de non ser así, podemos engadir os que nos falten do seguinte xeito:
+
+```bash
+echo "+cpu" >> /sys/fs/cgroup/cgroup.subtree_control
+```
+
+Este ficheiro se creará tamén dentro dos novos cgroups, permitindo flexibilizar que controladores estarán dispoñibles para os seus grupos fillo.
+
+Engadimos un novo grupo, de nome "grupo1", creando unha nova carpeta:
+
+```bash
+mkdir /sys/fs/cgroup/grupo1
+```
+
+Se listamos o contido da nova carpeta, veremos que o kernel creou tódolos ficheiros necesarios para xestionar as controladoras que especificamos na raíz.
+
+Pódese consultar que controladoras están dispoñibles nunha carpeta consultando a seu ficheiro `cgroup.controllers`:
+
+```bash
+cat /sys/fs/cgroup/grupo1/cgroup.controllers
+```
+
+Tras crear o grupo, comezamos establecendo limitacións na memoria. Para isto, actualizaremos o ficheiro `memory.max`. Por exemplo, para limitar a memoria solicitable por un proceso a 100MB, utilizaríamos:
+
+```bash
+echo 100000000 > /sys/fs/cgroup/grupo1/memory.max
+```
+
+Agora que xa temos o grupo creado e a limitación configurada, imos engadir un proceso a este grupo. 
+
+Para isto, teríamos que localizar o pid do proceso e engadilo ó ficheiro `cgroup.procs` do cgroup. Por exemplo, se temos un proceso co pid 1441, faríamos o seguinte para metelo no grupo de control:
+
+```bash
+echo 1441 > /sys/fs/cgroup/grupo1/cgroup.procs
+```
+
+Podemos verificar que o proceso esté realmente correndo no grupo de control do seguinte modo:
+
+```bash
+ps -o cgroup 1441
+```
+
+O sistema permite tamén monitorizar o consumo de memoria que están realizando os procesos que hai dentro do grupo, así como os seus procesos fillos. Faríase consultando o seguinte ficheiro:
+
+```bash
+cat /sys/fs/cgroup/grupo1/memory.current
+```
