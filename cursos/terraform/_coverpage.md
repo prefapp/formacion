@@ -1,6 +1,6 @@
 ![logo](_media/icon.png)
 
-# Terraform &nbsp;<small>🌏</small>
+# Terraform &nbsp;<small>🏗️ 🌏</small>
 
 > Complete container solution
 
