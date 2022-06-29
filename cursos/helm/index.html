@@ -63,17 +63,19 @@
               + html
               + '\n\n----\n\n'
           }),
-            hook.afterEach(function (html) {
+          hook.afterEach(function (html) {
               if (vm.route.path === '/') {
                 return html
               }
             })
         },
         function (hook) {
+          const d = new Date();
+          let year = d.getFullYear();
           var footer = [
             '<hr/>',
             '<footer>',
-            '<span> &copy;2020<strong> | </strong><a href="https://prefapp.es">PREFAPP</a> Cloud Consulting S.L.</span>',
+            `<span> &copy;${year}<strong> | </strong><a href="https://prefapp.es">PREFAPP</a> Cloud Consulting S.L.</span>`,
             '</footer>'
           ].join('');
         hook.afterEach(function (html) {

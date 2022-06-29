@@ -29,7 +29,7 @@ div#app:empty:before {
   vertical-align: middle;
 }
 .progress {
-  background-color: var(--theme-color, #018DBA);
+  background-color: var(--theme-color, #763FE0);
   height: 2px;
   left: 0;
   position: fixed;
@@ -41,7 +41,7 @@ div#app:empty:before {
 }
 .search .search-keyword,
 .search a:hover {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
 }
 .search .search-keyword {
   font-style: normal;
@@ -113,10 +113,10 @@ li input[type="checkbox"] {
 }
 .app-nav a.active,
 .app-nav a:hover {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
 }
 .app-nav a.active {
-  border-bottom: 2px solid var(--theme-color, #018DBA);
+  border-bottom: 2px solid var(--theme-color, #763FE0);
 }
 .app-nav li {
   display: inline-block;
@@ -174,7 +174,7 @@ li input[type="checkbox"] {
 }
 .github-corner svg {
   color: #fff;
-  fill: var(--theme-color, #018DBA);
+  fill: var(--theme-color, #763FE0);
   height: 80px;
   width: 80px;
 }
@@ -283,7 +283,7 @@ main.hidden {
   opacity: 0.4;
 }
 .sidebar-toggle span {
-  background-color: var(--theme-color, #018DBA);
+  background-color: var(--theme-color, #763FE0);
   display: block;
   margin-bottom: 4px;
   width: 16px;
@@ -557,9 +557,9 @@ section.cover ul {
 }
 section.cover .cover-main > p:last-child a {
   border-radius: 2rem;
-  border: 1px solid var(--theme-color, #018DBA);
+  border: 1px solid var(--theme-color, #763FE0);
   box-sizing: border-box;
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
   display: inline-block;
   font-size: 1.05rem;
   letter-spacing: 0.1rem;
@@ -569,7 +569,7 @@ section.cover .cover-main > p:last-child a {
   transition: all 0.15s ease;
 }
 section.cover .cover-main > p:last-child a:last-child {
-  background-color: var(--theme-color, #018DBA);
+  background-color: var(--theme-color, #763FE0);
   color: #fff;
 }
 section.cover .cover-main > p:last-child a:last-child:hover {
@@ -580,11 +580,11 @@ section.cover .cover-main > p:last-child a:hover {
   color: inherit;
 }
 section.cover blockquote > p > a {
-  border-bottom: 2px solid var(--theme-color, #018DBA);
+  border-bottom: 2px solid var(--theme-color, #763FE0);
   transition: color 0.3s;
 }
 section.cover blockquote > p > a:hover {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
 }
 .sidebar,
 body {
@@ -613,7 +613,7 @@ body {
 }
 .sidebar ul li.active > a {
   border-right: 2px solid;
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
   font-weight: 600;
 }
 .app-sub-sidebar li:before {
@@ -630,7 +630,7 @@ body {
   font-weight: 600;
 }
 .markdown-section a {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
   font-weight: 600;
 }
 .markdown-section h1 {
@@ -670,7 +670,7 @@ body {
   padding-left: 1.5rem;
 }
 .markdown-section blockquote {
-  border-left: 4px solid var(--theme-color, #018DBA);
+  border-left: 4px solid var(--theme-color, #763FE0);
   color: #858585;
   margin: 2em 0;
   padding-left: 20px;
@@ -731,7 +731,7 @@ body {
   color: #2973b7;
 }
 .token.string {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
 }
 .token.selector {
   color: #6679cc;
@@ -749,7 +749,7 @@ body {
 .token.control,
 .token.directive,
 .token.unit {
-  color: var(--theme-color, #018DBA);
+  color: var(--theme-color, #763FE0);
 }
 .token.function,
 .token.keyword {
@@ -853,12 +853,12 @@ label.checkboxgreen input[type="checkbox"]:focus ~ span {
   border: 2px solid #aab0b9;
 }
 label.checkboxgreen input[type="checkbox"]:focus:checked ~ span {
-  border: 2px solid #018DBA;
+  border: 2px solid #763FE0;
 }
 label.checkboxgreen input[type="checkbox"]:checked ~ span {
   color: #FFFFFF;
-  background: #018DBA url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTIgOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPHBhdGggZD0iTTQuNTc1IDguOTc3cy0uNDA0LS4wMDctLjUzNi0uMTY1TC4wNTcgNS42NGwuODI5LTEuMjI3TDQuNDcgNy4yNjggMTAuOTIxLjA4NmwuOTIzIDEuMTAzLTYuODYzIDcuNjRjLS4xMzQtLjAwMy0uNDA2LjE0OC0uNDA2LjE0OHoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPg0KPC9zdmc+) 50% 40% no-repeat;
-  border: 2px solid #018DBA;
+  background: #763FE0 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTIgOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPHBhdGggZD0iTTQuNTc1IDguOTc3cy0uNDA0LS4wMDctLjUzNi0uMTY1TC4wNTcgNS42NGwuODI5LTEuMjI3TDQuNDcgNy4yNjggMTAuOTIxLjA4NmwuOTIzIDEuMTAzLTYuODYzIDcuNjRjLS4xMzQtLjAwMy0uNDA2LjE0OC0uNDA2LjE0OHoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPg0KPC9zdmc+) 50% 40% no-repeat;
+  border: 2px solid #763FE0;
 }
 label.checkboxgreen span {
   border-radius: 3px;
