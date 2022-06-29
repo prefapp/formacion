@@ -84,6 +84,16 @@
       ]
     }
   </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/mermaid/dist/mermaid.js"></script>
+  <script src="dist/docsify-mermaid.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: 'loose',
+      logLevel: 1
+    });
+  </script>
   <script src="./_cdn/motor.js"></script>
   <script src="./_cdn/search.js"></script>
   <script src="./_cdn/copy-code.js"></script>
