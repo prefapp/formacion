@@ -9,7 +9,7 @@ $(document).ready(function () {
 });
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  var dataText = ["docker", "git", "docker-images", "kubernetes", "istio", "helm", "docker-compose"];
+  var dataText = ["docker", "git", "docker-images", "kubernetes", "istio", "helm", "docker-compose", "terraform"];
 
   function typeWriter(text, i, fnCallback) {
     if (i < text.length) {
