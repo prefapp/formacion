@@ -10,7 +10,21 @@
   <meta name="description" content="Formación interna PREFAPP - Terraform">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="./_cdn/theme.css" title="vue">
+  
+  
+  
+  
+  
+ // Import mermaid
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
+  
+  
+  
+  
+  
+  
   <style>
     nav.app-nav li ul {
       min-width: 100px;
@@ -21,7 +35,35 @@
 <body>
   <div id="app">Cargando ...</div>
   <script>
+
+    
+    var num = 0;
+mermaid.initialize({ startOnLoad: false });
+    
+    
+    
     window.$docsify = {
+      
+      
+      
+      
+    markdown: {
+    renderer: {
+      code: function(code, lang) {
+        if (lang === "mermaid") {
+          return (
+            '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
+          );
+        }
+        return this.origin.code.apply(this, arguments);
+      }
+    }
+  }
+      
+      
+      
+      
+      
       alias: {
         '/.*/_navbar.md': '/_navbar.md',
       },
