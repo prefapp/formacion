@@ -1,5 +1,5 @@
 # Providers e recursos
-## O providerr
+## O provider
 Un [provider](https://www.terraform.io/language/providers) en Terraform é un plugin que permite os usuarios manexar unha API externa. Os plugins de provider funcionan como unha capa de abstracción que permite ó noso Terraform comunicar coas diferentes nubes, providers, databases e servizos.
 
 ```mermaid
