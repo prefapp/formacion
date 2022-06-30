@@ -88,6 +88,16 @@
   <script src="./_cdn/motor.js"></script>
   <script src="./_cdn/search.js"></script>
   <script src="./_cdn/copy-code.js"></script>
+  <script src="//unpkg.com/mermaid/dist/mermaid.js"></script>
+  <script src="//unpkg.com/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true });</script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: 'loose',
+      logLevel: 1
+    });
+  </script>
 </body>
 
 </html>
