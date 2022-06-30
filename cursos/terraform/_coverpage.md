@@ -2,7 +2,7 @@
 
 # Terraform &nbsp;<small>🏗️ 🌏</small>
 
-> Complete container solution
+> Deliver infraestructure as code
 
 - Infraestructura como código
 - Estados en terraform
