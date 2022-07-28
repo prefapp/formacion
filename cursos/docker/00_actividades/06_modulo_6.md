@@ -36,7 +36,7 @@ $ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
 
 De tódolos xeitos tedes [ná páxina da documentación de docker-machine](https://docs.docker.com/machine/install-machine/), máis detalles dos diferentes métodos de instalación dispoñibles.
 
-#### Crear a primeira máquina virtual con docker-machine
+#### 1) Crear a primeira máquina virtual con docker-machine
 
 ```sh
 docker-machine create -d virtualbox vbox01
@@ -109,7 +109,7 @@ unha stack con [Wordpress](https://hub.docker.com/_/wordpress/), tamén con pers
 
 Basándonos no cluster swarm construido no apartado anterior despreguemos sobre él a aplicación de [nesquik vs colacao vista no módulo 4](https://formacion.4eixos.com/tema_4_web/prctica_guiada_nesquik_vs_colacao.html).
 
-### 1. Para comezar vamos a adaptar o [docker-compose.yaml da aplicación anterior]()https://s3-eu-west-1.amazonaws.com/formacion.4eixos.com/solucions/nesquik_vs_colacao_docker-compose.yml, ao formato v3, preparado para o lanzamento nun swarm, cunha serie de melloras á hora de dar un servicio máis confiable.
+ ### Para comezar vamos a adaptar o [docker-compose.yaml da aplicación anterior](https://s3-eu-west-1.amazonaws.com/formacion.4eixos.com/solucions/nesquik_vs_colacao_docker-compose.yml) ao formato v3, preparado para o lanzamento nun swarm, cunha serie de melloras á hora de dar un servicio máis confiable.
 
 Podedes descargar unha copia de exemplo do docker-compose da aplicación de nesquik vs colacao aqui.
 
@@ -126,7 +126,9 @@ No caso do servicio de redis, só queremos que teña unha única replica, e unha
 
 * En caso de fallo do container, o cluster de Swarm debe encargarse de levantalo de novo, e que o intente polo menos 3 veces, con 10s entre cada intento, nunha ventá de tempo de 120s
 
-	1. Postgresql
+```
+2. Postgresql
+```
 
 No caso do servicio de base de datos, como é algo bastante crítico QUE NECESITA PERSISTENCIA, os datos da mesma se teñen que almacenar nun volumen DEPENDENTE DO ANFITRIÓN* onde corre o contedor.
 
@@ -134,47 +136,98 @@ Por eso, non podemos permitir que o scheduler do Swarm nos mova a base de datos 
 
 Para esto vamos a agregar unha restricción de xeito que ese servicio só se execute no nodo **Manager**.
 
-_ \*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen **plugins de rede**, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin). _
+_ \*Docker se caracteriza por traer "baterías incluidas", pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen **plugins de rede**, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin). _
 
-	1. Votacions
+	3. Votacions
 
 Para o servicio de votacións, como é unha aplicación que non garda estado en si mesma, e está tendo moita demanda ;) vamos a escalalo a 2 replicas, de xeito que o cluster se encargue de balancear as peticións entre cada unha delas.
 
 Ademáis cando faga falta actualizar o servicio, queremos que se execute a actualización das 2 replicas á vez, e por suposto, se se cae que automáticamente se volva a arrincar soa.
 
-	1. Worker
+	4. Worker
 
-Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e admeáis agregarmoes unha política de restart on-failure.
+Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e ademáis agregaremos unha política de restart on-failure.
 
-	1. Resultados:
+	5. Resultados:
 
-Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de votacions.
+Para o nodo de resultados agregamos outras 2 réplicas, de maneira similar ao de votacions.
 
-### 1. Unha vez completado esto só queda facer o deploy de esta stack 
+### Unha vez completado esto só queda facer o deploy de esta stack 
 
-	1.  Para esto o primeiro sería preparar ó cliente de docker para que fale contra o nodo Manager.
+	1. Para esto o primeiro sería preparar ó cliente de docker para que fale contra o nodo Manager.
 
-	1. E finalmente quedaría facer o deploy desta stack
+	2. E finalmente quedaría facer o deploy desta stack
 
-	1. ¿Como podemos  comprobar como o cluster vai lanzando os servicios e tasks correspondentes?
+	3. ¿Como podemos  comprobar como o cluster vai lanzando os servicios e tasks correspondentes?
 
-### 1. Para rematar, e como tarefa extra, vamos a colocar un  proxy inverso que nos permita servir multiples aplicacións dende o noso cluster swarm, nun porto estandard 80, 443, e ademáis sexa dinámico para ser capaz de saber en cada momento cales son os contedores asociados aos servicios web.
+### Para rematar, e como tarefa extra, vamos a colocar un  proxy inverso que nos permita servir multiples aplicacións dende o noso cluster swarm, nun porto estandard 80, 443, e ademáis sexa dinámico para ser capaz de saber en cada momento cales son os contedores asociados aos servicios web.
 
-Para lograr esto podemos conectar un proxy inverso diante da nosa aplicación , [seguindo este exemplo](https://braybaut.dev/posts/utilizando-traefik-como-dynamic-reverse-proxy-en-docker-swarm-sobre-aws/). Empregaremos un dos sistemas de proxy inverso máis recoñecidos na actualidade para o uso nos entornos de contedores: [traefik](https://traefik.io/)
+Para lograr esto podemos conectar un proxy inverso diante da nosa aplicación. Empregaremos un dos sistemas de proxy inverso máis recoñecidos na actualidade para o uso nos entornos de contedores: [traefik](https://traefik.io/)
 
 O obxectivo desta última tarefa e poñer a convivir 2 aplicacións (a de Wordpress ou Ghost do exemplo anterior) ca de Nesquik vs Colacao, no mesmo cluster, atendendo as peticións no porto estandard http (80) 
 
-Tede en conta, para apuntar un dominio local ao cluster e poder validalo dende o navegador, vades a ter que facer uso do [ficheiro hosts](https://es.wikipedia.org/wiki/Archivo_hosts) ao que van chequear previamente as aplicacións do equipo (como o navegador) antes de ir a consultar ó servidor dns.
+Tede en conta que, para apuntar un dominio local ao cluster e poder validalo dende o navegador, vades a ter que facer uso do [ficheiro hosts](https://es.wikipedia.org/wiki/Archivo_hosts) ao que van chequear previamente as aplicacións do equipo (como o navegador) antes de ir a consultar ó servidor dns.
 
 ```sh
 # Liña de exemplo do /etc/hosts:
-```
 
-```sh
 92.168.99.100     vota.local resultados.local
 ```
 
 [Pasos para modificar o /etc/hosts en windows 10](https://planetared.com/2016/08/editar-archivo-hosts-en-windows-10/).
+
+Os pasos que imos seguir están basados no seguinte [exemplo](https://braybaut.dev/posts/utilizando-traefik-como-dynamic-reverse-proxy-en-docker-swarm-sobre-aws/), que podedes consultar para máis información.
+
+Requisitos: será preciso ter despregado un clúster de swarm cun manager e dous workers.
+
+**1) Primeiro debemos crear unha rede de tipo overlay, que será a que utilice Traefik para comunicarse cos servizos**
+
+```sh
+docker network create --driver=overlay [NOME_REDE]
+
+```
+
+**2) Facemos o despregue de Traefik establecendo o seguinte**
+
+    - Publícase o porto 80 para recibir os requests e o 8080 para acceder ó dashboard.
+    - Especifícase o nome da rede a usar, que é a que creamos no paso anterior.
+    - Fórzase que o servizo corra no nodo manager.
+    - Establécese a configuración para que funcione con swarm.
+
+Para o cal usamos a seguinte orde:
+
+```sh
+docker service create \
+ --name traefik \
+ --constraint=node.role==manager \
+ --publish 80:80 --publish 8080:8080 \
+ --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+ --network [NOME_REDE] \
+ traefik:v1.6 \
+ --docker \
+ --docker.swarmMode \
+ --docker.domain=traefik \
+ --docker.watch \
+ --web
+```
+
+Tralo cal xa podemos comprobar que o servizo esté funcionando correndo:
+
+```sh
+docker service ls
+
+```
+
+**3) Despregamos as nosas aplicacións**
+
+Para isto, debemos cambiar as redes públicas polas que accedemos ás aplicacións pola rede overlay que vimos de crear.
+
+Ademáis, nos deploys dos servizos que usen ditas redes, debemos engadir, como mínimo, as seguintes labels:
+
+    * traefik.port=[PORTO] → establecemos que porto usar
+    * traefik.docker.network=[NOME_REDE] → indicamos o nome da rede de overlay
+    * traefik.frontend.rule=Host:[NOME_HOST] → indicamos a traefik con que nome recibirá as peticións para este servizo (ej: wordpress.traefik.local)
+
 
 ---
 
