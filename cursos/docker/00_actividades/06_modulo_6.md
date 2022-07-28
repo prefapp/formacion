@@ -136,7 +136,7 @@ Por eso, non podemos permitir que o scheduler do Swarm nos mova a base de datos 
 
 Para esto vamos a agregar unha restricción de xeito que ese servicio só se execute no nodo **Manager**.
 
-_ \*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen **plugins de rede**, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin). _
+_ \*Docker se caracteriza por traer "baterías incluidas", pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen **plugins de rede**, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin). _
 
 	3. Votacions
 
@@ -146,11 +146,11 @@ Ademáis cando faga falta actualizar o servicio, queremos que se execute a actua
 
 	4. Worker
 
-Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e admeáis agregarmoes unha política de restart on-failure.
+Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e ademáis agregaremos unha política de restart on-failure.
 
 	5. Resultados:
 
-Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de votacions.
+Para o nodo de resultados agregamos outras 2 réplicas, de maneira similar ao de votacions.
 
 ### Unha vez completado esto só queda facer o deploy de esta stack 
 
