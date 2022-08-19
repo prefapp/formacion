@@ -1,6 +1,33 @@
 # Uso de Kind coma ferramenta de desenvolvemento
 
-Ó longo deste curso, necesitaremos o uso dunha das ferramentas para desenvolvemento que mencionamos ó principio do módulo, para poder crear clústeres onde despregar as prácticas. Recomendamos o uso de Kind, pola potencia e flexibilidade que nos aporta. No seguinte enlace podedes acceder á [guía de instalación de kind](https://kind.sigs.k8s.io/docs/user/quick-start).
+Ó longo deste curso, necesitaremos o uso dunha das ferramentas para desenvolvemento que mencionamos ó principio do módulo, para poder crear clústeres onde despregar as prácticas. Recomendamos o uso de Kind, pola potencia e flexibilidade que nos aporta. 
+
+## Instalación de kubectl
+
+O primeiro paso será instalar kubectl, que é a ferramenta de liña de comandos de kubernetes, e que nos permitirá comunicarnos cos clústeres que creemos. Para isto, seguimos os pasos que nos indican na [documentación oficial](https://kubernetes.io/docs/tasks/tools/). En Linux, faríamolo do seguinte modo:
+
+- Descargamos a última release do binario:
+
+```shell
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+```
+
+- Lanzamos a súa instalación:
+
+```shell
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+- Comprobamos que kubectl está funcionando, solicitándolle a versión:
+
+```shell
+kubectl version --output=yaml
+
+```
+
+## Instalación de Kind
+
+Unha vez kubectl esté funcionando, xa podemos instalar kind. No seguinte enlace podedes acceder á [guía de instalación de kind](https://kind.sigs.k8s.io/docs/user/quick-start), onde se explican os pasos a seguir segundo o sistema operativo que se esté utilizando. No caso de Linux, o máis sinxelo será facer a [instalación do binario](https://kind.sigs.k8s.io/docs/user/quick-start#installing-from-release-binaries).
 
 Unha vez rematemos a instalación, xa podemos crear un novo clúster. O xeito máis sinxelo para facelo é mediante a seguinte orde:
 

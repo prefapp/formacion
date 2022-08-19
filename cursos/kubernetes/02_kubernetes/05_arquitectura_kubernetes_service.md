@@ -191,7 +191,7 @@ Commercial support is available at
 Vemos que:
 
 - Calquer pod dentro do kubernetes (e no namespace correcto) ten acceso ó servizo, basta con saber:
-o nome do servizo
+  - o nome do servizo
   - o porto de conexión (do servizo)
   - Non hai que facer ningunha configuración no pod cliente
 - O pod cliente non se preocupa do número de réplicas, do nodo no que está o pod de nginx, a súa ip, etc...

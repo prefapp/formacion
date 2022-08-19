@@ -42,7 +42,7 @@ Unha regra de ingress está constituida polas seguintes partes:
 Se vemos unha regra sinxela:
 ```yaml
 # exemplo ing.yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: exemplo-ingress
@@ -50,9 +50,13 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
-          serviceName: servizo-1
-          servicePort: 80
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: servizo-1
+            port:
+              number: 80
 ```
 
 Vemos que se trata dun artefacto de K8s, co que eso implica (declarativo, pode ter metadatos...)
@@ -68,7 +72,7 @@ No artefacto, declárase:
 Agora, 
 ```shell
 # creamos o artefacto
-microk8s.kubectl apply -f ing.yaml
+kubectl apply -f ing.yaml
 
 # e facemos unha petición
 curl localhost:<porto_ingress>/servizo
@@ -78,7 +82,7 @@ curl localhost:<porto_ingress>/servizo
 
 Poderíamos, obviamente, crear varios paths:
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress
@@ -89,14 +93,20 @@ spec:
   rules:
   - http:
       paths:
-      - path: /servizo
+      - pathType: Prefix
+        path: /servizo
         backend:
-          serviceName: servizo
-          servicePort: 8080
-      - path: /test
+          service:
+            name: servizo
+            port: 
+              number: 8080
+      - pathType: Prefix
+        path: /test
         backend:
-          serviceName: servizo-test
-          servicePort: 8888
+          service:
+            name: servizo-test
+            port: 
+              number: 8888
 ```
 
 Neste exemplo, teríamos:
@@ -110,15 +120,15 @@ Un dos elementos clave en ingress é que as regras se expresan como un artefacto
 
 ```shell
 # listar os ingress aplicables 
-microk8s.kubectl get ing
+kubectl get ing
 NAME                 HOSTS   ADDRESS     PORTS   AGE
 o-meu-ingress   *       127.0.0.1   80      7h11m
 
 # poderíamos editalo
-microk8s.kubectl edit ing o-meu-ingress
+kubectl edit ing o-meu-ingress
 
 # poderíamos borralo
-microk8s.kubectl delete ing o-meu-ingress
+kubectl delete ing o-meu-ingress
 ```
 
 
