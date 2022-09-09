@@ -30,6 +30,8 @@ O [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) es
 - Controlador: unha aplicación que controla o servidor reprogramándoa segundo as regras que se declaren. 
 - Regras: artefactos de Kubernetes que declaran accións que debe levar a cabo o Ingress.  
 
+Polo tanto, para poder utilizar as regras de Ingress, será preciso que teñamos un controlador instalado no noso clúster. Máis adiante faremos unha práctica guiada explicando como configurar este controlador; mentres tanto, podedes despregar un clúster xa preparado para traballar con ingress co seguinte [ficheiro .sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
+
 #### i) Regras en ingress
 
 Como xa dixemos, as regras de ingress son un artefacto de Kubernetes. 
