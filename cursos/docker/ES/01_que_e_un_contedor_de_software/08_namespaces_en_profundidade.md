@@ -1,87 +1,87 @@
-# Namespaces en profundidad
+# namespaces en profundidad
 
 ## 1 - Tipos de namespaces
 
-Como xa falaramos noutra sección, os namespaces son un mecanismo de aillamento de certos recursos que permite crear vistas "privadas" do SO para un proceso ou conxunto de procesos. 
+Como discutimos en otra sección, los namespaces son un mecanismo para aislar ciertos recursos que permite crear vistas "privadas" del sistema operativo para un proceso o conjunto de procesos.
 
-Cada un dos namespaces ailla un tipo concreto de recurso ou familia de recursos:
+Cada uno de los namespaces aísla un tipo específico de recurso o familia de recursos:
 
-- _Pids_: identificadores de procesos, grupos de procesos e sesións. Máis información en [1](https://lwn.net/Articles/531114/), [2](https://lwn.net/Articles/531419/) e [3](https://lwn.net/Articles/532748/).
-- _Network_: redes, pilas de red, regras de cortalumes. Máis información [aquí](https://lwn.net/Articles/580893/).
-- _Usuarios_: xestión de usuarios e grupos de usuarios. Máis información neste [artigo](https://lwn.net/Articles/532593/).
-- _UTS_: (Unix Time-sharing System) para hostname e domainname. Discútense neste [fío](https://lwn.net/Articles/179345/) e neste [artigo](https://lwn.net/Articles/531114/).
-- _IPC_: sockets, memoria compartida, semáforos. Neste [artigo](https://lwn.net/Articles/531114/) hai mais información.
-- _Mount_: montaxe de sistemas de ficheiros por proceso ou grupo de proceso. Hai unha discusión en profundidade neste [artigo](https://lwn.net/Articles/689856/).
+- _Pids_: identificadores de procesos, grupos de procesos y sesiones. Más información en [1](https://lwn.net/Articles/531114/), [2](https://lwn.net/Articles/531419/) y [3](https://lwn.net/Articles/532748/).
+- _Red_: redes, pilas de red, reglas de firewall. Más información [aquí](https://lwn.net/Articles/580893/).
+- _Usuarios_: gestión de usuarios y grupos de usuarios. Más información en este [artículo](https://lwn.net/Articles/532593/).
+- _UTS_: (Unix Time-sharing System) para nombre de host y nombre de dominio. Se analizan en este [hilo](https://lwn.net/Articles/179345/) y este [artículo](https://lwn.net/Articles/531114/).
+- _IPC_: sockets, memoria compartida, semáforos. Este [artículo](https://lwn.net/Articles/531114/) tiene más información.
+- _Montar_: montar sistemas de archivos por proceso o grupo de procesos. Hay una discusión en profundidad en este [artículo](https://lwn.net/Articles/689856/).
 
-## 2 - Comandos de xestión de namespaces
+## 2 - Comandos de gestión del namespace
 
-Existen una serie de comandos que nos permiten interactuar cos namespaces, son:
+Existen una serie de comandos que nos permiten interactuar con los namespaces, son:
 
-- **unshare**: acepta un comando a lanzar como parámetro e crea novos namespaces para él segundo os flags que se lle pasen. 
- - Mediante esta utilidade pódense lanzar procesos conterizados isto é, aillados en namespaces propios para eles e os seus procesos-fillo.
- - Permite un control fino dos namespaces (UTS, pids, rede, usuarios, ipc...)
- - Pódese atopar máis información do comando na páxina do manual de linux.
-- **nsenter**: trátase do comando inverso ó anterior. Se unshare permítenos aillar un proceso, o comando nsenter permite "entrar" ou unirse a un namespace existente. 
- - Pódese atopar máis información do comando na páxina do [manual de linux](http://man7.org/linux/man-pages/man1/nsenter.1.html).
+- **unshare**: acepta un comando para iniciar como parámetro y crea nuevos namespaces para él de acuerdo con las flags que se le pasan.
+  - Con esta utilidad, se pueden lanzar procesos en contenedores, es decir, aislados en sus propios namespaces para ellos y sus procesos secundarios.
+  - Permite un control fino de los namespaces (UTS, pids, red, usuarios, ipc...)
+  - Se puede encontrar más información sobre los comandos en la página del [manual de Linux](https://man7.org/linux/man-pages/man1/unshare.1.html).
+- **nsenter**: este es el comando inverso al anterior. Si unshare nos permite aislar un proceso, el comando nsenter nos permite "entrar" o unirnos a un namespace existente.
+  - Puede encontrar más información sobre el comando en la página [manual de Linux](http://man7.org/linux/man-pages/man1/nsenter.1.html).
 
-### A - Emprego do comando unshare
+### A - Uso del comando unshare
 
-O comando **unshare** permite alterar o entorno de execución dun proceso mediante a creación de namespaces propios para él.
+El comando **unshare** permite modificar el entorno de ejecución de un proceso creando sus propios namespaces para él.
 
-Nun exemplo sinxelo:
+En un ejemplo sencillo:
 
 ```bash
 unshare -fp /bin/bash
 ```
 
-O que estamos a facer é:
+Lo que estamos haciendo es:
 
-- Lanzar o comando ```/bin/bash```.
-- O flag ```-fp``` indica a unshare que, hay que crear un novo namespace (de pids) para o proceso de ```/bin/bash``` e que debe correr nun fork novo.
-Se executamos esa sentencia no noso terminal, non notaremos ningún cambio. De feito, se probamos a facer un top ou un ps non hai diferencia ningunha: seguimos a ver os procesos da nosa máquina. 
+- Iniciar el comando ```/bin/bash```.
+- El indicador ```-fp``` indica que unshare debe crear un nuevo namespace (de pids) para el proceso ``/bin/bash'' y que se debe ejecutar en una nueva bifurcación.
+Si ejecutamos esa declaración en nuestra terminal, no notaremos ningún cambio. De hecho, si intentamos hacer un top o un ps no hay diferencia: seguimos viendo los procesos de nuestra máquina.
 
-Sen embargo, o bash que corremos **xa non está no namespace global de pids**. 
+Sin embargo, el bash que ejecutamos **ya no está en el namespace global de pids**.
 
-![Container](./../_media/01_que_e_un_contedor_de_software/namespaces_1.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/namespaces_1.png)
 
-Para probar isto, imos sair do bash creado:
-
-```bash
-exit
-```
-
-E imos correr outra vez o comando anterior, pero solicitando ó sistema que nos monte un proc novo acorde ó noso namespace de pids.
+Para probar esto, salgamos del bash creado:
 
 ```bash
-unshare -fp --mount-proc /bin/bash
+salida
 ```
 
-Se agora facemos un ```top``` ou un ```ps``` veremos só dous procesos. Isto é, **o proceso que lanzamos "vive" nun namespace de pids propio**. O proceso ```/bin/bash``` lanzado terá pid 1. Se abrimos outra terminal e buscamos na nosa árbore de procesos o ```/bin/bash``, veremos que ten un pid diferente que non é o pid 1. 
-
-
-Unha pregunta moi interesante neste punto é saber a razón de que o proceso de /bin/bash teña pid 1. Unha discusión sobre este tema pódese atopar [aquí](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900).
-
-### B - Inserción de procesos noutros namespaces: o comando nsenter
-
-Tal e como dixemos, o comando **nsenter** permite que un proceso se inserte nun ou varios namespaces xa existentes.
-
-#### i) Listaxe dos namespaces
-Para procurar os namespaces, como regra xeral, basta con acudir a ```/proc/<pid do proceso>/ns```. Ahí veremos os namespaces dun proceso concreto.
-
-Estes namespaces poden referenciarse mediante a súa ruta. 
-
-#### ii) Empregando nsenter
-Tal e como dixemos, basta con especificar o pid do proceso creador dos namespaces para poder ter acceso a eles cun proceso novo. 
-
-Imos empregar o comando da sección anterior para lanzar unha shell que corra no seu propio namespace de pids e co seu propio ```/proc```.
+Y ejecutemos el comando anterior nuevamente, pero pidiéndole al sistema que monte un nuevo proceso de acuerdo con nuestro namespace pids.
 
 ```bash
 unshare -fp --mount-proc /bin/bash
 ```
 
-Abrimos outro terminal e buscamos o pid do proceso /bin/bash lanzado por (aparecerá colgando dun proceso unshare)
+Si ahora hacemos un ``top'' o un ``ps'' veremos sólo dos procesos. Es decir, **el proceso que lanzamos "vive" en su propio namespace pids**. El proceso lanzado ```/bin/bash``` tendrá pid 1. Si abrimos otra terminal y buscamos ```/bin/bash``` en nuestro árbol de procesos, veremos que tiene un pid diferente que no es el pid 1.
 
-Agora lanzamos o seguinte comando:
+
+Una pregunta muy interesante en este punto es la razón por la que el proceso /bin/bash tiene pid 1. Se puede encontrar una discusión sobre este tema [aquí](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900).
+
+### B - Inserción de procesos en otros namespaces: el comando nsenter
+
+Como dijimos, el comando **nsenter** permite insertar un proceso en uno o más namespaces existentes.
+
+#### i) Lista de namespaces
+Para buscar namespaces, como regla general, simplemente vaya a ```/proc/<process pid>/ns```. Allí veremos los namespaces de un proceso específico.
+
+Se puede hacer referencia a estos namespaces usando su ruta.
+
+#### ii) Uso de nsenter
+Como decíamos, basta con especificar el pid del proceso que creó los namespaces para poder acceder a ellos con un nuevo proceso.
+
+Vamos a usar el comando de la sección anterior para iniciar un shell que se ejecuta en su propio namespace pids y con su propio ```/proc```.
+
+```bash
+unshare -fp --mount-proc /bin/bash
+```
+
+Abrimos otra terminal y buscamos el pid del proceso /bin/bash lanzado por (aparecerá colgado de un proceso unshare)
+
+Ahora ejecutamos el siguiente comando:
 
 ```bash
 nsenter --target <pid> -p -m
@@ -89,16 +89,16 @@ nsenter --target <pid> -p -m
 
 Esto implica:
 
-- Lanzar un comando (se non especificamos será por defecto o intérprete contido en ```$SHELL```).
-- Buscando os namespaces propios do proceso co pid expresado en ```--target```.
-- Insertarse no seu espazo de pids (```-p```).
-- Participar dos seus mounts (```-m```).
+- Lanzar un comando (si no lo especificamos será el intérprete por defecto contenido en ``$SHELL'').
+- Buscando los namespaces del proceso con el pid expresado en ```--target```.
+- Inserte en su espacio pid (```-p```).
+- Participa en tus montas (```-m```).
 
-Se agora facemos dende a nova ```shell``` un ```top``` ou un ps veremos os procesos que corren no namespace de pids creado polo unshare. 
+Si ahora creamos un ```top``` o un `ps` desde el nuevo `shell`, veremos los procesos ejecutándose en el namespace pids creado por unshare.
 
-Nun diagrama:
+En un diagrama:
 
-![Container](./../_media/01_que_e_un_contedor_de_software/namespaces_2.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/namespaces_2.png)
 
-**Σ Webgrafía**
-- Abrams, Vish. "The curious case of pid namespaces" [en liña](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900) [Consulta: 06-xan-2018].
+**Σ Webografía**
+- Abrams, Vish. "El curioso caso de los pid namespaces" [en línea](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900) [Consultado: 06-ene-2018].

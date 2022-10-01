@@ -1,30 +1,30 @@
-# Solución completa (2): os cgroups
+# Solución completa (2): los cgroups
 
-Sabemos que o Kernel de Linux ten como traballo evitar a monopolización por parte dos procesos de recursos básicos tales como:
+Sabemos que el trabajo del Kernel de Linux es evitar que los procesos acaparen recursos básicos como:
 
-- CPU
+- UPC
 - Memoria
-- Operacións E/S 
+- Operaciones de E/S
 
-> A pregunta que xorde é: permite un control fino de acceso e consumo destes recursos? 
+> La pregunta que surge es: ¿permite un control fino del acceso y consumo de estos recursos?
 
-A resposta é que, previamente á versión 2.6.24, existían mecanismos de control (fundamentalmente o comando nice) pero eran moi limitados.
+La respuesta es que, antes de la versión 2.6.24, había mecanismos de control (principalmente el comando nice) pero eran muy limitados.
 
-Todo isto cambia coa adopción polo kernel de Linux, en xaneiro de 2008, dos [control groups](https://wiki.archlinux.org/index.php/cgroups) (abreviado cgroups) impulsados principalmente polos enxeñeiros de Google. 
+Todo esto cambia con la adopción en enero de 2008 por parte del kernel de Linux de [grupos de control](https://wiki.archlinux.org/index.php/cgroups) (cgroups para abreviar) impulsados ​​principalmente por ingenieros de Google.
 
-Os cgroups pódense ver como unha árbore en que os procesos están pendurados dunha pola de control de tal xeito que podense establecer, para ese proceso e os seus fillos:
+cgroups puede verse como un árbol en el que los procesos se cuelgan de un poste de control de tal manera que se pueden establecer, para ese proceso y sus hijos:
 
-- Limitacións de recursos.
-- Prioridades de acceso a recursos.
-- Monitorización do emprego dos recursos.
-- Xestión a baixo nivel de procesos.
+- Limitaciones de recursos.
+- Prioridades de acceso a los recursos.
+- Seguimiento del uso de los recursos.
+- Gestión de procesos a bajo nivel.
 
-A flexibilidade que permiten é moi grande. Pódense crear distintos grupos de limitacións e control e asignar un proceso, e os seus fillos, a distintos grupos, facendo combinacións que permiten un grao moi alto de personalización. 
+La flexibilidad que permiten es muy grande. Se pueden crear diferentes grupos de restricciones y controles y se puede asignar un proceso y sus hijos a diferentes grupos, haciendo combinaciones que permiten un alto grado de personalización.
 
 ![CGroups](./../_media/01_que_e_un_contedor_de_software/cgroups_1.png)
 
-A partir da versión 4.5 do kernel de Linux, aparece unha nova versión de cgroups. A principal diferenza que implementa cgroups v2 é a forma na que se establece a xerarquía.
+A partir de la versión 4.5 del kernel de Linux, aparece una nueva versión de cgroups. La principal diferencia que implementa cgroups v2 es la forma en que se establece la jerarquía.
 
-A nova versión deixa de utilizar distintas árbores para cada controlador (memoria, CPU, etc.), e funciona de tal xeito que, ó crear un novo grupo, este pasa a ser a raíz, da cal penduran os distintos controladores. 
+La nueva versión deja de utilizar árboles diferentes para cada controlador (memoria, CPU, etc.), y funciona de tal forma que, cuando creas un nuevo grupo, este se convierte en la raíz, de la que cuelgan los diferentes controladores.
 
-Grazas a este cambio, xa non é preciso crear o mesmo grupo dentro de cada un dos distintos controladores, senón que se centraliza a configuración de todos eles dentro da carpeta do grupo.
+Gracias a este cambio, ya no es necesario crear el mismo grupo dentro de cada uno de los diferentes controladores, sino que la configuración de todos ellos está centralizada dentro de la carpeta del grupo.

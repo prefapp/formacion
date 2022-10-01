@@ -22,8 +22,4 @@ Estos recursos son:
 Esto implica que, en un sistema, no puede haber dos procesos con el mismo PID, o procesos que vean diferentes nombres de host en la misma máquina, o que tengan acceso a diferentes puntos de montaje...
 
 **Σ Webografía**
-- Kerrisk, Michael. "LEC: El fallo de los sistemas operativos y cómo podemos repararlo". [en línea](https://lwn.net/Articles/524952/) [Consultado: 6 de enero de 2019]
-Més informació sobre aquest text d'origen
-Es requereix el text d'origen per obtenir informació addicional sobre la traducció
-Envia suggeriments
-Taulers laterals
+- Kerrisk, Michael. "LEC: El fallo de los sistemas operativos y cómo podemos repararlo". [en línea](https://lwn.net/Articles/524952/)

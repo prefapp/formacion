@@ -1,24 +1,24 @@
-# Solución parcial: virtualización da plataforma
+# Solución parcial: virtualización de plataformas
 
-Unha das solucións que se empregan para evitar o problema da falta de illamento do SO dos recursos globais, é a virtualización a nivel de plataforma.
+Una de las soluciones que se utilizan para evitar el problema de la falta de aislamiento del SO de los recursos globales, es la virtualización a nivel de plataforma.
 
-Existen diversas técnicas (paravirtualización, full virtualization) pero a idea á a mesma: virtualizar o hardware, esto é, simular un ordenador mediante software.
+Existen varias técnicas (paravirtualización, virtualización completa) pero la idea es la misma: virtualizar el hardware, es decir, simular una computadora usando software.
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_5.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_5.png)
 
-De esta forma, e dado que temos varias máquinas virtuais, cada unha co seu sistema operativo, podemos illar os recursos globaies antes mencionados.
+De esta forma, y ​​dado que disponemos de varias máquinas virtuales, cada una con su propio sistema operativo, podemos aislar los citados recursos globales.
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_6.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_6.png)
 
-Non obstante,
+Sin embargo,
 
-- O coste en CPU/RAM da emulación do hardware é elevado
-- O tempo de arranque/parada dunha máquina virtual é considerable (> 1')
+- El costo de CPU/RAM de la emulación de hardware es alto
+- El tiempo de inicio/parada de una máquina virtual es considerable (> 1')
 
-Por soposto a virtualización de plataforma sigue tendo virtudes importantes:
+Por supuesto, la virtualización de plataformas aún tiene importantes virtudes:
 
-- Mellor aproveitamento do hardware 
-- Automatización dos desplegues
-- Portabilidade de VMs
+- Mejor uso del hardware.
+- Automatización de despliegues
+- Portabilidad de máquinas virtuales
 
-> Con todo, o su emprego con fins de illamento de procesos é **excesivamente caro en térmos de tempo e recursos**. 
+> Sin embargo, su uso con fines de aislamiento de procesos es **excesivamente costoso en términos de tiempo y recursos**.

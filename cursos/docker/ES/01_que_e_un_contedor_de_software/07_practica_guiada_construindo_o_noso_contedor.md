@@ -1,140 +1,140 @@
-# Entón, que é un contedor?
+# Entonces, ¿qué es un contenedor?
 
-> Empregando as ferramentas que nos da Linux, imos construir un contedor para unha distro de debian.
+> Usando las herramientas que nos da Linux, vamos a construir un contenedor para una distribución de Debian.
 
-\**Nota - Esta práctica está baseada [nesta](https://ericchiang.github.io/post/containers-from-scratch/).*
+\**Nota: esta práctica se basa en [esto](https://ericchiang.github.io/post/containers-from-scratch/).*
 
-## 1 - O sistema de ficheiros 
+## 1 - El sistema de archivos
 
-Para correr un sistema debian, obviamente, precisamos do conxunto de ferramentas, útiles e demonios que ten unha distro deste tipo. 
+Para ejecutar un sistema Debian, obviamente necesitamos el conjunto de herramientas, utilidades y demonios que tiene dicha distribución.
 
-Imos baixar un sistema de ficheiros con tódolos elementos necesarios.
+Descarguemos un sistema de archivos con todos los elementos necesarios.
 
-Collemos o tar deste link.
+Tomamos el alquitrán de este enlace.
 
-Nun directorio do noso sistema de ficheiros, descargamos o tar co sistema debian:
+En un directorio de nuestro sistema de archivos, descargamos el tar con el sistema debian:
 
 ```bash
 wget https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz
 ```
 
-Imos extraer os contidos do tar:
+Extraigamos el contenido del tar:
 
 ```bash
 tar xfz rootfs.tar.gz
 ```
 
-Se listamos os contidos do rootfs resultante, veremos que ten unha estrutura moi similar á dun sistema tradicional debian.
+Si enumeramos el contenido del rootfs resultante, veremos que tiene una estructura muy similar a la de un sistema Debian tradicional.
 
-## 2 - Engaiolar o proceso no sistema de ficheiros mediante chroot
+## 2 - Enjaula el proceso en el sistema de archivos usando chroot
 
-A ferramenta [chroot](https://en.wikipedia.org/wiki/Chroot), permítenos illar un proceso con respecto a unha ruta concreta dentro do noso sistema de ficheiros. 
+La herramienta [chroot](https://en.wikipedia.org/wiki/Chroot), nos permite aislar un proceso con respecto a una ruta específica dentro de nuestro sistema de archivos.
 
-Se lanzamos este comando dende a ruta onde desentarramos o noso sistema de ficheiros:
-
-```bash
-chroot rootfs /bin/bash
-```
-
-Entraremos nunha nova shell, un novo proceso, que está montado a partires de 6. ```~/rootfs```.
-
-![Container](./../_media/01_que_e_un_contedor_de_software/container_10.png)
-
-Temos un container real? 
-
-A resposta é que non.
-
-Se montamos o proc nunha ruta do noso proceso:
+Si ejecutamos este comando desde la ruta donde descubrimos nuestro sistema de archivos:
 
 ```bash
-mount -t proc proc /proc
+chrootrootfs/bin/bash
 ```
 
-E facemos un ps ou un top, seguimos a ver tódolos procesos do sistema. 
+Entraremos en una nueva shell, un nuevo proceso, que se monta desde 6. ```~/rootfs```.
 
-Polo tanto, o noso proceso, ainda que ten como raíz o rootfs, non está realmente illado do resto do sistema, posto que segue a pertencer ós namespaces globáis.
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_10.png)
 
-É dicir, o noso proceso **segue a estar no namespace global compartido polo resto dos procesos do sistema**.
+¿Tenemos un contenedor real?
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_11.png)
+La respuesta es no.
 
-Como podemos ver, este proceso non está realmente "contido":
+Si montamos el proc en una ruta de nuestro proceso:
 
-- Pode crear usuarios no namespace xeral da máquina.
-- Pode ve-los procesos de toda a máquina.
-- Se modifica iptables, se conecta a portos.. estará afectando ó resto dos procesos da máquina.
+```bash
+montar -t proc proc /proc
+```
 
-Isto non é un verdadeiro isolamento do noso proceso.
+Y hacemos un ps o un top, seguimos viendo todos los procesos del sistema.
 
-Para logralo, imos recorrer ós namespaces.
+Por lo tanto, nuestro proceso, aunque esté rooteado en rootfs, no está realmente aislado del resto del sistema, ya que todavía pertenece a los espacios de nombres globales.
 
-## 3 - Illa-lo proceso mediante os namespaces
+Es decir, nuestro proceso **todavía está en el espacio de nombres global compartido por el resto de los procesos del sistema**.
 
-Como vimos no paso 2, realmente, estamos a lanzar un proceso que ten unha nova raíz no sistema de ficheiros, pero non está realmente illado do resto dos recursos do sistema. Se o queremos realmente illar, teríamos que crear unha serie de namespaces privados dese proceso (e do resto de fillos do mesmo). 
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_11.png)
 
-Nun diagrama:
+Como podemos ver, este proceso no está realmente "contenido":
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_12.png)
+- Puede crear usuarios en el espacio de nombres general de la máquina.
+- Puedes ver los procesos de toda la máquina.
+- Si modificas iptables, conectas a puertos... afectará al resto de procesos de la máquina.
 
-O comando [unshare](https://man7.org/linux/man-pages/man1/unshare.1.html) permítenos lanzar un comando ou proceso especificando os namespaces que queremos que sexan privados do mesmo. 
+Esto no es un verdadero aislamiento de nuestro proceso.
 
-Imos lanzar de novo un proceso, pero esta vez mediante unshare:
+Para conseguirlo, recurriremos a los espacios de nombres.
+
+## 3 - Aislar el proceso usando espacios de nombres
+
+Como vimos en el paso 2, en realidad estamos lanzando un proceso que tiene una nueva raíz en el sistema de archivos, pero no está realmente aislado del resto de los recursos del sistema. Si realmente queremos aislarlo, tendríamos que crear una serie de espacios de nombres privados de ese proceso (y el resto de sus hijos).
+
+En un diagrama:
+
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_12.png)
+
+El comando [unshare](https://man7.org/linux/man-pages/man1/unshare.1.html) nos permite iniciar un comando o proceso especificando los espacios de nombres que queremos que sean privados.
+
+Iniciemos un proceso nuevamente, pero esta vez a través de unshare:
 
 ```bash
 unshare -m -i -n -p -u -f chroot rootfs /bin/bash
 ```
 
-Neste comando estamos a dicirlle ó sistema:
+En este comando le estamos diciendo al sistema:
 
-- Lanza o proceso chroot rootfs /bin/bash
-- Illa en namespaces novos de mounts, de ipc, de networking, de pids, de UTS ó proceso
-Sinxelo, non? Imos ver se realmente é así. 
+- Inicie el proceso chroot rootfs /bin/bash
+- Aislar en nuevos namespaces de mounts, de ipc, de networking, de pids, de UTS al proceso
+Sencillo, ¿verdad? Veamos si ese es realmente el caso.
 
-Montamos o proc:
+Montamos el proc:
 
 ```bash
-mount -t proc proc /proc
+montar -t proc proc /proc
 ```
 
-Se introducimos o comando top, veremos que temos dous procesos. 
+Si ingresamos el comando superior, veremos que tenemos dos procesos.
 
-Vemos que proceso que ten o pid 1, é o noso /bin/bash.
+Vemos qué proceso tiene pid 1, es nuestro /bin/bash.
 
-Cómo é iso posible? 
+¿Cómo es posible?
 
-Recordemos que agora estamos dentro dun novo namespace de PIDS é, o proceso que creou ese namespace, foi o noso /bin/bash. 
+Recordemos que ahora estamos dentro de un nuevo espacio de nombres PIDS, el proceso que creó ese espacio de nombres fue nuestro /bin/bash.
 
-Imos facer outra cousa:
+Vamos a hacer otra cosa:
 
 ```bash
 hostname
 ```
 
-Veremos o hostname da nosa máquina. O cal non é extraño, dado que o namespace de UTS clonóuse do noso UTS global. 
+Veremos el nombre de host de nuestra máquina. Lo cual no es extraño, ya que el espacio de nombres UTS fue clonado de nuestro UTS global.
 
-Pero se agora cambiamos o hostname dentro do noso container:
+Pero si ahora cambiamos el nombre de host dentro de nuestro contenedor:
 
 ```bash
-hostname contedor-a-man
+hostname contenedor-a-man
 ```
 
-Veremos que, efectivamente, o noso hostname mudou a "contedor-a-man".
+Veremos que, efectivamente, nuestro nombre de host ha cambiado a "container-a-man".
 
-Se abrimos outra terminal na nosa máquina, e facemos hostname, veremos que conserva o hostname orixinal.
+Si abrimos otra terminal en nuestra máquina y hacemos hostname, veremos que conserva el nombre de host original.
 
-Isto é posible porque, tra-la chamada a **unshare**, o noso container ten un UTS diferente (privado) con respecto ó global.
+Esto es posible porque, después de llamar a **unshare**, nuestro contenedor tiene una UTS (privada) diferente con respecto a la global.
 
-## 4 - Conclusión
+## 4. Conclusión
 
-Fomos quen de crear un proceso que está dentro dun contedor (dun conxunto de namespaces privados a ese proceso). 
+Pudimos crear un proceso que está dentro de un contenedor (un conjunto de espacios de nombres privados para ese proceso).
 
-Deste xeito, accións que normalmente afectarían á tódolos procesos da máquina:
+De esta forma, acciones que normalmente afectarían a todos los procesos de la máquina:
 
-- Cambiar o hostname.
+- Cambiar el nombre de host.
 - Creación de usuarios.
-- Facer mounts.
-- Conectar aplicacións a escoitar en portos concretos.
+- Hacer monturas.
+- Conectar aplicaciones para escuchar en puertos específicos.
 
-Están illados dentro dos namespaces do contedor sen afectar á máquina.
+Están aislados dentro de espacios de nombres de contenedores sin afectar la máquina.
 
-Por último, notar que a creación do contedor levou prácticamente o mesmo tempo que lanzar un proceso novo (faga a proba) e que o custo en memoria e insignificante.
+Finalmente, observe que la creación del contenedor tomó casi el mismo tiempo que lanzar un nuevo proceso (hacer la prueba) y que el costo en memoria es insignificante.

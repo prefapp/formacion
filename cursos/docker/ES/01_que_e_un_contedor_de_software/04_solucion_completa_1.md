@@ -1,27 +1,27 @@
-# Solución completa (1): os namespaces
+# Solución completa (1): los espacios de nombres
 
-Os contedores de software consisten nunha técnica de virtualización a nivel de SO, tamén se coñocen como virtualización a nivel de proceso. 
+Los contenedores de software consisten en una técnica de virtualización a nivel de sistema operativo, también conocida como virtualización a nivel de proceso.
 
-A idea é sinxela, dado que o SO é, dende o punto de vista do proceso, un conxunto de recursos, podemos ofrecerlle unha vista "privada" ou virtual desos recursos. 
+La idea es simple, ya que el SO es, desde el punto de vista del proceso, un conjunto de recursos, podemos darle una vista "privada" o virtual de esos recursos.
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_7.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_7.png)
 
-A virtualización desos recursos globais de tal forma que, desde o punto de vista do proceso, sexan privados para él, **é no que consiste un contedor**.
+Virtualizar esos recursos globales de tal manera que, desde el punto de vista del proceso, le sean privados, **de eso se trata un contenedor**.
 
-> "De igual xeito que na virtualización a nivel de plataforma o SO "cree" estarse a executar nunha máquina real, na  containerización, o proceso "cree" ter un SO para sí mesmo"
+> "Al igual que en la virtualización a nivel de plataforma, el sistema operativo "cree" que se está ejecutando en una máquina real, en la creación de contenedores, el proceso "cree" que tiene un sistema operativo para sí mismo"
 
-A técnica de usar contedores é superior a da virtualización de plataforma en que:
+La técnica de usar contenedores es superior a la virtualización de plataformas en que:
 
-- No supón un custe de recursos adicionais por ter que emular hardware e correr en él un SO: se poden ter milleiros de contedores nun servidor
-- O arranque/parada dun container é prácticamente igual ao arranque/parada dun proceso (< 1'')
+- No implica el coste de recursos adicionales por tener que emular hardware y ejecutar un SO en él: puedes tener miles de contenedores en un servidor.
+- El inicio/parada de un contenedor es prácticamente el mismo que el inicio/parada de un proceso (< 1'').
 
-A costa de:
+A expensas de:
 
-- Compartir o Kernel do SO
+- Compartir el kernel del sistema operativo
 
-Ademais, non é alternativa a técnica de virtualización de plataforma: ao contrario, é **totalmente compatible**. Precisamente, é como se está a empregar en moitos sitios:
+Además, no es una alternativa a la técnica de virtualización de plataformas: por el contrario, es **totalmente compatible**. Precisamente, así se está utilizando en muchos sitios:
 
-![Container](./../_media/01_que_e_un_contedor_de_software/container_8.png)
+![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_8.png)
 
-Kerrisk Michael, "Namespaces in operation, part 1: namespaces overview" [en liña](https://lwn.net/Articles/531114/) [Consulta: 06-Xaneiro-2019]
-* O primeiro de 9 artigos a consultar para explorar en profundidade os namespaces en Linux e a súa condición de elemento fundamental para os contedores. 
+Kerrisk Michael, "Espacios de nombres en funcionamiento, parte 1: descripción general de los espacios de nombres" [en línea](https://lwn.net/Articles/531114/) [Acceso: 6 de enero de 2019]
+* El primero de 9 artículos para consultar una exploración en profundidad de los espacios de nombres en Linux y su estado como elemento fundamental para los contenedores.

@@ -1,213 +1,212 @@
-# Módulo 1: A problemática da xestión de recursos nun sistema operativo
+# Módulo 1: El problema de la gestión de recursos en un sistema operativo
 
-## Comprender e empregar a tecnoloxía de namespaces
+## Comprender y utilizar la tecnología de namespace
 
-> Os [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade) son un dos pilares básicos para a construcción de contedores, a posibilidade de crear "vistas" privadas so SO para un proceso ou conxunto de procesos aporta unha flexibilidade moi grande para a execución de procesos.
+> Los [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade) son uno de los pilares básicos para construir contenedores, la posibilidad de crear "vistas" privadas en SO para un proceso o conjunto de procesos proporciona una gran flexibilidad para la ejecución del proceso.
 
-Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
+Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que siguen.
 
 Pasos:
 
-1. **Consultar** e **analizar** a documentación sobre  namespaces en profundidade.
+1. **Consulta** y **analiza** la documentación sobre namespaces en profundidad.
 
-2. **Traballar** cos comandos de xestión dos namespaces:
-Nun pdf pon as capturas de pantalla dos comandos necesarios para:
-Correr un bash cun pid, proc e network aillados.
-Correr un bash co uts aillado.
-Lanzar un bash que entre no namespace do paso 2 e modifique o hostname a "tarefa-namespaces".
+2. **Trabaje** con comandos de administración de namespace:
+En un pdf, ponga las capturas de pantalla de los comandos necesarios para:
+   - Lanzar un bash con pid, proc y red aislados.
+   - Lanzar un bash una fiesta con uts aislados.       
+   - Lanzar un bash que ingrese al namespace del paso 2 y cambie el nombre de host a "tarefa-namespaces de tareas".
 
-3. **Explorar** o namespace de rede.
-O namespace de redes permite, entre outras cousas, conectar procesos que se atopan en distintos namespaces a través de elementos virtuais tales como os veth. Nun pdf, pon as capturas de pantalla dos comandos necesarios para:
-- Lanzar un bash con namespaces privados de rede, pid, proc.
-- Crear un par de interfaces virtuais. 
-- Asignar unha das interfaces ó namespace privado. 
-- Comunicarse a través das veth (un ping por exemplo)
-- Pódese atopar axuda neste [artigo](https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/).  
+3. **Explore** el namespace de la red.
+El namespace de la red permite, entre otras cosas, conectar procesos que están en diferentes namespaces a través de elementos virtuales como veth. En un pdf, coloque capturas de pantalla de los comandos necesarios para:
+   - Inicie un bash con namespaces de redes privadas, pid, proc.
+   - Crear un par de interfaces virtuales.
+   - Asigne una de las interfaces al namespace privado.
+   - Comunicarse a través de veth (un ping, por ejemplo)
+   - Puede encontrar ayuda en este [artículo](https://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/).
 
 ---
 
-**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencia de adquisición de desempeño**: Pasos 1 a 4 completados correctamente de acuerdo con estos...
 
-**Indicadores de logro**:  
+**Indicadores de logros**:
 
-- O cuestionario se contesta.
-- Nos pdfs a entregar:
- - figurarán os comandos de bash para lanzar procesos con namespaces aillados. 
- - veránse os comandos de inserción dun proceso nun namespace doutro proceso.
- - pódense crear veth e comunicar dous namespaces diferentes a través da rede.
+- Se contesta el cuestionario.
+- En los pdfs a entregar:
+ - Se enumerarán los comandos bash para iniciar procesos con namespaces aislados.
+ - Se verán los comandos de inserción de un proceso en un namespace de otro proceso.
+ - veth se puede crear y comunicar dos namespaces diferentes a través de la red.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Criterios de corrección** / **niveis de logro dos desempeños**:
+**Criterios de corrección** / **Niveles de logro de desempeño**:
 
 - Paso 2
- - **5 puntos** se o cuestionario está completado
+ - **5 puntos** si se completa el cuestionario
 
-- Paso 3  (12 puntos máximos)
- - **4 puntos** se o comando de arranque do bash aillado está correcto.
- - **4 puntos** se o comando para arrancar o bash aillado do uts global está correcto. 
- - **4 puntos** se o comando de lanzar un proceso no namespace do uts privado e modificar o hostname está correcto.
+- Paso 3 (máximo 12 puntos)
+ - **4 puntos** si el comando bash boot aislado es correcto.
+ - **4 puntos** si el comando para iniciar bash aislado de uts global es correcto.
+ - **4 puntos** si el comando para iniciar un proceso en el namespace privado de uts y modificar el nombre de host es correcto.
 
-- Paso 4 (8 puntos máximos)
- - **4 puntos** se os comandos de arranque do bash cos namespaces privados e o de creación dos veth están correctos.
- - **4 puntos** se os comandos de asociación dos veth ós namespaces global e privado e os de testeo son correctos.
+- Paso 4 (máximo 8 puntos)
+ - **4 puntos** si los comandos de inicio de bash con los namespaces privados y el comando de creación de veth son correctos.
+ - **4 puntos** si los comandos de asociación veth a los namespaces globales y privados y los de prueba son correctos.
 
-**Peso na cualificación**:
+**Peso en calificación**:
 
-- Peso desta tarefa no seu tema ...................................................... 25 %
+- Peso de esta tarea en su tema ........................................... .......... 25%
 
-## Limitar e controlar procesos a través dos cgroups
+## Limitar y controlar procesos a través de cgroups
 
-> Os cgroups son unha das funcionalidades básicas para a creación e xestión de contedores de software. Introducidos no Kernel de Linux polos enxeñeiros de Google a finales do 2007, permiten crear xerarquías de control, xestión e monitorización de procesos aplicables a usuarios e programas individuais. A súa flexibilidade e potencia fan que sexan empregados por outras ferramentas básicas de sistemas tales como systemd.
+> cgroups es una de las funcionalidades básicas para la creación y gestión de contenedores de software. Introducidos en el Kernel de Linux por los ingenieros de Google a finales de 2007, permiten crear jerarquías de control, gestión y seguimiento de procesos aplicables a usuarios y programas individuales. Su flexibilidad y poder hacen que sean utilizados por otras herramientas básicas del sistema como systemd.
 
-Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
+Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que siguen.
 
 Pasos:
 
-1. **Consultar** e **analizar** a documentación sobre [cgroups: grupos de control de procesos](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades).
+1. **Consulta** y **analiza** la documentación en [cgroups: grupos de control de procesos](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades) .
 
-2. **Traballar** cos comandos de xestión de cgroups:
-- Os pasos a seguir serán distintos en función de se o sistema usa cgroups v1 ou cgroups v2. Pódese comprobar a versión lanzando o seguinte comando:
+2. **Trabaje** con los comandos de administración de cgroups:
+- Los pasos a seguir serán diferentes dependiendo de si el sistema utiliza cgroups v1 o cgroups v2. Puede verificar la versión ejecutando el siguiente comando:
 
 ```bash
 grep cgroup /proc/filesystems
 ```
 
-O sistema terá soporte para cgroups v2 se o resultado é:
+El sistema admitirá cgroups v2 si el resultado es:
 
 ```bash
 nodev    cgroup
 nodev    cgroup2
 ```
 
-Pola contra, soportará únicamente cgroups v1 se o resultado é:
+En cambio, solo admitirá cgroups v1 si el resultado es:
 
 ```bash
 nodev    cgroup
 ```
 
 
-- Como script de test podes empregar este:
+- Como script de prueba puedes usar esto:
 
 ```bash
 #!/bin/sh
-while [ 1 ]; do
-        echo "Hola mundo"
-        sleep 20
+mientras [ 1 ]; de
+        echo "hola mundo"
+        dormir 20
 done
 ```
 
-- Nun pdf pon as capturas de pantalla dos comandos necesarios para:
- - Crear un grupo de control de memoria co nome grupotest.
- - Limitar a execución de memoria a 50MB
- - Introducir unha execución do script de probas no grupo de control grupotest.
- - Ver o consumo de memoria do script a través de cgroups. 
- - Limitar a execución de memoria a 4KB. 
- - Mostrar os logs do sistema cando se corre o script de test con esta limitación. Pista:
+- En un pdf, poner las capturas de pantalla de los comandos necesarios para:
+ - Crear un grupo de control de memoria con el nombre grouptest.
+ - Limite la ejecución de la memoria a 50 MB
+ - Introducir una ejecución de script de prueba en el grupo de control grupotest.
+ - Ver el consumo de memoria del script a través de cgroups.
+ - Limite la ejecución de la memoria a 4 KB.
+ - Mostrar los registros del sistema cuando se ejecuta el script de prueba con esta limitación. Clave:
 
 ```bash
 /var/log/messages
 ```
 
-Ou, se non existe este ficheiro:
+O, si este archivo no existe:
 
 ```bash
 /var/log/syslog
 ```
-
-3. **Explorar** o control de cpu nos cgroups.
-- Hai unha información excelente nesta [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu). Tamén temos un bó exemplo [neste enlace](https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups) empregando as ferramentas de libcgroup.
-- No caso de cgroups v2, podédesvos guiar pola seguinte [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_monitoring_and_updating_the_kernel/using-cgroups-v2-to-control-distribution-of-cpu-time-for-applications_managing-monitoring-and-updating-the-kernel).
-- Para testear unha aplicación de uso extensivo de cpu, recoméndase matho-primes:
- - Baixar o paquete https://launchpad.net/ubuntu/+source/mathomatic/16.0.5-1.
- - Descomprimir. 
- - Ir á carpeta primes/
- - Executar make && make install
- - Executand isto, temos unha tarefa de uso intensivo de cpu que podemos cancelar sen problema en calqueira momento.
+3. **Explore** el control de la CPU en cgroups.
+- Hay excelente información en esta [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu). También tenemos un buen ejemplo [en este enlace](https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups) usando las herramientas libcgroup.
+- En el caso de cgroups v2, puede guiarnos a través de la siguiente [documentación](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_monitoring_and_updating_the_kernel/using-cgroups-v2-to-control-distribution-of-cpu-time-for-applications_managing-monitoring-and-updating-the-kernel).
+- Para probar una aplicación con un uso intensivo de la CPU, recomendamos matho-primes:
+ - Descarga el paquete https://launchpad.net/ubuntu/+source/mathomatic/16.0.5-1.
+ - Descomprimir.
+ - Ir a carpeta primes/
+ - Ejecutar `make && make install`
+ - Ejecutando esto, tenemos una tarea intensiva de cpu que podemos cancelar sin problema en este momento.
 
 ```bash
 /usr/local/bin/matho-primes 0 9999999999 > /dev/null &
 ```
 
-- Nun pdf, mostrar as sentencias necesarias para:
- 1. Crear un grupo de control de emprego de cpu. 
- 2. Introducir limitacións de `cpu_shares` en caso de usar cgroups v1, ou de `cpu.weight` en caso de usar cgroups v2.
- 3. Establecer unha ratio de limitación de 2:1
- 4. Lanzar 3 instancias do programa de test e mostrar co top as limitación de cpu. 
+- En un pdf, mostrar las frases necesarias para:
+ 1. Crear un grupo de control de trabajos de CPU.
+ 2. Introducir limitaciones de `cpu_shares` en caso de usar cgroups v1, o de `cpu.weight` en caso de usar cgroups v2.
+ 3. Establecer una relación de limitación de 2:1
+ 4. Inicie 3 instancias del programa de prueba y muestre las limitaciones de la CPU.
 
 ---
 
-**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencia de adquisición de rendimiento**: Pasos 1 a 4 realizados correctamente de acuerdo con estos...
 
-**Indicadores de logro**:  
+**Indicadores de logros**:
 
-- O cuestionario se contesta.
-- Nos pdfs a entregar:
- - figuran os comandos necesarios para crear os cgroups coas limitacións de memoria e os scripts correndo dentro dos grupos. 
- - vense os comandos de bash de creación de cpu-shares nos cgroups e testeos dos comandos.
+- El interrogador concursos.
+- En los pdfs a entregar:
+ - mostrando los comandos necesarios para crear los cgroups con limitaciones de memoria y los scripts que se ejecutan dentro de los grupos.
+ - ver comandos bash de creación de recursos compartidos de cpu en cgroups y pruebas de comando.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Criterios de corrección** / **niveis de logro dos desempeños**:
+**Criterios de corrección** / **Niveles de logro de desempeño**:
 
 - Paso 2
- - **5 puntos** se o cuestionario está completado
-- Paso 3  (12 puntos máximos)
- - **4 puntos** se o grupo de memoria está correctamente creado e a limitación establecida a 50MB.
- - **4 puntos** se o script está correctamente introducido no grupo e se comproba correctamente a limitación efectiva de memoria. 
- - **4 puntos** se se limita a memoria a 4KB e se mostra nos logs o que ocorre ó executar o script. 
-- Paso 4 (8 puntos máximos)
- - **4 puntos** se o grupo de control de cpu está correctamente creado e a limitación de cpu shares establecida de xeito adecuado.
- - **4 puntos** se hai tres instancias lanzadas do script de test e as limitacións no top aparecen correctamente.
+ - **5 puntos** si se completa el cuestionario
+- Paso 3 (12 puntos máximo)
+ - **4 puntos** si el grupo de memoria se crea correctamente y la limitación se establece en 50 MB.
+ - **4 puntos** si se introduce correctamente el guión en el grupo y se comprueba correctamente la limitación efectiva de memoria.
+ - **4 puntos** si la memoria está limitada a 4 KB y los registros muestran lo que sucede cuando se ejecuta el script.
+- Paso 4 (8 puntos máximo)
+ - **4 puntos** si el grupo de control de CPU se crea correctamente y la limitación de recursos compartidos de CPU se configura correctamente.
+ - **4 puntos** si hay tres instancias del script de prueba iniciado y las limitaciones en la parte superior aparecen correctamente.
 
-## Crear os primeiros contedores de software
+## Crear los primeros contenedores de software
 
-> Montando un contedor - Empregando [as tecnoloxías que vimos nesta tema (unshare, mount...)](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidaded) vamos a crear un contedor de software de xeito "artesanal"
+> Montando un contenedor - Usando [las tecnologías que vimos en este tema (unshare, mount...)](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidaded) van a crear un contenedor de software "artesanal"
 
-O contedor ten que reunir as seguintes características:
+El contenedor debe reunir las siguientes características:
 
-**Especificacións**.
+**Especificaciones**.
 
-- O contedor ten que montar este [sistema de ficheiros](https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz).
+- El contenedor debe montar este [sistema de archivos](https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz).
 
-- Ten que estás illado nos seguintes [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade): (pids, mounts, UTS, network, ipc)
+- Asegúrate de estar en los siguientes [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade): (pids, mounts, UTS, network, ipc)
 
-- Ten que ter montado un /proc propio
+- Debe haber montado un /proc propio
 
 **Pasos**:
 
-1 Revisar o aprendido sobre contedores.
+1 Repase lo que aprendió sobre los contenedores.
 
-- Nun pdf, mostra as captura de pantalla de todo o necesario para:
- - Crear un contedor segundo as especificacións establecidas.
- - Como probar que o UTS está realmente illado?
- - Como podemos saber cal é o proceso init do contedor?
- - Como lle daríamos conectividade ó exterior ó contedor?  Pista ([veth](http://man7.org/linux/man-pages/man4/veth.4.html)).
- - Sabendo o que son os [cgroups](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita a memoria do contedor a ```512 MB```.
+- En pdf, muestra capturas de pantalla de todo lo necesario para:
+ - Crear un contenedor según las especificaciones establecidas.
+ - ¿Cómo probar que la UTS está realmente enferma?
+ - ¿Cómo podemos saber que cal es el proceso de inicio del contenedor?
+ - ¿Cómo daríamos conectividad al exterior o al contenedor? Pista ([veth](http://man7.org/linux/man-pages/man4/veth.4.html)).
+ - Sabiendo que son los [cgroups](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita la memoria del contenedor a ```512 MB```.
 
 ---
 
-**Evidencias da adquisición dos desempeños**: Pasos 1 correctamente realizado segundo estes...
+**Evidencia de adquisición de rendimiento**: Pasos 1 realizados correctamente de acuerdo con estos...
 
-**Indicadores de logro**: O teu contedor deberá...
+**Indicadores de falla**: Su contenedor debe...
 
-- Estar aillado nos namespaces establecidos.
-- Poderá comprobarse que ten o seu propio UTS.
-- Poderá saberse cal é o seu proceso init.
-- Terá conectividade co exterior. 
-- Estará limitada a súa memoria a 512 MB mediante cgroups. 
+- Estar aillado en los namespaces establecidos.
+- Podrás comprobar que tienes tu propia UTS.
+- Podrá saber si cal es su proceso de inicio.
+- Dispondrá de conectividad con el exterior.
+- Su memoria estará limitada a 512 MB a través de cgroups.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Criterios de corrección** / **niveis de logro dos desempeños**:
+**Criterios de corrección** / **Niveles de logro de desempeño**:
 
 - Paso 1 (máximo de **40 puntos**)
- - **10 puntos** se o contedor está arrincado cos seus namespaces propios.
- - **5 puntos** se a comprobación do UTS é correcta.
- - **5 puntos** se a comprobación do proceso init é correcta. 
- - **10 puntos** se o contedor ten conectividade co exterior.
- - **10 puntos** se o contedor está nun cgroup que o limita a 512 MB de memoria.
+ - **10 puntos** si el contenedor está en riesgo con sus propios namespaces.
+ - **5 puntos** si la verificación UTS es correcta.
+ - **5 puntos** si la verificación del proceso init es correcta.
+ - **10 puntos** si el contenedor tiene conectividad externa.
+ - **10 puntos** si el contenedor está en un cgroup que lo limita a 512 MB de memoria.
 
-**Peso na cualificación**:
+**Peso en calificación:**
 
-- Peso desta tarefa no seu tema ...................................................... 40 %
+- Peso de esta tarea en su asignatura ........................................... .......... 40%
