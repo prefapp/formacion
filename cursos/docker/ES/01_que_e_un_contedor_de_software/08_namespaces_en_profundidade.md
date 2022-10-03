@@ -47,7 +47,7 @@ Sin embargo, el bash que ejecutamos **ya no está en el namespace global de pids
 Para probar esto, salgamos del bash creado:
 
 ```bash
-salida
+exit
 ```
 
 Y ejecutemos el comando anterior nuevamente, pero pidiéndole al sistema que monte un nuevo proceso de acuerdo con nuestro namespace pids.
@@ -56,8 +56,7 @@ Y ejecutemos el comando anterior nuevamente, pero pidiéndole al sistema que mon
 unshare -fp --mount-proc /bin/bash
 ```
 
-Si ahora hacemos un ``top'' o un ``ps'' veremos sólo dos procesos. Es decir, **el proceso que lanzamos "vive" en su propio namespace pids**. El proceso lanzado ```/bin/bash``` tendrá pid 1. Si abrimos otra terminal y buscamos ```/bin/bash``` en nuestro árbol de procesos, veremos que tiene un pid diferente que no es el pid 1.
-
+Si ahora hacemos un ```top``` o un ```ps``` veremos sólo dos procesos. Es decir, **el proceso que lanzamos "vive" en su propio namespace pids**. El proceso lanzado ```/bin/bash``` tendrá pid 1. Si abrimos otra terminal y buscamos ```/bin/bash``` en nuestro árbol de procesos, veremos que tiene un pid diferente que no es el pid 1.
 
 Una pregunta muy interesante en este punto es la razón por la que el proceso /bin/bash tiene pid 1. Se puede encontrar una discusión sobre este tema [aquí](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900).
 

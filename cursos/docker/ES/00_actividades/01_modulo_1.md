@@ -13,10 +13,10 @@ Pasos:
 2. **Trabaje** con comandos de administración de namespace:
 En un pdf, ponga las capturas de pantalla de los comandos necesarios para:
    - Lanzar un bash con pid, proc y red aislados.
-   - Lanzar un bash una fiesta con uts aislados.       
-   - Lanzar un bash que ingrese al namespace del paso 2 y cambie el nombre de host a "tarefa-namespaces de tareas".
+   - Lanzar un bash con uts aislado.       
+   - Lanzar un bash que ingrese al namespace del paso 2 y cambie el nombre de host a "tarefa-namespaces".
 
-3. **Explore** el namespace de la red.
+1. **Explore** el namespace de la red.
 El namespace de la red permite, entre otras cosas, conectar procesos que están en diferentes namespaces a través de elementos virtuales como veth. En un pdf, coloque capturas de pantalla de los comandos necesarios para:
    - Inicie un bash con namespaces de redes privadas, pid, proc.
    - Crear un par de interfaces virtuales.
@@ -91,9 +91,9 @@ nodev    cgroup
 
 ```bash
 #!/bin/sh
-mientras [ 1 ]; de
+while [ 1 ]; do
         echo "hola mundo"
-        dormir 20
+        sleep 20
 done
 ```
 
@@ -140,7 +140,7 @@ O, si este archivo no existe:
 
 **Indicadores de logros**:
 
-- El interrogador concursos.
+- Se contesta el cuestionario.
 - En los pdfs a entregar:
  - mostrando los comandos necesarios para crear los cgroups con limitaciones de memoria y los scripts que se ejecutan dentro de los grupos.
  - ver comandos bash de creación de recursos compartidos de cpu en cgroups y pruebas de comando.
@@ -179,8 +179,8 @@ El contenedor debe reunir las siguientes características:
 
 - En pdf, muestra capturas de pantalla de todo lo necesario para:
  - Crear un contenedor según las especificaciones establecidas.
- - ¿Cómo probar que la UTS está realmente enferma?
- - ¿Cómo podemos saber que cal es el proceso de inicio del contenedor?
+ - ¿Cómo probar que la UTS está realmente aislada?
+ - ¿Cómo podemos saber cuál es el proceso de inicio del contenedor?
  - ¿Cómo daríamos conectividad al exterior o al contenedor? Pista ([veth](http://man7.org/linux/man-pages/man4/veth.4.html)).
  - Sabiendo que son los [cgroups](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita la memoria del contenedor a ```512 MB```.
 
@@ -192,7 +192,7 @@ El contenedor debe reunir las siguientes características:
 
 - Estar aillado en los namespaces establecidos.
 - Podrás comprobar que tienes tu propia UTS.
-- Podrá saber si cal es su proceso de inicio.
+- Podrá saber cuál es su proceso de inicio.
 - Dispondrá de conectividad con el exterior.
 - Su memoria estará limitada a 512 MB a través de cgroups.
 
