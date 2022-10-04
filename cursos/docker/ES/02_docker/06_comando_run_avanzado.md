@@ -1,102 +1,103 @@
-# Comando _**run**_ avanzado
+# Comando avanzado _**run**_
 
-Unha vez comprendido o ciclo básico de **crear-correr-deter-borrar** contedores, imos revisita-lo comando run para ver algunhas das súas opcións.
+Una vez que comprenda el ciclo básico de contenedores **crear-ejecutar-detener-eliminar**, revisemos el comando `run` para ver algunas de sus opciones.
 
-## Executar un comando instantáneo nun contedor
+## Ejecutar un comando instantáneo en un contenedor
 
-Imaxinemos que queremos sabe-la versión da nosa debian, para iso, teríamos que facer un cat do ficheiro **/etc/issue**.
+Imaginemos que queremos saber la versión de nuestro debian, para eso tendríamos que hacer un `cat` del archivo **/etc/issue**.
 
-Imos crear un contedor que faga este traballo, e despois que desapareza. 
+Vamos a crear un contenedor que haga este trabajo y luego desaparezca.
 
 ```shell
 docker run --rm prefapp/debian-formacion cat /etc/issue
 ```
 
-Isto nos sacará por pantalla, a seguinte información:
+Esto mostrará la siguiente información:
 
 ```shell
 Debian GNU/Linux 8 \n \l
 ```
 
-O que acaba de pasar é o seguinte:
+Lo que acaba de pasar es lo siguiente:
 
-1. Docker crea e arrinca (_**run**_) un novo contedor.
-2. O sistema vai a borrar o container ó final da súa execución (_**--rm**_).
-3. Este contedor vai a estar baseado na imaxe _**prefapp/debian-formacion**_.
-4. O comando a executar no contedor é _**cat /etc/issue**_.
+1. Docker crea e inicia (_**run**_) un nuevo contenedor.
+2. El sistema eliminará el contenedor al final de su ejecución (_**--rm**_).
+3. Este contenedor se va a basar en la imagen _**prefapp/debian-formacion**_.
+4. El comando para run en el contenedor es _**cat /etc/issue**_.
 
-Notése que o /etc/issue non é o da nosa máquina senón o da imaxe que monta o contedor! 
+Tenga en cuenta que el resultado de /etc/issue no es el de la máquina anfitriona sino el del contenedor que se monta con la imagen.
 
-Neste exemplo pódese ver o lixeiros que son os contedores: os creamos e destruimos en cuestión de décimas de segundos e os empregamos para executar tareas triviais (como facer un cat).
+En este ejemplo puedes ver lo livianos que son los contenedores: los creamos y los destruimos en cuestión de décimas de segundo y los usamos para realizar tareas triviales (como hacer un cat).
 
-## Executar un comando de xeito interactivo
+## run un comando de forma interactiva
 
-Imaxinemos que queremos executar unha sesión dentro da nosa imaxe debian e poder executar comandos dentro dela. 
+Imaginemos que queremos ejecutar una sesión dentro de nuestra imagen de Debian y poder ejecutar comandos dentro de ella.
 
-Para iso temos que crear un contedor (que arrinque un intérprete de comandos), e interactuar con él. 
+
+Para esto, tenemos que crear un contenedor (que inicia un intérprete de comandos) e interactuar con él.
 
 ```shell
 docker run --rm -ti prefapp/debian-formacion /bin/bash
 ```
 
-Se executamos este comando, a noso prompt cambiará a un cadea hexadecimal (o uuid do propio contedor). 
+Si ejecutamos este comando, nuestro prompt cambiará a una cadena hexadecimal (el uuid del propio contenedor).
 
-Agora poderíamos interactuar co contedor, e cando rematemos, basta escribir _**exit**_ ou **Ctrl + D** para sair da shell e, ó rematar o programa de lanzamento do contedor, o propio contedor morre e recupera o control a shell da nosa máquina. 
+Ahora podríamos interactuar con el contenedor, y cuando hayamos terminado, con _**exit**_ o **Ctrl + D** podemos salir del shell, o cuando finalice el programa de inicio del contenedor, el contenedor en sí muera recupera el control del shell de nuestra máquina.
 
-## Crear e correr un contedor demonizado
+## Crear y run un contenedor demonizado
 
-Cando queremos correr un contedor que da un servizo, o normal é executalo como un daemon. 
+Cuando queremos run un contenedor que proporciona un servicio, lo normal es ejecutarlo como un daemon.
 
-Imos crear un contedor que funcione como si de un servidor Debian se tratase. Este contedor vai correr demonizado (independiente da nosa sesión na máquina). Ademáis, ímoslle poñer un nome para poder xestionalo dun xeito máis sinxelo. 
+Vamos a crear un contenedor que funcione como si fuera un servidor Debian. Este contenedor se ejecutará demonizado (independientemente de nuestra sesión en la máquina). Además, le vamos a poner un nombre para poder gestionarlo de una forma más sencilla.
 
 ```shell
 docker run --name contedor-formacion -d prefapp/debian-formacion tail -f /dev/null
 ```
 
-Neste caso, decímoslle a docker
+En este caso, le decimos a docker
 
-- Crea e arrinca un contedor (_**run**_)
-- Ponlle o nome contedor-formacion (_**--name**_)
-- Queremos que corra en segundo plano, como daemon (_**-d**_)
-- Baseámolo na imaxe _**prefapp/debian-formacion**_
-- O comando a executar é _**tail -f /dev/null**_
+- Crear e iniciar un contenedor (_**run**_)
+- Dale el nombre de contenedor de entrenamiento (_**--name**_)
+- Queremos que se ejecute en segundo plano, como un demonio (_**-d**_)
+- Nos basamos en la imagen _**prefapp/debian-formacion**_
+- El comando a run es _**tail -f /dev/null**_ 
 
 
 
-> ⚠️ O emprego do _**tail -f /dev/null**_ empregase para que, ó ser o proceso iniciador do contedor, perviva indefinidamente, ata que se remate explícitamente mediante _**docker stop**_, rematando así o contedor enteiro.
+> ⚠️ Se utiliza el uso de _**tail -f /dev/null**_ (`sleep infinity`) para que, siendo el proceso iniciador del contenedor, sobreviva indefinidamente, hasta que sea terminado explícitamente por _**docker stop**_, terminando así todo el contenedor.
 
-Se executamos o comando, veremos que seguimos na shell da nosa máquina. Ó facer _**docker ps**_, veremos que o noso container está creado e co nome que establecemos.
+Si ejecutamos el comando, veremos que todavía estamos en el shell de nuestra máquina. Al hacer _**docker ps**_, veremos que nuestro contenedor está creado y con el nombre que le pusimos.
 
 ```shell
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
 21295036cca5        prefapp/debi...     "tail -f /dev/null"      2 seconds ago       Up 1 second                                  contedor-formacion
 ```
 
-> Unha pregunta que nos podemos facer agora é: como entro nese contedor agora?
+> Una pregunta que nos podemos hacer ahora es: ¿cómo entro en ese contenedor?
 
-A solución é _**docker exec**_.
+La solución es _**docker exec**_.
 
-## Executando un comando dentro dun contedor: o _**docker-exec**_
+## Ejecutando un comando dentro de un contenedor: _**docker-exec**_
 
-Na sección anterior vimos que podiamos crear un contedor como un daemon que correse na nosa máquina. 
+En la sección anterior vimos que podíamos crear un contenedor como un demonio para runlo en nuestra máquina.
 
-Preguntábamos cómo podíamos "acceder" a ese contedor. 
+Nos preguntábamos cómo podíamos "acceder" a ese contenedor.
 
-A solución que nos ofrece docker é o comando [exec](https://docs.docker.com/engine/reference/commandline/exec/): a idea é crear un proceso que se "inserte" dentro do contedor e se execute dentro do mesmo. 
+La solución que ofrece docker es el comando [exec](https://docs.docker.com/engine/reference/commandline/exec/): la idea es crear un proceso que se "inserte" dentro del contenedor y se ejecute dentro.
 
-Para poder acadar isto, Docker emprega a chamada ó sistema [nsenter](https://man7.org/linux/man-pages/man1/nsenter.1.html) que lle permite que o proceso "entre" nos namespaces doutro proceso, neste caso, os do contedor no que queremos introducirnos. 
+Para lograr esto, Docker usa la llamada al sistema [nsenter](https://man7.org/linux/man-pages/man1/nsenter.1.html) que permite que un proceso "entre" en los espacios de nombres de otro proceso, en este caso, las del contenedor en el que queremos entrar.
 
-Se lembramos o exemplo anterior, tiñamos un contedor correndo a nosa imaxe de debian co nome "contedor-formacion". 
+Si recordamos el ejemplo anterior, teníamos un contenedor ejecutando nuestra imagen de Debian con el nombre "contedor-formacion".
 
-Para poder correr un proceso noso dentro, cun intérprete de comandos, facemos:
+Para poder ejecutar nuestro proceso por dentro, con un intérprete de comandos, corremos:
 
 ```shell
 docker exec -ti contedor-formacion /bin/bash
 ```
 
-O que estamos a dicirlle a Docker é:
+Lo que le estamos diciendo a Docker es:
 
-1. Queremos que corras un proceso dentro dun contedor (_**exec**_)
-2. Ese proceso ten que correrse en formato interactivo (_**-ti**_)
-3. O contedor se identifica co nome _**contedor-formacion**_
-4. O proceso a executar é un _**/bin/bash**_
+1. Queremos que ejecute un proceso dentro de un contenedor (_**exec**_).
+2. Ese proceso tiene que ejecutarse en formato interactivo (_**-ti**_).
+3. El contenedor se identifica con el nombre _**formación-contenedor**_.
+4. El proceso que se ejecuta es _**/bin/bash**_ para abrir un shell bash dentro del contenedor.

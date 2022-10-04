@@ -1,99 +1,99 @@
-# Xestión da rede
+# Administración de redes
 
-Por defecto os contedores Docker poden acceder ó exterior (teñen conectividade, dependendo sempre da máquina anfitriona)
+Por defecto los contenedores Docker pueden acceder al exterior (tienen conectividad, siempre dependiendo de la máquina host)
 
-Nembargantes, o contedor está aillado con respecto a entrada de datos. É decir, por defecto, e coa excepción do comando exec, o contedor constitúe unha unidad aillada á que non se pode acceder. 
+Sin embargo, el contenedor está aislado con respecto a la entrada de datos. Es decir, por defecto, y con la excepción del comando exec, el contenedor es una unidad aislada a la que no se puede acceder.
 
-Por suposto, compre poder acceder ós contedores para poder interactuar dalgún xeito con eles. 
+Por supuesto, debe poder acceder a los contenedores para interactuar con ellos de alguna manera.
 
-A regra básica aquí é: salvo que se estableza o contrario, **todo está pechado ó mundo exterior**. 
+La regla básica aquí es: a menos que se indique lo contrario, **todo está cerrado al mundo exterior**.
 
-Nesta sección imos aprender cómo resolve Docker o problema de dar conectividade ós contedores. 
+En esta sección aprenderemos cómo Docker resuelve el problema de proporcionar conectividad a los contenedores.
 
-## Portos do contedor
+## Puertos de contenedores
 
-Un contedor está dentro do seu namespace de rede polo que pode establecer regras específicas sen afectar ó resto do sistema. 
+Un contenedor está dentro de su espacio de nombres de red, por lo que puede establecer reglas específicas sin afectar al resto del sistema.
 
-Deste xeito, e sempre dende o punto de vista do contedor, podemos establecer as regras que queiramos e conectar o que desexemos ós 65535 do contedor sen temor a colisións doutros servizos. 
+De esta forma, y ​​siempre desde el punto de vista del contenedor, podemos establecer las reglas que queramos y conectar lo que queramos a los 65535 del contenedor sin miedo a colisiones con otros servicios.
 
-Así, poderíamos ter un contedor cun apache conectado ó porto 80:
+Entonces podríamos tener un contenedor con apache conectado al puerto 80:
 
 ![Container porto](./../_media/02_docker/contedor_porto.png)
 
-Ou poderíamos ter varios contedores con servizos apache conectados ó porto 80:
+O podríamos tener varios contenedores con servicios apache conectados al puerto 80:
 
 ![Containers porto](./../_media/02_docker/contedores_porto.png)
 
-Dado que cada un deles ten o seu propio namespace de rede, non habería ningún problema de colisión entre servizos conectados ó mesmo porto en contedores diferentes. 
+Dado que cada uno de ellos tiene su propio espacio de nombres de red, no habría problemas de colisión entre los servicios conectados al mismo puerto en diferentes contenedores.
 
-> ⚠️  Por suposto, se dentro dun mesmo contedor poñemos dous servizos á escoita no mesmo porto, producirase un erro de rede.
+> ⚠️ Por supuesto, si dentro de un mismo contenedor ponemos dos servicios escuchando en el mismo puerto, se producirá un error de red.
 
-O problema é que, pese a ter esta liberdade dentro do contedor, aínda precisamos conecta-lo extremo do contedor cun porto da máquina anfitriona para que as conexións externas poidan chega-lo noso contedor. Por sorte, ese traballo vaínolo facilitar moito Docker. 
+El problema es que, a pesar de tener esta libertad dentro del contenedor, aún necesitamos conectar el extremo del contenedor con un puerto en la máquina host para que las conexiones externas puedan llegar a nuestro contenedor. Afortunadamente, Docker facilitará mucho ese trabajo.
 
-## Conectar portos de docker ó exterior
+## Conecta los puertos acoplables al exterior
 
-Tal e como viramos na sección anterior, dentro dun contedor dispoñemos de todo o stack de rede para facer o que queiramos. 
+Como vimos en la sección anterior, dentro de un contenedor tenemos toda la pila de red para hacer lo que queramos.
 
-Nembargantes, con iso non é suficiente para que o se poida chegar ó noso contedor dende o mundo exterior. Así:
+Sin embargo, eso no es suficiente para llegar a nuestro contenedor desde el mundo exterior. Como esto:
 
 ![Container conexión](./../_media/02_docker/contedor_conexion_0.png)
 
-Como vemos, o noso contedor está aillado do mundo exterior, por moito que o apache esté presente e conectado ó porto 80 dentro do contedor. 
+Como podemos ver, nuestro contenedor está aislado del mundo exterior, aunque apache está presente y conectado al puerto 80 dentro del contenedor.
 
-Imos probar a arrincar unha imaxe que temos preparada para este curso:
+Intentemos comenzar con una imagen que hemos preparado para este curso:
 
-- Está baseada en debian:8
-- Ten instalado o apache2
-- O proceso de arranque consiste en poñer a escoitar o apache no porto 80
+- Está basado en debian:8
+- Tienes apache2 instalado
+- El proceso de arranque consiste en hacer que apache escuche en el puerto 80
 
 ```shell
 docker run -d --name apache-probas prefapp/apache-formacion
 ```
 
-Se facemos agora un _**docker ps**_, verémo-lo noso contedor funcionado. O problema: non podemos chegar de ningunha forma ó servizo de apache que corre escoitando no porto 80, porque o noso contedor non ten conectividade co exterior. 
+Si hacemos un _**docker ps**_ ahora, veremos nuestro contenedor ejecutándose. El problema: no podemos llegar al servicio de apache que se ejecuta escuchando en el puerto 80, porque nuestro contenedor no tiene conectividad con el exterior.
 
-O único xeito para poder conectarse ó apache, é entrar no contedor:
+La única forma de conectarse a apache es ingresar al contenedor:
 
 ```shell
 docker exec -ti apache-probas /bin/bash
 ```
 
-E dende dentro do mesmo, xa poderíamos facer, por exemplo un curl ó porto 80:
+Y desde dentro podríamos hacer, por ejemplo, un curl al puerto 80:
 
 ```shell
 root@378cc9f54153:/# curl localhost:80
 ```
 
-E obteríamos unha resposta axeitada do apache. 
+Y obtendríamos una respuesta adecuada de apache.
 
-Docker permítenos conectar os portos do contedor con portos do anfitrión de tal xeito que este último sexa accesible dende fora. 
+Docker nos permite conectar puertos de contenedor a puertos de host de tal manera que este último sea accesible desde el exterior.
 
-Imos borra-lo noso container:
-
-```shell
-docker rm -f -v apache-probas
-```
-
-E redesplegalo cunha nova opción:
+Eliminemos nuestro contenedor:
 
 ```shell
-docker run -d -p 9090:80 --name apache-probas prefapp/apache-formacion
+docker rm -f -v apache-pruebas
 ```
 
-Como vemos, a novidade aquí é o *(-p 9090:80)*:
+Y vuelva a implementarlo con una nueva opción:
 
-- Estalle a dicir ó Docker que precisa conectar un porto do anfitrión cun do container.
-- O porto 9090 corresponde cun porto do anfitrión.
-- O porto 80 é o de dentro do contedor (onde escoita o noso apache)
-Nun diagrama:
+```shell
+docker run -d -p 9090:80 --name apache-tests prefapp/apache-training
+```
+
+Como podemos ver, la novedad aquí es el *(-p 9090:80)*:
+
+- Dígale a Docker que necesita conectar un puerto de host a un puerto de contenedor.
+- El puerto 9090 corresponde a un puerto host.
+- El puerto 80 es el que está dentro del contenedor (donde escucha nuestro apache)
+En un diagrama:
 
 ![Container conexión](./../_media/02_docker/contedor_conexion_1.png)
 
-Agora o porto 80 do noso contedor está conectado ó porto 9090 da máquina anfitriona. Podemos, por tanto, chegar ó apache que corre dentro sen problema dende o exterior:
+Ahora el puerto 80 de nuestro contenedor está conectado al puerto 9090 de la máquina host. Podemos, por tanto, llegar al apache corriendo por dentro sin problema desde fuera:
 
 ```shell
 curl localhost:9090
 ```
-> ⚠️ O porto do anfitrión é totalmente controlable mediante reglas de iptables ou de firewall para determinar a súa accesibilidade dende o exterior.
+> ⚠️ El puerto de host es totalmente controlable usando iptables o reglas de firewall para determinar su accesibilidad desde el exterior.
 
->> Aínda que teñamos liberdade nos portos dentro do contedor, os portos do anfitrión son un recurso limitado e de uso alternativo. Isto é, non se pode asignar o mesmo porto a varios portos de contedor. Isto supón un problema de xestión a resolver por parte das ferramentas de orquestración, obxecto do tema 6 do presente curso.
+>> Incluso si tenemos libertad en los puertos dentro del contenedor, los puertos host son un recurso limitado y de uso alternativo. Es decir, no puede asignar el mismo puerto a varios puertos de contenedores. Esto representa un problema de gestión a resolver con las herramientas de orquestación, tema del tema 6 de esta asignatura.

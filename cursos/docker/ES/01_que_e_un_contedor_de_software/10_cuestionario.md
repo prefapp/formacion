@@ -1,6 +1,6 @@
-# Cuestionario Final
+# Cuestionario final
 
-Un SO illa completamente os recursos que expón aos procesos que corren nel?
+¿Un SO elimina por completo los recursos que expone a los procesos que se ejecutan en él?
 
 > <div class='checkboxes'>
     <div>
@@ -11,7 +11,7 @@ Un SO illa completamente os recursos que expón aos procesos que corren nel?
             value="1"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Sí, totalmente, é a sua misión principal.
+            Sí, totalmente, es su principal misión.
         </label>
     </div>
     </br>
@@ -23,7 +23,7 @@ Un SO illa completamente os recursos que expón aos procesos que corren nel?
             value="2"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Non, existen unha serie de recursos (puntos de montaxe, usuarios, pids, IPC...) que siguen sendo globais. 
+            No, hay una serie de recursos (puntos mountaxe, usuarios, pids, IPC...) que siguen siendo globales.
         </label>
     </div>
     </br>
@@ -35,14 +35,14 @@ Un SO illa completamente os recursos que expón aos procesos que corren nel?
             value="3"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Un SO non illa recursos. 
+            Un SO no aisla recursos. 
         </label>
     </div>
 </div>
 
 ---
 
-A técnica da virtualización a nivel de plataforma...
+La técnica de virtualización a nivel de plataforma...
 
 > <div class='checkboxes'>
     <div>
@@ -53,7 +53,7 @@ A técnica da virtualización a nivel de plataforma...
             value="1"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            Busca emular con software o hardware dunha máquina para crear un computador virtual.
+            Busca emular el hardware de una máquina con software para crear una computadora virtual.
         </label>
     </div>
     </br>
@@ -65,7 +65,7 @@ A técnica da virtualización a nivel de plataforma...
             value="2"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            É moi pouco costosa en térrmos de tempo de arranque e de uso de CPU/RAM. 
+            Es muy económico en términos de tiempo de arranque y uso de CPU/RAM.
         </label>
     </div>
     </br>
@@ -77,14 +77,14 @@ A técnica da virtualización a nivel de plataforma...
             value="3"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            É incompatible con calquer outra forma de virtualización.
+            Es incompatible con cualquier otra forma de virtualización.
         </label>
     </div>
 </div>
 
 ---
 
-Os contedores de software son unha técnica de virtualización...
+Los contenidos del software son una técnica de virtualización...
 
 > <div class='checkboxes'>
     <div>
@@ -95,7 +95,7 @@ Os contedores de software son unha técnica de virtualización...
             value="1"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Que busca emular o hardware de forma similar ao que fan as técnicas de virtualización de plataforma.
+            Que busca emular el hardware de forma similar a las técnicas de virtualización de plataformas.
         </label>
     </div>
     </br>
@@ -107,7 +107,7 @@ Os contedores de software son unha técnica de virtualización...
             value="2"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Ofrece unha vista "privada" dunha serie de recursos tradicionalmente globais de forma que o proceso, ou grupo de procesos, ten a ilusión de ter un SO para él.
+            Ofrece una vista "privada" de una serie de recursos tradicionalmente globales para que el proceso, o grupo de procesos, tenga la ilusión de tener un SO propio.
         </label>
     </div>
     </br>
@@ -119,7 +119,7 @@ Os contedores de software son unha técnica de virtualización...
             value="3"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Non pode usarse en máquinas virtuais.
+            No se puede utilizar en máquinas
         </label>
     </div>
 </div>

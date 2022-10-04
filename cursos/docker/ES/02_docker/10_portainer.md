@@ -1,29 +1,30 @@
-# Portainer: a administración visual do Docker
+# Portainer: administración visual de Docker
 
-> O proxecto de portainer consiste na creación dunha servicio web que permite interactuar coa API de Docker dun xeito visual e intuitivo. 
+> El proyecto portainer consiste en la creación de un servicio web que permite interactuar con la API de Docker de forma visual e intuitiva.
 
-Para instala-lo, basta con facer:
+Para desplegarlo solo haz lo siguiente:
 
 ```shell
 docker run -d -p 9000:9000 --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /opt/portainer:/data portainer/portainer
 ```
 
-E xa teríamos o portainer correndo nun contedor, bastaría con abrir o navegador no porto elixido e veríamos a pantalla de inicio. 
+Y ya tendríamos el portainer funcionando en un contenedor, bastaría con abrir el navegador en el puerto elegido y veríamos la pantalla de inicio.
 
-Fornecemos un usuario e un contrasinal, e aparecerá esta pantalla:
+Proporcionamos un nombre de usuario y contraseña, y aparecerá esta pantalla:
 
 ![Portainer](./../_media/02_docker/portainer1.png)
 
-Polo de agora, imos a escoller o entorno local:
+Por ahora, elijamos el entorno local:
 
 ![Portainer](./../_media/02_docker/portainer2.png)
 
-Damoslle a connect e xa teríamos un sistema para administrar visualmente o noso Docker. 
+Le damos a connect y ya tendríamos un sistema para administrar visualmente nuestro Docker.
 
-# 📖 Actividade
+# 📖 Actividad
 
-Probemos a instalar o portainer. 
+Intentemos instalar portainer.
 
-A partir de agora, ó longo do resto do curso aparecerá esta icona ![Portainer](./../_media/02_docker/portainer3.png) en varios lugares. Cando sexa así, estamos a recomandar que se vexan os resultados no portainer. 
+A partir de ahora, durante el resto del curso, este ícono ![Portainer](./../_media/02_docker/portainer3.png) aparecerá en varios lugares. Cuando este sea el caso, le recomendamos que vea los resultados en Portainer.
 
-Consideramos que a información que aporta facilita o proceso de aprendizaxe. 
+Creemos que la información que proporciona facilita el proceso de aprendizaje.
+

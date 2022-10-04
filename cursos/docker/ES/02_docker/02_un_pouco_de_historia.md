@@ -1,28 +1,28 @@
-# Orixes dos contedores de software
+# Orígenes de los contenedores de software
 
-> Vamos a revisar unha serie de ferramentas e tecnoloxías que xurdiron ao longo dos anos en diferentes sistemas operativos, para dar resposta ao problema que se plantexaba no módulo 1 sobre a xestión de recursos dentro dun SO.
+> Vamos a repasar una serie de herramientas y tecnologías que han ido surgiendo a lo largo de los años en diferentes sistemas operativos, para dar respuesta al problema planteado en el módulo 1 sobre la gestión de recursos dentro de un SO.
 
 ---
 
-## **Xaulas chroot (1979)**
+## **Jaulas Chroot (1979)**
 
 ![chroot](./../_media/02_docker/chroot.png)
 
-No desenrolo do sistema Unix V7, agregouse unha nova chamada de sistema (chroot) que permitía cambiar o directorio raíz dun proceso, e os seus descendentes, a unha nova localización do sistema de ficheiros.
+En el desarrollo del sistema Unix V7, se agregó una nueva llamada al sistema (chroot) que permitía cambiar el directorio raíz de un proceso y sus descendientes a una nueva ubicación en el sistema de archivos.
 
-Este avance foi o comezo do illamento a nivel de proceso, posibilitando controlar o acceso aos ficheiros por proceso. 
+Este avance fue el comienzo del aislamiento a nivel de proceso, lo que hizo posible controlar el acceso a los archivos por proceso.
 
-Na actualidade esa ferramenta aínda está dispoñible en calquer sistema Unix , e por suposto en Linux. Podedes probala seguindo o seguinte exemplo:
+Actualmente esa herramienta sigue estando disponible en cualquier sistema Unix, y por supuesto en Linux. Puedes probarlo siguiendo el siguiente ejemplo:
 
 ```shell
-# copiamos los binarios que queremos executar na xaula chroot
+# copiamos los binarios que queremos ejecutar en la celda chroot
 mkdir -p chroot/bin
 sudo cp /bin/{ls,bash,mkdir,rm} chroot/bin/
 sudo cp /usr/bin/tree chroot/bin/
 ```
 
 ```shell
-# montamos librerias
+# montamos librerías
 mkdir chroot/{lib,lib64}
 for i in {lib,lib64}; do sudo mount --bind /$i chroot/$i ; done
 ```
@@ -33,7 +33,7 @@ sudo chroot chroot/
 ```
 
 ```shell
-# probamos a executar estos comandos básicos de unix
+# probamos ejecutar estos comandos básicos de Unix
 ls
 tree -d -L 2
 mkdir /probando
@@ -48,14 +48,14 @@ for i in {lib,lib64}; do sudo umount chroot/$i ; done
 
 ## **FreeBSD Jails (2000), Solaris Zones (2004)**
 
-![Evil Jail](./../_media/02_docker/evil_jail.png)
+![Cárcel del mal](./../_media/02_docker/evil_jail.png)
 ![Solaris](./../_media/02_docker/solaris.png)
 
-Duas décadas despois, un proveedor de hosting sacou un servizo sobre xaulas BSD para lograr unha separación de recursos clara entre os seus servizos e os dos seus clientes, e deste xeito mellorar a seguridade e facilitar a administración dos mesmos.
+Dos décadas después, un proveedor de hosting lanzó un servicio sobre jaulas BSD para lograr una clara separación de recursos entre sus servicios y los de sus clientes, y de esta forma mejorar la seguridad y facilitar la administración de los mismos.
 
-As xaulas de FreeBSD permiten a un administrador, particionar un sistema FreeBSD en varios sistemas BSD independentes e con menos recursos, illados, e coa capacidade de agregar unha IP a cada un deles.
+Las jaulas de FreeBSD permiten a un administrador particionar un sistema FreeBSD en varios sistemas BSD independientes con menos recursos, aislados y con la capacidad de agregar una IP a cada uno de ellos.
 
-Oracle agregou unha característica similar a Solaris, que combina o control de recursos que pode consumir un proceso, ca separación en zonas dos procesos que se executan na máquina.
+Oracle ha agregado una función similar a Solaris, que combina el control de los recursos que puede consumir un proceso con la zonificación de los procesos que se ejecutan en la máquina.
 
 ---
 
@@ -63,29 +63,29 @@ Oracle agregou unha característica similar a Solaris, que combina o control de 
 
 ![OpenVZ](./../_media/02_docker/opevz.png)
 
-Un ano máis tarde, a compañía Virtuozzo creou un novo sistema de virtualización basado en contedores, sobre o kernel de Linux, que permitía crear multiples contedores illados e seguros, nunha mesma máquina, como se dun servidor privado virtual se tratara.
+Un año después, la empresa Virtuozzo creó un nuevo sistema de virtualización basado en contenedores, sobre el kernel de Linux, que permitía crear múltiples contenedores aislados y seguros en una misma máquina, como si de un servidor privado virtual se tratase.
 
-O código de OpenVZ, aínda que está aberto, nunca formou parte da distribución oficial do kernel de Linux e se incorpora como unha serie de parches extra que se aplican sobre o código do kernel.
+El código OpenVZ, aunque de código abierto, nunca ha sido parte de la distribución oficial del kernel de Linux y se incorpora como una serie de parches adicionales que se aplican sobre el código del kernel.
 
 ---
 
-## **linuxcontainers (2008) e Docker (2013)**
+## **linuxcontainers (2008) y Docker (2013)**
 
-![LinuxContanirs](./../_media/02_docker/linuxcontainers.png)
+![LinuxContainers](./../_media/02_docker/linuxcontainers.png)
 ![Docker](./../_media/02_docker/docker_logo.png)
 
-A primeira ferramenta de contedores de software que encontrou ampla acollida dentro da comunidade de Linux foi [LXC](https://linuxcontainers.org/), principalmente polas tecnoloxías que aglutinaba e que foron introducidas dentro do kernel de linux (**Namespaces e cgroups**).
+La primera herramienta de contenedor de software que encontró una amplia aceptación dentro de la comunidad de Linux fue [LXC](https://linuxcontainers.org/), principalmente debido a las tecnologías que reunió y que se introdujeron en el kernel de Linux (**Namespaces y cgroups**).
 
-O seu obxectivo e dispor dun contedor como un entorno o máis similar posible a unha máquina virtual, pero sen o sobrecoste de emular hardware.
+Su objetivo es tener un contenedor como entorno lo más similar posible a una máquina virtual, pero sin la sobrecarga de emular hardware.
 
-A xestión de este contedor se fai mediante unha serie de ficheiros de configuración, donde o usuario ten que encargarse de descargar e preparar o sistema de ficheiros, e definir e configurar os namespaces onde quere conectar ao container, conectar a rede ... o que o convirte en unha ferramenta moi pouco amigable para un desenvolvedor.
+La gestión de este contenedor se realiza a través de una serie de archivos de configuración, donde el usuario tiene que descargar y preparar el sistema de archivos, y definir y configurar los espacios de nombres donde quiere conectarse al contenedor, conectarse a la red... lo que lo convierte en una herramienta muy hostil para un desarrollador.
 
-A compañía dotCloud, onde traballaban os creadores de Docker, e que empregaba LXC para proporciona aos seus clientes un dos primeiros [servizos de aloxamento PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/) que apareceu no mercado, buscando unha forma de facilitar a adopción do seu servizo, e trantando de facer máis accesible a tecnoloxía de contedores aos desenvolvedores de aplicacións, creou o proxecto que sería o precursor de Docker.
+La empresa dotCloud, donde trabajaron los creadores de Docker, y que utilizó LXC para brindar a sus clientes uno de los primeros [servicios de hosting PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/) que apareció en el mercado, buscando la forma de facilitar la adopción de su servicio, y tratando de hacer más accesible la tecnología de contenedores a los desarrolladores de aplicaciones, creó el proyecto que sería el precursor de Docker.
 
-Docker se libera como proxecto de [código aberto](https://github.com/moby/moby) o 13 de marzo de 2013, e na actualidade a pesar do cambio de estratexia e de nome, ten máis de 50.000 estrelas en Github e casi 2.000 contribuidores, e convertiuse na principal tecnoloxía para a xestión de contedores.
+Docker se lanza como un proyecto [de código abierto](https://github.com/moby/moby) el 13 de marzo de 2013 y hoy, a pesar del cambio de estrategia y nombre, tiene más de 50 000 estrellas en Github y casi 2000 colaboradores, y se ha convertido en la tecnología líder para la gestión de contenedores.
 
-* **Saber máis**
+* **Aprende más**
 
- - [A brief history of containers](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
+  - [Una breve historia de los contenedores](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
 
- - [Confining the omnipotent root](http://phk.freebsd.dk/pubs/sane2000-jail.pdf)
+  - [Confinamiento de la raíz omnipotente](http://phk.freebsd.dk/pubs/sane2000-jail.pdf)

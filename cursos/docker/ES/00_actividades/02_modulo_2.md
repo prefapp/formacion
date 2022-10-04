@@ -1,169 +1,169 @@
-# Módulo 2: Docker, contedores para todos
+# Módulo 2: Docker, contenedores para todos
 
-## Docker básico. Instalar docker no noso entorno de probas e operar cos primeiros contedores
+## Docker básico. Instale docker en nuestro entorno de prueba y opere con los primeros contenedores
 
-> Antes de comezar a traballar co ecosistema de Docker, temos que instalar docker engine no noso entorno de traballo.
+> Antes de comenzar a trabajar con el ecosistema Docker, debemos instalar el motor Docker en nuestro entorno de trabajo.
 
 ### Tipos de instalación
 
-Actualmente existen duas versións de Docker, unha gratuita para a comunidade (Community Edition) e unha de pago, con soporte extendido, para empresas (Enterprise Edition).
+Actualmente existen dos versiones de Docker, una gratuita para la comunidad (Community Edition) y otra de pago, con soporte extendido, para empresas (Enterprise Edition).
 
-Dentro da versión de comunidade, que sería a de empregar neste curso, temos varias opcións:
+Dentro de la versión comunitaria, que sería la que usaremos en este curso, tenemos varias opciones:
 
-- A: Instalación de Docker no noso laptop.
-- B: Creación dunha máquina virtual (servidor linux) e instalar o Docker dentro dela.
+- A: Instalando Docker en nuestro portátil.
+- B: Crear una máquina virtual (servidor linux) e instalar Docker en su interior.
 
-#### A - Instalación de Docker no noso laptop
-A plataforma de Docker permite a súa instalación nos principais sistemas operativos:
+#### A - Instalación de Docker en nuestro portátil
+La plataforma Docker permite su instalación en los principales sistemas operativos:
 
 - [Windows](https://docs.docker.com/docker-for-windows/install/).
 - [Mac](https://docs.docker.com/docker-for-mac/install/).
-- Linux (ver a continuación o apartado B).
+- Linux (consulte la sección B a continuación).
 
-#### B - Instalación de Docker nun servidor linux
+#### B - Instalación de Docker en un servidor Linux
 
-Segundo a distro da nosa elección, temos distintas [posibilidades](https://docs.docker.com/engine/installation/#server). Se estades a empregar a imaxe recomendada no modulo 0, de preparación do entorno (Ubuntu 18.04) tedes as instruccións [aquí](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
+Dependiendo de la distribución que elijamos, tenemos diferentes [posibilidades](https://docs.docker.com/engine/installation/#server). Si estás usando la imagen recomendada en el módulo 0, preparación del entorno (Ubuntu 18.04) tienes las instrucciones [aquí](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 
 **Pasos**:
 
-1. **Instalar** docker no noso entorno de traballo seguindo uns dos camiños anteriores (A ou B).
+1. **Instalar** docker en nuestro entorno de trabajo siguiendo una de las rutas anteriores (A o B).
 
-2. Unha vez instalado o Docker vamos a levantar o noso primeiro contedor. Para esto temos que levantar un proceso que, empregando a comando de shell [```echo```](http://www.linfo.org/echo.html), saque unha mensaxe por pantalla dicindo: Ola Mundo!
+2. Una vez que Docker esté instalado, construiremos nuestro primer contenedor. Para esto tenemos que crear un proceso que, usando el comando de shell [```echo```](http://www.linfo.org/echo.html), muestre un mensaje en la pantalla diciendo: Hello World !
 
-Obviamente, queremos facelo dentro dun contedor, e que monte **unha distro CentOS**.
+Obviamente, queremos hacerlo dentro de un contenedor y montar **una distribución de CentOS**.
 
-Tal e como viramos na práctica do módulo 1 (construindo o noso contedor) poderíamos seguir eses pasos para face-lo traballo:
+Como vimos en la práctica del módulo 1 (construyendo nuestro contenedor) podríamos seguir estos pasos para que funcione:
 
-- Descargar un sistema de ficheiros de CentOS.
-- Montar un contedor con unshare, limitando os [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade), facer un chroot a onde está o sistema de ficheiros descargado...
+- Descarga un sistema de archivos CentOS.
+- Montar un contenedor con unshare, limitando los [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade), hacer un chroot a donde está el sistema de archivos descargado. . .
 - ...
 
-pero agora xa podemos empregar Docker para facelo. Con Docker, básicamente, temos que seguir a mesma receta, pero, afortunadamente, todo iso está automatizado dentro das súas [utilidades](https://docs.docker.com/engine/reference/commandline/run/).
+Pero ahora podemos usar Docker para hacerlo. Con Docker, básicamente tenemos que seguir la misma receta, pero afortunadamente, todo eso está automatizado dentro de sus [utilidades](https://docs.docker.com/engine/reference/commandline/run/).
 
-3. A continuación vexamos como **aloxar un servidor dentro dun contedor**, e ademáis **que teña persistencia**, de xeito que si eliminamos e volvemos a recrear o contedor non se perderán os datos que nel se almacenan.
+1. A continuación, veamos cómo **alojar un servidor dentro de un contenedor**, y también **que tenga persistencia**, de modo que si borramos y volvemos a crear el contenedor, los datos almacenados en él no se perderán.
 
-Para esto  montar un contedor que:
+Para esto configure un contenedor que:
 
-- 3.1: conteña un **servidor mysql**, empregando a imaxen oficial de [mysql](https://hub.docker.com/_/mysql), **na súa versión 5.7**.
-- 3.2: se arrinque **en segundo plano** e continue ca execución do servicio unha vez desenganchado do terminal.
-- 3.3: que teña  **persistencia de datos**, dentro do path de almacenado de mysql (```/var/lib/mysql```).
-- 3.4: ademáis **seguindo as instruccións indicadas** no [repositorio da imaxen](https://hub.docker.com/_/mysql):
- - establecer a contrasinal de root a unha cadea de 10 caracteres.
- - crear unha base de datos co nome "platega-docker".
- - crear un usuario para esa base de datos co nome de pila do alumno e unha contrasinal de 10 caracteres.
+- 3.1: contiene un **servidor mysql**, utilizando la imagen oficial de [mysql](https://hub.docker.com/_/mysql), **en su versión 5.7**.
+- 3.2: iniciar **en segundo plano** y seguir ejecutando el servicio una vez desconectado del terminal.
+- 3.3: que tiene **persistencia de datos**, dentro de la ruta de almacenamiento mysql (```/var/lib/mysql```).
+- 3.4: también **siguiendo las instrucciones indicadas** en el [repositorio de imágenes](https://hub.docker.com/_/mysql):
+   - establezca la contraseña de root en una cadena de 10 caracteres.
+   - crear una base de datos con el nombre "platega-docker".
+   - crear un usuario para esa base de datos con el nombre del alumno y una contraseña de 10 caracteres.
 
-4. Ademais de que teña persistencia, tamén queremos que teña conectividade co exterior, de xeito que se poida acceder dende fora da máquina virtual a ese contedor. Para isto relancemos o servidor de mysql do apartado anterior pero expoñendo o **porto 3306**, na interfaz pública do entorno de traballo (a máquina virtual de virtualbox, se é o caso).
+4. Además de tener persistencia, también queremos que tenga conectividad con el exterior, para que puedas acceder a ese contenedor desde fuera de la máquina virtual. Para ello relanzamos el servidor mysql del apartado anterior pero exponiendo el **puerto 3306**, en la interfaz pública del entorno de trabajo (máquina virtual virtualbox si aplica).
 
-- 4.1: Deter o contedor e crear un novo que traballe contra os mesmos datos.
-- 4.2: Mostra-los pasos necesarios para dar ó contedor conectividade co exterior.
-- 4.3: Comprobar que se pode facer login no mysql do contedor con root e co usuario normal **dende o anfitrión**, por exemplo empregando o [Mysql Workbench](https://dev.mysql.com/downloads/workbench/), ou o cli de mysql.
-- 4.4: Mostrar cómo se faría un backup (ferramenta mysqldump), **introducindo o proceso** no mesmo contedor do servidor mysql, pero redirixindo a saída a un ficheiro no anfitrión.
+- 4.1: Detenga el contenedor y cree uno nuevo que funcione con los mismos datos.
+- 4.2: Muestra los pasos necesarios para dotar al contenedor de conectividad con el exterior.
+- 4.3: Verifique que pueda iniciar sesión en el mysql del contenedor con root y con el usuario normal **desde el host**, por ejemplo usando el [Mysql Workbench](https://dev.mysql.com/downloads/ workbench/ ), o mysql cli.
+- 4.4: Mostrar cómo se haría una copia de seguridad (herramienta mysqldump), **introduciendo el proceso** en el mismo contenedor que el servidor mysql, pero redirigiendo la salida a un archivo en el host.
 
 ---
 
-**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencia de adquisición de desempeño**: Pasos 1 a 4 completados correctamente de acuerdo con estos...
 
-**Indicadores de logro**:  
+**Indicadores de logros**:
 
-- Entregar un documento* cas capturas de pantalla que mostren:
- - 1. Os pasos seguidos para levar a cabo a instalación de docker escollida no entorno  de traballo.
- - 2. O comando docker executado para obter a saída  "Ola Mundo!".
- - 3. Os comandos escollidos para crear un servidor de mysql 5.7 dentro dun docker cunha base de datos que reúna tódolos requisitos indicados.
- - 4. Os comandos necesarios crear un novo contedor de mysql,  dar conectividade co exterior ao servizo de mysql, e facer un backup da base de datos co ```mysqldump```. [Neste enlace](https://support.hostway.com/hc/en-us/articles/360000220190-How-to-backup-and-restore-MySQL-databases-on-Linux) temos unha guía de cómo usar o mysqldump
+- Envíe un documento con capturas de pantalla que muestren:
+ - 1. Los pasos seguidos para llevar a cabo la instalación del docker elegido en el entorno de trabajo.
+ - 2. El comando docker se ejecuta para obtener el resultado "¡Hola mundo!".
+ - 3. Los comandos elegidos para crear un servidor mysql 5.7 dentro de un docker con una base de datos que cumpla con todos los requisitos indicados.
+ - 4. Los comandos necesarios para crear un nuevo contenedor mysql, dar conectividad al exterior al servicio mysql, y hacer una copia de seguridad de la base de datos con ```mysqldump''. [En este enlace](https://support.hostway.com/hc/en-us/articles/360000220190-How-to-backup-and-restore-MySQL-databases-on-Linux) tenemos una guía sobre cómo para usar mysqldump
 
-\**Nota - Se o preferides, podedes entregar un screencast da consola, con ```asciinema.org```.
+\**Nota: si lo prefiere, puede enviar un screencast de la consola con [asciinema.org](https://asciinema.org/).
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
 **Criterios de corrección**:
 
-- Realizar a instalación correctamente, do docker engine no entorno de traballo (**4 puntos**).
-- Executar o primeiro contedor de "Ola Mundo!" (**4 puntos**).
-- Lanzar o contedor de mysql cas características indicadas (**16 puntos**).
- - A razón de **4 puntos** por cada apartado indicado correctamente.
-- Agregarlle conectividade co exterior ao servizo de mysql e facer as comprobacións (**16 puntos**).
- - A razón de **4 puntos** por cada apartado indicado correctamente.
+- Realizar la correcta instalación del motor docker en el ambiente de trabajo (**4 puntos**).
+- Ejecute el primer contenedor de "Hello World!" (**4 puntos**).
+- Lanzar el contenedor mysql con las características indicadas (**16 puntos**).
+ - La proporción de **4 puntos** para cada apartado indicado correctamente.
+- Agregar conectividad externa al servicio mysql y realizar las comprobaciones (**16 puntos**).
+ - La proporción de **4 puntos** para cada apartado indicado correctamente.
 
-## Docker avanzado. Configura un servizo web empregando varios contedores Docker.
+## docker avanzado. Configure un servicio web utilizando varios contenedores de Docker.
 
-> Para levar a cabo este exercicio é necesario dispoñer dun servidor mysql coas características indicadas no exercicio anterior (2.2).
+> Para realizar este ejercicio es necesario disponer de un servidor mysql con las características indicadas en el ejercicio anterior (2.2).
 
-1. Agora vamos a conectar unha **aplicación** [phpmyadmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) **ao servidor de base de datos do exercicio anterior**, para poder operar de xeito gráfico ca base de datos creada. **Tamén debe expoñerse nun porto público (8000) para poder acceder a él dende fora da máquina virtual**.
+1. Ahora vamos a conectar una **aplicación** [phpmyadmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) **al servidor de base de datos del ejercicio anterior**, para poder operar gráficamente la base de datos creada. **También debe estar expuesto en un puerto público (8000) para poder acceder desde fuera de la máquina virtual**.
 
-2. Mediante o novo container de **phpmyadmin**, **conectado co servidor de mysql, crear unhas taboas dentro da base de datos, cos seguintes campos**:
+2. Usando el nuevo contenedor **phpmyadmin**, **conectado al servidor mysql, cree algunas tablas dentro de la base de datos, con los siguientes campos**:
 
 ```sql
-Alumnos ( id INT PRIMARY KEY, nome VARCHAR(20), apelidos VARCHAR(60), centro VARCHAR(120) )
+Estudiantes ( id INT PRIMARY KEY, nombre VARCHAR(20), apellido VARCHAR(60), centro VARCHAR(120) )
 ```
 
 ```sql
-Cursos ( id INT PRIMARY KEY, nome VARCHAR(120), codigo VARCHAR(20), data_comezo DATE )
+Cursos (id INT PRIMARY KEY, nombre VARCHAR(120), código VARCHAR(20), start_date DATE )
 ```
 
-**Ademáis debedes agregar varios rexistros a ambas táboas**.
+**También debe agregar varios registros a ambas tablas**.
 
-3. Desenvolver **unha aplicación php** que mostre nunha taboa html os datos que ten almacenados a táboas mysql de Alumnos e de Cursos (ou un erro en caso de non haber conectividade), tendo en conta que:
+3. Desarrollar **una aplicación php** que muestre en una tabla html los datos almacenados en tablas mysql de Estudiantes y Cursos (o un error si no hay conectividad), teniendo en cuenta que:
 
-- A aplicación debe recibir os datos de conexión ca base de datos polo entorno.
-- Empregará a imaxen de php:7.2-apache do repo oficial de php de Dockerhub. É recomendable revisar a [documentación oficial das imaxes de php](https://hub.docker.com/_/php), posto que teñen múltiples versiones con diferentes servizos. No caso de apache, podemos obter a versión da imaxe oficial co nome da seguinte maneira php:<version>-apache . No noso caso imos utilizar php:7.2-apache .
-- Montará un volumen co código da vosa aplicación en ```/var/www/html```.
-- Exportará o porto 80 do container no porto 8080 das interfaces da máquina virtual.
+- La aplicación debe recibir los datos de conexión a la base de datos del entorno.
+- Utilizará la imagen php:7.2-apache del repositorio php oficial de Dockerhub. Se recomienda consultar la [documentación oficial de imágenes de php](https://hub.docker.com/_/php), ya que tienen múltiples versiones con diferentes servicios. En el caso de apache, podemos obtener la versión oficial de la imagen con el siguiente nombre php:<version>-apache. En nuestro caso usaremos php:7.2-apache.
+- Montará un volumen con el código de tu aplicación en ```/var/www/html```.
+- Exportará el puerto 80 del contenedor al puerto 8080 de las interfaces de la máquina virtual.
 
-\**Nota - Podedes empregar como exemplo este código de [StackOverflow](https://stackoverflow.com/questions/17902483/show-values-from-a-mysql-database-table-inside-a-html-table-on-a-webpage).
+**Nota**: puede usar como ejemplo este código de [StackOverflow](https://stackoverflow.com/questions/17902483/show-values-from-a-mysql-database-table-inside-a-html-table-on-a-webpage).
 
-**A ter en conta**: a imaxe de php (php:7.2-apache) a partir da cal se lanza o container non ten as librarías de mysql instaladas. 
-E preciso agregalas antes de poder emplear as funcións de mysqli_* na vosa aplicación.
+**Nota**: la imagen php (php:7.2-apache) desde la que se inicia el contenedor no tiene instaladas las bibliotecas mysql.
+Y debe agregarlos antes de poder usar las funciones mysqli_* en su aplicación.
 
-Para agregalas, hai que executar o seguinte comando **dende dentro do contedor** que vai a correr a aplicación, e reinicialo:
+Para agregarlos, debe ejecutar el siguiente comando **desde dentro del contenedor** que ejecutará la aplicación y reiniciarla:
 
 ```bash
-docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+docker-php-ext-instalar mysqli && docker-php-ext-habilitar mysqli
 ```
 
-Poderíamos facer esto todo xunto co seguinte comando:
+Podríamos hacer todo esto junto con el siguiente comando:
 
 ```bash
 docker exec <nome_container_php> bash -c 'docker-php-ext-install mysqli && docker-php-ext-enable mysqli' && \
 docker restart <nome_container_php>
 ```
 
-3.2: ¿Como poderíamos comprobar o funcionamento do código ca versión 5.6 de php? ¿e ca última versión 7.3? ¿Podemos ter as 3 versións da aplicación  funcionando á vez, cada unha no seu porto (8080,8081,8082)?
-¿Como limitaríamos o consumo de recursos no anfitrión (50 MB de memoria, 50% dunha cpu) para os 3 contedores cas diferentes versións da aplicación?
+3.2: ¿Cómo podríamos comprobar el funcionamiento del código con la versión 5.6 de php? ¿Qué pasa con la última versión 7.3? ¿Podemos tener las 3 versiones de la aplicación ejecutándose a la vez, cada una en su propio puerto (8080,8081,8082)?
+¿Cómo limitaríamos el consumo de recursos en el host (50 MB de memoria, 50 % de una CPU) para los 3 contenedores con diferentes versiones de la aplicación?
 
-4. Agora vamos a **probar a aplicación** de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) e ver os containers correndo na máquina virtual, de maneira gráfica dende un navegador.
+4. Ahora vamos a **probar la aplicación** de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) y ver los contenedores corriendo en la máquina virtual, gráficamente desde un navegador.
 
-4.1 Para isto seguir os pasos indicados nos [contidos](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) do curso.
+4.1 Para ello, siga los pasos indicados en los [contenidos](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) del curso.
 
-4.2 Apagar todos os contedores dende [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer). Antes de esto descargar unha copia sql da base de datos, dende o phpmyadmin.
+4.2 Cerrar todos los contenedores de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer). Antes de esto, descargue una copia sql de la base de datos, desde phpmyadmin.
 
-**Evidencias de adquisición de desempeños**: Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencia de adquisición de desempeño**: Pasos 1 a 4 completados correctamente de acuerdo con estos...
 
-**Indicadores de logro**:  
+**Indicadores de logros**:
 
-- Entregar un sql co contido da base de datos mysql solicitada.
-- Entregar un ou varios ficheiros php, co código operativo da aplicación solicitada.
+- Entregar un sql con el contenido de la base de datos mysql solicitada.
+- Entregar uno o más archivos php, con el código operativo de la aplicación solicitada.
 
-Se vos resulta máis sinxelo podedes remitirnos o repositorio de código de github/bitbucket co código da aplicación e o sql da base de datos.
+Si te resulta más fácil, puedes enviarnos el repositorio de códigos github/bitbucket con el código de la aplicación y la base de datos sql.
 
-- Entregar un documento cos comandos docker executados para:
- - Lanzar o contedor de phpmyadmin, enlazado co contedor de mysql.
- - Lanzar a aplicación php desenvolta, conectada co contedor mysql do exercicio anterior.
- - Lanzar novas versións da aplicación php desenvolta, cas versión 5.6 e 7.3 de php.
-   * Limitadas a consumir 50MB de RAM e o 50% de 1 cpu
- - Lanzar o contedor de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) e listar todos os contedores executándose na maquina docker
+- Entregar un documento con los comandos docker ejecutados para:
+ - Inicie el contenedor phpmyadmin, vinculado al contenedor mysql.
+ - Inicie la aplicación php desarrollada, conectada al contenedor mysql del ejercicio anterior.
+ - Liberar nuevas versiones de la aplicación de desarrollo php, cas versión 5.6 y 7.3 de php.
+   * Limitado a consumir 50 MB de RAM y 50 % de 1 CPU
+ - Inicie el contenedor [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) y enumere todos los contenedores que se ejecutan en la máquina docker
 
-Se vos resulta máis sinxelo podedes remitirnos os json de [asciinema](https://asciinema.org/) con estos comandos.
+Si te resulta más fácil, puedes enviarnos el [asciinema](https://asciinema.org/) json con estos comandos.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
 **Criterios de corrección**:
 
-- Aplicación operativa cumplindo os requisitos esixidos (**20 puntos**):
- - **5 puntos** se a base de datos está correctamente xenerada.
- - **10 puntos** se a aplicación php entregada recolle a conectividade dende o entorno e se conecta ca base de datos e mostra os valores das táboas.
- - **5 puntos**s se o comando docker de lanzamento da aplicación php desenvolta cumple os requisitos.
-- Os comandos docker para a execución das diferentes tarefas están correctamente especificados (**20 puntos**).
- - **5 puntos**, se é correcto o comando de docker para lanzar phpmyadmin, enlazado co contedor de mysql.
- - **5 puntos** se son correctos os comandos para lanzar a aplicación php desenvolta, cas versión php 5.6 e 7.3 correndo simultaneamente, e accesibles.
- - **5 puntos** se son correctos os comandos para limitar a memoria consumida e a cpu de cada contedor cas diferentes versións da aplicación.
- - **5 puntos** se é correcto o comando empregado para lanzar portainer, con persistencia e acceso á api de docker.
+- Aplicación operativa que cumple los requisitos exigidos (**20 puntos**):
+ - **5 puntos** si la base de datos está correctamente generada.
+ - **10 puntos** si la aplicación php entregada recopila conectividad del entorno y se conecta a la base de datos y muestra los valores de la tabla.
+ - **5 puntos**s si el comando docker de inicio de la aplicación php cumple con los requisitos.
+- Los comandos docker para la ejecución de las diferentes tareas están correctamente especificados (**20 puntos**).
+ - **5 puntos**, si el comando docker para iniciar phpmyadmin, vinculado al contenedor mysql, es correcto.
+ - **5 puntos** si los comandos para iniciar la aplicación de desarrollo de php son correctos, con las versiones de php 5.6 y 7.3 ejecutándose simultáneamente y accesibles.
+ - **5 puntos** si los comandos son correctos para limitar la memoria consumida y la cpu de cada contenedor en diferentes versiones de la aplicación.
+ - **5 puntos** si el comando usado para lanzar portainer es correcto, con persistencia y acceso a la api de docker.

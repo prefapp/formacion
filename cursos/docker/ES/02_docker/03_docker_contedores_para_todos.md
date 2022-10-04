@@ -1,50 +1,50 @@
-# Docker: contedores para todos
+# Docker: contenedores para todos
 
-## A orixe de Docker
+## El origen de Docker
 
-Docker naceu ao abeiro dunha empresa, na actualidade xa extinta (dotCloud Inc.), que tiña como obxectivo facilitar o despregue de aplicacións aos desenvolvedores, liberándoos de ter que preocuparse da infraestructura. Fundada no 2010, polo autor orixinal de Docker (Salomon Hykes), na actualidade xa non está operativa, pero nela xurdiu o xerme de construir unha ferramenta que permitise estandarizar e axilizar o despregue de aplicacións e servizos web,  permitindo **separar claramente as responsabilidades** do equipo de desenvolvemento, da responsabilidade do equipo de operacións, encargado de aloxar e manter a dispoñibilidade da aplicación.
+Docker nació bajo el paraguas de una empresa en la actualidad extinta (dotCloud Inc.), que tenía como objetivo facilitar el despliegue de aplicaciones a los desarrolladores, liberándolos de tener que preocuparse por la infraestructura. Fundado en 2010, por el autor original de Docker (Salomon Hykes), actualmente ya no está operativo, pero es el germen de construir una herramienta que estandarizaría y agilizaría el despliegue de aplicaciones y servicios web, permitiendo **separar claramente las responsabilidades** del equipo de desarrollo, responsabilidad del equipo de operaciones, encargado de hospedar y mantener la disponibilidad de la aplicación.
 
-> Inspirados pola evolución que supuxo na industria do transporte a adopción dos contedores de mercancías, podemos ver [no seguinte video](https://www.youtube.com/watch?v=Q5POuMHxW-0&feature=youtu.be) unha das presentacións máis famosas que fixo o autor orixinal, cando a tecnoloxía aínda non tiña a tracción que ten na actualidade.
+> Inspirándonos en la evolución de la adopción de contenedores de carga en la industria del transporte, podemos ver [en el siguiente video](https://www.youtube.com/watch?v=Q5POuMHxW-0&feature=youtu.be) uno de las presentaciones más famosas que hizo el autor original, cuando la tecnología aún no tenía la tracción que tiene hoy.
 
-O máximo expoñente de este modelo de plataforma como servicio ([PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)) era por aquel entón [Heroku](https://www.heroku.com/), da cal surxiron unha serie de ideas e boas prácticas, condensadas nun manifesto de 12 regras,  destinadas aos desenvolvedores de aplicacións, que facilitaran a adopción de este tipo de proveedores.
-De este manifesto  bebe extensamente Docker, sendo a propia ferramenta de gran utilidade cara adoptar este conxunto de boas prácticas nos nosos proxectos de software.  
+El máximo exponente de este modelo de plataforma como servicio ([PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)) fue en su momento [Heroku](https://www.heroku.com/), del que surgieron una serie de ideas y buenas prácticas, condensadas en un manifiesto de 12 reglas, destinadas a los desarrolladores de aplicaciones, que facilitarían la adopción de este tipo de proveedores.
+Docker se basa en gran medida en este manifiesto, siendo una herramienta muy útil para adoptar este conjunto de buenas prácticas en nuestros proyectos de software.
 
-**[The twelve factor app](https://12factor.net/es/)**
+**[La app de los doce factores](https://12factor.net/es/)**
 
-I. [Base de código](https://12factor.net/es/codebase): Usa unha única base de código da que levar o control de versións e múltiples despreges de este código.
+**I.** [Código base (Codebase)](https://12factor.net/es/codebase): Un código base sobre el que hacer el control de versiones y multiples despliegues.
 
-II. [Dependencias](https://12factor.net/es/dependencies): Declara e illa explícitamente as dependencias.
+**II.** [Dependencias](https://12factor.net/es/dependencies): Declarar y aislar dependencias de forma explícita.
 
-III. [Configuración](https://12factor.net/es/config): Garda a configuración no entorno, non no código.
+**III.** [Configuraciones](https://12factor.net/es/config): Guardar configuración en entorno, no en código.
 
-IV. [Backing services](https://12factor.net/es/backing-services): Trata los servicios que soportan a aplicación ("backing services") como recursos enchufables.
+**IV.** [Backing services](https://12factor.net/es/backing-services): Tratar los servicios que dan soporte a la aplicación ("backing services") como recursos enchufables.
 
-V. [Construir, distribuir, executar](https://12factor.net/es/build-release-run): Separa completamente a fase de construcción da fase de execución.
+**V.** [Construir, desplegar, ejecutar](https://12factor.net/es/build-release-run): Separa completamente la etapa de construcción de la etapa de ejecución.
 
-VI. [Procesos](https://12factor.net/es/processes): Executa as aplicacións como un ou máis procesos **sin estado**.
+**VI.** [Procesos](https://12factor.net/es/processes): Ejecuta aplicaciones como uno o más procesos **sin estado**.
 
-VII. [Asignación de portos](https://12factor.net/es/port-binding): Exporta servicios mediante portos de rede.
+**VII.** [Asignación de puertos](https://12factor.net/es/port-binding): Publicar servicios mediante asignación de puertos.
 
-VIII. [Concurrencia](https://12factor.net/es/concurrency): Escala mediante o modelo de procesos, horizontalmente mellor que verticalmente.
+**VIII.** [Concurrencia](https://12factor.net/es/concurrency): Escala usando el modelo de proceso, mejor en horizontal que en vertical.
 
-IX. [Descartabilidade](https://12factor.net/es/disposability): Maximiza a robustez con arranques rápidos do teu servicio e paradas limpas.
+**IX.** [Desechabilidad](https://12factor.net/es/disposability): Maximice la robustez con inicios rápidos y cierres limpios de su servicio.
 
-X. [Similitude entre desenvolvemento e producción](https://12factor.net/es/dev-prod-parity): Manten os entornos (desenvolvemento, preproducción, producción...) tan semellantes como sexa posible.
+**X.** [Paridad en desarrollo y producción](https://12factor.net/es/dev-prod-parity): Mantener los entornos (desarrollo, preproducción, producción...) lo más parecidos posible.
 
-XI. [Logs](https://12factor.net/es/logs): Trata os logs como un fluxo de eventos.
+**XI.** [Logs](https://12factor.net/es/logs): Trata los logs como un flujo de eventos.
 
-XII. [Administración de procesos](https://12factor.net/es/admin-processes): Corre as tarefas de xestión/administración como novos procesos do teu servicio, con unha única execución.
+**XII.** [Administración de procesos](https://12factor.net/es/admin-processes): Ejecuta las tareas de gestión/administración como nuevos procesos de tu servicio, con una única ejecución.
 
 ## Características de Docker
 
-A pesar da competencia que existía no seu día entre os diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ....), e as ferramentas que empregaban para construir o seu servizo, unhas de código aberto e outras propietarias,  Docker logrou estableceuse na actualidade como a principal motor de contedores debido a que :
+A pesar de la competencia que existía entre los diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ...), y las herramientas que utilizaban para construir su servicio, algunas de código abierto y otras propietarias, Docker Managed se ha consolidado como el principal motor de contenedores debido al hecho de que:
 
-- Facilita enormemente a xestión de contedores.
-- Ofrece un sistema sinxelo de creación,  mantemento e distribución de imaxes de contedores. 
-- Aporta ferramentas de orquestración propias (Docker Swarm), e integrase con  ferramentas de terceiros como Kubernetes.
-- Esfórzase por manter unha serie de [estándares](https://opencontainers.org/) de conterización, que dan cabida a novos proxectos.
+- Facilita enormemente la gestión de los contenedores.
+- Proporciona un sistema simple para crear, mantener y distribuir imágenes de contenedores.
+- Proporciona sus propias herramientas de orquestación (Docker Swarm), y se integra con herramientas de terceros como Kubernetes.
+- Se esfuerza por mantener una serie de [estándares](https://opencontainers.org/) para contenerización, que acomodan nuevos proyectos.
 
-- Ligazóns de interese:
- - [Azure Docs: What is PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)
- - [Heroku PaaS](https://www.heroku.com/)
- - [The Twelve factor app](https://12factor.net/es/)
+- Enlaces de interés:
+   - [Azure Docs: Qué es PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)
+   - [Heroku PaaS](https://www.heroku.com/)
+   - [La app de Los Doce factores](https://12factor.net/es/)

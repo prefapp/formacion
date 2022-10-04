@@ -1,83 +1,83 @@
 # Comandos básicos
 
-A interacción con Docker (co seu daemon)  pódese facer, fundamentalmente por dúas vias:
+La interacción con Docker (con su daemon) se puede realizar principalmente de dos formas:
 
-- A través dunha [api](https://docs.docker.com/engine/api/v1.30/).
-- Mediante a súa liña de comandos
+- A través de una [api](https://docs.docker.com/engine/api/v1.30/).
+- Usando su línea de comando
 
-Neste curso, imos a empregar a liña de comandos. 
+En este curso vamos a utilizar la línea de comandos.
 
-O intérprete de comandos de Docker é o comando [docker](https://docs.docker.com/engine/reference/commandline/cli/).
+El shell de Docker es el comando [docker](https://docs.docker.com/engine/reference/commandline/cli/).
 
-## Listaxe dos contedores do sistema
+## Lista de contenedores del sistema
 
-Para saber os contedores existentes nunha máquina, imos a empregar o comando [_**ps**_](https://docs.docker.com/engine/reference/commandline/ps/).
+Para conocer los contenedores existentes en una máquina, usaremos el comando [_**ps**_](https://docs.docker.com/engine/reference/commandline/ps/).
 
 ```shell
 docker ps
 ```
 
-O que obtemos é:
+Lo que obtenemos es:
 
 ```shell
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
 b3b0f3dff0cd        mongo               "docker-entrypoint..."   7 second ago        Up 6 seconds        27017/tcp                mongo
 ```
 
-Como podemos comprobar:
+¿Cómo podemos comprobar:
 
-- Docker asigna un uuid ós contedores. 
-- Infórmanos sobre a imaxe que monta (máis sobre imaxes no seguinte tema).
-- Fálanos do comando que lanzou este contedor.
-- Os seus tempos de arranque (CREATED) e o tempo que leva aceso (STATUS)
-- A conectividade do contedor.
-- O nome asignado ó contedor en caso de que non llo poñamos nós.
+- Docker asigna un uuid a los contenedores.
+- Nos informa sobre la imagen que montas (más sobre imágenes en el siguiente tema).
+- Nos informa sobre el comando que lanzó este contenedor.
+- Sus tiempos de inicio (CREATED) y el tiempo que lleva encendido (STATUS).
+- La conectividad del contenedor.
+- El nombre asignado al contenedor. Si no le damos uno lo pone aleatorio.
 
-## Creando e arrincando contedores
+## Creando y arrancando contenedores
 
-O comando básico de creación de contedores e [_**create**_](https://docs.docker.com/engine/reference/commandline/create/). (Orixinalmente [_**docker run**_](https://docs.docker.com/engine/reference/commandline/run/), que sigue estando dispoñible e conxuga varios obxetos cos que traballa docker: containers, volumes e networks)
+El comando básico de creación de contenedores es [_**create**_](https://docs.docker.com/engine/reference/commandline/create/). (Originalmente [_**docker run**_](https://docs.docker.com/engine/reference/commandline/run/), que todavía está disponible y combina varios objetos con los que trabaja Docker: contenedores, volúmenes y redes)
 
-Compre enviarlle un elemento obligatorio:
+Podemos enviarle un elemento obligatorio:
 
-Imaxe de creación, (similar  ao disco de arranque do container), trátase dunha planiña a partir da que se montará o contedor.
+Imagen de creación, (similar al disco de arranque del contenedor), es un plano a partir del cual se ensamblará el contenedor.
 
-Deste xeito, o seguinte comando:
+Así, el siguiente comando:
 
 ```shell
 docker create prefapp/debian-formacion
 ```
 
-Voltaranos unha cadea en hexadecimal que será o identificador único do contedor creado. 
+Devolverá una cadena en hexadecimal que será el identificador único del contenedor creado.
 
-Nembargantes, se facemos _**docker ps**_ non o veremos na táboa de contedores. 
+Sin embargo, si hacemos _**docker ps**_ no lo veremos en la tabla de contenedores.
 
-A razón é que o contedor creado estará parado. Para arrincalo, compre executar o comando [_**start**_](https://docs.docker.com/engine/reference/commandline/start/).
-
-```shell
-docker start <uuid do contedo>
-```
-
-Con isto, teremos o novo contedor funcionando, e se facemos un _**docker ps**_ poderémolo ver na táboa de contedores funcionando. 
-
-O normal é facer estos dous pasos nun, mediante  o comando [_**run**_](https://docs.docker.com/engine/reference/commandline/run/). Este comando, crea e arrinca o contedor. 
-
-## Detendo o contedor
-
-Para deter un contedor que está a funcionar, abonda con empregar o comando [_**stop**_](https://docs.docker.com/engine/reference/commandline/stop/). 
+El motivo es que se detendrá el contenedor creado. Para iniciarlo, ejecute el comando [_**start**_](https://docs.docker.com/engine/reference/commandline/start/).
 
 ```shell
-docker stop
+docker start <uuid de contenido>
 ```
 
-Unha vez executado, o contedor está detido, de tal xeito que non aparecerá xa na táboa de _**docker ps**_. Compre empregar _**docker ps -a**_ para que o listado inclúa os contedores detidos.
+Con esto ya tendremos el nuevo contenedor ejecutándose, y si hacemos un _**docker ps**_ podremos verlo en la tabla de contenedores en ejecución.
 
-## Borrando o contedor
+Es normal unificar estos dos pasos en uno, usando el comando [_**run**_](https://docs.docker.com/engine/reference/commandline/run/). Este comando crea e inicia el contenedor.
 
-O comando docker [_**rm**_](https://docs.docker.com/engine/reference/commandline/rm/) elimina o contedor. 
+## Detener el contenedor
+
+Para detener un contenedor en ejecución, solo use el comando [_**stop**_](https://docs.docker.com/engine/reference/commandline/stop/).
 
 ```shell
-docker rm <uuid do contedo>
+docker stop <uuid de contenido>
 ```
 
-**Ligazóns de interese**
-- Docker [cheat-sheet](https://dockerlux.github.io/pdf/cheat-sheet-v2.pdf)
+Una vez que se lance el comando el contenedor se detiene, por lo que ya no aparecerá en la tabla _**docker ps**_. Podemos usar _**docker ps -a**_ para enumerar los contenedores detenidos.
+
+## Limpiando el contenedor
+
+El comando docker [_**rm**_](https://docs.docker.com/engine/reference/commandline/rm/) elimina el contenedor.
+
+```shell
+docker rm <uuid de contenido>
+```
+
+**Enlaces de interés**
+- Docker [hoja de trucos](https://dockerlux.github.io/pdf/cheat-sheet-v2.pdf)

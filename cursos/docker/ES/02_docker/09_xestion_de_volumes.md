@@ -1,40 +1,40 @@
-# Xestión de volumes
+# Gestión de volumen
 
-Sabemos que os contedores son efémeros, isto é, unha vez rematado o contedor (cando o proceso que o arrincou finalize) tódolos datos que teñamos no contedor desaparecen. 
+Sabemos que los contenedores son efímeros, es decir, una vez terminado el contenedor (cuando finaliza el proceso que lo inició) desaparecen todos los datos que tenemos en el contenedor.
 
-Para velo, podemos facer a seguinte práctica:
+Para verlo, podemos hacer la siguiente práctica:
 
-# 📖 Actividade 1
+# 📖 Actividad 1
 
-Arrinquemos un container con run da nosa debian de formación:
+Comencemos un contenedor con run desde nuestro debian de entrenamiento:
 
 ```shell
 docker run --rm -ti prefapp/debian-formacion bash
 ```
 
-Agora, actualizamo-las fontes con _**apt-get updat**_e. De seguido instalamo-lo programa curl. 
+Ahora, actualizamos las fuentes con _**apt-get update**_. Luego instalamos el programa curl.
 
 ```shell
 apt-get update && apt-get install --yes curl
 ```
 
-Comprobamos que funciona. 
+Comprobamos que funciona.
 
-Salimos do container (a opción _**--rm**_ provocará o seu inmediato borrado).
+Salimos del contenedor (la opción _**--rm**_ provocará su borrado inmediato).
 
-Se volvemos a lanzar un container co comando de enriba, temos curl? Por que?
+Si volvemos a lanzar un contenedor con el comando anterior, ¿tenemos curl? ¿Por qué?
 
-# Volumes: a conexión do contedor co sistema de ficheiros do anfitrión
+# Volúmenes: la conexión del contenedor con el sistema de archivos del anfitrión
 
-Unha das solucións principais para o problema da falta de persistencia dos contedores é a dos volumes. 
+Una de las principales soluciones al problema de la no persistencia de los contenedores es la de los volúmenes.
 
-Podemos pensar nun volume como un directorio do noso anfitrión que se "monta" como parte do sistema de ficheiros do contedor. Este directorio pasa a ser accesible por parte do contedor e, os datos almacenados nel, persistirán con independencia do ciclo de vida do contedor.
+Podemos pensar en un volumen como un directorio en nuestro anfitrión que está "montado" como parte del sistema de archivos del contenedor. El contenedor puede acceder a este directorio y los datos almacenados en él persistirán independientemente del ciclo de vida del contenedor.
 
-![Container volume](./../_media/02_docker/contedor_volume.png)
+![Volumen contenedor](./../_media/02_docker/contedor_volume.png)
 
-Para acadar isto, abonda con indicarlle a Docker qué directorio do noso anfitrión queremos montar como volume e en qué ruta queremos montalo no noso contedor. 
+Para lograr esto, basta con decirle a Docker qué directorio de nuestro host queremos montar como volumen y en qué ruta queremos montarlo en nuestro contenedor.
 
-Nun exemplo:
+En un ejemplo:
 
 ```shell
 docker run --rm -ti -v ~/meu_contedor:/var/datos prefapp/debian-formacion bash
@@ -42,14 +42,14 @@ docker run --rm -ti -v ~/meu_contedor:/var/datos prefapp/debian-formacion bash
 
 Como podemos ver:
 
-- Indicamoslle ó Docker que queremos un contedor interactivo que se autodestrúa  (_**run --rm -ti**_).
-- Imos corre-la imaxe _**prefapp/debian**_.
-- O comando de entrada é o _**bash**_.
-- Montamos un volume: _**-v**_, indicándolle ruta_anfitrion:ruta_contedor _**(~/meu_contedor:/var/datos)**_.
+- Le decimos a Docker que queremos un contenedor interactivo que se autodestruya (_**run --rm -ti**_).
+- Ejecutemos la imagen _**prefapp/debian**_.
+- El comando de entrada es _**bash**_.
+- Montamos un volumen: _**-v**_, especificando host_path:container_path _**(~/my_container:/var/data)**_.
 
-# 📖 Actividade 2
+# 📖 Actividad 2
 
->- ✏️ Probemos este comando. Lanzamos un contedor que cree un volume e, unha vez dentro do contedor, creamos tres ficheiros en /var/datos. 
->- ✏️ Pechamola-sesión do contedor e miramos no directorio do anfitrión, qué ten dentro?
->- ✏️ Volvemos lanzar un contedor co mesmo comando, se vamos a _**/var/datos**_: están os ficheiros? Se están, borramos o /var/datos/a e o /var/datos/b. 
->- ✏️ echamos outra vez a sesión, miramos no directorio do anfitrión, qué ficheiros hai?
+>- ✏️ Probemos este comando. Lanzamos un contenedor que crea un volumen, y una vez dentro del contenedor, creamos tres archivos en /var/data.
+>- ✏️ Cierre la sesión del contenedor y busque en el directorio del host, ¿qué hay dentro?
+>- ✏️ Volvemos a lanzar un contenedor con el mismo comando, si vamos a _**/var/data**_: son los archivos? Si lo son, eliminamos /var/data/a y /var/data/b.
+>- ✏️ Volvemos a iniciar sesión, buscamos en el directorio host, ¿qué archivos hay?

@@ -1,33 +1,34 @@
-# Paso de argumentos ó contedor
+# Pasando argumentos al contenedor
 
-A estas alturas da lección, xa sabemos que o contedor é unha unidade illada dende o punto de vista dos recursos tradicionalmente compartidos nunha máquina: usuarios, pids, mounts, rede...
+A estas alturas de la lección, ya sabemos que el contenedor es una unidad aislada desde el punto de vista de los recursos tradicionalmente compartidos en una máquina: usuarios, pids, mounts, red...
 
-Este isolamento é unha das claves da creación de contedores. Nembargantes, a veces compre poder controlar dalgún xeito os procesos que corren dentro do contedor. Isto, é: controlar os programas mediante o paso de parámetros. 
+Este aislamiento es una de las claves para crear contenedores. Sin embargo, a veces desea poder controlar de alguna manera los procesos que se ejecutan dentro del contenedor. Es decir: programas de control pasando parámetros.
 
-Existen duas formas principais de paso de parámetros a un contedor:
+Hay dos formas principales de pasar parámetros a un contenedor:
 
-- Mediante os argumentos que lle chegan ó programa que lanzamos mediante docker-run ou docker-create.
-- Asignando ou mudando os valores que reciben as variables de entorno dentro do contedor. 
-Imos centrarnos na segunda das posibilidades nesta sección. 
+- A través de los argumentos que llegan al programa que lanzamos mediante `docker-run` o `docker-create`.
+- Asignar o cambiar los valores recibidos por las variables de entorno dentro del contenedor.
 
-## Control das variables de entorno dun contedor
+Nos centraremos en la segunda posibilidad en esta sección.
 
-Antes de correr un contedor, Docker permite establecer cal será o valor do seu entorno mediante o paso de binomios clave=valor. 
+## Control de las variables de entorno de un contenedor
 
-Deste xeito, se temos unha aplicación que precisa un login/password de administrador e que os recolle de variables de entorno, por exemplo (ROOT_LOGIN, ROOT_PASSWORD), poderíamos facer o seguinte:
+Antes de ejecutar un contenedor, Docker le permite establecer cuál será el valor de su entorno pasando binomios clave=valor.
+
+Por lo tanto, si tenemos una aplicación que necesita un nombre de usuario/contraseña de administrador y los recopila de las variables de entorno, por ejemplo (ROOT_LOGIN, ROOT_PASSWORD), podríamos hacer lo siguiente:
 
 ```shell
 docker run -d -e ROOT_LOGIN=admin -e ROOT_PASSWORD=segredo imaxe-de-app-con-admin
 ```
 
-Neste exemplo:
+En este ejemplo:
 
-- Créase e lanzase un container en modo daemon (_**run -d**_)
-- Cunha imaxe ficticia (_**imaxe-de-app-con-admin**_)
-- Establécese que se cree ou mude (_**-e**_) o valor dunha variable de entorno (**ROOT_LOGIN** con valor admin)
-- O mesmo (_**-e**_) para a variable **ROOT_PASSWORD** (valor segredo)
-Docker, vai inxectar estas variables dentro do contedor antes de arrincalo de xeito que, se o programa está preparado para facelo, pode recolle-la súa configuración do ENV.
+- Se crea un contenedor y se lanza en modo daemon (_**run -d**_)
+- Con una imagen ficticia (_**app-image-with-admin**_)
+- Establecer para crear o cambiar (_**-e**_) el valor de una variable de entorno (**ROOT_LOGIN** con valor admin)
+- Lo mismo (_**-e**_) para la variable **ROOT_PASSWORD** (valor secreto)
+Docker inyectará estas variables en el contenedor antes de iniciarlo para que, si el programa está listo para hacerlo, pueda recoger su configuración del ENV.
 
-![Container contorno](./../_media/02_docker/contedor_contorno.png)
+![Contorno del contenedor](./../_media/02_docker/contedor_contorno.png)
 
-> ⚠️ Obviamente, se queremos mudar o valor das variables de entorno dun contedor en funcionamento, compre reinicialo o recrealo.
+> ⚠️ Obviamente, si queremos cambiar el valor de las variables de entorno de un contenedor en ejecución, debemos reiniciarlo o recrearlo.
