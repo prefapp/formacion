@@ -1,6 +1,6 @@
-# Creación de conta en Dockerhub
+# Creación de cuenta en Dockerhub
 
-## Actividade 📖
-A pesares de que non é necesario estar rexistrado no Dockerhub para poder descargar imaxes, sí que imos precisar ter conta para poder subir as nosas imaxes. 
+## Actividad 📖
+Aunque no es necesario estar registrado en Dockerhub para poder descargar imágenes, sí que necesitaremos tener una cuenta para poder subir nuestras imágenes.
 
-✏️ Cree unha conta no dockerhub. É gratuito e a imos empregar para subir os nosos traballos e distribuilos.
+✏️ Crea una cuenta en dockerhub. Es gratis y lo vamos a utilizar para subir nuestro trabajo y distribuirlo.

@@ -1,6 +1,6 @@
 # Cuestionario Final
 
-Que relación teñen as imaxes cos containers?
+¿Qué relación tienen las imágenes con los contenedores?
 
 > <div class='checkboxes'>
     <div>
@@ -11,7 +11,7 @@ Que relación teñen as imaxes cos containers?
             value="1"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Son a planiña de creación do container, almacenan todo o stack de software que pode executarse no container.
+            Es el plan de creación del contenedor, almacenan toda la pila de software que se puede ejecutar en el contenedor.
         </label>
     </div>
     </br>
@@ -23,7 +23,7 @@ Que relación teñen as imaxes cos containers?
             value="2"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Trátase do conxunto de configuracións que reflicten cómo debe funcionar un container. 
+            Es un conjunto de configuraciones que reflejan cómo debe funcionar un contenedor.
         </label>
     </div>
     </br>
@@ -35,7 +35,7 @@ Que relación teñen as imaxes cos containers?
             value="3"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Unha imaxe é unha ISO dun sistema operativo a montar no container. 
+            Un imaxe es un ISO de un sistema operativo que se montará en el contenedor. 
         </label>
     </div>
     </br>
@@ -47,14 +47,14 @@ Que relación teñen as imaxes cos containers?
             value="4"
             onclick="selectOnlyThis1(this)">
         <span class='indicator'></span>
-            Unha copia de seguridade ou snapshot dun sistema en funcionamento.
+            Una copia de seguridad o instantánea de un sistema en funcionamiento.
         </label>
     </div>
 </div>
 
 ---
 
-En que consiste o problema da persistencia nos containers?
+¿Cuál es el problema de la persistencia en contenedores?
 
 > <div class='checkboxes'>
     <div>
@@ -65,7 +65,7 @@ En que consiste o problema da persistencia nos containers?
             value="1"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            O container non pode almacenar datos polo que todo o seu estado ten que vir definido na imaxe que monta.
+            El contenedor no puede almacenar datos porque su estado completo debe definirse en la imagen que ensambla.
         </label>
     </div>
     </br>
@@ -77,7 +77,7 @@ En que consiste o problema da persistencia nos containers?
             value="2"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            Dada a volatilidade dos containers, compre que os datos fiquen almacenados en volúmenes externos, non volátiles. 
+            Dada la volatilidad de los contenedores, asegúrese de que los datos se almacenen en volúmenes externos no volátiles. 
         </label>
     </div>
     </br>
@@ -89,14 +89,14 @@ En que consiste o problema da persistencia nos containers?
             value="3"
             onclick="selectOnlyThis2(this)">
         <span class='indicator'></span>
-            Os containers podense marcar como persistentes, almacenando indefinidamente os seus datos. 
+            Los contenedores se pueden marcar como persistentes, almacenando sus datos indefinidamente.
         </label>
     </div>
 </div>
 
 ---
 
-En que casos compre empregar a opción _**-f**_ no _**docker rmi**_?
+¿En qué casos debo usar la opción _**-f**_ en _**docker rmi**_?
 
 > <div class='checkboxes'>
     <div>
@@ -107,7 +107,7 @@ En que casos compre empregar a opción _**-f**_ no _**docker rmi**_?
             value="1"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Para <strong><i>"está vostede seguro? (S/N)"</i></strong>.
+            Para <strong><i>"¿Estár a salvo? (S/N)"</i></strong>.
         </label>
     </div>
     </br>
@@ -119,7 +119,7 @@ En que casos compre empregar a opción _**-f**_ no _**docker rmi**_?
             value="2"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Para forza-lo borrado da imaxe aínda que esté a ser empregada por containers en funcionamento. 
+            Para forzarlo se desdibujó la imagen aún siendo utilizada por contenedores en funcionamiento.
         </label>
     </div>
     </br>
@@ -131,7 +131,7 @@ En que casos compre empregar a opción _**-f**_ no _**docker rmi**_?
             value="3"
             onclick="selectOnlyThis3(this)">
         <span class='indicator'></span>
-            Empregando a opción <strong><i>-f</i></strong> a imaxe bórrase en local e tamén no repositorio onde esté aloxada (sempre que se teñan permisos).
+            Usando la opción <strong><i>-f</i></strong>, la imagen se borra en el lugar y también en el repositorio donde se almacena (siempre que se den los permisos).
         </label>
     </div>
 </div>

@@ -1,32 +1,33 @@
-# Imaxe, contedor e persistencia
+# Imagen, contenedor y persistencia
 
-O problema da persistencia 
-Sabemos que un container é un elemento volátil que pode ser arrincado e parado en cuestión de segundos. Sabemos, tamén, que é susceptible de correr nunha máquina ó carón doutros centos ou incluso miles de containers. 
+## El problema de la persistencia.
 
-Na anterior sección viramos que o container realiza as súas operacións de escritura, **modifica o seu estado**, nunha capa distinta da imaxe que está asociada a ese container concreto. 
+Sabemos que un contenedor es un elemento volátil que puede iniciarse y detenerse en cuestión de segundos. También sabemos que es probable que se ejecute en una máquina junto a cientos o incluso miles de otros contenedores.
 
-O problema xorde en que, se o container é volátil, a capa asociada a ese container o é tamén.
+En la sección anterior vimos que el contenedor realiza sus operaciones de escritura, **modifica su estado**, en una capa distinta a la imagen que está asociada a ese contenedor en particular.
 
-> Polo tanto, **NON PODEMOS ALMACENAR DATOS DE IMPORTANCIA NA CAPA DO CONTAINER**.
+Surge el problema de que, si el contenedor es volátil, la capa asociada a ese contenedor también es volátil.
 
-Imaxinemos que o noso container escribe datos clave nun ficheiro situado no sistema de archivos:
+> Entonces **NO PODEMOS ALMACENAR DATOS CRÍTICOS EN LA CAPA DEL CONTENEDOR**.
+
+Imaginemos que nuestro contenedor escribe datos clave en un archivo ubicado en el sistema de archivos:
 
 ![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos.png)
 
-Agora xa sabemos que todos esos cambios realmente se están a facer na capa onde o container pode escribir, isto é, **na capa de container**. 
+Ahora sabemos que todos esos cambios realmente se están haciendo en la capa donde el contenedor puede escribir, es decir, **en la capa contenedora**.
 
-Se por algunha razón, o container cae ou desaparece, tamén o fai a capa de datos asociada ó mesmo. 
+Si por alguna razón, el contenedor se cae o desaparece, también lo hace la capa de datos asociada a él.
 
 ![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos_desaparece.png)
 
-Isto supón que, si relanzamos un container, vai ter unha nova capa de datos (asociada ó container) e, polo tanto, **non ten ese ficheiro de datos, ou os seus cambios**.
+Esto significa que, si relanzamos un contenedor, tendrá una nueva capa de datos (asociada al contenedor) y, por lo tanto, **no tiene ese archivo de datos, ni sus cambios**.
 
 ![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escritura_datos_error.png)
 
-## Solucións ó problema da persistencia
+## Soluciones al problema de la persistencia
 
-O problema da persistencia solucionase de dúas formas distintas:
+El problema de la persistencia se resuelve de dos maneras diferentes:
 
-- **Almacenar na imaxe**: existen formas de almacenar datos importantes na imaxe. Non é recomandable no 99% dos casos!!!! A imaxe é algo estático que ten dependencias básicas do sistema, a súa evolución basease na creación dunha nova imaxe e expresa configuracións estruturais de sistema ou novas versións de software, o estado dunha aplicación non se debe almacenar na imaxe do container.
+- **Almacenar en imagen**: hay formas de almacenar datos importantes en la imagen. No se recomienda en el 99% de los casos!!!! La imagen es algo estático que tiene dependencias básicas del sistema, su evolución se basa en la creación de una nueva imagen y expresa configuraciones estructurales del sistema o nuevas versiones de software, el estado de una aplicación no debe almacenarse en la imagen contenedora.
 
-- **Volúmenes de datos**: esta é a forma adecuada de garantir a persistencia. Deste xeito os datos están nunha carpeta da máquina anfitrión e, o container, fai cambios no sistema de ficheiros que non é volátil, polo que, ainda que o container desapareza os datos está almacenados nun lugar estable e persistente.
+- **Volúmenes de datos**: esta es la forma correcta de garantizar la persistencia. De esta forma, los datos están en una carpeta en la máquina host y el contenedor realiza cambios en el sistema de archivos no volátil, por lo que incluso si el contenedor desaparece, los datos se almacenan en un lugar estable y persistente.

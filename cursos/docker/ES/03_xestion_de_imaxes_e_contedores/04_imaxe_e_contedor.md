@@ -1,34 +1,34 @@
-# Imaxe e contedor
+# Imagen y contenedor
 
-> Nesta sección afirmamos que a imaxe é algo **estático** e **inmutable**, polo que as imaxes non se poden cambiar, agás a través dos métodos establecidos para o desenvolvemento e mantemento de imaxes por parte da suite de Docker.
+> En esta sección afirmamos que la imagen es algo **estático** e **inmutable**, por lo que las imágenes no se pueden cambiar, excepto a través de los métodos establecidos para el desarrollo y mantenimiento de imágenes por parte de la suite Docker.
 
-- Significa isto que un container non pode escribir en disco? 
-- Dentro do container, poderemos crear, borrar ou modificar ficheiros?
-- Se a imaxe é algo inmutable, cómo se pode facer todo isto?
-Por suposto, Docker permite que os containers modifiquen o seu sistema de ficheiros, puidendo, se quixer, borrar todas as carpetas e os seus contidos. 
+- ¿Significa esto que un contenedor no puede escribir en el disco?
+- Dentro del contenedor, ¿podemos crear, eliminar o modificar archivos?
+- Si la imagen es algo inmutable, ¿cómo se puede hacer todo esto?
+Por supuesto, Docker permite que los contenedores modifiquen su sistema de archivos, pudiendo eliminar todas las carpetas y su contenido si se desea.
 
-Para poder facer isto, Docker emprega un mecanismo coñecido como **copy-on-write** (COW).
+Para poder hacer esto, Docker utiliza un mecanismo conocido como **copy-on-write** (COW).
 
-## O mecanismo de COPY-ON-WRITE
+## El mecanismo COPY-ON-WRITE
 
-O "truco" é concetualmente sinxelo: Docker non corre o noso container directamente sobre a imaxe, senón que, por enriba da última capa da mesma, crea unha nova: **a capa de container**.
+El "truco" es conceptualmente sencillo: Docker no ejecuta nuestro contenedor directamente sobre la imagen, sino que, encima de la última capa de la misma, crea una nueva: **la capa contenedora**.
 
-Partamos dun container correndo e baseado nunha imaxe:
+Partimos de un contenedor en ejecución y en base a una imagen:
 
 ![Container imaxe](./../_media/03_xestion_de_imaxes_e_contedores/imaxe_e_contedor_1.png)
 
-Realmente, a imaxe está formada polas capas propias da imaxe e por unha capa de container. Tan só a capa de container é de **ESCRITURA/LECTURA**.
+En realidad, la imagen se compone de capas propias de la imagen y una capa contenedora. Solo la capa contenedora es **ESCRITURA/LECTURA**.
 
 ![Container imaxe](./../_media/03_xestion_de_imaxes_e_contedores/imaxe_e_contedor_2.png)
 
-Deste xeito, os programas correndo no container poden escribir no sistema de ficheiros de xeito natural sen ser conscientes de que, realmente, están a escribir nunha capa asociada ó container e non na imaxe que é inmutable. 
+De esta forma, los programas que se ejecutan en el contenedor pueden escribir en el sistema de archivos de forma natural sin darse cuenta de que en realidad están escribiendo en una capa asociada con el contenedor y no en la imagen inmutable.
 
 ![Container imaxe](./../_media/03_xestion_de_imaxes_e_contedores/imaxe_e_contedor_3.png)
 
-Isto posibilita que, cada container, poida face-las súas modificacións no sistema de ficheiros sen afectar a outros containers que estén baseados na mesma imaxe, dado que, **cada container ten asociada unha capa de container específica para él**. 
+Esto hace posible que cada contenedor realice cambios en el sistema de archivos sin afectar a otros contenedores que se basan en la misma imagen, ya que **cada contenedor tiene una capa de contenedor específica asociada**.
 
 ![Container imaxe](./../_media/03_xestion_de_imaxes_e_contedores/imaxe_e_contedor_4.png)
 
-Tal e como podemos ver, este mecanismo é moi útil. Non obstante, esto produce un problema: **a volatilidade dos datos**.
+Como podemos ver, este mecanismo es muy útil. Sin embargo, esto produce un problema: la **volatilidad de los datos**.
 
-O tratamento deste problema e das súas solucións, será obxecto da seguinte sección.
+El tratamiento de este problema y sus soluciones será objeto de la siguiente sección.

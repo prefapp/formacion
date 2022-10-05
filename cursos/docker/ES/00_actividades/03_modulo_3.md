@@ -1,96 +1,96 @@
-# Módulo 3: Xestión de Imaxes e Contedores
+# Módulo 3: Gestión de Imágenes y Contenedores
 
-## Explorar e comprender os fundamentos das imaxes de contedores
+## Explore y comprenda los fundamentos de las imágenes de contenedores
 
-> Unha imaxe é unha planiña de creación de contedores. Contén todo o software base, librarías e utilidades que requiren os procesos aloxados no contedor para funcionar.
+> Una imagen es un modelo para crear contenedores. Contiene todo el software base, las bibliotecas y las utilidades que los procesos alojados en el contenedor requieren para funcionar.
 
-\**Nota - Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
+\**Nota - Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que se detallan a continuación.
 
-1. **Consultar** e **analizar** a documentación sobre  [imaxes e contedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_imaxes_e_contedores/01_obxectivos).
-2. **Crear** unha conta en [Dockerhub](https://hub.docker.com/). A pesares de que non é necesario estar rexistrado no Dockerhub para poder descargar imaxes, sí que imos precisar ter conta para poder subir as nosas imaxes.
+1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_images_e_contedores/01_objectivos).
+2. **Cree** una cuenta en [Dockerhub](https://hub.docker.com/). Aunque no es necesario estar registrado en Dockerhub para poder descargar imágenes, sí que necesitaremos tener una cuenta para poder subir nuestras imágenes.
 
-Cree unha conta no dockerhub. É gratuito e a imos empregar para subir os nosos traballos e distribuilos.
+Crea una cuenta en dockerhub. Es gratis y lo vamos a utilizar para subir nuestro trabajo y distribuirlo.
 
-- 1. Unha vez creada a conta, ingresar na páxina de dockerhub.
-- 2. Ir á lapela de perfil (profile) e quitar unha captura de pantalla.
-Enviar á captura ós coordinadores mediante unha mensaxe privada.
+  1. Una vez creada la cuenta, ingresa a la página de dockerhub.
+  2. Ve a la pestaña de perfil y haz una captura de pantalla.
+Envía la captura a los coordinadores a través de un mensaje privado.
 
-**Evidencias da adquisición dos desempeños**: Paso 2 e 3 correctamente realizados segundo estes...
+**Evidencia de la adquisición de las prestaciones**: Paso 2 y 3 realizados correctamente de acuerdo a estos...
 
-**Indicadores de logro**: debes...
+**Indicadores de logros**: Debes...
 
-1. Ter feito o cuestionario do paso 2. 
-2. Ter creada unha conta no dockerhub e enviada a captura ós coordinadores. 
+1. Haber completado el cuestionario del paso 2.
+2. Haber creado una cuenta en dockerhub y enviado la captura a los coordinadores.
 Criterios de corrección:
 
-- **4 puntos** se ten contestado ó cuestionario. 
-- **6 puntos** se ten creado o perfil en Dockerhub e enviada a captura ós coordinadores.
+- **4 puntos** si ha contestado el cuestionario.
+- **6 puntos** si has creado el perfil en Dockerhub y enviado la captura a los coordinadores.
 
-**Autoavaliación**: Autoavalíate aplicando os indicadores de logro e mesmo os criterios de corrección.
+**Autoevaluación**: Autoevalúate aplicando indicadores de logro e incluso criterios de corrección.
 
-**Heteroavaliación**: A titoría avaliará e cualificará a tarefa.
+**Heteroevaluación**: El tutorial evaluará y calificará la tarea.
 
-**Peso na cualificación**:
+**Peso en calificación**:
 
-- Peso desta tarefa na cualificación final  .................... 4 puntos
-- Peso desta tarefa no seu tema .................................. 16 %
+- Peso de esta tarea en la calificación final .......................... 4 puntos
+- Peso de esta tarea en su tema .......................................... 16%
 
-## Traballar cos comandos de xestión de imaxes.
+## Trabajar con comandos de gestión de imágenes.
 
-> Tal e como indicamos, as imaxes de Docker deben estar instaladas **localmente** para poder ser empregadas nos contedores que corran na máquina.
+> Como indicamos, las imágenes de Docker deben instalarse **localmente** para poder usarse en contenedores que se ejecutan en la máquina.
 
-Docker ofrece un conxunto de comandos que nos permiten xestionar as imaxes, tanto a nivel local, como a nivel da súa relación cos repositorios de imaxes.
+Docker proporciona un conjunto de comandos que nos permiten gestionar las imágenes, tanto localmente como a nivel de su relación con los repositorios de imágenes.
 
-Para realizar esta tarefa, compre crear un documento onde iremos rexistrando os comandos e capturas que se precise enviar. Despois, se exportará un pdf a adxuntar.
+Para llevar a cabo esta tarea, crea un documento donde registraremos los comandos y capturas que se deben enviar. A continuación, se exportará un pdf para adjuntarlo.
 
 Pasos:
 
-1. **Consultar** e **analizar** a documentación sobre [imaxes e contedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_imaxes_e_contedores/01_obxectivos).
-2. **Investigar** e **compilar** as opcións do comando docker images
- 1. O comando expón unha axuda (docker images --help) ou pódese consultar na [documentación oficial](https://docs.docker.com/engine/reference/commandline/images/).
- 2. No pdf, crear unha sección "1" onde se expoñerán as opcións do comando docker images e un resumo sobre a súa función.
-3. **Investigar** sobre os digests de imaxes.
- 1. No pdf crea una sección "2" onde respostarás ás seguintes preguntas:
- - 1. Qué é un digest de imaxe?
- - 2. Cal é a súa relación cos tags de imaxe?
- - 3. Por qué son importantes para despregues en entornos "de producción"?
- 2. Pódese atopar información neste [artigo](https://engineering.remind.com/docker-image-digests/), na documentación [oficial de docker](https://docs.docker.com/engine/reference/commandline/images/#list-the-full-length-image-ids) e neste [blogue](https://windsock.io/explaining-docker-image-ids/).
-4. **Traballar** cos comandos de docker para imaxes:
- 1. No pdf, crear unha sección "3" onde se farán capturas dos comandos necesarios para:
- - 1. Descargar a imaxe library/hello-world do DockerHub.
- - 2. Comprobar que está realmente almacenada na máquina.
- - 3. Lanzar un contedor que monte esta imaxe e comprobar que realmente imprime a mensaxe de benvida pola pantalla.
- - 4. Borrar a imaxe library/hello-world da máquina local.
+1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_images_e_contedores/01_objectivos).
+2. **Investigue** y **compile** las opciones del comando de docker
+   1. El comando muestra ayuda (docker images --help) o se puede consultar en la [documentación oficial](https://docs.docker.com/engine/reference/commandline/images/).
+   2. En el pdf, crea una sección "1" donde se expondrán las opciones del comando docker images y un resumen sobre su funcionamiento.
+3. **Investiga** sobre digest de imagen.
+   1. En el pdf crea una sección "2" donde responderás las siguientes preguntas:
+      1. ¿Qué es un compendio de imágenes?
+      2. ¿Cuál es tu relación con las etiquetas de imagen?
+      3. ¿Por qué son importantes para los despliegues en entornos de "producción"?
+   2. La información se puede encontrar en este [artículo](https://engineering.remind.com/docker-image-digests/), en la documentación [oficial de docker](https://docs.docker.com/engine/reference/commandline/images/#list-the-full-length-image-ids) y en este [blog](https://windsock.io/explaining-docker-image-ids/).
+4. **Trabaje** con comandos acoplables para imágenes:
+   1. En el pdf, crear una sección "3" donde se realizarán capturas de los comandos necesarios para:
+      1. Descargue la imagen biblioteca/hola mundo de DockerHub.
+      2. Comprobar que realmente está almacenado en la máquina.
+      3. Inicie un contenedor que monte esta imagen y compruebe que realmente imprime el mensaje de bienvenida en la pantalla.
+      4. Elimine la imagen de biblioteca/hola mundo de la máquina local.
 
-Cando remates a tarefa:
+Cuando termines la tarea:
 
-1. Preme máis abaixo o botón "Engadir entrega" e adxunta o pdf.
-2. Unha vez revisada pola titoría poderás ver o feedback entrando novamente na tarefa ou no libro de cualificacións.
+1. Haga clic en el botón "Agregar entrega" a continuación y adjunte el pdf.
+2. Una vez revisado por el tutor, puede ver los comentarios al volver a ingresar la tarea o el libro de calificaciones.
 
 ---
 
-**Evidencias da adquisición dos desempeños**: Paso 2, 3 e 4 correctamente realizados segundo estes...
+**Evidencia de la adquisición de las prestaciones**: Paso 2, 3 y 4 realizados correctamente de acuerdo con estos...
 
-**Indicadores de logro**: a teu pdf debe ter completadas...
+**Indicadores de logro**: Su pdf debe haber completado...
 
-1. A sección "1" onde se vexan:
- - O resumo das opcións do docker images.
-2. A sección "2" onde se poida apreciar:
- - A túa resposta ás preguntas formuladas sobre os digest das imaxes.
-3. A sección "3" que deberá contar:
- - Cos comandos correctamente configurados para realizar as accións descritas no punto 4.
+1. Sección "1" donde se puede ver:
+   - Resumen de las opciones de imágenes de la ventana acoplable.
+2. Sección "2" donde se puede ver:
+   - Su respuesta a las preguntas formuladas sobre los resúmenes de imágenes.
+3. Apartado “3” que deberá incluir:
+   - Con los comandos correctamente configurados para realizar las acciones descritas en el punto 4.
 
 **Criterios de corrección**:
 
-- **8 puntos** se ten feito o resumo das opcións do comando docker images na sección "1" do pdf.
-- **4 puntos** por cada pregunta correctamente respondida, ata un máximo de **12 puntos**, na sección "2" do pdf.
-- **5 puntos** por cada resposta correcta, ata un máximo de **20 puntos**, na sección "3" do pdf.
+- **8 puntos** si ha resumido las opciones del comando de docker en la sección "1" del pdf.
+- **4 puntos** por cada pregunta correctamente contestada, hasta un máximo de **12 puntos**, en el apartado "2" del pdf.
+- **5 puntos** por cada respuesta correcta, hasta un máximo de **20 puntos**, en el apartado "3" del pdf.
 
-**Autoavaliación**: Autoavalíate aplicando os indicadores de logro e mesmo os criterios de corrección.
+**Autoevaluación**: Autoevalúate aplicando indicadores de logro e incluso criterios de corrección.
 
-**Heteroavaliación**: A titoría avaliará e cualificará a tarefa.
+**Heteroevaluación**: El tutorial evaluará y calificará la tarea.
 
-**Peso na cualificación**:
+**Peso en calificación**:
 
-- Peso desta tarefa na cualificación final  ......................... 4 puntos
-- Peso desta tarefa no seu tema .......................................... 16 %
+- Peso de esta tarea en la calificación final ......................... 4 puntos
+- Peso de esta tarea en su tema .......................................... 16 %

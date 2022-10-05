@@ -1,5 +1,5 @@
-# 📜 Obxectivos
+# 📜 Objetivos
 
-- Entender que é unha imaxe e a súa relación cos containers. 
-- Familiarizarse coa xestión das imaxes e cos repositorios públicos e privados de imaxes.
-- Coñecer os repositorios públicos e privados de imaxes
+- Comprender qué es una imagen y su relación con los contenedores.
+- Familiarizarse con la gestión de imágenes y repositorios de imágenes públicos y privados.
+- Conocer los repositorios públicos y privados de imágenes

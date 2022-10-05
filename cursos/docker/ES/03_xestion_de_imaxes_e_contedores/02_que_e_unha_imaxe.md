@@ -1,9 +1,9 @@
-# Que é unha imaxe
+# Que es una imagen
 
-> A imaxe é un dos conceptos fundamentáis no mundo da containerización.
+> La imagen es uno de los conceptos fundamentales en el mundo de la contenerización.
 
-Tal e como viramos, a containerización é unha técnica de virtualización que permite illar un proceso dentro dun SO de tal xeito que este último "pensa" que ten toda a máquina para él, puidendo executar versións específicas de software, establéce-lo seu stack de rede ou crear unha serie de usuarios sen afecta-lo resto dos procesos do sistema.
+Como hemos visto, la contenerización es una técnica de virtualización que permite aislar un proceso dentro de un SO de tal manera que este último "piensa" que tiene toda la máquina para sí mismo, pudiendo ejecutar versiones específicas de software, establece su pila de red o crear una serie de usuarios sin afectar al resto de procesos del sistema.
 
-Unha imaxe abrangue o conxunto de software específico a empregar polo container unha vez arrancado. Intuitivamente, podemos comprender que se trata de algo **estático** e **inmutable**, como pasa por exemplo cunha ISO, que temos que ter almacenado na máquina anfitrioa para poder lanzar containers baseados nesa imaxe.
+Una imagen cubre el conjunto específico de software que utilizará el contenedor una vez que se inicie. Intuitivamente podemos entender que es algo **estático** e **inmutable**, como ocurre por ejemplo con una ISO, que tenemos que tener almacenada en la máquina host para poder lanzar contenedores basados ​​en esa imagen.
 
-A xestión de imaxes é un dos puntos fortes de Docker.
+La gestión de imágenes es uno de los puntos fuertes de Docker.

@@ -1,8 +1,8 @@
-# Repositorios de imaxes
+# Repositorios de imágenes
 
-Tal e como avanzaramos no principio da unidade, un dos puntos fortes de Docker é a xestión das imaxes. A saber:
+Como comentamos al principio de la unidad, uno de los puntos fuertes de Docker es la gestión de imágenes. Quién sabe:
 
-- Describe un formato estándar de imaxe compatible cos containers que pode mover.
-- Aporta comandos para a descarga, borrado e importación de imaxes. 
-- Implementa utilidades para a construcción de imaxes, tanto mediante comandos como mediante unha linguaxe declarativa especial ([Dockerfile](https://docs.docker.com/engine/reference/builder/)).
-- Ofrece un servizo público e gratuito de repositorio de imaxes ([Dockerhub](https://hub.docker.com/)).
+- Describe un formato de imagen estándar compatible con los contenedores que puede mover.
+- Proporciona comandos para descargar, eliminar e importar imágenes.
+- Implementar utilidades para construir imágenes, tanto a través de comandos como a través de un lenguaje declarativo especial ([Dockerfile](https://docs.docker.com/engine/reference/builder/)).
+- Ofrece un servicio de repositorio de imágenes público y gratuito ([Dockerhub](https://hub.docker.com/)).

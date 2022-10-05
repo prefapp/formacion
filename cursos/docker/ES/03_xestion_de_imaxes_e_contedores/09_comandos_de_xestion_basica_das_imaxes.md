@@ -1,64 +1,64 @@
-# Comandos de xestión básica das imaxes
+# Comandos básicos de gestión de imágenes
 
-> Tal e como falaramos, as imaxes de Docker teñen que estar **instaladas localmente** para poder ser empregadas polos nosos containers. 
+> Como mencionamos, las imágenes de Docker deben **instalarse localmente** para que puedan ser utilizadas por nuestros contenedores.
 
-O que segue é unha relación dos comandos que imos precisar para xestionar as imaxes na nosa máquina. 
+Lo que sigue es una lista de los comandos que necesitaremos para administrar las imágenes en nuestra máquina.
 
-## I. Listado de imaxes
+## I. Lista de imágenes
 
-Docker almacena as imaxes que podemos empregar localmente. Para obter un listado das imaxes, basta con facer:
+Docker almacena las imágenes que podemos usar localmente. Para obtener una lista de imágenes, solo haz lo siguiente:
 
 ```shell
 docker images
 ```
 
-Deste xeito, obteremos un listado das imaxes que temos na nosa máquina. 
+De esta forma, obtendremos una lista de las imágenes que tenemos en nuestra máquina.
 
-Como vemos, as imaxes teñen unha serie de campos:
+Como podemos ver, las imágenes tienen una serie de campos:
 
-- **Repository**: uri da imaxe, por defecto o repositorio de obtención e o Dockerhub. 
-- **Size**: tamaño da imaxe en disco.
-- **Tag**: marcado da imaxe. 
-- **Image ID**: Identificador da imaxe
-- **Created**: Data de creación
+- **Repositorio**: uri de la imagen, por defecto el repositorio fetch y el Dockerhub.
+- **Tamaño**: tamaño de la imagen en disco.
+- **Etiqueta**: marcaje de la imagen.
+- **ID de imagen**: Identificador de la imagen
+- **Creado**: fecha de creación
 
-### Actividade 📖
->- ✏️ Atope todas as opcións do comando _**docker images**_
->- ✏️ Que é un digest de imaxe?
+### Actividad 📖
+>- ✏️ Encuentra todas las opciones del comando _**docker images**_
+>- ✏️ ¿Qué es un digest de imágenes?
 
-## II. Obtención de imaxes
+## II. Obtención de imágenes
 
-Para descargar de imaxes mediante Docker, compre facelo dende un repositorio que sexa compatible co sistema. 
+Para descargar imágenes usando Docker, hágalo desde un repositorio que sea compatible con su sistema.
 
-O comando de descarga de imaxes en Docker é _**docker pull**_. Imos comezar por descargar unha imaxe mínima do Dockerhub que xera containers que imprimen por pantalla a mensaxe:
+El comando de descarga de imágenes en Docker es _**docker pull**_. Comencemos descargando una imagen mínima de Dockerhub que genera contenedores que imprimen el mensaje en la pantalla:
 
 > Hello, World!
 
-Para obter a imaxe facemos:
+Para obtener la imagen hacemos:
 
 ```shell
 docker pull library/hello-world
 ```
 
-### Actividade 📖
->- ✏️ Probe a descargar a imaxe **library/hello-word**.
->- ✏️ Comprobe que está realmente almacenada na súa máquina.
->- ✏️ Lance un container coa imaxe e comprobe que realmente imprime a mensaxe de saúdo por pantalla.
+### Actividad 📖
+>- ✏️ Prueba a descargar la imagen de **library/hello-word**.
+>- ✏️ Verifique que esté realmente almacenado en su máquina.
+>- ✏️ Inicie un contenedor con la imagen y verifique que realmente imprima el mensaje de saludo en pantalla.
 
-## III. Borrado de imaxes
+## III. Eliminación de imágenes
 
-Para borrar unha imaxe, basta con empregar docker rmi **\<nome de imaxe\>**.
+Para eliminar una imagen, solo use docker rmi **\<nombre de imagen\>**.
 
-É **importante** notar que, si hay containers que están a empregar unha imaxe, non se pode borrar ata que non se borre o derradeiro container dependente.
+Es **importante** tener en cuenta que, si hay contenedores que usan una imagen, no se puede eliminar hasta que se elimine el último contenedor dependiente.
 
-Se quixeramos borrar a imaxe de hello-world que baixamos antes, bastaría con facer:
+Si quisiéramos borrar la imagen de hola mundo que descargamos anteriormente, bastaría con hacer:
 
 ```shell
 docker rmi library/hello-world
 ```
 
-Supoñendo que non haxa containers dependentes, o Docker borraríanos a imaxe da máquina local. 
+Suponiendo que no haya contenedores dependientes, Docker eliminará la imagen de la máquina local.
 
-### Actividade 📖
->- ✏️ Probe a borrar a imaxe de **library/hello-world** da súa máquina.
->- ✏️ Explore as opcións de docker _**rmi**_, qué fai a opción _**-f**_?.
+### Actividad 📖
+>- ✏️ Intente eliminar la imagen **library/hello-world** de su máquina.
+>- ✏️ Explore las opciones de la docker _**rmi**_, ¿qué hace la opción _**-f**_?.
