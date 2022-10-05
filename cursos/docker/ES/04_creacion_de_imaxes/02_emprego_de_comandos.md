@@ -1,27 +1,27 @@
-# Emprego de comandos
+# Uso de comandos
 
-No tema anterior falamos de que container sempre parte dunha **imaxe** e ten asociada unha capa de **container**, de tal xeito que, mediante o mecanismo de **copy-on-write** (COW) os cambios que faga no sistema de ficheiros quedan reflectidos nesa capa e non na imaxe que, dende o punto de vista do container, é algo **inmutable**.
+En el tema anterior hablamos de cómo un contenedor parte siempre de una **imagen** y tiene asociada una capa de **contenedor**, de modo que, a través del mecanismo de **copia sobre escritura** (COW), el los cambios que hagas en el sistema de archivos se reflejan en esa capa y no en la imagen que, desde el punto de vista del contenedor, es algo **inmutable**.
 
-Non obstante, as imaxes pódense evolucionar. Para facelo a clave está, precisamente, nesa capa de container.
+Sin embargo, las imágenes pueden evolucionar. Para ello, la clave está precisamente en esa capa contenedora.
 
-Partamos dun container que fai cambios no seu sistema de ficheiros.
+Comenzamos con un contenedor que realiza cambios en su sistema de archivos.
 
 ![Container](./../_media/01_creacion_de_imaxes/crear_container_de_imaxe.png)
 
-Como sabemos, esos cambios quedan reflectidos no súa capa de container.
+Como sabemos, esos cambios se reflejan en la capa de su contenedor.
 
-Se detemos agora o container, de tal xeito que non poida facer máis cambios:
+Si detenemos el contenedor ahora, para que no pueda hacer más cambios:
 
 ![Container](./../_media/01_creacion_de_imaxes/crear_container_de_imaxe_detido.png)
 
-Nótese que o container está **detido**, non **destruido**, polo tanto o container non está a correr pero está presente no motor de Docker, e polo tanto tamén a súa capa de datos.
+Tenga en cuenta que el contenedor está **detenido**, no **destruido**, por lo que el contenedor no se está ejecutando pero está presente en el motor de Docker y, por lo tanto, también en su capa de datos.
 
-Se agora collemos esa capa de datos propia do container e facemos un **commit**, o que estamos a facer e producir unha nova imaxe que sí que incorpora os cambios da capa de container á súa propia estrutura interna.
+Si ahora tomamos esa capa de datos que pertenecen al contenedor y hacemos un **commit**, lo que estamos haciendo es producir una nueva imagen que incorpora los cambios de la capa del contenedor en su propia estructura interna.
 
 ![Container](./../_media/01_creacion_de_imaxes/crear_container_de_imaxe_detido_commit.png)
 
-En definitiva, **acabamos de evoluciona-la imaxe**. E os novos containers baseados nesa nova imaxe sí verán os cambios que fixeramos no container orixinal.
+En resumen, **acabamos de evolucionar la imagen**. Y los nuevos contenedores basados ​​en esa nueva imagen verán los cambios que hicimos en el contenedor original.
 
-Este precisamente, é o ciclo de evolución das imaxes en Docker.
+Este es precisamente el ciclo de evolución de las imágenes en Docker.
 
 ![Container](./../_media/01_creacion_de_imaxes/evolucion_da_imaxe.png)

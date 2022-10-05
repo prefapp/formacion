@@ -1,46 +1,46 @@
-# Mellorando o Dockerfile da web "gatiño do día"
+# Mejorando el Dockerfile web del "gatiño do día"
 
-## 1. Alixeirando a imaxe
-Se construímo-la imaxe do gatinho web da [actividade anterior](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_imaxes/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia), podemos sabe-lo tamaño da mesma.
+## 1. Aligerar la imagen
+Si construimos la imagen del gatito web a partir de la [actividad anterior](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_images/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia), podemos saber su tamaño.
 
-Basta con facer:
+Solo haz:
 
 ```dockerfile
 docker images web-gatinhos
 ```
 
-Para obter o tamaño da imaxe. Veremos que a imaxe pesa 491MB. Este peso é excesivo segundo os estándares actuais. Pensemos que estas imaxes:
+Para obtener el tamaño de la imagen. Veremos que la imagen pesa 491MB. Este peso es excesivo para los estándares actuales. Pensemos que estas imágenes:
 
-- Son susceptibles de instalarse en moitos nodos.
-- A velocidade de disposición delas depende, en grande medida, do seu tamaño posto que compre descargalas ó host para poder empregalas.
-- Hoxe en día a tendencia é a de construir as imaxes máis pequenas posibles.
+- Se pueden instalar en muchos nodos.
+- La rapidez de su provisión depende, en gran medida, de su tamaño ya que hay que descargarlos al host para poder utilizarlos.
+- Hoy en día la tendencia es construir imágenes lo más pequeñas posible.
 
-Afortunadamente, o Docker e a comunidade van poñer á nosa disposición unha serie de mecanismos para facer as nosas imaxes máis pequenas.
+Afortunadamente, Docker y la comunidad van a poner a nuestra disposición una serie de mecanismos para hacer más pequeñas nuestras imágenes.
 
-### A. A estratexia do multi-stage
+### A. La estrategia de varias etapas
 
-Repasemos o proceso de construcción da imaxe do "gatiño do día":
+Repasemos el proceso de construcción de la imagen del "gatiño do día":
 
-1. Partimos dunha Ubuntu.
-2. Instalamos git e as dependencias básicas de python. 
-3. Clonamos o repo de gatiño do día.
-4. Facemos a instalación das librarías de python do proxecto.
-5. Definimos arranque do sistema.
+1. Partimos de un Ubuntu.
+2. Instalamos git y las dependencias básicas de python.
+3. Clonamos el repositorio de gatitos del día.
+4. Instalamos las librerías de python del proyecto.
+5. Definimos el arranque del sistema.
 
-Se o pensamos, o git emprégamolo para clonar o repo, pero unha vez feito este paso, qué utilidade ten?
+Si lo pensamos bien, usamos git para clonar el repositorio, pero una vez hecho este paso, ¿de qué sirve?
 
-A idea do [multi-stage](https://docs.docker.com/develop/develop-images/multistage-build/) consiste en ir creando contedores que fan un traballo e o deixan en directorios que poden ser empregados por outros contedores. O contedor que fixo un traballo, pode ser desbotado e con él tódalas súas dependencias. Co cal quedamos co resultado do traballo e non con todo o software auxiliar que compre empregar para obtelo. 
+La idea de [multi-stage](https://docs.docker.com/develop/develop-images/multistage-build/) es crear contenedores que hagan un trabajo y dejarlo en directorios que puedan ser utilizados por otros contenedores. El contenedor que hizo un trabajo, se puede descartar y con él todas sus dependencias. Con lo cual nos quedamos con el resultado del trabajo y no con todo el software auxiliar que necesitamos usar para obtenerlo.
 
-No noso caso, podemos crear un contedor, instala-lo git, clonar o repo e despois desbotar o git e tódalas súas dependencias. O que nos interesa é ter o noso repo nalgures para o seguinte contedor que faga o seguinte traballo.
+En nuestro caso, podemos crear un contenedor, instalar git, clonar el repositorio y luego volcar git y todas sus dependencias. Lo que nos interesa es tener nuestro repositorio en algún lugar para el próximo contenedor que haga el próximo trabajo.
 
-Para facer unha imaxe da web "gatiño do día" imos dividi-lo traballo en dúas fases (stages):
+Para hacer una imagen web del "gatiño do día", dividiremos el trabajo en dos etapas:
 
-1. **Constructor**: imos instalar todo o software necesario para clona-lo repo e instalar as librarías de proxecto. Todo o software resultante e estrictamente necesario vaise poñer nun directorio: o **/venv**. O resto do software do contedor vaise desbotar.
-2. **Final**: imos montar o directorio resultante da fase anterior (o /venv) nun novo contedor que terá o mínimo necesario para move-lo python (o [pipenv](https://docs.python-guide.org/dev/virtualenvs/)).
+1. **Builder**: vamos a instalar todo el software necesario para clonar el repositorio e instalar las bibliotecas del proyecto. Todo el software resultante y estrictamente necesario se pondrá en un directorio: el **/venv**. El resto del software del contenedor se desechará.
+2. **Final**: Montamos el directorio resultante de la fase anterior (el /venv) en un nuevo contenedor que tendrá lo mínimo necesario para moverlo python (el [pipenv](https://docs.python-guide.org/dev/virtualenvs/)).
 
 ![multistaging](./../_media/01_creacion_de_imaxes/multi-staging.png)
 
-Se o vemos nun Dockerfile:
+Si lo vemos en un Dockerfile:
 
 ```dockerfile
 # Constructor: stage de produción do /venv con todo o necesario para o noso proxecto
@@ -79,27 +79,33 @@ CMD ["python", "/venv/catweb/app.py"]
 
 Como podemos ver:
 
-- Hai dúas fases que comenzan en dous from distintos (liñas 6 e 23).
-- O traballo do constructor vólcase no /venv (liña 15).
-- O contedor final "importa" o /venv do contedor constructor (liña 23).
+- Hay dos fases que se inician en dos diferentes de (líneas 6 y 23).
+- El trabajo del constructor se convierte en /venv (línea 15).
+- El contenedor final "importa" /venv del contenedor del constructor (línea 23).
 
-> ⚠️ Para evitar ter moitos RUN fanse cadeas de comandos con && e se corta a liña para facelo máis lexíbel.
+> ⚠️ Para evitar tener muchos RUN, las cadenas de comando se hacen con && y la línea se corta para que sea más legible.
 
-Se executamos este Dockerfile e creamos outra imaxe, veremos que a imaxe nova ten un tamaño de 205MB, producimos un aforro de 286MB!!!
+Si ejecutamos este Dockerfile y creamos otra imagen, veremos que la nueva imagen tiene un tamaño de 205 MB, ¡producimos un ahorro de 286 MB!
 
-> ⚠️ Mostramos neste exemplo dous stages, pero poderían ser moitos máis segundo as nosas necesidades. 
+> ⚠️ Mostramos dos etapas en este ejemplo, pero podría haber muchas más según nuestras necesidades.
 
-> 👀 Onde se tira tamén moito partido desta técnica é nas aplicacións compilables con linguaxes como C, C++ ou Go.
+> 👀 Donde también se aprovecha esta técnica es en aplicaciones que se pueden compilar con lenguajes como C, C++ o Go.
 
-> 👀 Para unha discusión relativa ás construcción multi-stage ou builds de tipo mono-stage pódese consultar este artigo.
+> 👀 Para una discusión sobre compilaciones de varias etapas o compilaciones de una sola etapa, puede consultar este artículo.
 
-### B. Todavía máis.... Xogando con alpine
 
-As distros de linux como [Alpine](https://www.alpinelinux.org/about/), están deseñadas para ser moi lixeiras e seguras, pero mantendo unha orientación hacia o propósito xeral.
 
-Alpine destaca especialmente polo seu reducido tamaño (5MB) e por ser unha das distros estrela no Dockerhub.
 
-Empregando micro-distros, podemos reducir ainda máis o tamaño das nosas imaxes.
+
+
+
+### B. Aún más.... Jugando con alpine
+
+Las distribuciones de Linux como [Alpine](https://www.alpinelinux.org/about/), están diseñadas para ser muy livianas y seguras, pero mantienen una orientación de propósito general.
+
+Alpine destaca especialmente por su reducido tamaño (5MB) y por ser una de las distros estrella en Dockerhub.
+
+Mediante el uso de microdistribuciones, podemos reducir aún más el tamaño de nuestras imágenes.
 
 ```dockerfile
 FROM alpine:latest
@@ -121,46 +127,46 @@ EXPOSE 5000
 CMD ["/usr/bin/python3", "/usr/src/app/app.py"]
 ```
 
-Con este Dockerfile e clonando o [repo](https://github.com/prefapp/catweb) en local, podemos ter unha imaxe de "gatiño do día" de 60MB!!!!
+Con este Dockerfile y clonando el [repo](https://github.com/prefapp/catweb) localmente, ¡podemos tener una imagen del "gatito del día" de 60 MB!
 
-# 🕮 Actividade
+# 🕮 Actividad
 
->- ✏️ Probemos a construí-la imaxe do "gatiño do día" co multi-stage e vexamos cal é o seu tamaño.
+>- ✏️ Intentemos construir la imagen del "gatito del día" con el multietapa y veamos cuál es su tamaño.
 
-## 2. Construindo distintas versións da web
+## 2. Construyendo diferentes versiones de la web
 
-No caso de ter distintas versións da web, sempre que o proceso de construcción é o mesmo, parece útil poder empregar o mesmo Dockerfile para ambas construccións. 
+En el caso de tener diferentes versiones de la web, siempre que el proceso de construcción sea el mismo, parece útil poder utilizar el mismo Dockerfile para ambas construcciones.
 
-Imaxinemos que temos un repo de git (como o dos [gatiños](https://github.com/prefapp/catweb)) con dúas ramas:
+Imaginemos que tenemos un repositorio git (como [gatiños](https://github.com/prefapp/catweb)) con dos ramas:
 
-- **master**: ten a versión 1 da web.
-- **v2**: ten a versión 2 da web.
+- **master**: tiene la versión 1 de la web.
+- **v2**: tiene la versión 2 de la web.
 
-Interesaría ter un Dockerfile que, segundo lle pasemos un argumento ou outro poida construir versións diferentes. 
+Sería interesante tener un Dockerfile que, según le pasemos un argumento u otro, pueda construir diferentes versiones.
 
-Para acadar isto temos os [ARGS](https://docs.docker.com/engine/reference/builder/#arg) do Dockerfile. Os args son valores que podemos pasarlle ó **docker-build** no momento da construcción da imaxe.
+Para lograrlo contamos con los [ARGS](https://docs.docker.com/engine/reference/builder/#arg) del Dockerfile. Los args son valores que podemos pasar a **docker-build** al construir la imagen.
 
-Estos ARGS pódense interpolar nas diversas instruccións do Dockerfile.
+Estos ARGS se pueden interpolar en las distintas instrucciones del Dockerfile.
 
-Imaxinemos que temos dúas ramas no noso repo da web "gatiños do día" (master, v2), podemos modificar o noso Dockerfile orixinal para que solo baixe unha das ramas no clone.
+Imaginemos que tenemos dos ramas en nuestro repositorio web "gatinho do día" (master, v2), podemos modificar nuestro Dockerfile original para que solo una de las ramas se descargue en el clon.
 
-É dicir, no canto de empregar isto:
+Es decir, en lugar de usar esto:
 
 ```dockerfile
 RUN git clone https://github.com/prefapp/catweb.git
 ```
 
-Imos utiliza-la seguinte sentencia:
+Usemos la siguiente oración:
 
 ```dockerfile
 RUN git clone https://github.com/prefapp/catweb.git --single-branch -b $branch
 ```
 
-Deste xeito o git sólo baixara unha das ramas do proxecto (master, v2, v3...).
+De esta forma, git solo descargará una de las ramas del proyecto (master, v2, v3...).
 
-O problema. obviamente, é como establecer o valor da variable _**$branch**_.
+El problema. obviamente, es como establecer el valor de la variable _**$branch**_.
 
-Para iso, imos a empregar un ARG.
+Para ello, vamos a utilizar un ARG.
 
 ```dockerfile
 ARG branch=master
@@ -168,26 +174,26 @@ ARG branch=master
 RUN git clone https://github.com/prefapp/catweb.git --single-branch -b $branch
 ```
 
-Agora, o noso Dockerfile agarda un argumento branch cando se invoque. No caso de non recibir tal argumento, o arg inicialízase a un valor por defecto "master".
+Ahora, nuestro Dockerfile espera un argumento de rama cuando se invoca. Si no se recibe dicho argumento, arg se inicializa con un valor predeterminado de "master".
 
-Se agora facemos:
+Si ahora hacemos:
 
 ```shell
 docker build --build-arg branch=master . -t web-gatinhos:v1
 ```
 
-Estamos a dicirlle ó Docker:
+Le estamos diciendo a Docker:
 
-- Constrúe unha imaxe (docker build).
-- Pásalle un arg "branch" con valor "master" (--build-arg branch=master).
-- O dockerfile está nesta ruta (.).
-- A imaxe resultante ten que ser web-gatinhos:v1
+- Construir una imagen (compilación acoplable).
+- Pasar un argumento "branch" con valor "master" (--build-arg branch=master).
+- El dockerfile está en esta ruta (.).
+- La imagen resultante debe ser web-catinhos:v1
 
-Se agora facemos o mesmo pero para v2:
+Si ahora hacemos lo mismo pero para v2:
 ```shell
 docker build --build-arg branch=v2 . -t web-gatinhos:v2
 ```
 
-Teremos unha imaxe web-gatinhos:v2 cos novos cambios. 
+Tendremos una imagen web-gatinhos:v2 con los nuevos cambios.
 
-> ⚠️ Pasar mediante ARGS contrasinais ou outra información confidencial é perigoso, pois queda na imaxe producida.
+> ⚠️ Pasar contraseñas de ARGS u otra información confidencial es peligroso, porque permanece en la imagen producida.

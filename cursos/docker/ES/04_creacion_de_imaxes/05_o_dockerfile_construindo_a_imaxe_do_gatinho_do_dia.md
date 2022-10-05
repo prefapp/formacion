@@ -1,72 +1,72 @@
-# O Dockerfile: construíndo a imaxe do "gatiño do día"
+# El Dockerfile: construyendo la imagen del "gatiño do día"
 
-### B. Empregando a sintaxe de Dockerfile para construí-la imaxe de "gatiño do día"
+### B. Uso de la sintaxis de Dockerfile para crear la imagen del "gatiño do día"
 
-Neste exemplo imos construir unha imaxe que teña Python e corra unha aplicación feita en [Flask](https://flask.palletsprojects.com/en/1.1.x/) que é un microframework de aplicacións e páxinas web feito en Python.
+En este ejemplo vamos a construir una imagen que tiene Python y ejecutar una aplicación hecha en [Flask](https://flask.palletsprojects.com/en/1.1.x/) que es un microframework de aplicaciones y páginas web hechas en Python.
 
-Precisamos:
+Nosotros necesitamos:
 
-1. Partir dunha ubuntu.
-2. Instalar o software necesario de python.
-3. Instalar o git para clonar un repositorio.
-4. Clonar un repositorio de código: [https://github.com/prefapp/catweb.git](https://github.com/prefapp/catweb.git).
-5. Establecer como punto de entrada por defecto dos contedores baseados nesta imaxe a execución do app.py.
+1. A partir de un ubuntu.
+2. Instale el software de Python necesario.
+3. Instala git para clonar un repositorio.
+4. Clone un repositorio de código: [https://github.com/prefapp/catweb.git](https://github.com/prefapp/catweb.git).
+5. Configure la ejecución de app.py como el punto de entrada predeterminado para los contenedores basados ​​en esta imagen.
 
-Creamos un ficheiro baleiro co nome Dockerfile e imos paso a paso:
+Creamos un archivo vacío con el nombre Dockerfile y vamos paso a paso:
 
 ```dockerfile
 FROM ubuntu
 ```
 
-O primeiro que declaramos é que a nosa imaxe vaise basear nunha ubuntu. A sentencia [FROM](https://docs.docker.com/engine/reference/builder/#from) establece unha imaxe de base, por suposto poderíamos incluir imaxes dun registry privado.
+Lo primero que declaramos es que nuestra imagen estará basada en un ubuntu. La declaración [FROM](https://docs.docker.com/engine/reference/builder/#from) establece una imagen base, por supuesto, podríamos incluir imágenes de un registro privado.
 
-Imos establecer unha ruta de traballo:
+Configuremos una ruta de trabajo:
 
 ```dockerfile
 WORKDIR /home
 ```
 
-Nesta sentencia establecemos o directorio de traballo actual. O [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir) establece ónde está o pwd dunha serie de comandos do propio Dockerfile.
+En esta declaración establecemos el directorio de trabajo actual. El [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir) establece dónde está el pwd para una serie de comandos en el propio Dockerfile.
 
-Agora instalamos o software que precisamos:
+Ahora instalamos el software que necesitamos:
 
 ```dockerfile
 RUN apt-get update -y && apt-get -y install python3-pip
 ```
 
-A sentencia [RUN](https://docs.docker.com/engine/reference/builder/#run) corre un comando dentro dun contedor e almacena os resultados (a capa de contedor) na imaxe que se está a construir.
+La instrucción [RUN](https://docs.docker.com/engine/reference/builder/#run) ejecuta un comando dentro de un contenedor y almacena los resultados (la capa del contenedor) en la imagen que se está creando.
 
-Agora clonamos o repositorio de código da nosa aplicación (en /home).
+Ahora hemos clonado el repositorio de código de nuestra aplicación (en /home).
 
 ```dockerfile
 RUN git clone https://github.com/prefapp/catweb.git
 ```
 
-Poñemos os directorio de traballo no repo clonado:
+Ponemos los directorios de trabajo en el repositorio clonado:
 
 ```dockerfile
 WORKDIR /home/catweb
 ```
 
-Esta aplicación ten un ficheiro **requirements.txt** que nos indica qué dependencias de Python se precisan para que funcione. Imos executa-lo [pip](https://pypi.org/project/pip/) para instalar o necesario:
+Esta aplicación tiene un archivo **requirements.txt** que nos dice qué dependencias de Python se requieren para que funcione. Ejecutemos [pip](https://pypi.org/project/pip/) para instalar lo necesario:
 
 ```dockerfile
 RUN pip3 install -r requirements.txt
 ```
 
-Por último imos establecer o comando de arranque:
+Finalmente configuremos el comando de arranque:
 
 ```dockerfile
 CMD ["python3", "app.py"]
 ```
 
-A sentencia [CMD](https://docs.docker.com/engine/reference/builder/#cmd) permítenos establecer un **único comando de arranque por Dockerfile**.
+La instrucción [CMD](https://docs.docker.com/engine/reference/builder/#cmd) nos permite establecer un **comando de arranque único por Dockerfile**.
 
-Este comando de arranque implica que, se no docker-run ou no docker-create non expresamos outra cousa, o contedor baseado nesta imaxe vai lanzar o comando que establezcamos nesta sentencia. Digamos que é un init por defecto.
+Este comando de inicio implica que, si no expresamos nada más en docker-run o docker-create, el contenedor basado en esta imagen lanzará el comando que configuramos en esta instrucción. Digamos que es un inicio predeterminado.
 
-> ⚠️ Distinto do CMD é o ENTRYPOINT. Unha discusión das diferencias pódese ver [aquí](https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/).
+> ⚠️ A diferencia del CMD es el PUNTO DE ENTRADA. Se puede ver una discusión de las diferencias [aquí](https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd/).
 
-Con isto, temos xa o noso Dockerfile:
+Con esto, tenemos nuestro Dockerfile:
 
 ```dockerfile
 FROM ubuntu
@@ -84,16 +84,16 @@ RUN pip3 install -r requirements.txt
 CMD ["python3", "app.py"]
 ```
 
-Poñéndonos no directorio do Dockerfile, construímo-la imaxe:
+Poniéndonos en el directorio Dockerfile, construimos la imagen:
 
 ```shell
 docker build . -t web-gatinhos
 ```
 
-E agora lanzamos a nosa web para o gato do día:
+Y ahora estrenamos nuestra web para el gato del día:
 
 ```shell
 docker run -d -p 5000:5000 web-gatinhos
 ```
 
-Se imos a un navegador e miramos no localhost:5000, veremos unha foto dun gatiño. Cada vez que recarguemo-la páxina teremos unha nova foto.
+Si vamos a un navegador y miramos localhost:5000, veremos una imagen de un gatito. Cada vez que recarguemos la página tendremos una nueva foto.

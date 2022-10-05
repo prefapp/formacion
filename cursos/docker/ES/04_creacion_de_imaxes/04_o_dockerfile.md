@@ -1,24 +1,24 @@
-# O Dockerfile
+# Dockerfile
 
-Tal e como vimos na sección do saudo-gl, a confección dunha imaxe pode resultar un proceso tedioso e complexo que implica o lanzamento de moitos comandos e que pode resultar moi difícil de replicar.
+Como vimos en la sección saudo-gl, hacer una imagen puede ser un proceso tedioso y complejo que implica lanzar muchos comandos y que puede ser muy difícil de replicar.
 
-Por sorte, Docker aporta unha ferramenta que nos permite traballar de xeito moito máis sinxelo: o Dockerfile.
+Por suerte, Docker proporciona una herramienta que nos permite trabajar mucho más fácil: el Dockerfile.
 
-## 1. O Dockerfile
+## 1. Dockerfile
 
-O Dockerfile é un ficheiro de texto que contén a receita de cómo construir unha imaxe.
+El Dockerfile es un fichero de texto que contiene la receta de cómo crear una imagen.
 
-O conxunto de instruccións do Dockerfile constitúen un DSL que nos vai permitir expresar dun xeito razoablemente doado os pasos que hai que dar para producir-la imaxe.
+El conjunto de instrucciones del Dockerfile constituye un [DSL](https://es.wikipedia.org/wiki/Lenguaje_espec%C3%ADfico_de_dominio) que nos permitirá expresar de una manera razonablemente sencilla los pasos que se deben seguir para producir la imagen.
 
-Unha vez redactado o Dockerfile, basta con empregar o comando docker build para producir unha imaxe con él. Docker creará (e destruirá) os containers de traballo que precise para construir a nosa imaxe mantendo únicamente o resultado final: a imaxe que queremos.
+Una vez que se haya escrito el Dockerfile, simplemente use el comando docker build para producir una imagen con él. Docker creará (y destruirá) los contenedores de trabajo que necesita para construir nuestra imagen mientras conserva solo el resultado final: la imagen que queremos.
 
-### A. A sintaxe dun Dockerfile
+### A. La sintaxis de un Dockerfile
 
-O Dockerfile agrupa un conxunto de sentencias nun ficheiro de texto. Cada unha das sentencias son interpretadas e executadas por orde polo Docker producindo unha imaxe de saída.
+El Dockerfile agrupa un conjunto de declaraciones en un archivo de texto. Docker interpreta y ejecuta cada una de las declaraciones en orden y produce una imagen de salida.
 
-Cada sentencia implica unha nova capa na imaxe. 
+Cada sentencia implica una nueva capa en la imagen.
 
-Nun exemplo:
+Ejemplo:
 
 ```dockerfile
 # Imaxe da que se parte
@@ -40,12 +40,12 @@ ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off"]
 EXPOSE 80
 ```
 
-Se poñemos ese contido nun ficheiro que se chame Dockerfile e tecleamos:
+Si ponemos ese contenido en un archivo llamado Dockerfile y escribimos:
 
 ```shell
 docker build -t imaxe_propia .
 ```
 
-O Docker vainos a producir unha imaxe de nome **imaxe_propia** que terá un nginx correndo no porto 80 e baseada na imaxe de Ubuntu.
+Docker producirá una imagen llamada **own_image** que ejecutará nginx en el puerto 80 y se basará en la imagen de Ubuntu.
 
-O DSL do Dockerfile é sinxelo pero moi completo. [Aquí](https://docs.docker.com/engine/reference/builder/) pode ver unha relación dos comandos.
+El Dockerfile DSL es simple pero muy completo. [Aquí](https://docs.docker.com/engine/reference/builder/) puede ver una lista de los comandos.

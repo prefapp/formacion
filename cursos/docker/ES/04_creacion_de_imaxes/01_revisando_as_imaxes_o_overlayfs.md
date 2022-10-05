@@ -1,94 +1,93 @@
-# Revisitando as imaxes: o overlayfs
+# Revisitando las imágenes: overlaysfs
 
-Na sección anterior vimos o concepto de imaxe e cómo se empregan para acada-los obxectivos da containerización. 
+En la sección anterior vimos el concepto de imágenes y cómo se utilizan para lograr los objetivos de la contenedorización.
 
-Sen embargo, nesta sección imos profundizar no concepto de imaxe botando unha ollada ás tecnoloxías que as fan posibles: referímonos ós **union mounts**. 
+Sin embargo, en este apartado vamos a profundizar en el concepto de imagen echando un vistazo a las tecnologías que las hacen posibles: nos referimos a los **soportes de unión**.
 
-## 1. Os unions mounts
-Un union mount é un sistema que permite combinar diferentes directorios nun só que se ve como unha mestura dos mesmos: de ahí o seu nome.
+## 1. La union mounts
+Un union mount es un sistema que le permite combinar diferentes directorios en uno que parece una mezcla de ellos: de ahí su nombre.
 
 ![Union](./../_media/01_creacion_de_imaxes/union_1.png)
 
-### A. Xogando cos union mounts
+### A. Jugando con union mounts
 
-> ⚠️ Para facer esta  práctica guiada compre un sistema linux cun kernel >= 3.18. Non se pode realizar dentro dun contedor!
+> ⚠️ Para hacer esta práctica guiada, compra un sistema linux con un kernel >= 3.18. ¡No se puede realizar dentro de un contenedor!
 
-A tecnoloxía empregada hoxe en día por Docker é o [OverlayFS](https://en.wikipedia.org/wiki/OverlayFS), incluído no propio kernel dende a 3.18. 
+La tecnología que utiliza actualmente Docker es [OverlayFS](https://en.wikipedia.org/wiki/OverlayFS), incluida en el propio kernel desde la 3.18.
 
-Imos crear dous directorios: 
+Vamos a crear dos directorios:
 
 ```shell
 mkdir a b
 ```
 
-Dentro de o directorio _**~/a**_ imos crear dous ficheiros baleiros: 
+Dentro del directorio _**~/a**_ vamos a crear dos archivos vacíos:
 
 ```shell
 touch a b
 ```
 
-Dentro do directorio _**~/b**_ imos crear dous ficheiros baleiros (**c** **e** **d**) e un novo directorio **e**.
+Dentro del directorio _**~/b**_ vamos a crear dos archivos vacíos (**c** **d**) y un nuevo directorio **e**.
 
 ```shell
 touch c d
 mkdir e
 ```
 
-Agora creamos un directorio c ó mesmo nivel que _**~/a**_ _**e ~/b**_.
+Ahora creamos un directorio c al mismo nivel que _**~/a**_ _** y ~/b**_.
 
 ```shell
 mkdir c
 ``` 
 
-Lanzando o seguinte comando:
+Emitiendo el siguiente comando:
 
 ```shell
 mount -t overlay overlay -o lowerdir=./a,upperdir=./b,workdir=./c ./c
 ```
 
-Se listamos os contidos do _**~/c**_ veremos que temos unha estrutura como a do diagrama.
+Si listamos el contenido de _**~/c**_ veremos que tenemos una estructura como la del diagrama.
 
-Que fixemos con este comando?
+¿Qué hicimos con este comando?
 
-- Montamos unha unidade nun directorio _**~/c**_.
+- Montamos una unidad en un directorio _**~/c**_.
 - De tipo _**overlay**_.
-- Especificamos como obxectivo: un directorio de só lectura (_**~/a**_) un directorio de escritura-lectura (_**~/b**_) e un directorio especial de trasvase (_**~/c**_).
+- Especificamos como destino: un directorio de solo lectura (_**~/a**_) un directorio de escritura-lectura (_**~/b**_) y un directorio de transferencia especial (_**~/ c **_).
 
-### B. O mecanismo COW e o copy-up
+### B. El mecanismo COW y copy-up
 
-Por suposto, xorden preguntas:
+Naturalmente, surgen preguntas:
 
-- Que pasa se modifico un ficheiro?
-- Que pasa se elimino un directorio ou ficheiro?
-- Podo establecer elementos de solo lectura?
+- ¿Qué pasa si modifico un archivo?
+- ¿Qué sucede si elimino un directorio o un archivo?
+- ¿Puedo configurar elementos de solo lectura?
 
-Cando falamos de lowerdir e upperdir estámonos a referir a dous niveles de montaxe no overlayfs. 
+Cuando hablamos de lowerdir y upperdir nos referimos a dos niveles de montaje en los overlayfs.
 
-#### i. O Lowerdir
+#### i. Lowerdir
 
-As capas montadas neste nivel non poder ser modificadas ou eliminadas.
+Las capas montadas en este nivel no se pueden modificar ni eliminar.
 
-En caso de modificar un ficheiro pertencente a esta capa, o que se vai facer e copialo (COW - copy on write) a unha capa superior, ó upperdir.
+Si modifica un archivo perteneciente a esta capa, lo que se hará es copiarlo (COW - copy on write) a una capa superior, la upperdir.
 
 ![Union](./../_media/01_creacion_de_imaxes/union_3.png)
 
-O copy-up recibe o seu nome de esa operación de copia-lo ficheiro dunha capa de lowerdir a unha de upperdir antes de modificala. Esto permite dúas cousas:
+copy-up recibe su nombre de esa operación de copiar el archivo de una capa de lowerdir a una de upperdir antes de modificarlo. Esto permite dos cosas:
 
-- So se copian os ficheiros que son realmente modificados (Copy On Write -> COW)
-- Pódense manter capas de só lectura mesturadas con capas de escritura. 
-- Todas estas operacións son transparentes para o proceso que corre no volume de overlayfs.
+- Solo se copian los archivos que están realmente modificados (Copy On Write -> COW)
+- Se pueden mantener capas de solo lectura mezcladas con capas de escritura.
+- Todas estas operaciones son transparentes para el proceso que se ejecuta en el volumen overlayfs.
 
-#### ii. O upperdir
+#### ii. upperdir
 
-Trátase dos directorios de escritura/lectura. Os copy-up realízanse nestas capas. 
+Estos son los directorios de escritura/lectura. copy-up se realizan en estas capas.
 
+## 2. Imágenes y OverlayFS
 
-## 2. Imaxes e OverlayFS
+Como mencionamos, el contenedor se crea a partir de una imagen que es un sistema de archivos de solo lectura.
 
-Como contaramos, o contedor créase a partir dunha imaxe que é un sistema de ficheiros de só lectura.
+Sin embargo, dentro del contenedor podemos instalar, borrar y modificar todo lo que queramos.
 
-Nembargantes, dentro de contedor podemos instalar, borrar e modificar todo o que queiramos.
+Ahora, entendemos que todos los cambios se guardan en la capa del contenedor, que es un directorio superior montado precisamente sobre la imagen, que es una capa de directorio inferior.
 
-Agora, entendemos que tódolos cambios se están a guardar na capa do contedor que é un upperdir montado precisamente por enriba da imaxe que é capa de lowerdir.
-
-E os volumes? Os volumes, dependendo de se os montamos de só lectura ou non, estarán en lowerdir ou en upperdir.
+¿Y los volúmenes? Los volúmenes, dependiendo de si los montamos de solo lectura o no, estarán en lowerdir o upperdir.

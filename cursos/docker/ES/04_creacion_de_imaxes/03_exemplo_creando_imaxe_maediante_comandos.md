@@ -1,157 +1,158 @@
-# Exemplo: creando imaxe mediante comandos
+# Ejemplo: crear una imagen usando comandos
 
-> O noso "Hello World"
+> Nuestro "Hello World"
 
-Imos ilustrar o proceso de creación dunha imaxe a través dun Hello World!, pero á galega.
+Vamos a ilustrar el proceso de creación de una imagen a través de un ¡Hello World!, pero en gallego.
 
-Animamos ó docente a que probe a facer este exemplo na súa máquina porque será relevante para despoís face-la práctica de final da sección.
+Animamos al alumno a que intente hacer este ejemplo en su máquina porque será relevante para luego convertirlo en una práctica al final de la sección.
 
-Imos construir unha imaxe que conteña unha sinxela aplicación baseada en **apache2** que exporta unha páxina web cun "**Hello Wolrd**" á galega.
+Vamos a construir una imagen que contenga una sencilla aplicación basada en **apache2** que exporte una página web con "**Hello World**" en gallego.
 
-O plan de traballo é o seguinte:
+El plan de trabajo es el siguiente:
 
-1.Partiremos dunha **Debian:Jessie**.
-2.Instalaremos un **apache**.
-3.Introduciremos unha configuración.
-4.Copiaremos o noso **Hello World!!**
-5.Probaremo-la nosa imaxe lanzando un container.
+1. Partiremos de una **Debian:Jessie**.
+2. Instalaremos un **apache**.
+3. Introduciremos una configuración.
+4. Copiaremos nuestro **Hello World!!**
+5. Probaremos nuestra imagen lanzando un contenedor.
 
-## I. Poñendo as cousas en orde
+## I. Poner las cosas en orden
 
-O primeiro que precisamos é a imaxe de Debian que imos a empregar. Ímola descargar dende o Dockerhub:
+Lo primero que necesitamos es la imagen de Debian que vamos a utilizar. Vamos a descargarlo desde Dockerhub:
 
 ```shell
 docker pull debian:jessie
 ```
 
-Agora xa temos a imaxe de Debian na nosa máquina local. Podemos empezar a traballar!
+Ahora tenemos la imagen de Debian en nuestra máquina local. ¡Podemos empezar a trabajar!
 
-Para segui-lo noso ciclo de evolución, imos a empregar o container **saudo-container**, e a imaxe a producir vaise chamar **saudo-galego**.
+Para seguir nuestro ciclo de evolución, vamos a utilizar el contenedor **saudo-container**, y la imagen a producir se llamará **saudo-galego**.
 
-## II. Instalando Apache2
+## II. Instalación de Apache2
 
-Compre que instalemos o apache2 no noso container e que despois fagamos un commit dos cambios á nosa imaxe. Nun esquema:
+Compre que instalamos apache2 en nuestro contenedor y luego hacemos una confirmación de los cambios en nuestra imagen. En un esquema:
 
 ![Pasos](./../_media/01_creacion_de_imaxes/imaxe_paso_1.png)
 
-Arrincamos un container para face-lo traballo de instalar o **apache2**:
+Iniciamos un contenedor para hacer el trabajo de instalar **apache2**:
 
-- O container vai ter o nome **saudo-container**.
-- Ten que estar en modo *interactivo* para poder empregalo e que, unha vez que saigamos do container, este último quede *detido*. 
-- Ademáis, queremos que o **punto de entrada** ó container sexa o bash.
+- El contenedor tendrá el nombre **hello-container**.
+- Tiene que estar en modo *interactivo* para poder usarlo y que, una vez que salimos del contenedor, este se *detenga*.
+- Además, queremos que el **punto de entrada** al contenedor sea bash.
 
 ```shell
 docker run --name saudo-container -ti debian:jessie bash
 ```
 
-Unha vez executado, estaremos dentro do container, e facemo-lo noso traballo:
+Una vez ejecutado, ya estaremos dentro del contenedor, y haremos nuestro trabajo:
 
-- Actualizamos fontes de software
+- Actualizamos fuentes de software
 
 ```shell
 apt-get update
 ```
 
-- Instalamos o apache
+- Instalamos apache
 
 ```shell
 apt-get install apache2
 ```
 
-Limpiamos as fontes:
+Limpiamos las fuentes:
 
 ```shell
 rm -r /var/lib/apt/lists/*
 ```
 
-Agora temo-lo noso container co estado que queremos. Salimos mediante **exit** ou **CTRL+D**.
+Ahora tenemos nuestro contenedor con el estado que queremos. Salga usando **exit** o **CTRL+D**.
 
-Xa na máquina anfitrión, facemo-lo **commit** á nova imaxe.
+Ya en la máquina host, nos **commit** con la nueva imagen.
 
 ```shell
 docker commit saudo-container saudo-galego
 ```
 
-Temos unha nova imaxe co noso software instalado.
+Tenemos una nueva imagen con nuestro software instalado.
 
-Podemos prescindir do container saudo-container posto que os cambios xa están na nova imaxe. Borrámolo:
+Podemos prescindir del contenedor saudo-container ya que los cambios ya están en la nueva imagen. Bórralo:
 
 ```shell
 docker rm -v saudo-container
 ```
 
-## III. Clonando o repo do Saudo Galego
+## III. Clonación del repositorio Saudo Galego
 
-Coa base que temos do paso anterior, imos arrincar de novo un container (xa baseado a nosa imaxe) e face-las seguintes tarefas:
+Con la base que tenemos del paso anterior, comencemos de nuevo un contenedor (ya basado en nuestra imagen) y hagamos las siguientes tareas:
 
-1. Instalar o git como VCS.
-2. Clonar o repo da páxina de saúdo.
-3. Face-lo commit á imaxe.
+1. Instale git como VCS.
+2. Clone el repositorio de la página de bienvenida.
+3. Haz que se comprometa con la imagen.
 
-Nun esquema, quedaría:
+En un esquema seria:
 
 ![Pasos](./../_media/01_creacion_de_imaxes/imaxe_paso_2.png)
 
-Para comezar, arrincamos un novo container baseado na imaxe de saudo-galego que xa producimos no paso anterior:
+Para empezar, arrancamos un nuevo contenedor basado en la imagen de saludos gallegos que ya elaboramos en el paso anterior:
 
-- O container se chamará tamén **saudo-container**.
-- Necesitamos que sexa interactivo para poder traballar dentro do container.
-- O comando a lanzar é o bash.
+- El contenedor también se llamará **saudo-container**.
+- Necesitamos que sea interactivo para poder trabajar dentro del contenedor.
+- El comando para iniciar es bash.
 
-Na nosa máquina, tecleamos:
+En nuestra máquina, escribimos:
 
 ```shell
 docker run -ti --name saudo-container saudo-galego bash
 ```
 
-Imos empregar o software de [Git](https://git-scm.com/) polo que instalamos o paquete:
+Vamos a usar el software [Git](https://git-scm.com/) así que instalamos el paquete:
 
 ```shell
 apt-get install -y git
 ```
 
-Agora clonamos o repo do proxecto saudo-gl nunha ruta do noso container:
+Ahora clonamos el repositorio del proyecto saud-gl en una ruta de nuestro contenedor:
 
 ```shell
 cd /opt  && git clone https://github.com/prefapp/saudo-gl.git
 ```
 
-Xa estamos dentro dun container baseado na imaxe do paso anterior. Polo tanto ten xa instalado un Apache2. O Apache2, por defecto, sirve os contidos dende _**/var/www/html**_.
+Ya estamos dentro de un contenedor basado en la imagen del paso anterior. Por lo tanto, ya tiene un Apache2 instalado. Apache2, de forma predeterminada, ofrece contenido de _**/var/www/html**_.
 
-Movémonos a esa ruta:
+Pasemos a esa ruta:
 
 ```shell
 cd /var/www/html
 ```
 
-E copiamos os contidos do proxecto saudo-gl na ruta onde o Apache2 serve ficheiros:
+Y copiamos el contenido del proyecto saud-gl a la ruta donde Apache2 sirve los archivos:
 
 ```shell
 cp -r /opt/saudo-gl/* . 
 ```
 
-Et voilà! Saimos do container con **exit** ou **CTRL+D** e facemos un commit dos novos cambios á nosa imaxe:
+Et voilà! Salimos del contenedor con **exit** o **CTRL+D** y confirmamos los nuevos cambios en nuestra imagen:
 
 ```shell
 docker commit saudo-container saudo-galego
 ```
 
-Coma sempre, borramos o container de traballo porque non o precisamos máis. É listo!
+Como siempre, eliminamos el contenedor de trabajo porque ya no lo necesitamos. ¡Está listo!
 
-O proceso completo quedaría como segue:
+El proceso completo sería el siguiente:
 
 ![Pasos](./../_media/01_creacion_de_imaxes/imaxe_pasos.png)
 
-## IV. Empregando a imaxe de saudo-galego
+## IV. Usando la imagen de saud-galego
 
-Para lanzar un container coa nosa aplicación, basta lembrar dúas cousas:
+Para lanzar un contenedor con nuestra aplicación, solo recuerda dos cosas:
 
-- Compre establecer o **entrypoint** declarando que debe ser arrinca-lo **Apache2**.
-- É convinte asociarlle un porto diferente do 80 para evitar colisións con outros servicios que o docente poida ter levantados na súa máquina.
+- Comprar establece el **punto de entrada** declarando que debe iniciar **Apache2**.
+- Es recomendable asociar un puerto diferente al 80 para evitar colisiones con otros servicios que el profesor pueda tener configurados en su máquina.
 
-Introducindo isto na nosa máquina:
+Introduciendo esto en nuestra máquina:
 
 ```shell
 docker run --rm -p 8000:80 -d saudo-galego apachectl -DFOREGROUND
 ```
-Teríamos un container correndo coa nosa imaxe preparada e escoitando no porto 8000. Se vamos ó noso navegador e introducimos [http://localhost:8000](http://localhost:8000) a aplicación nos saludará.
+
+Tendríamos un contenedor corriendo con nuestra imagen preparada y escuchando en el puerto 8000. Si vamos a nuestro navegador e ingresamos [http://localhost:8000](http://localhost:8000) la aplicación nos saludará.
