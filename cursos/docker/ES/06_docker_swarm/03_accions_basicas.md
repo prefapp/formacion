@@ -1,8 +1,8 @@
-# Accións básicas
+# Acciones básicas
 
 ## Comandos básicos
 
-Neste apartado vamos a ver un conxunto de comandos básicos para a xestión do swarm
+En esta sección veremos un conjunto de comandos básicos para la gestión de swarms
 
 * Inicializar un swarm
 
@@ -10,81 +10,81 @@ Neste apartado vamos a ver un conxunto de comandos básicos para a xestión do s
 docker swarm init --advertise-addr <MANAGER-IP>
 ```
 
-* Unirse a un swarm
+* Únete a un swarm
 
 ```sh
 docker swarm join --token xxxxxxx <MANAGER-IP>:2377
 ```
 
-*Un nodo se une ao cluster como worker ou como manager según o token que se use ao facer o join.*
 
-* Desplegar unha stack, a partir dun docker-compose.yaml
+*Un nodo se une al clúster como trabajador o administrador según el token utilizado al unirse.*
+
+* deploy una pila, desde docker-compose.yaml
 
 ```sh
 docker stack deploy -c <path do docker-compose.yaml> <nome da stack>
 ```
 
-* Ver o estado das tasks da stack
+* Ver el estado de las tareas de la pila
 
 ```sh
 docker stack ps <nome da stack>
 ```
 
-* Borrar unha stack
+* Eliminar una pila
 
 ```sh
 docker stack rm <nome da stack>
 ```
+## La sección "deploy"
 
-## A sección "deploy"
+Para que un docker-compose.yaml se pueda deploy en un swarm, primero debe tener el campo **version** >= **3**. Actualmente están en la versión 3.6.
 
-Para que un docker-compose.yaml se poida despregar nun Swarm o primeiro que ten que ter o campo **version** >= **3**. Actualmente están na versión 3.6.
+La principal diferencia de un docker-compose habilitado para ejecutarse en swarm (v3), con respecto a lo que vimos en el tema anterior (v2), es la sección [deploy](https://docs.docker.com/compose/compose-file/#deploy).
 
-A principal diferencia dun docker-compose habilitado para correr en Swarm (v3), con respecto ao que vimos no tema anterior (v2), é a sección [deploy](https://docs.docker.com/compose/compose-file/#deploy).
-
-Vamos a ver as principáis opcións que se poden declarar dentro de esta sección:
+Veamos las principales opciones que se pueden declarar dentro de este apartado:
 
 ### mode
-Pode ser **replicated** ou **global**. Por defecto o modo de deploy e *replicated*, esto quere decir, que queremos que o container asociado a un servicio esté replicado cun número determinado de replicas, esparcidas por todo o cluster de Swarm. Este e a maneira de facer balanceo de carga.
-Se especificamos *global*, o Swarm se vai a encargar de que exista, EN CADA NODO DO CLUSTER, un container co noso servicio.
+Puede ser **replicated** o **global**. Por defecto, el modo de implementación es *replicated*, esto significa que queremos que el contenedor asociado a un servicio se replique con un número determinado de réplicas, repartidas por todo el clúster de swarm. Esta es la forma de equilibrar la carga.
+Si especificamos *global*, el swarm se encargará de la existencia, EN CADA NODO DEL CLUSTER, de un contenedor con nuestro servicio.
 
 ![img](../_media/05_docker_swarm/swarm04.png)
 
-para máis detalles ver [docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/#replicated-and-global-services)
+para obtener más información, consulte [docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/#replicated-and-global-services)
 
-### replicas
+### réplicas
 
-Si o servicio é de tipo **replicated**, este é o número de contedores que queremos que estén activos simultaneamente en todo o cluster.
+Si el servicio es de tipo **replicated**, esta es la cantidad de contenedores que queremos que estén activos simultáneamente en todo el clúster.
 
 ### update_config
 
-Como queremos que se realice a estratexia de actualización do noso servicio. Cando haxa que despregar unha nova versión do noso servicio, como queremos que Swarm a leve a cabo, todas a replicas de golpe, de N en N, para evitar perder servicio...
+Cómo queremos que se lleve a cabo la estrategia de actualización de nuestro servicio. Cuando hay que desplegar una nueva versión de nuestro servicio, como queremos que lo haga swarm, todas las réplicas a la vez, de N a N, para no perder el servicio...
 
 ### restart_policy
 
-En caso de que unha das replicas do noso servicio finalice, como queremos que reaccione o cluster.
-No apartado **condition**, especificaremos unhas das 3 opcións que nos da Swarm:
+En caso de que una de las réplicas de nuestro servicio termine, cómo queremos que reaccione el clúster.
+En el apartado **condición** especificaremos una de las 3 opciones que nos da swarm:
 
-* **none**: se se cae un contedor do noso servicio non o trates de arrinar de novo.
-* **on-failure**: se o contedor finalizou nun estado fallido (exit code != 0)  reiniciao, e trata de que arrinque  de novo
-* **any**: sempre que finalice un contedor do noso servicio, reiniciao para tratar de que volva a estar operativo
+* **none**: si un contenedor de nuestro servicio falla, no intente iniciarlo de nuevo.
+* **on-failure**: si el contenedor terminó en un estado fallido (exit code != 0) reinícielo e intente comenzar de nuevo
+* **any**: cada vez que finaliza un contenedor de nuestro servicio, reinícielo para intentar que vuelva a funcionar.
 
-Aparte hai unha serie de parámetros extra onde axustar finamente o comportamento de reinicio (canto intentos debe facer o cluster para arrincar de novo o contedor, canto tempo debe pasar entre intentos ...)
+Aparte de eso, hay una serie de parámetros adicionales en los que puede ajustar el comportamiento de reinicio (cuántos intentos debe hacer el clúster para reiniciar el contenedor, cuánto tiempo debe pasar entre intentos...)
 
 ### labels
 
-Etiquetas establecidas A NIVEL DO SERVICIO. Tamén se poden especificar a nivel do contedor indicándoas fora do campo deploy. Ademáis tamén se poden agregar en moitos outros obxetos de docker (imaxes, redes, volumes ...)
-As etiquetas son un campo moi interesante, que nos van a permitir clasificar e organizar, según os nosos propios términos, calquer obxeto de docker. Nelas podemos establecer descripcións dos nosos servicios,  relacións entre contedores, información de cara ao usuario...
+labels puestas A NIVEL DE SERVICIO. También se pueden especificar a nivel de contenedor especificándolos fuera del campo de implementación. Además, también se pueden añadir a muchos otros objetos docker (imágenes, redes, volúmenes...)
+Las labels son un campo muy interesante, que nos permitirá clasificar y organizar, según nuestros propios términos, cualquier objeto docker. En ellos podemos establecer descripciones de nuestros servicios, relaciones entre contenedores, información de cara al usuario...
 
-### placement
+### colocación
 
-Este apartado nos permite indicar restriccións de en que nodo deben correr os contedores do noso servicio, por exemplo porque queremos que os que teñan estado, que sempre arranquen no mesmo nodo, xa que é onde está o volumen de datos asociado.
+Este apartado nos permite indicar restricciones sobre en qué nodo deben correr los contenedores de nuestro servicio, por ejemplo porque queremos que los que tienen estado empiecen siempre en el mismo nodo, ya que es ahí donde está el volumen de datos asociado.
 
-### resources
+### recursos
 
-Por último, neste apartado nos permiten especificar os recursos do nodo , que queremos reservar, ou limitar, para os contedores do noso servicio. Se divide en 2 claves correspondentes (**reservations** e **limits**), e típicamente configuraremos limites ou reservas, de cpu e memoria.
+Finalmente, en esta sección nos permiten especificar los recursos del nodo, que queremos reservar, o limitar, para los contenedores de nuestro servicio. Se divide en 2 claves correspondientes (**reservas** y **límites**), y normalmente configuraremos límites o reservas, de cpu y memoria.
 
-Ademáis do campo deploy, tamén tedes que ter en conta, que hai unha serie de opcións válidas no docker-compose, que non están soportadas no modo de swarm:a
+Además del campo de implementación, también debe tener en cuenta que hay una serie de opciones válidas en docker-compose, que no son compatibles con el modo swarm:a
 
 * [build](https://docs.docker.com/compose/compose-file/#build)
 * [cgroup_parent](https://docs.docker.com/compose/compose-file/#cgroup_parent)

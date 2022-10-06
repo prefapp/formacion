@@ -1,36 +1,36 @@
-# Práctica guiada: Nesquik vs Colacao distribuida
+# Práctica guiada: Nesquik vs Colacao repartido
 
-Por último e como remate do curso vamos a despregar no noso cluster swarm, creado no apartado anterior, a aplicación de votación que montamos no tema 5.
+Finalmente, y como cierre de curso, vamos a desplegar en nuestro swarm cluster, creado en el apartado anterior, la aplicación de votación que configuramos en el tema 5.
 
-Vamos a adaptar o docker-compose.yaml da aplicación anterior, ao formato v3, preparado para o lanzamento nun swarm, cunha serie de melloras á hora de dar un servicio máis confiable.
+Vamos a adaptar el docker-compose.yaml de la aplicación anterior, al formato v3, listo para lanzar en swarm, con una serie de mejoras a la hora de dar un servicio más fiable.
 
-Para esto imos ir servizo a servizo agregándolle configuración extra.
+Para ello iremos de servicio en servicio añadiendo configuración extra.
 
-O primeiro que temos que facer e cambiar a versión da especificación de docker-compose, para usar polo menos a 3. (Actualmente están na 3.6)
+Lo primero que debemos hacer es cambiar la versión de la especificación docker-compose, para usar al menos 3. (Actualmente están en 3.6)
 
 ![img](../_media/05_docker_swarm/swarm06.png)
 
-Básicamente todas as configuracións relativas ao modo swarm están concentradas, dentro de cada servicio, no apartado de **deploy**, de tal maneira que o único comando que interpreta estas opcións é 
-**docker stack deploy**, e tanto docker-compose up como docker-compose run simplemente evitan esta sección.
+Básicamente todas las configuraciones relacionadas con el modo swarm se concentran, dentro de cada servicio, en la sección **deploy**, por lo que el único comando que interpreta estas opciones es
+**docker stack deployment**, y tanto docker-compose up como docker-compose run simplemente pasan por alto esta sección.
 
 ### Redis
 
-No caso do servicio de redis, só queremos que teña unha única replica, e unha política de reinicio:
+En el caso del servicio redis, solo queremos que tenga una sola réplica y una política de reinicio:
 
-*  en caso de fallo do container, o cluster que se encarge de levantalo de novo, que o intente polo menos 3 veces, con 10s entre cada intento, nunha ventá de tempo de 120s
+* en caso de falla del contenedor, el clúster responsable de traerlo de nuevo, que intenta al menos 3 veces, con 10s entre cada intento, en una ventana de tiempo de 120s
 
 ![img](../_media/05_docker_swarm/swarm07.png)
 
-### Postgresql
+### PostgreSQL
 
-No caso do servicio de base de datos, como é algo bastante crítico QUE NECESITA PERSISTENCIA, os datos da mesma se teñen que almacenar nun volumen DEPENDENTE DO ANFITRIÓN\* onde corre o contedor. Por eso, non podemos permitir que o scheduler do Swarm nos mova a base de datos a outro nodo diferente de onde se arrincaou a primeira vez.
-Para esto vamos a agregar unha restricción de xeito que ese servicio só se execute no nodo **Manager**.
+En el caso del servicio de base de datos, al ser algo bastante crítico QUE NECESITA PERSISTENCIA, sus datos deben almacenarse en un volumen DEPENDIENTE DEL HOST\* donde se ejecuta el contenedor. Por lo tanto, no podemos permitir que el programador Swarm mueva la base de datos a un nodo diferente de donde se inició por primera vez.
+Para esto vamos a agregar una restricción para que este servicio solo se ejecute en el nodo **Manager**.
 
-_\*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen plugins de rede, e os que proveen plugins para a xestión de volumenes. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin)_.
+_\*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quiere decir que hay partes del Docker Engine que, aunque vienen con una funcionalidad ya definida, se pueden cambiar por otras de otro proveedor para mejorarlo. Existen principalmente 2 tipos de proveedores de complementos, los que brindan complementos de red y los que brindan complementos de administración de volumen. Precisamente estos últimos están muy centrados en intentar buscar soluciones para poder abstraer el volumen de datos, del host, de forma que los contenedores de servicios puedan moverse entre nodos del clúster y seguir teniendo sus datos disponibles. Puede ver algunos de ellos [aquí](https://store.docker.com/search?type=plugin)_.
 
 ![img](../_media/05_docker_swarm/swarm08.png)
 
-Tamen e necesario engadir as variables para a configuración de usuario e contrasinal de postgres:
+Sin embargo, es necesario agregar las variables para la configuración de usuario y contraseña de postgres:
 
 ```yaml
 environment:
@@ -40,19 +40,19 @@ environment:
  POSTGRES_PASSWORD: "postgres"
 ```
 
-### Votacions
+### Votos
 
-Para o servicio de votacións, como é unha aplicación que non garda estado en si mesma, e está tendo moita demanda ;) vamos a escalalo a 2 replicas, de xeito que o cluster se encargue de balancear as peticións entre cada unha delas.
+Para el servicio de votaciones, como es una aplicación que no guarda estado en sí misma, y ​​está teniendo mucha demanda ;) la vamos a escalar a 2 réplicas, para que el cluster se encargue de balancear las solicitudes entre cada una de a ellos.
 
-Ademáis cando faga falta actualizar o servicio, queremos que se execute a actualización das 2 replicas á vez, e por suposto, se se cae que automáticamente se volva a arrincar soa.
+Además, cuando sea necesario actualizar el servicio, queremos que la actualización de las 2 réplicas se ejecute al mismo tiempo y, por supuesto, si falla, se reiniciará automáticamente por sí solo.
 
 ![img](../_media/05_docker_swarm/swarm09.png)
 
-Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel correo non soporta máis, e unha política de restart on-failure.
+Para el nodo de trabajo vamos a agregar 1 sola réplica ya que la aplicación que lo ejecuta ya no lo admite, y una política de reinicio en caso de falla.
 
-Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de votacions.
+Para el nodo de resultados, agreguemos otras 2 réplicas, de manera similar a la votación.
 
-Unha vez completado esto, so queda preparar o noso cliente de docker para que fale contra o nodo Manager.
+Una vez que esto esté completo, todo lo que queda es preparar nuestro cliente acoplable para hablar con el nodo Administrador.
 
 Input
 ```sh
@@ -69,14 +69,14 @@ Output
 eval $(docker-machine env vbox01) #sendo vbox01 o noso nodo Manager
 ```
 
-E finalmente quedaría facer o deploy desta stack
+Y finalmente quedaría desplegar esta pila
 
 Input
 ```sh
 docker stack deploy --compose-file docker-stack-tema6.yaml nesquik-colacao
 ```
 
-Para comprobar como o cluster vai lanzando os servicios e tasks correspondentes, podemos executar:
+Para comprobar cómo el clúster está lanzando los servicios y tareas correspondientes, podemos ejecutar:
 
 Input
 ```sh
@@ -85,16 +85,16 @@ docker stack ps nesquick-colacao
 
 ## Actividad
 
-Completar a stack e desplegala no swarm previamente creado.
+Complete la pila y despliéguela en el swarm creado previamente.
 
-Comprobar o funcionamento da aplicación, revisando o porto 8000 e 8001 en ambos  nodos.
+Comprobar el funcionamiento de la aplicación, comprobando el puerto 8000 y 8001 en ambos nodos.
 
-Conectar o portainer ao nodo Manager e revisar a arquitectura da aplicación de xeito visual.
+Conecte el portainer al nodo Manager y revise visualmente la arquitectura de la aplicación.
 
-## Conectar un novo endpoint ao portainer
+## Conectar un nuevo punto final a portainer
 
-Para configurar o portainer contra o nodo Manager do cluster Swarm, tedes que acceder ao apartado de Endpoints e rexistrar un novo, especificando os datos de conexión ao mesmo.
+Para configurar el portainer contra el nodo Manager del clúster Swarm, hay que acceder a la sección Endpoints y dar de alta uno nuevo, especificando los datos de conexión al mismo.
 
-Os certificados TLS para a conexión co Manager están dentro da carpeta **.docker** do voso $HOME, na subcarpeta **machines**.
+Los certificados TLS para la conexión al Administrador están dentro de la carpeta **.docker** en su $HOME, en la subcarpeta **máquinas**.
 
 ![img](../_media/05_docker_swarm/swarm14.png)

@@ -115,7 +115,7 @@ services:
   bbdd:
     image: postgres:9.4
     container_name: bbdd
-    valumes:
+    volumes:
       - "bbdd-datos:/var/lib/postgresql/data"
     networks:
       - rede-privada
@@ -143,7 +143,6 @@ worker:
     - "redis"
 networks:
   - rede-privada
-```red privada
 ```
 
 El worker también está en la red privada. Vemos la etiqueta [**depends_on**](https://docs.docker.com/compose/compose-file/#depends_on) que establece el orden de inicio de los servicios (contenedores).

@@ -1,16 +1,16 @@
-# Montando o primeiro cluster Swarm - Docker Machine
+# Montaje del primer clúster Swarm - Docker Machine
 
-Para a creación dun primeiro cluster de nodos con Docker Swarm, vamos a usar 2 máquinas virtuais correndo no propio VirtualBox que temos instalado localmente.
+Para la creación de un primer clúster de nodos con Docker Swarm utilizaremos 2 máquinas virtuales corriendo en el propio VirtualBox que tenemos instalado localmente.
 
-Poderíamos realizar esta tarefa clonando a máquina actual **docker-platega**, ou instalando de novo 2 vps co seu SO Linux e agregándolle o docker engine como vimos no tema 2, pero Docker nos provee dunha ferramenta máis útil para esta labor:
+Podríamos realizar esta tarea clonando la máquina actual **docker-platega**, o instalando de nuevo 2 vps con su sistema operativo Linux y añadiéndole el motor docker como vimos en el tema 2, pero Docker nos proporciona una herramienta más útil para este trabajo:
 
-## Docker machine
+## Máquina acoplable
 
-[Docker Machine](https://docs.docker.com/machine/overview/#why-should-i-use-it) é unha ferramenta [opensource](https://github.com/docker/machine) mantida pola empresa Docker xunta coa comunidade, que permite instalar e xestionar, dende o noso equipo local, nodos Docker (servidores virtuais co docker-engine instalado) tanto en máquinas virtuais locais (HyperV, VirtualBox, VMWare Player) como en proveedores remotos (AWS, Azure, DigitalOcean ...).
+[Docker Machine](https://docs.docker.com/machine/overview/#why-should-i-use-it) es una herramienta [opensource](https://github.com/docker/machine) mantenida por la empresa Docker junto con la comunidad, que permite instalar y gestionar, desde nuestro equipo local, nodos Docker (servidores virtuales con el docker-engine instalado) tanto en máquinas virtuales locales (HyperV, VirtualBox, VMWare Player) como en proveedores remotos ( AWS, Azure, DigitalOcean...).
 
-Para crear o noso primeiro cluster Swarm, vamos a empregar esta ferramenta, para crear 2 novas máquinas virtuais correndo no noso VirtualBox, que van a formar o noso cluster Swarm.
+Para crear nuestro primer clúster Swarm, usaremos esta herramienta para crear 2 nuevas máquinas virtuales que se ejecutan en nuestro VirtualBox, que formarán nuestro clúster Swarm.
 
-Para isto so é necesario realizar os seguintes pasos:
+Para ello solo es necesario realizar los siguientes pasos:
 
 ### 0) Instalar docker-machine
 
@@ -20,41 +20,40 @@ chmod +x /tmp/docker-machine && \
 sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
 ```
 
-	Atencion Se estamos nun sistema operativo diferente de linux (windows, mac), para poder dispoñer de docker-machine é recomendable instalar o paquete de
+Atención Si estamos en un sistema operativo diferente a linux (windows, mac), para tener docker-machine se recomienda instalar el paquete de
 
-	[Docker Toolbox](https://docs.docker.com/toolbox/overview/), xa que aínda que está actualmente marcado como legacy, é o que menos problemática xenera co VirtualBox.
+[Docker Toolbox](https://docs.docker.com/toolbox/overview/), ya que aunque actualmente está marcada como heredada, es la menos problemática con VirtualBox.
 
-### 1) Crear a primeira máquina virtual con docker-machine
+### 1) Crear la primera máquina virtual con docker-machine
 
 ```sh
 docker-machine create -d virtualbox vbox01
 ```
 
-> Con -d se especifica o driver a empregar,  vbox01 será o nome da vm xenerada.
+> Con -d si especifica el controlador a usar, vbox01 será el nombre de la máquina virtual generada.
 
-Este comando descarga unha imaxen de Virtualbox dunha distribución moi lixeira de Linux (boot2docker) co demonio de Docker instalado, e crea a máquina vitual co demonio de Docker arrancado.
+Este comando descarga una imagen de Virtualbox desde una distribución de Linux muy liviana (boot2docker) con el demonio Docker instalado y crea la máquina virtual con el demonio Docker iniciado.
 
-### 2) Crear a segunda máquina virtual con docker-machine
+### 2) Crear la segunda máquina virtual con docker-machine
 
 ```sh
 docker-machine create -d virtualbox vbox02
 ```
 
-### 3) Iniciar o swarm nunha delas (por exemplo na vbox1)
+### 3) Iniciar el swarm en uno de ellos (por ejemplo en vbox1)
 
 ```sh
 docker-machine ssh vbox01 "docker swarm init --advertise-addr <MANAGER-IP>"
 ```
 
-A MANAGER-IP  é a ip que ten configurada o nodo na interfaz que se vai  a usar para conectarse  cos demais nodos
+El MANAGER-IP es la ip que el nodo tiene configurada en la interfaz que se usará para conectarse a los otros nodos
 
-### 4) Unir a outra máquina ao swarm
+### 4) Une otra máquina al enjambre
 
 ```sh
 docker-machine ssh vbox02 "docker swarm join --token xxxxxxxxxxxxxx <MANAGER-IP>:2377"
 ```
 
-O token para unir a máquina ao swarm nolo indican no anterior punto 3, ao facer o *swarm init*.
+El token para unir la máquina al swarm se indica en el punto 3 anterior, al hacer el *swarm init*.
 
-E listo, con estos 4 pasos xa temos un cluster swarm creado con 2 máquinas. Agora podemos agregar máis máquinas ao cluster, ou lanzar sobre él unha aplicación.
-
+Y listo, con estos 4 pasos ya tenemos un swarm cluster creado con 2 máquinas. Ahora podemos agregar más máquinas al clúster o iniciar una aplicación en él.
