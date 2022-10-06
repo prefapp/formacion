@@ -1,52 +1,52 @@
-# Ciclo de vida dunha aplicación de compose
+# Ciclo de vida de una aplicación compuesta
 
-O docker-compose é unha ferramenta de liña de comando. 
+docker-compose es una herramienta de línea de comandos.
 
-Para funcionar compre ter definido un docker-compose.yaml que é un ficheiro onde se expresa no [DSL](https://docs.docker.com/compose/compose-file/) de compose unha infraestructura de contedores, redes e volumes.
+Para funcionar, debe tener definido un docker-compose.yaml que es un archivo donde se expresa en el [DSL](https://docs.docker.com/compose/compose-file/) de compose con una infraestructura de contenedores, redes y volúmenes.
 
-Unha vez que temos ese ficheiro creado, podemos:
+Una vez que tenemos ese archivo creado, podemos:
 
-- Lanzar a aplicación ([_**up**_](https://docs.docker.com/compose/reference/up/)).
-- Detela e borrala ([_**down**_](https://docs.docker.com/compose/reference/down/)).
-- Inspeccionala ([_**ps**_](https://docs.docker.com/compose/reference/ps/) e [_**top**_](https://docs.docker.com/compose/reference/top/)).
-- Construí-la súas imaxes ([_**build**_](https://docs.docker.com/compose/reference/build/)).
+- Inicie la aplicación ([_**up**_](https://docs.docker.com/compose/reference/up/)).
+- Deténgalo y elimínelo ([_**down**_](https://docs.docker.com/compose/reference/down/)).
+- Inspecciónelo  ([_**ps**_](https://docs.docker.com/compose/reference/ps/)  y  [_**top**_](https://docs.docker.com/compose/reference/top/)).
+- Cree sus imágenes ([_**build**_](https://docs.docker.com/compose/reference/build/)).
 
 ![Ciclo vida compose](./../_media/04_aplicacions_e_servizos_multicontedor/ciclo_vida_compose.png)
 
-## A estratexia de nomeamento de artefactos en Docker Compose
+## La estrategia de nomenclatura de artefactos en Docker Compose
 
-Como xa sabemos o compose lee o noso ficheiro de docker-compose.yaml e comeza a crear:
+Como ya sabemos, compose lee nuestro archivo docker-compose.yaml y comienza a compilar:
 
-- Volumes
+- Volúmenes
 - Redes
-- Contedores
+- Contenedores
 
-O problema parece obvio: cómo nomea todos eses artefactos en Docker?
+El problema parece obvio: ¿cómo se nombran todos esos artefactos en Docker?
 
-A solución que adopta o docker-compose e crear un nome composto:
+La solución que toma docker-compose y crea un nombre compuesto:
 
 ![Dominio](./../_media/04_aplicacions_e_servizos_multicontedor/dominio.png)
 
-Dado que cada contedor, volume e rede ten un nome (sexa o do servizo, ou o propio do artefacto) para evitar unha colisión de nomes, o que fai o docker-compose é determinar un dominio por aplicación e engadirlle o nome concreto do artefacto.
+Dado que cada contenedor, volumen y red tiene un nombre (ya sea el nombre del servicio o el nombre del artefacto) para evitar una colisión de nombres, lo que hace docker-compose es determinar un dominio por aplicación y agregarle el nombre del artefacto específico.
 
-O dominio ou nome da app **virá dado polo nome do directorio onde se atope o docker-compose.yaml**.
+El dominio o nombre de la app **lo dará el nombre del directorio donde se encuentra docker-compose.yaml**.
 
-Deste xeito:  
+De este modo:
 
 - Dado _**~/foo/docker-compose.yaml**_.
-- Un contedor "**app**" chamarase **foo_app**.
-- Unha rede "**privada**" chamarase _**foo_privada**_.
+- Un contenedor "**app**" se llamará **foo_app**.
+- Una red "**privada**" se llamará _**foo_private**_.
 
-## Actividade 📖
+## Actividad 📖
 
->- ✏️ A partires deste [docker-compose](https://raw.githubusercontent.com/prefapp/saudo-gl/master/docker-compose.yaml) imos:
-- Arrincar a app de saudo-gl.
-- Comprobar que o contedor que constrúe está a funcionar.
-- Detela.
-- Borrar o servizo.
+>- ✏️ A partir de este [docker-compose](https://raw.githubusercontent.com/prefapp/saudo-gl/master/docker-compose.yaml) vamos:
+- Inicie la aplicación saudo-gl.
+- Verifique que el contenedor que construya esté funcionando.
+- Para.
+- Eliminar el servicio.
 
->- ✏️ Examinémos o compose:
-- Por que baixa unha imaxe? que imaxe é?
-- Qué nome lle pon ó contedor? por que?
-- Como poderíamos crear unha rede para o contedor?
-- Podemos facer un docker-exec nese contedor?
+>- ✏️ Examinemos la composición:
+- ¿Por qué descargar una imagen? ¿qué imagen es?
+- ¿Qué nombre le das al contenedor? ¿por qué?
+- ¿Cómo podríamos crear una red para el contenedor?
+- ¿Podemos hacer un docker-exec en ese contenedor?

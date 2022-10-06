@@ -1,12 +1,13 @@
-# Orquestración: a solución
+# Orquestación: la solución
 
-A orquestración de containers é un conxunto de técnicas e ferramentas que buscan asegurar:
+La orquestación de contenedores es un conjunto de técnicas y herramientas que buscan asegurar:
 
-- O correcto aprovisionamento de hosts.
-- A correcta xestión (arrincado, detención) dun grupo de containers.
-- O re-arrincado de containers caídos.
-- A conexión de containers a través dunha serie de interfaces estándar ou ben establecidas.
-- A correcta conexión de determinados containers ó mundo exterior de tal xeito que poidan comunicarse cos clientes do sistema. 
-- O escalado e dimensionamento do grupo de containers de tal xeito que se creen e destrúan containers segundo as necesidades puntuais do sistema en cada momento.
+- El correcto aprovisionamiento de hosts.
+- La correcta gestión (arranque, parada) de un grupo de contenedores.
+- La puesta en marcha de contenedores caídos.
+- La conexión de contenedores a través de una serie de interfaces estándar o bien establecidas.
+- La correcta conexión de determinados contenedores con el exterior de forma que puedan comunicarse con los clientes del sistema.
+- El escalado y dimensionado del conjunto de contenedores de forma que se creen y destruyan contenedores según las necesidades específicas del sistema en cada momento.
 
-> ⚠️ Nótese que o tema da orquestración é algo moi novidoso e que está moi lonxe de ser pacífico. Hai un constante desenvolvemento e traballo con respecto a este asunto que excede ampliamente os contidos deste curso. Polo tanto, imos limitarnos a expoñe-las bases do mesmo e algunhas solucións; pero, o tratamento completo e pormenorizado da orquestración de containers debería ser obxecto doutro curso.
+> ⚠️ Tenga en cuenta que el tema de la orquestación es algo muy nuevo y está lejos de ser pacífico. Hay un constante desarrollo y trabajo en esta materia que supera con creces los contenidos de este curso. Por ello, nos limitaremos a exponer las bases de la misma y algunas soluciones; sin embargo, el tratamiento completo y detallado de la orquestación de contenedores debe ser tema de otro curso.
+> 

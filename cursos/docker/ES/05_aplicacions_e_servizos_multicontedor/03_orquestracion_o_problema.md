@@ -1,70 +1,70 @@
-# Orquestración: o problema
+# Orquestación: el problema
 
-## O paradigma da conterización
+## El paradigma de la contenerización
 
-A estas alturas do curso xa imos comprendendo porqué os containers son un cambio de paradigma no mundo dos sistemas, comparable ó que foi o da virtualización de máquinas.
+A estas alturas del curso ya estamos entendiendo por qué los contenedores son un cambio de paradigma en el mundo de los sistemas, comparable al de la virtualización de máquinas.
 
-- Gracias ós containers podemos illar un proceso e as súas dependencias nunha unidade que se pode arrancar/parar en cuestión de segundos.
-- O custo da containerización en termos de CPU/Memoria é totalmente insignificante.
-- Podemos expresar cómo se constrúe unha imaxe en código (Dockerfile) o que presenta importantísimas [vantaxes](https://en.wikipedia.org/wiki/Infrastructure_as_code).
-- A posibilidade de crear infraestructuras baseadas en micro-servicios ábrese para todo o mundo.
+- Gracias a los contenedores podemos aislar un proceso y sus dependencias en una unidad que se puede iniciar/detener en cuestión de segundos.
+- El costo de contenerización en términos de CPU/Memoria es totalmente insignificante.
+- Podemos expresar cómo construir una imagen en código (Dockerfile), lo que presenta [ventajas](https://en.wikipedia.org/wiki/Infrastructure_as_code) muy importantes .
+- La posibilidad de crear infraestructuras basadas en microservicios está abierta a todos.
 
-Como vemos, a idea é a de romper o noso sistema en unidades funcionais pequenas e manexables que se comunican entre elas para facer un traballo máis grande.
+Como lo vemos, la idea es dividir nuestro sistema en unidades funcionales pequeñas y manejables que se comunican entre sí para hacer un trabajo más grande.
 
-Un simil ó que se recorre moitas veces é ó da programación orientada a obxectos:
+Un símil que se usa a menudo es el de la programación orientada a objetos:
 
-- Igual que na POO temos clases e instancias, na conterización temos imaxes e obxectos. 
-- A idea clave é encapsular funcionalidades en unidades independientes que falan entre sí mediante paso de mensaxes. 
-- A evolución do sistema faise mediante a extensión/creación de novas clases e obxectos non mediante a modificación dos existentes. 
+- Así como en [POO](https://es.wikipedia.org/wiki/Programaci%C3%B3n_orientada_a_objetos) tenemos clases e instancias, en contenedorización tenemos imágenes y objetos.
+- La idea clave es encapsular la funcionalidad en unidades independientes que se comunican entre sí a través del paso de mensajes.
+- La evolución del sistema se realiza mediante la ampliación/creación de nuevas clases y objetos, no mediante la modificación de los existentes.
 
-Polo tanto, a conterización introduce un novo paradigma de diseño de aplicacións e infraestructuras no que:
+Por lo tanto, la contentización introduce un nuevo paradigma de diseño de aplicaciones e infraestructuras en el que:
 
-- O sistema se fragmenta en unidades moi pequenas, sendo o bloque mínimo de construcción **o contedor**.
-- Cada unidade ten unha funcionalidade concreta e ben definida ([Separación de intereses](https://en.wikipedia.org/wiki/Separation_of_concerns)).
-- Acadando esta modularidade, as diferentes partes pódense ver como **microservicios** que expoñen una interface clara para comunicarse e que traballan conxuntamente para asegura-lo cumprimento dos obxectivos do sistema como entidade. 
-- Ademáis as nosas aplicación son por fin **escalables horizontalmente**, engandindo novas instancias (containers) podemos aumenta-la potencia da nosa aplicación sen necesidade de recurrir á gaiola do **escalado vertical**.
+- El sistema está fragmentado en unidades muy pequeñas, siendo el bloque de construcción mínimo **el contenedor**.
+- Cada unidad tiene una funcionalidad específica y bien definida ([Separación de intereses](https://es.wikipedia.org/wiki/Separaci%C3%B3n_de_intereses)).
+- Logrando esta modularidad, las distintas partes pueden ser vistas como **microservicios** que exponen una interfaz clara para comunicarse y que trabajan en conjunto para asegurar el cumplimiento de los objetivos del sistema como entidad.
+- Además, nuestras aplicaciones finalmente son **escalables horizontalmente**, agregando nuevas instancias (contenedores) podemos aumentar la potencia de nuestra aplicación sin tener que recurrir a la jaula del **escalado vertical**.
 
-## O problema do paradigma de orquestración
+## El problema del paradigma de la orquestación
 
-Vale, agora temos claro que hai que romper todo en unidades pequenas que se comunican entre sí. Pero, cómo facemos iso?
+Bien, ahora tenemos claro que tenemos que dividir todo en pequeñas unidades que se comuniquen entre sí. Pero cómo hacemos eso?
 
-Imos comenzar conha simple aplicación en Php dentro dun container:
+Comencemos con una aplicación Php simple dentro de un contenedor:
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/container_standalonoe.png)
 
-A nosa aplicación quere ter **estado**. A solución obvia é agregar unha base de datos dentro do container:
+Nuestra aplicación quiere tener **estado**. La solución obvia es agregar una base de datos dentro del contenedor:
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/mega_container.png)
 
-Isto, a pesar de qué sería unha solución obvia, é un horror e unha ruptura do paradigma da containerización:
+Esto, a pesar de lo que sería una solución obvia, es un horror y una ruptura con el paradigma de la contenerización:
 
-- O container non ten unha única preocupación, ten dúas (xestión de bbdd e aplicación en Php).
-- O cambio na bbdd ou na aplicación implica cambiar o resto de unidades.
-- Introducimos dependencias do software de Mysql con respectoSeparación de intereses ó Php e viceversa.
+- El contenedor no tiene una sola preocupación, tiene dos (administración de bbdd y aplicación Php).
+- El cambio en la bbdd o en la aplicación implica cambiar el resto de equipos.
+- Introducimos las dependencias del software Mysql con respecto a la Separación de intereses a Php y viceversa.
 
-O problema sería peor se queremos, por exemplo, engadir soporte para SSL, un servidor web, soporte para métricas e logs.... O noso container crecería e crecería, polo que non amañariamos ningún dos problemas que queremos resolver o por enriba perderíamos as vantaxes da containerización. 
+El problema sería peor si quisiéramos, por ejemplo, agregar soporte para SSL, un servidor web, soporte para métricas y registros... Nuestro contenedor crecería y crecería, por lo que no arreglaríamos ninguno de los problemas que queremos. de resolver o encima perderíamos las ventajas de la contenedorización.
 
-A solución axeitada sería esta:
+La solución correcta sería esta:
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/container_bbdd.png)
 
-Agora temos dúas unidades independentes en dous containers. Podemos modificar unha sen afecta-la outra. As preocupacións están correctamente separadas. 
+Ahora tenemos dos unidades independientes en dos contenedores. Podemos modificar uno sin afectar al otro. Las preocupaciones están debidamente separadas.
 
-Neste momento, os nosos containers poden ademáis **escalar**, basta con engadir novos containers de aplicación se é necesario:
+En este punto, nuestros contenedores también pueden **escalarse**, solo agregue nuevos contenedores de aplicaciones si es necesario:
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/escalado_container.png)
 
-E, por suposto, podemos engadir os servicios auxiliares que creamos convintes, sen necesidade de modifica-los containers que xa temos (**encapsulación**).
+Y, por supuesto, podemos añadir los servicios auxiliares que creemos de forma convenientes, sin necesidad de modificar los contenedores que ya tenemos (**encapsulación**).
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/escalado_funcional.png)
 
-Como podemos ver, a nosa aplicación **crece engandindo novas unidades funcionais**, **non modificando as existentes**. Esto aporta as vantaxes das que xa falaramos na sección previa.
+Como vemos, nuestra aplicación **crece añadiendo nuevas unidades funcionales**, **no modificando las existentes**. Esto trae las ventajas de las que ya te hemos hablado en el apartado anterior.
 
-Pero, xorden preguntas:
+Pero, surgen preguntas:
 
-- Cómo coñece o noso container de Php a dirección e o porto no que escoita o Mysql?
-- Cómo facemos para parar/arrincar todos os containers de vez?
-- Se un container cae e o levantalo cambiou de Ip cómo o sabe o resto?
-- Cómo inxectamos configuracións comúns a tódolos containers?
+- ¿Cómo sabe nuestro contenedor Php la dirección y el puerto en el que escucha Mysql?
+- ¿Cómo paramos/arrancamos todos los contenedores a la vez?
+- Si se cae un contenedor y al recogerlo ha cambiado la IP, ¿cómo lo sabe el resto?
+- ¿Cómo inyectamos configuraciones comunes a todos los contenedores?
 
-> A estas e outras moitas preguntas trata de dar resposta **a orquestración de containers**.
+> Intenta responder a estas y muchas otras preguntas de **orquestación de contenedores**.

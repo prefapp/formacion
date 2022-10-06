@@ -1,11 +1,12 @@
 # Introducción
 
-Ata o momento temos visto como os **contedores** son unha técnica de virtualización que nos aforra tempo e cartos ó permitirnos crear "máquinas virtuais" a nivel de proceso.
+Hasta ahora hemos visto como los **contenedores** son una técnica de virtualización que nos ahorra tiempo y dinero al permitirnos crear "máquinas virtuales" a nivel de proceso.
 
-Sabemos tamén que, gracias a ferramentas como **Docker**, as tarefas de xestión dos contedores (creación, inspección, borrado) son relativamente doadas e fáciles de automatizar. 
+También sabemos que, gracias a herramientas como **Docker**, las tareas de gestión de contenedores (creación, inspección, eliminación) son relativamente sencillas y fáciles de automatizar.
 
-Por último temos visto como, mediante os mecanismos de construcción de **imaxes**, podemos facer combinacións de software específicas para unha aplicación ou servicio determinado sen ter que nos preocupar polo resto dos procesos residentes na máquina ou polos custos económicos ou de tempo a invertir na virtualización. 
+Finalmente, hemos visto cómo, a través de los mecanismos de construcción de **imágenes**, podemos realizar combinaciones específicas de software para una determinada aplicación o servicio sin tener que preocuparnos del resto de procesos que residen en la máquina ni de los costes económicos o de tiempo. invertir en virtualización.
 
-Non obstante, aínda existen problemas sen resolver no mundo dos contedores, sendo un dos principaís a **orquestración** dos mesmos. 
+Sin embargo, aún existen problemas sin resolver en el mundo de los contenedores, siendo uno de los principales la **orquestación** de los mismos.
 
-No presente tema imos falar da orquestración de contedores e como nos vai permitir expresar unha infraestructura complexa de contedores dun xeito relativamente sinxelo.
+En este tema hablaremos sobre la orquestación de contenedores y cómo nos permitirá expresar una infraestructura compleja de contenedores de una manera relativamente simple.
+

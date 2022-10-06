@@ -1,74 +1,74 @@
 # Práctica guiada: Nesquik vs ColaCao
 
-> Baseada neste [exemplo](https://github.com/dockersamples/example-voting-app).
+> Basado en este [ejemplo](https://github.com/dockersamples/example-voting-app).
 
-## Explicación do proxecto
+## Explicación del proyecto
 
-Imos crear unha aplicación de voto para saber de qué somos: de Nesquik ou de Cola Cao. O plantexamento é sinxelo:
+Creemos una aplicación de votación para saber a cuál pertenecemos: Nesquik o Cola Cao. El enfoque es simple:
 
-Trátase dunha aplicación que ten dúas partes:
+Esta es una aplicación que tiene dos partes:
 
-1.  Un panel web onde votamo-la nosa opción.
-2. Outro panel web onde vemos os resultados.
+1. Un panel web donde votamos nuestra opción.
+2. Otro web panel donde vemos los resultados.
 
-## Servizos
+## Servicios
 
 ### 1. Votación
 
-A aplicación de votacións está escrita en python con [Flask](https://flask.palletsprojects.com/en/1.1.x/) (sí como a do "gatiño do día").
+La aplicación de encuestas está escrita en python con [Flask](https://flask.palletsprojects.com/en/1.1.x/) (sí, el "gatiño do día").
 
-Esta aplicación expón un porto ó exterior por onde acepta peticións (porto 80).
+Esta aplicación expone un puerto al exterior donde acepta solicitudes (puerto 80).
 
 ![Servizos python](./../_media/04_aplicacions_e_servizos_multicontedor/servizos-python.png)
 
-Cando alguén vota, apunta o senso do voto nunha base de datos [Redis](https://redis.io/) (que escoita dentro do contedor no 6379).
+Cuando alguien vota, apunta el sentido del voto a una base de datos [Redis](https://redis.io/) (que escucha dentro del contenedor #6379).
 
 ![Servizos python redis](./../_media/04_aplicacions_e_servizos_multicontedor/servizos-python-redis.png)
 
-### 2. Worker
+### 2. worker
 
-O worker é un servizo (nun contedor claro) que escoita mensaxes no redis e agrega eses resultados parciais ó resultado final. 
+El worker es un servicio (en un contenedor transparente) que escucha mensajes en redis y agrega esos resultados parciales al resultado final.
 
-Os resultados fináis atópanse nunha base de datos [PostgreSQL](https://www.postgresql.org/). 
+Los resultados finales están en una base de datos [PostgreSQL](https://www.postgresql.org/).
 
-O worker está escrito en [.NET](https://dotnet.microsoft.com/).
+El worker está escrito en [.NET](https://dotnet.microsoft.com/).
 
 ![Postgresql](./../_media/04_aplicacions_e_servizos_multicontedor/net_postgresql.png)
 
-### 3. Servizo de resultados
+### 3. Servicio de resultados
 
-O servizo de resultados está feito en nodejs. Este servizo expón (no porto 80) unha páxina en HTML5 e monitoriza constantemente a base de datos PostgreSQL para devolver o estado actual da enquisa.
+El servicio de resultados se realiza en nodejs. Este servicio expone (en el puerto 80) una página en HTML5 y monitorea constantemente la base de datos de PostgreSQL para devolver el estado actual de la encuesta.
 
 ![Node](./../_media/04_aplicacions_e_servizos_multicontedor/node.png)
 
-### 4. Esquema final dos servizos
+### 4. Esquema final de servicios
 
-O esquema final dos servizos quedaría como segue:
+El esquema final de servicios sería el siguiente:
 
 ![Final](./../_media/04_aplicacions_e_servizos_multicontedor/final.png)
 
 ## Redes
 
-Vendo o esquema de servizos, parece claro que debería haber dúas redes:
+Mirando el diagrama de servicio, parece claro que debería haber dos redes:
 
-- Unha **privada** onde estén conectados tódolos contedores para comunicarse entre sí.
-- Unha **pública** onde teñan conectividade EXCLUSIVAMENTE os contedores de frontend (o de votacións e o de resultados).
+- Un **privado** donde todos los contenedores están conectados para comunicarse entre sí.
+- Un **público** donde EXCLUSIVAMENTE los contenedores frontend (votación y resultados) tienen conectividad.
 
 ![Redes](./../_media/04_aplicacions_e_servizos_multicontedor/redes_redes.png)
 
-Deste xeito, os contedores de BBDD e o worker están illados do mundo exterior, é dicir, únicamente os contedores que estén na súa rede (privada) poden falar con eles.
+De esta forma, los contenedores BBDD y el worker quedan aislados del mundo exterior, es decir, solo los contenedores que están en su red (privada) pueden hablar con ellos.
 
-Polo contrario, os contedores de votación e resultados, que expoñen páxinas web, están conectados a ambas redes para poder face-lo traballo de mediación entre o backend e o fronted da nosa aplicación.
+Por el contrario, los contenedores de votaciones y resultados, que exponen páginas web, están conectados a ambas redes para poder mediar entre el backend y el frontend de nuestra aplicación.
 
-## Volumes: persistencia
+## Volúmenes: persistencia
 
-Para esta práctica guiada, imos dar persistencia á parte de resultados finais. Isto é, ós datos que están almacenados no PostgreSQL.
+Para esta práctica guiada, vamos a darle persistencia a la parte de resultados finales. Es decir, a los datos que se almacenan en PostgreSQL.
 
-## O docker-compose
+## El docker-compose
 
-Imos agora expresar toda esta infraestructura no DSL de docker-compose. 
+Expresemos ahora toda esta infraestructura en el DSL docker-compose.
 
-As imaxes a empregar serán:
+Las imágenes a utilizar serán:
 
 - Worker: (**.Net**) [prefapp/votacion_worker](https://hub.docker.com/r/prefapp/votacion_worker/).
 - Votos: (**Python**) [prefapp/votacion_votar](https://hub.docker.com/r/prefapp/votacion_votar/).
@@ -76,7 +76,7 @@ As imaxes a empregar serán:
 - Bbdd resultados: (**PostgreSQL**) [postgres:9.4](https://hub.docker.com/_/postgres/).
 - Bbdd: (**Redis**) [redis:alpine](https://hub.docker.com/_/redis/).
 
-Para definir a parte de **redes**, quedaría como segue:
+Para definir la parte de **redes**, se vería así:
 
 ```yml
 version: '3'
@@ -86,7 +86,7 @@ networks:
   rede-publica:
 ```
 
-Vemos que creamos dúas redes, unha pública e outra privada. Na parte de **volumes**, imos a crear un volume que despois asociaremos ó servizo de PostgreSQL:
+Vemos que hemos creado dos redes, una pública y otra privada. En la parte de **volúmenes**, vamos a crear un volumen que luego asociaremos con el servicio de PostgreSQL:
 
 ```yml
 version: '3'
@@ -99,7 +99,7 @@ networks:
   rede-publica:
 ```
 
-Pasemos á definición dos **servizos**, comezamos cos de bbdd:
+Pasemos a la definición de **servicios**, comenzando con bbdd:
 
 ```yml
 services:
@@ -121,7 +121,7 @@ services:
       - rede-privada
 ```
 
-Hai que engadir tamen as variables para a configuración do usuario e contraseña de postgres:
+También debe agregar las variables para la configuración de usuario y contraseña de postgres:
 
 
 ```yml
@@ -130,11 +130,11 @@ environment:
   POSTGRES_PASSWORD: "postgres"
 ```
 
-Vemos como se conectan ambos servizos á rede privada. Ademáis, o servizo de bbdd (postgresql) vincula o directorio de datos ó volume creado. Isto otorga persistencia en caso de sucesivos reinicios do sistema. 
+Vemos como ambos servicios se conectan a la red privada. Además, el servicio bbdd (postgresql) vincula el directorio de datos al volumen creado. Esto proporciona persistencia en los sucesivos reinicios del sistema.
 
-Apréciase tamén a exposición do porto de redis [6379] para conexións (sempre dende a rede privada).
+También se agradece exponer el puerto redis [6379] para conexiones (siempre desde la red privada).
 
-Vexamos agora o servizo do **worker**:
+Ahora veamos el servicio del **worker**:
 
 ```yml
 worker:
@@ -143,13 +143,15 @@ worker:
     - "redis"
 networks:
   - rede-privada
+```red privada
 ```
 
-O worker tamén está na rede privada. Vemos a etiqueta [**depends_on**](https://docs.docker.com/compose/compose-file/#depends_on) que establece a orde de arranque dos servizos (dos contedores).
+El worker también está en la red privada. Vemos la etiqueta [**depends_on**](https://docs.docker.com/compose/compose-file/#depends_on) que establece el orden de inicio de los servicios (contenedores).
 
-Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do Redis esté en funcionamento.
+Como se indica en esta línea, el contenedor de workeres **no se puede iniciar** antes de que se ejecute el contenedor de Redis.
 
-Pasamos agora á definición do **servizo de votacións**:
+Pasamos ahora a la definición del **servicio de votación**:
+
 
 ```yml
 services:
@@ -164,11 +166,11 @@ services:
       - rede-publica
 ```
 
-O servizo de votacións non ten moita sorpresa. Está asociado a ambas redes, a pública e a privada.
+El servicio de votación no tiene mucha sorpresa. Se asocia tanto a redes públicas como privadas.
 
-Asocia o porto 8000 do host ó porto 80 do contedor para asegurá-la conectividade co exterior.
+Asocie el puerto 8000 del host al puerto 80 del contenedor para garantizar la conectividad con el exterior.
 
-Por último, imos ver o **servizo de resultados**:
+Finalmente, veamos el **servicio de resultados**:
 
 ```yml
 services:
@@ -184,18 +186,18 @@ services:
       - rede-publica
 ```
 
-O servizo de resultados tampouco ten moito que comentar. O porto 8001 é o de escoita do servidor e por onde haberá que conectarse para ve-la páxina web coa información.
+El servicio de resultados tampoco tiene mucho que comentar. El puerto 8001 es el puerto de escucha del servidor y donde tendrás que conectarte para ver la página web con la información.
 
-Escribimos un docker-compose.yaml con toda esa información e facemos:
+Escribimos un docker-compose.yaml con toda esa información y hacemos:
 
 ```shell
 docker-compose up -d
 ```
 
-Et voila!! No [localhost:8000](localhost:8000) teríamos a votación e no [localhost:8001](localhost:8001) teremos os resultados.
+¡¡Y voilá!! En [localhost:8000](localhost:8000) tendríamos la votación y en [localhost:8001](localhost:8001) tendríamos los resultados.
 
-Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os resultados en tempo real e sen necesidade de recargar nada.
+Si abrimos dos pestañas, una para cada lado, y votamos, veremos cómo cambian los resultados en tiempo real y sin necesidad de recargar nada.
 
-## Actividade 📖
+## Actividad 📖
 
->- ✏️ Seguindo os pasos e entendendo o que fan, escribamos o docker-compose.yaml de esta infraestructura e lancémola.
+>- ✏️ Siguiendo los pasos y entendiendo lo que hacen, escribamos el docker-compose.yaml de esta infraestructura y ejecútelo.

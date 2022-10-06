@@ -1,160 +1,169 @@
-# Módulo 5: Aplicacións e servizos multi-contedor
+# Módulo 5: Aplicaciones y servicios multicontenedor
 
-## Deseñar e implantar unha solución co docker-compose para docker-meiga
+## Diseñe e implemente una solución con docker-compose para docker-meiga
 
-> Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
+> Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que siguen.
 
-Imos mellorá-la nosa aplicación de docker-meiga (a do tema 3) engadíndolle estado. 
+Mejoremos nuestra aplicación docker-meiga (la del tema 3) agregando state.
 
-A versión 2 da nosa meiga ten varias características novas con respecto a v1:
+La versión 2 de nuestra meiga tiene varias características nuevas en comparación con la v1:
 
-- Conéctase a unha bbdd para ter estado.
-- A aplicación agora reconta o número de visitas. 
-- Tamén controla o tamaño da lúa que pode menguar ou crecer. 
+- Conectarse a una bbdd para tener estado.
+- La aplicación ahora cuenta el número de visitas.
+- También controla el tamaño de la luna que puede encogerse o crecer.
 
-### Nova infraestructura
+### Nueva infraestructura
 
-Na nova infraestructura da nosa aplicación teremos que construir:
+En la nueva infraestructura de nuestra aplicación tendremos que construir:
 
-A) Servizo de bbdd
+A) servicio bbdd
 
-Terá:
+Usted tendrá:
 
-- Imaxe de [mysql oficial](https://hub.docker.com/_/mysql/) (a de dockerhub) versión 5.7. 
-- Esa imaxe contrólase por variables de entorno:
-  - MYSQL_ROOT_PASSWORD: determina-lo password do root do Mysql.
-  - MYSQL_DATABASE: crea esta bbdd se non existe ó arranca-lo contedor. 
-- O servizo deberá arrancar cunha base de datos definida, de nome meiga. 
+- Imagen de [mysql oficial](https://hub.docker.com/_/mysql/) (la de dockerhub) versión 5.7.
+- Esa imagen está controlada por variables de entorno:
+  - MYSQL_ROOT_PASSWORD: determina la contraseña de root de Mysql.
+  - MYSQL_DATABASE: crea esta bbdd si no existe al iniciar el contenedor.
+- El servicio debe comenzar con una base de datos definida, llamada bruja.
 
-B) Servizo de Aplicación
+B) Servicio de Solicitud
 
-A aplicación de docker-meiga é a versión [v2](https://github.com/prefapp/docker-meiga.git).
+La aplicación docker-meiga es la versión [v2](https://github.com/prefapp/docker-meiga.git).
 
-As súas características:
+Sus caracteristicas:
 
-- A imaxe a empregar será a do [v2](https://hub.docker.com/r/prefapp/docker-meiga/) (en dockerhub)  prefapp/docker-meiga:v2
-- Ten tódalas variables de entorno da v1 (ver tarefa 3.4 do módulo anterior)
-- Presenta, ademáis, novas variables:
-  - MYSQL_HOST: o host onde realiza-la conexión.
-  - MYSQL_USER: o usuario da bbdd. 
-  - MYSQL_PASSWORD: o contrasinal de acceso.
-  - MYSQL_DATABASE: o nome da bbdd de traballo. 
-- A aplicación, ó iniciarse, realizará a creación das táboas que precise, de non existir, de xeito idempotente. 
+- La imagen a utilizar será la de [v2](https://hub.docker.com/r/prefapp/docker-meiga/) (en dockerhub) prefapp/docker-meiga:v2
+- Tiene todas las variables de entorno de v1 (ver tarea 3.4 del módulo anterior)
+- También presenta nuevas variables:
+  - MYSQL_HOST: el host donde se realiza la conexión.
+  - MYSQL_USER: el usuario bbdd.
+  - MYSQL_PASSWORD: la contraseña de acceso.
+  - MYSQL_DATABASE: el nombre de la base de datos de trabajo.
+- La aplicación, al iniciarse, creará las tablas que necesita, si no existen, de forma idempotente.
 
-### O docker-compose
+### El docker-compose
 
-No docker-compose terán que existir estes dous servizos. Ademáis, compre definir as variables de entorno que controlen a bbdd e establecer tamén esas credencias de acceso no servizo de app (o de php). 
+En docker-compose estos dos servicios tendrán que existir. Además, defina las variables de entorno que controlan bbdd y también configure esas credenciales de acceso en el servicio de la aplicación (el de php).
 
-Existirán dúas redes, unha privada (**rede-meiga**) na que estarán conectados o contedor de bbdd e o de aplicación, e unha público (**rede-publica**) onde estará únicamente o contedor de php. 
+Existirán dos redes, una privada (**witch-network**) en la que se conectará el contenedor bbdd y la aplicación, y una pública (**publica-network**) donde solo se conectará el contenedor php .
 
-Compre establecer un volume (**datos-meiga**) para darlle persistencia ós datos do mysql.
+Compre un volumen (**witch-data**) para dar persistencia a los datos mysql.
 
 Pasos:
 
-1. **Planificar e crear** un docker-compose.yaml que cumpla coas especificacións referidas.
-- Nun pdf entregar o docker-compose.yaml creado ou adxuntar na tarefa o ficheiro do docker-compose.yaml.
-2. **Lanzar** unha instancia do docker-meiga v2. 
-- No pdf amosar os comandos necesarios para arrincar a instancia ou o asciinema do mesmo. 
-- No pdf ou adxuntar á tarefa unha captura do navegador coa web funcionando.
-  - A lúa ten que estar chea (pista: sucesivos clicks na lúa a fan avanzar no seu ciclo)
-  - Ten que verse o nome do docente (contrólase mediante variable de entorno)
-3. **Mostrar** nunha sección do pdf ou en asciinema os comandos necesarios para:
-- Reiniciar tódolos servizos sen pérdida de datos. 
-- Poder ver os logs .
-- Reiniciar só o servizo da aplicación e non o de bbdd. 
-- Destruir completamente a aplicación, os seus contedores e o volume de datos. 
-4. **Revisar** a creación de imaxes, nunha sección do pdf ou en ficheiro aparte, remitir o Dockerfile necesario para:
-- Crear a imaxe de docker-meiga v2
-  - partir da imaxe de php.
-  - hai que instalar git e clona-lo proxecto de [docker-meiga](https://github.com/prefapp/docker-meiga.git) na rama v2
-  - compre instalar o módulo mysqli (pista: ver os [comandos auxiliares](https://hub.docker.com/_/php/) que ofrece a imaxe para extensións).
-5. **Modificar** o docker-compose orixinal para permitir o [build](https://docs.docker.com/compose/compose-file/#build) da imaxe dende o mesmo. Adxuntar mellora en ficheiro ou nunha nova sección do pdf.
+1. **Planifique y cree** un archivo docker-compose.yaml que cumpla con las especificaciones a las que se hace referencia.
+   - En un pdf entregue el docker-compose.yaml creado o adjunte el archivo docker-compose.yaml a la tarea.
+2. **Inicie** una instancia de docker-meiga v2.
+   - En el pdf mostramos los comandos necesarios para iniciar la instancia o el asciinema de la misma.
+   - En el pdf o adjuntar a la tarea una captura de pantalla del navegador con la web funcionando.
+     - La luna debe estar llena (pista: clics sucesivos sobre la luna la hacen avanzar en su ciclo)
+     - Se debe ver el nombre del profesor (es controlado por una variable de entorno)
+3. **Mostrar** en una sección del pdf o en asciinema los comandos necesarios para:
+   - Reiniciar todos los servicios sin pérdida de datos.
+   - Poder ver los registros.
+   - Reinicie solo el servicio de la aplicación y no el servicio bbdd.
+   - Destruir completamente la aplicación, sus contenedores y volumen de datos.
+4. **Revisar** la creación de imágenes, en una sección del pdf o en un archivo aparte, enviar el Dockerfile necesario para:
+   - Crear la imagen de docker-meiga v2
+     - de la imagen php.
+     - instale git y clone el proyecto [docker-meiga](https://github.com/prefapp/docker-meiga.git) en la rama v2
+     - compre la instalación del módulo mysqli (sugerencia: vea los [comandos auxiliares] (https://hub.docker.com/_/php/) provistos por la imagen para las extensiones).
+5. **Modifique** el docker-compose original para permitir [compilar](https://docs.docker.com/compose/compose-file/#build) la imagen a partir de él. Adjuntar mejora en archivo o en una nueva sección del pdf.
 
-**Evidencias de adquisición dos desempeños**: pasos 1 a 5.
+**Evidencia de adquisición de desempeño**: pasos 1 a 5.
 
-**Indicadores de logro**: deberás ter:
+**Indicadores de logro**: Debe tener:
 
-- PDF ou zip con:
-  - docker-compose de aplicación docker-meiga v2 segundo as especificacións fornecidas.
-  - capturas ou asciinema dos comandos necesarios para:
-    - lanzar unha nova instancia.
-  - captura do navegador coa web funcionando:
-    - a lúa ten que estar chea.
-    - o nome do docente tense que ver.
- - capturas ou asciinema dos comandos necesarios para:
-   - reiniciar tódolos servizos sen pérdida de datos. 
+- PDF o zip con:
+  - aplicación docker-compose docker-meiga v2 según las especificaciones proporcionadas.
+  - capturas o asciinema de los comandos necesarios para:
+    - lanzar una nueva instancia.
+  - captura del navegador con la web funcionando:
+    - la luna debe estar llena.
+    - Debe verse el nombre del profesor.
+ - capturas o asciinema de los comandos necesarios para:
+   - reiniciar todos los servicios sin pérdida de datos.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
 **Criterios de corrección**:
 
 1. Paso 1
-- Docker compose correcto segundo as especificacións (max. 10 puntos)
+- Redacción Docker correcta según especificaciones (máx. 10 puntos)
 2. Paso 2
-- Comandos para lanzar a instancia segundo as especificacións (max. 5 puntos)
-- Captura da web funcionando (max. 5 puntos)
+- Comandos para lanzar la instancia según especificaciones (máx. 5 puntos)
+- Captura de la web funcionando (máx. 5 puntos)
 3. Paso 3
-- Comandos de control da instancia (2.5 puntos cada un ata un máx de 10 puntos)
+- Comandos de control de instancias (2,5 puntos cada uno hasta un máximo de 10 puntos)
 4. Paso 4
-- Dockerfile de creación da v2 de meiga correcto (max. 15 puntos)
+- Corrija la compilación Witch v2 Dockerfile (máx. 15 puntos)
 5. Paso 5
-- Build dentro do dockerfile (max. 5 puntos)
+- Construir dentro del dockerfile (máx. 5 puntos)
 
-**Peso na cualificación**:
+**Peso en calificación**:
 
-Peso desta tarefa no seu tema............................................... 50%
+Peso de esta tarea en tu tema.................................... 50%
 
-## Empregar a ferramenta docker-compose para a orquestación de contedores
 
-> Antes de realizar a tarefa le atentamente as **instrucións**, os **indicadores de logro** e os **criterios de corrección** que de seguido se detallan.
 
-### Web do "gatinho do día"
 
-Para esta tarefa compre ter construida a imaxe dos "[gatinhos do día](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_imaxes/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia)". Tarefa do módulo 3.
+
+
+
+
+
+
+## Use la herramienta docker-compose para la orquestación de contenedores
+
+> Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que siguen.
+
+### Sitio web del "gatito del día"
+
+Para esta tarea necesito haber construido la imagen de "[gatinhos do día](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_images/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia)". Tarea del módulo 3.
 
 Pasos:
 
-1. **Instala** o docker-compose na túa máquina seguindo estas [instruccións](https://docs.docker.com/compose/install/#install-compose):
- - Nun pdf amosa a captura do comando "docker-compose version".
-2. **Experimenta** co docker-compose. No pdf, amosa as capturas dos comandos para que:
- - Arrancar a web-gatinhos en primeiro plano e demonizada. 
- - Os comandos para deter e rearrancar a web **sen borrar os contedores**. 
- - Cómo borrarías os contedores creados unha vez lanzado o compose?
-3. **Investiga** as opcións de construcción de imaxe do compose.
- - Poderíase solicitar o build da imaxe dende o docker-compose? De ser o caso, adxunta un docker-compose no que se constrúa a imaxe. 
- - Como se borrarían as imaxes creadas localmente a partir do compose?
+1. **Instala** docker-compose en tu máquina siguiendo estas [instrucciones](https://docs.docker.com/compose/install/#install-compose):
+ - En un pdf muestra la captura del comando "docker-compose version".
+2. **Experimenta** con docker-compose. En el pdf mostrar capturas de los comandos para que:
+ - Iniciar web-gatos en primer plano y demonizado.
+ - Los comandos para parar y reiniciar la web **sin borrar los contenedores**.
+ - ¿Cómo eliminaría los contenedores creados una vez que se inicie compose?
+3. **Investigue** las opciones de creación de imágenes de composición.
+ - ¿Se podría solicitar la compilación de la imagen desde docker-compose? Si corresponde, adjunte un docker-compose en el que construir la imagen.
+ - ¿Cómo eliminar imágenes creadas localmente desde componer?
 
-**Evidencias da adquisición dos desempeños**: Paso 1 a 3.
+**Evidencia de adquisición de desempeño**: Paso 1 a 3.
 
-**Indicadores de logro**: deberás ter.
+**Indicadores de logros**: debe tener.
 
-- Instalado o docker-compose.
-- PDF adxunto con:
-  - Captura de version do docker-compose.
-  - Sección cos:
-    - Comandos para arrancar a web en primeiro plano e demonizado.
-    - Deter a web sen borrar os contedores e rearrancala.
-    - Deter a web e borrar os contedores asociados.
-  - Sección cos comandos e compose para:
-    - Facer un build da imaxe .
-    - Comando para borrar as imaxes locais.
+- Docker-compose instalado.
+- PDF adjunto con:
+  - Captura de versión de docker-compose.
+  - Sección con:
+    - Comandos para iniciar la web en primer plano y demonizados.
+    - Detener la web sin borrar los contenedores y reiniciarla.
+    - Detener la web y eliminar los contenedores asociados.
+  - Sección con comandos y composición para:
+    - Hacer una construcción de la imagen.
+    - Comando para eliminar imágenes locales.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
 **Criterios de corrección**:
 
 - Paso 1
-  - Ter instalado correctamente o docker-compose (**max. 10 puntos**).
+  - Haber instalado docker-compose correctamente (**máx. 10 puntos**).
 - Paso 2
-  - Sección no pdf coas capturas dos comandos para (**max. 15 puntos**).
-    - Arrancar o compose en primeiro plano e demonizado (5 puntos).
-    - Deter o compose sen borrar contedores e rearrancalo (5 puntos).
-    - Deter o compose e borrar os contedores (5 puntos).
+  - Sección en el pdf con las capturas de los comandos para (**máx. 15 puntos**).
+    - Iniciar la composición en primer plano y demonizado (5 puntos).
+    - Detener la redacción sin eliminar contenedores y reiniciarla (5 puntos).
+    - Detener la redacción y eliminar los contenedores (5 puntos).
 - Paso 3
-  - Sección no pdf coas capturas dos comandos e o compose necesario para (**max 15 puntos**).
-    - Construir a imaxe de "o gatinho do día dende o compose" (10 puntos).
-    - Borrar as imaxes locales construidas polo compose (5 puntos).
+  - Apartado en el pdf con las capturas de los comandos y la composición necesaria para (**max 15 puntos**).
+    - Construir la imagen de "el gatito del día a partir de la composición" (10 puntos).
+    - Eliminar las imágenes locales creadas por componer (5 puntos).
 
-**Peso na cualificación**:
-- Peso desta tarefa no seu tema .............................40%
+**Peso en calificación**:
+- Peso de esta tarea en tu asignatura .............................40%
 

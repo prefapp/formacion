@@ -1,24 +1,25 @@
-# O Docker-Compose: fundamentos
+# docker-Compose: conceptos básicos
 
-## Entidades 
+## Entidades
 
-Dentro do noso compose, imos definir tres entidades fundamentais:
+Dentro de nuestra composición, vamos a definir tres entidades fundamentales:
 
-- **Servizos**: trátase de definicións de contedores.
-- **Redes**: definicións de rede que poden ser empregados polos contedores.
-- **Volumes**: un directorio accesible polos contedores.
+- **Servicios**: Estas son definiciones de contenedores.
+- **Redes**: Definiciones de red que pueden usar los contenedores.
+- **Volúmenes**: Un directorio accesible por contenedores.
 
-## Servizos
+## Servicios
 
-Trátase dunha definición de contedor, no que se establece:
+Esta es una definición de contenedor, en la que se establece:
 
-- A imaxe a montar.
-- As variables de entorno.
-- O número de réplicas do contedor a correr.
-- Os portos de conexión.
-- Os volumes que monta.
+- La imagen a montar.
+- Las variables de entorno.
+- El número de réplicas del contenedor a ejecutar.
+- Los puertos de conexión.
+- Los volúmenes que monta.
 
-Imaxinemos que queremos correr o noso "gatiño do día" como un servizo dun compose:
+Imaginemos que queremos ejecutar nuestro "gatito del día" como un servicio de redacción:
+
 
 ```yml
 version: '3'
@@ -35,27 +36,29 @@ volumes: {}
 networks: {}
 ```
 
-Simplemente corremos un compose cun servizo ("gatinhos") que emprega a imaxe que fixeramos no tema 4. Ademáis conecta o porto 5000 do contedor co 8000 do host. 
 
-Se metemos esas liñas nun ficheiro docker-compose.yaml, e facemos:
+Simplemente ejecutamos una composición con un servicio ("gatinhos") que usa la imagen que creamos en el tema 4. También conecta el puerto 5000 del contenedor al puerto 8000 del host.
+
+Si colocamos esas líneas en un archivo docker-compose.yaml y hacemos:
 
 ```shell
 docker-compose up -d
 ```
 
-Veremos como se lanza un contedor coa nosa imaxe e como está conectada ó porto 8000 do host.
+Veremos como se lanza un contenedor con nuestra imagen y como se conecta al puerto 8000 del host.
 
 ## Redes
 
-As [redes en Docker](https://docs.docker.com/network/) son unha construcción que permite que os distintos contedores pertencentes se "vexan" uns ós outros sen necesidade de coñece-las súas IPs.
+Las [redes en Docker](https://docs.docker.com/network/) son una construcción que permite que los diferentes contenedores pertenecientes se "vean" entre sí sin necesidad de conocer sus IPs.
 
-Imaxinemos que temos un servizo en PHP que se conecta a outro que corre unha bbdd en Mysql.
+Imaginemos que tenemos un servicio en PHP que se conecta a otro que ejecuta una bbdd en Mysql.
 
-Se o metemos nunha rede común, o servizo de PHP vai a ter definido un host (bbdd) **que coincide co nome do servizo de bbdd** sen ter que preocuparse da IP do contedor.
+Si lo ponemos en una red común, el servicio PHP tendrá un host (bbdd) definido **que coincide con el nombre del servicio de bbdd** sin tener que preocuparse por la IP del contenedor.
 
 ![Container](./../_media/04_aplicacions_e_servizos_multicontedor/redes.png)
 
-Se o definimos nun compose:
+Si lo definimos en un compose:
+
 
 ```yml
 version: '3'
@@ -78,12 +81,12 @@ networks:
   rede-foo:
 ```
 
-Vemos aquí como o contedor de app e o de bbdd están na mesma rede: a rede-foo. Esta rede atópase definida no mesmo docker-compose. 
+Vemos aquí cómo el contenedor de aplicaciones y el contenedor de bbdd están en la misma red: foo-network. Esta red se define en el mismo docker-compose.
 
-Agora, e dado que os dous servizos están nesta rede, nun contedor de app existe definido o host **bbdd** que corresponde á ip do contedor do servizo bbdd.
+Ahora bien, y dado que los dos servicios están en esta red, en un contenedor de aplicaciones se define el host **bbdd** que corresponde a la ip del contenedor del servicio bbdd.
 
-## Volumes
+## Volúmenes
 
-Xa falamos dos volumes nunha lección anterior.
+Ya hablamos de volúmenes en una lección anterior.
 
-Baste dicir aquí que os volumes poden ser directamente definidos no docker-compose  a través da propia DSL da ferramenta.
+Baste decir aquí que los volúmenes se pueden definir directamente en docker-compose a través del propio DSL de la herramienta.

@@ -1,7 +1,7 @@
-# 📜 Obxectivos
+# 📜 Objetivos
 
-- Comprender qué problema resolve a orquestración e a súa importancia.
+- Comprender qué problema resuelve la orquestación y su importancia.
 
-- Familiarizarse coa ferramenta **docker-compose** como un xeito rápido e sinxelo de orquestrar contedores.
+- Familiarícese con la herramienta **docker-compose** como una forma rápida y fácil de orquestar contenedores.
 
-- Aprender a ver as arquitecturas de contedores como redes de micro-servicios conectados entre sí.
+- Aprender a ver las arquitecturas de contenedores como redes de microservicios conectados entre sí.
