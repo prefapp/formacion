@@ -17,7 +17,7 @@ El proyecto se implementará en un contenedor y se debe compilar el Dockerfile d
 - La imagen para la versión 1 (la que tenemos ahora) necesita PHP.
 - Podemos usar la imagen oficial de [php](https://hub.docker.com/_/php/) que está en dockerhub (php:7.2).
 - Como servidor web lo utilizaremos [PHP internal](http://php.net/manual/es/features.commandline.webserver.php).
-- La aplicación necesita dos variables de entorno definidas (CURSO y PROFESOR).
+- La aplicación necesita dos variables de entorno definidas (CURSO y DOCENTE).
 
 ### Procedimiento de construcción
 
@@ -30,25 +30,25 @@ A partir de la imagen de origen:
 ### Pasos a seguir:
 
 1. Consultar y analizar la documentación sobre [imágenes y contenedores](https://prefapp.github.io/formacion/cursos/docker-images/#/./01_creacion_de_images/01_revisando_as_images_o_overlayfs).
-1. En un pdf, capturas de pantalla de todo lo que necesitas para:
-  1. Cree una imagen del oficial de registro con el siguiente nombre: #registry-name, siendo #name el nombre del estudiante.
-  1. Lanzar una instancia del registro con la imagen creada, esta instancia debe cumplir con los siguientes requisitos:
-    - El nombre del contenedor será #registry-formation-name, siendo #name el nombre del alumno.
-    - El registro debe ejecutarse en el puerto 5050.
-    - Requerimos que tenga almacenamiento persistente, en un directorio en la máquina host.
-  1. Cree una imagen para docker-meiga:
-    - Dockerfile para construir la imagen de witch docker de acuerdo a los requerimientos establecidos.
-    - El comando para construir la imagen (la imagen debe llamarse docker-meiga).
-    - El comando de subida de imágenes al registro privado de imágenes del punto anterior.
-  1. El comando para lanzar un contenedor basado en la imagen docker-meiga:
-    - Tienes que correr como un demonio.
-    - El puerto de conexión debe ser 8000.
-    - El nombre del contenedor será meiga-v1.
-    - Proporcione una captura de pantalla del navegador con la aplicación web en ejecución.
-1. Mejorar el Dockerfile:
-  - En el pdf, proporcione un dockerfile que reduzca el tamaño de la imagen final.
-1. Permitir múltiples ramas en el Dockerfile:
-  - Contribuya con un nuevo Dockerfile donde se puedan establecer diferentes ramas del repositorio para que coincidan con diferentes versiones de la aplicación. La versión a compilar se pasará como argumento al compilar la imagen. El nombre del argumento será la rama.
+2. En un pdf, capturas de pantalla de todo lo que necesitas para:
+   1. Cree una imagen del oficial de registro con el siguiente nombre: #registry-name, siendo #name el nombre del estudiante.
+   2. Lanzar una instancia del registro con la imagen creada, esta instancia debe cumplir con los siguientes requisitos:
+      - El nombre del contenedor será #registry-formation-name, siendo #name el nombre del alumno.
+      - El registro debe ejecutarse en el puerto 5050.
+      - Requerimos que tenga almacenamiento persistente, en un directorio en la máquina host.
+   3. Cree una imagen para docker-meiga:
+      - Dockerfile para construir la imagen de witch docker de acuerdo a los requerimientos establecidos.
+      - El comando para construir la imagen (la imagen debe llamarse docker-meiga).
+      - El comando de subida de imágenes al registro privado de imágenes del punto anterior.
+   4. El comando para lanzar un contenedor basado en la imagen docker-meiga:
+      - Tienes que correr como un demonio.
+      - El puerto de conexión debe ser 8000.
+      - El nombre del contenedor será meiga-v1.
+      - Proporcione una captura de pantalla del navegador con la aplicación web en ejecución.
+3. Mejorar el Dockerfile:
+   - En el pdf, proporcione un dockerfile que reduzca el tamaño de la imagen final.
+4. Permitir múltiples ramas en el Dockerfile:
+   - Contribuya con un nuevo Dockerfile donde se puedan establecer diferentes ramas del repositorio para que coincidan con diferentes versiones de la aplicación. La versión a compilar se pasará como argumento al compilar la imagen. El nombre del argumento será la rama.
 
 ### Evaluación
 
@@ -57,10 +57,10 @@ A partir de la imagen de origen:
 **Indicadores de logros:** Debes...
 - Entregar un cos pdf
   1. Comandos para configurar el registro privado.
-  1. El Dockerfile de creación de imágenes.
-  1. Los comandos para ejecutar un contenedor con la imagen.
-  1. La mejora Dockerfile.
-  1. El Dockerfile con ramas.
+  2. El Dockerfile de creación de imágenes.
+  3. Los comandos para ejecutar un contenedor con la imagen.
+  4. La mejora Dockerfile.
+  5. El Dockerfile con ramas.
 
 **Criterios de corrección:**
 - Registro privado (máximo 10 puntos):
@@ -83,5 +83,5 @@ A partir de la imagen de origen:
 **Heteroevaluación:** La tutoría evaluará y calificará el trabajo.
 
 **Peso en calificación:**
-- Peso de esta tarea en la calificación final .......................................... 40 puntos
-- Peso de esta tarea en su tema ........................................... .......... 40%
+- Peso de esta tarea en la calificación final .................................. 40 puntos
+- Peso de esta tarea en su tema ..................................................... 40%
