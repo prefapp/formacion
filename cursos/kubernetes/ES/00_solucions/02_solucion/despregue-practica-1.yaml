@@ -1,0 +1,30 @@
+
+# despregue-practica-1.yaml
+
+apiVersion: apps/v1
+kind: Deployment  # esta parte define o Deployment
+metadata:
+  name: despregue-practica-1
+  labels:
+    app: cont
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: cont
+  template: # a partir de aquí definimos o pod
+    metadata:
+      labels:
+        app: cont
+    spec:
+      containers:
+      - name: page
+        image: frmadem/catro-eixos-k8s-ej1:v1 # este é o cambio!!!!
+        command: ["npm", "run", "iniciar"]
+        env:
+          - name: PUERTO_APP
+            value: "8080"
+        ports:
+          - containerPort: 8080
+      restartPolicy: Always

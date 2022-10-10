@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-practica-2
+  labels:
+    app: "pod-practica-2"
+    practica: "modulo_3_1"
+data:
+  PUERTO_APP: "80"
+  RUTA_LOGS: "/var/log"

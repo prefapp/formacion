@@ -1,0 +1,15 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: binding-alumno
+  namespace: r-castrelo
+  labels:
+    tipo: platega-alumno
+subjects:
+- kind: User
+  name: r-castrelo
+  apiGroup: rbac.authorization.k8s.io
+roleRef:  
+  kind: Role
+  name: role-alumno
+  apiGroup: rbac.authorization.k8s.io
