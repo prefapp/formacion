@@ -4,7 +4,7 @@ Para la creación de un primer clúster de nodos con Docker Swarm utilizaremos 2
 
 Podríamos realizar esta tarea clonando la máquina actual **docker-platega**, o instalando de nuevo 2 vps con su sistema operativo Linux y añadiéndole el motor docker como vimos en el tema 2, pero Docker nos proporciona una herramienta más útil para este trabajo:
 
-## Máquina acoplable
+## Docker machine
 
 [Docker Machine](https://docs.docker.com/machine/overview/#why-should-i-use-it) es una herramienta [opensource](https://github.com/docker/machine) mantenida por la empresa Docker junto con la comunidad, que permite instalar y gestionar, desde nuestro equipo local, nodos Docker (servidores virtuales con el docker-engine instalado) tanto en máquinas virtuales locales (HyperV, VirtualBox, VMWare Player) como en proveedores remotos ( AWS, Azure, DigitalOcean...).
 
