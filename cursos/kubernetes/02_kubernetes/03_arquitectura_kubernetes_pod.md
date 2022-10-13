@@ -2,6 +2,12 @@
 
 Para ser quen despregar e controlar as aplicacións en Kubernetes, póñense á disposición dos usuarios unha serie de elementos básicos que actúan de bloques de construcción mediante os cales pódese expresar unha topoloxía e estrutura moi flexible que se axuste ás necesidades de cada caso.  
 
+Antes de lanzar a creación de calquera artefacto de Kubernetes, recorda que é preciso estar conectado a un clúster. No noso caso, como estamos usando clústeres locais para facer probas, crearemos un clúster con Kind, en caso de non telo feito antes:
+
+```shell
+kind create cluster
+```
+
 O que segue é unha descrición dos principais elementos e da súa relación co resto do sistema.
 
 ## Pod

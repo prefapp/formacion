@@ -217,7 +217,7 @@ O [servizo](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kuberne
 
 Creamos o artefacto do servizo e o lanzamos.
 
-Comprobamos que está realmente creado no noso microk8s. Que comando empregaremos?
+Comprobamos que está realmente creado no noso clúster. Que comando empregaremos?
 
 Facemos un curl ó clusterIp do noso servizo. Que saída teremos?
 
