@@ -30,7 +30,7 @@ Una vez hemos establecido los valores correcto de configuración dentro del fich
 helm install <Nombre de la release> -f <Fichero YML> bitnami/mariadb
 ```
 
-Con **microk8s** podemos ver el estado de los pods y servicios necesarios. Haciendo uso de un cliente de MySQL, podremos comprobar que la aplicación esta funcionando correctamente.
+Con **kubectl** podemos ver el estado de los pods y servicios necesarios. Haciendo uso de un cliente de MySQL, podremos comprobar que la aplicación esta funcionando correctamente.
 ```shell
 mysql -h 127.0.0.1 -u <Nombre del usuario> -p
 ```
