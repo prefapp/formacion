@@ -88,7 +88,7 @@ nsenter --target <pid> -p -m
 
 Esto implica:
 
-- Lanzar un comando (si no lo especificamos será el intérprete por defecto contenido en ``$SHELL'').
+- Lanzar un comando (si no lo especificamos será el intérprete por defecto contenido en ```$SHELL```).
 - Buscando los namespaces del proceso con el pid expresado en ```--target```.
 - Inserte en su espacio pid (```-p```).
 - Participa en tus montas (```-m```).

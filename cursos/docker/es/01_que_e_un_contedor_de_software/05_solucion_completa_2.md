@@ -2,7 +2,7 @@
 
 Sabemos que el trabajo del Kernel de Linux es evitar que los procesos acaparen recursos básicos como:
 
-- UPC
+- CPU
 - Memoria
 - Operaciones de E/S
 
