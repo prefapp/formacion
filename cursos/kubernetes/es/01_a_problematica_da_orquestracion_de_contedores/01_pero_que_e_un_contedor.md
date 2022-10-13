@@ -1,80 +1,80 @@
-# Pero, ¿qué é un contedor?
+# Pero, ¿qué es un contenedor?
 
-> Un contedor é unha [técnica de virtualización a nivel de sistema operativo](http://en.wikipedia.org/wiki/Operating-system-level_virtualization) que illa un proceso, ou grupo de procesos, ofrecéndolles un contexto de execución “completo”. Se entendo por contexto, ou entorno de execución, o conxunto de recursos (PIDs, red, sockets, puntos de montaje…) que lle son relevantes ao proceso.
+> Un contenedor es una [técnica de virtualización a nivel de sistema operativo](https://es.wikipedia.org/wiki/Virtualizaci%C3%B3n_a_nivel_de_sistema_operativo) que aísla un proceso, o grupo de procesos, proporcionándoles un contexto de ejecución "completo". ". Si entiendo por contexto, o entorno de ejecución, el conjunto de recursos (PIDs, red, sockets, puntos de montaje...) que son relevantes para el proceso.
 
-Dentro do mundo Linux que é co tipo de contedores cos que vamos a traballar, un contedor está baseado nas tecnoloxías de namespaces e cgroups, as cais permiten  "separar" os procesos que corren dentro do contedor, do resto do sistema.
+Dentro del mundo Linux, que es el tipo de contenedores con los que vamos a trabajar, un contenedor se basa en las tecnologías de namespaces y cgroups, los docks permiten "separar" los procesos que corren dentro del contenedor, del resto de el sistema.
 
-![Container](./../_media/01/contedor.png)
+![Contenedor](./../_media/01/contedor.png)
 
-A medio camiño entre o chroot e as solucións del virtualización completas (KVM, VirtualBox, VMWare, Xen) o contedor no incurre no custo de virtualizar o hardware ou o kernel do SO ofrecendo, así e todo, un nivel de control e illamento moi superior ao do chroot.
+A medio camino entre chroot y las soluciones de virtualización completa (KVM, VirtualBox, VMWare, Xen), el contenedor no incurre en el costo de virtualizar el hardware o el kernel del sistema operativo y aún ofrece un nivel mucho más alto de control y aislamiento para el chroot.
 
-O contedor é moito máis rápido en ser aprovisionado que a máquina virtual (VM), non precisa arrancar unha emulación de dispositivos nin o núcleo do sistema operativo, a costa dun nivel de illamento menor: procesos en distintos contedores comparten o mismo kernel.
-## Namespaces
+El contenedor es mucho más rápido de aprovisionar que la máquina virtual (VM), no necesita arrancar una emulación de dispositivo o el kernel del sistema operativo, a costa de un menor nivel de aislamiento: los procesos en diferentes contenedores comparten el mismo kernel.
+## Espacios de nombres
 
-Os contedores de software consisten nunha técnica de virtualización a nivel de SO, tamén se coñocen como virtualización a nivel de proceso.
+Los contenedores de software consisten en una técnica de virtualización a nivel de sistema operativo, también conocida como virtualización a nivel de proceso.
 
-A idea é sinxela, dado que o SO é, dende o punto de vista do proceso, un conxunto de recursos, podemos ofrecerlle unha vista "privada" ou virtual desos recursos.
+La idea es simple, ya que el SO es, desde el punto de vista del proceso, un conjunto de recursos, podemos darle una vista "privada" o virtual de esos recursos.
 
-![Container](./../_media/01/contedor1.png)
+![Contenedor](./../_media/01/contedor1.png)
 
-A virtualización desos recursos globais de tal forma que, desde o punto de vista do proceso, sexan privados para él, **é no que consiste un contedor**.
+Virtualizar esos recursos globales de tal manera que, desde el punto de vista del proceso, le sean privados, **de eso se trata un contenedor**.
 
-> "De igual xeito que na virtualización a nivel de plataforma o SO "cree" estarse a executar nunha máquina real, na  containerización, o proceso "cree" ter un SO para sí mesmo"
+> "Al igual que en la virtualización a nivel de plataforma, el sistema operativo "cree" que se está ejecutando en una máquina real, en la creación de contenedores, el proceso "cree" que tiene un sistema operativo para sí mismo"
 
-A técnica de usar contedores é superior a da virtualización de plataforma en que:
+La técnica de usar contenedores es superior a la virtualización de plataformas en que:
 
-- No supón un custe de recursos adicionais por ter que emular hardware e correr en él un SO: se poden ter milleiros de contedores nun servidor.
-- O arranque/parada dun container é prácticamente igual ao arranque/parada dun proceso (< 1'').
+- No supone un coste de recursos adicionales por tener que emular hardware y ejecutar un SO en él: puedes tener miles de contenedores en un servidor.
+- El inicio/parada de un contenedor es prácticamente el mismo que el inicio/parada de un proceso (< 1'').
 
-A costa de:
+A expensas de:
 
-- Compartir o Kernel do SO.
+- Comparte el kernel del sistema operativo.
 
-Ademais, non é alternativa a técnica de virtualización de plataforma: ao contrario, é **totalmente compatible**. Precisamente, é como se está a empregar en moitos sitios:
+Además, no es una alternativa a la técnica de virtualización de plataformas: por el contrario, es **totalmente compatible**. Precisamente, así se está utilizando en muchos sitios:
 
-![Container](./../_media/01/contedor2.png)
+![Contenedor](./../_media/01/contedor2.png)
 
-**Σ Webgrafía**
-- Kerrisk Michael, "**Namespaces in operation, part 1: namespaces overview**" [en liña]. Dispoñible: [enlace](https://lwn.net/Articles/531114/) [Consulta: 06-Xaneiro-2019]
- - O primeiro de 9 artigos a consultar para explorar en profundidade os namespaces en Linux e a súa condición de elemento fundamental para os contedores. 
- ## Cgroups
+**Σ Webografía**
+- Kerrisk Michael, "**Espacios de nombres en funcionamiento, parte 1: descripción general de los espacios de nombres**" [en línea]. Disponible: [enlace](https://lwn.net/Articles/531114/) [Consulta: 06-Enero-2019]
+ - El primero de 9 artículos a consultar para una exploración en profundidad de los espacios de nombres en Linux y su estado como elemento fundamental para los contenedores.
+ ## CGroups
 
-Sabemos que o Kernel de Linux ten como traballo evitar a monopolización por parte dos procesos de recursos básicos tales como:
+Sabemos que el trabajo del Kernel de Linux es evitar que los procesos acaparen recursos básicos como:
 
 - CPU
 - Memoria
-- Operacións E/S
+- Operaciones de E/S
 
-A pregunta que xorde é: permite un control fino de acceso e consumo destes recursos?
+La pregunta que surge es: ¿permite un control minucioso del acceso y consumo de estos recursos?
 
-A resposta é que, previamente á versión 2.6.24, existían mecanismos de control (fundamentalmente o comando [nice](https://linux.die.net/man/1/nice)) pero eran moi limitados.
+La respuesta es que, antes de la versión 2.6.24, había mecanismos de control (principalmente el comando [nice](https://linux.die.net/man/1/nice)) pero eran muy limitados.
 
-Todo isto cambia coa adopción polo kernel de Linux, en xaneiro de 2008, dos [control groups](https://wiki.archlinux.org/index.php/cgroups) (abreviado cgroups) impulsados principalmente polos enxeñeiros de Google.
+Todo esto cambia con la adopción en enero de 2008 por parte del kernel de Linux de [control groups](https://wiki.archlinux.org/index.php/cgroups) (cgroups para abreviar) impulsados ​​principalmente por ingenieros de Google.
 
-Os cgroups pódense ver como unha árbore en que os procesos están pendurados dunha pola de control de tal xeito que podense establecer, para ese proceso e os seus fillos:
+cgroups puede verse como un árbol en el que los procesos se cuelgan de un poste de control de tal manera que se pueden establecer, para ese proceso y sus hijos:
 
-- Limitacións de recursos.
-- Prioridades de acceso a recursos.
-- Monitorización do emprego dos recursos.
-- Xestión a baixo nivel de procesos.
+- Limitaciones de recursos.
+- Prioridades de acceso a los recursos.
+- Seguimiento del uso de los recursos.
+- Gestión de procesos a bajo nivel.
 
-A flexibilidade que permiten é moi grande. Pódense crear distintos grupos de limitacións e control e asignar un proceso, e os seus fillos, a distintos grupos, facendo combinacións que permiten un grao moi alto de personalización.
+La flexibilidad que permiten es muy grande. Se pueden crear diferentes grupos de restricciones y controles y se puede asignar un proceso y sus hijos a diferentes grupos, haciendo combinaciones que permiten un alto grado de personalización.
 
-![Container](./../_media/01/contedor3.png)
-## Evolución das tecnoloxías de contedores
+![Contenedor](./../_media/01/contedor3.png)
+## Evolución de las tecnologías de contenedores
 
-> Vamos a revisar unha serie de ferramentas e tecnoloxías que xurdiron ao longo dos anos en diferentes sistemas operativos, para dar resposta ao problema que se plantexaba no módulo 1 sobre a xestión de recursos dentro dun SO.
+> Vamos a repasar una serie de herramientas y tecnologías que han ido surgiendo a lo largo de los años en diferentes sistemas operativos, para dar respuesta al problema planteado en el módulo 1 de Docker sobre la gestión de recursos dentro de un SO.
 
 ---
-### **Xaulas chroot (1979)**
+### **Jaulas Chroot (1979)**
 
 ![chroot](./../_media/01/chroot.png)
 
-No desenrolo do sistema Unix V7, agregouse unha nova chamada de sistema (chroot) que permitía cambiar o directorio raíz dun proceso, e os seus descendentes, a unha nova localización do sistema de ficheiros.
+En el desarrollo del sistema Unix V7, se agregó una nueva llamada al sistema (chroot) que permitía cambiar el directorio raíz de un proceso y sus descendientes a una nueva ubicación en el sistema de archivos.
 
-Este avance foi o comezo do illamento a nivel de proceso, posibilitando controlar o acceso aos ficheiros por proceso. 
+Este avance fue el comienzo del aislamiento a nivel de proceso, lo que hizo posible controlar el acceso a los archivos por proceso.
 
-Na actualidade esa ferramenta aínda está dispoñible en calquer sistema Unix , e por suposto en Linux. Podedes probala seguindo o seguinte exemplo:
+Actualmente esa herramienta sigue estando disponible en cualquier sistema Unix, y por supuesto en Linux. Puedes probarlo siguiendo el siguiente ejemplo:
 
 ```shell
 # copiamos los binarios que queremos executar na xaula chroot
@@ -113,11 +113,11 @@ for i in {lib,lib64}; do sudo umount chroot/$i ; done
 ![Evil Jail](./../_media/01/evil_jail.png)
 ![Solaris](./../_media/01/solaris.png)
 
-Duas décadas despois, un proveedor de hosting sacou un servizo sobre xaulas BSD para lograr unha separación de recursos clara entre os seus servizos e os dos seus clientes, e deste xeito mellorar a seguridade e facilitar a administración dos mesmos.
+Dos décadas después, un proveedor de hosting lanzó un servicio sobre jaulas BSD para lograr una clara separación de recursos entre sus servicios y los de sus clientes, y de esta forma mejorar la seguridad y facilitar la administración de los mismos.
 
-As xaulas de FreeBSD permiten a un administrador, particionar un sistema FreeBSD en varios sistemas BSD independentes e con menos recursos, illados, e coa capacidade de agregar unha IP a cada un deles.
+Las jaulas de FreeBSD permiten a un administrador particionar un sistema FreeBSD en varios sistemas BSD independientes con menos recursos, aislados y con la capacidad de agregar una IP a cada uno de ellos.
 
-Oracle agregou unha característica similar a Solaris, que combina o control de recursos que pode consumir un proceso, ca separación en zonas dos procesos que se executan na máquina.
+Oracle ha agregado una función similar a Solaris, que combina el control de los recursos que puede consumir un proceso con la zonificación de los procesos que se ejecutan en la máquina.
 
 ---
 
@@ -125,29 +125,29 @@ Oracle agregou unha característica similar a Solaris, que combina o control de 
 
 ![OpenVZ](./../_media/01/opevz.png)
 
-Un ano máis tarde, a compañía Virtuozzo creou un novo sistema de virtualización basado en contedores, sobre o kernel de Linux, que permitía crear multiples contedores illados e seguros, nunha mesma máquina, como se dun servidor privado virtual se tratara.
+Un año después, la empresa Virtuozzo creó un nuevo sistema de virtualización basado en contenedores, sobre el kernel de Linux, que permitía crear múltiples contenedores aislados y seguros en una misma máquina, como si de un servidor privado virtual se tratase.
 
-O código de OpenVZ, aínda que está aberto, nunca formou parte da distribución oficial do kernel de Linux e se incorpora como unha serie de parches extra que se aplican sobre o código do kernel.
+El código OpenVZ, aunque de código abierto, nunca ha sido parte de la distribución oficial del kernel de Linux y se incorpora como una serie de parches adicionales que se aplican sobre el código del kernel.
 
 ---
 
-### **linuxcontainers (2008) e Docker (2013)**
+### **linuxcontainers (2008) y Docker (2013)**
 
-![LinuxContanirs](./../_media/01/linuxcontainers.png)
+![LinuxContainers](./../_media/01/linuxcontainers.png)
 ![Docker](./../_media/01/docker_logo.png)
 
-A primeira ferramenta de contedores de software que encontrou ampla acollida dentro da comunidade de Linux foi [LXC](https://linuxcontainers.org/), principalmente polas tecnoloxías que aglutinaba e que foron introducidas dentro do kernel de linux (**Namespaces e cgroups**).
+La primera herramienta de contenedor de software que encontró una amplia aceptación dentro de la comunidad de Linux fue [LXC](https://linuxcontainers.org/), principalmente debido a las tecnologías que reunió y que se introdujeron en el kernel de Linux (**Namespaces y cgroups**).
 
-O seu obxectivo e dispor dun contedor como un entorno o máis similar posible a unha máquina virtual, pero sen o sobrecoste de emular hardware.
+Su objetivo es tener un contenedor como entorno lo más similar posible a una máquina virtual, pero sin la sobrecarga de emular hardware.
 
-A xestión de este contedor se fai mediante unha serie de ficheiros de configuración, donde o usuario ten que encargarse de descargar e preparar o sistema de ficheiros, e definir e configurar os namespaces onde quere conectar ao container, conectar a rede ... o que o convirte en unha ferramenta moi pouco amigable para un desenvolvedor.
+La gestión de este contenedor se realiza a través de una serie de archivos de configuración, donde el usuario tiene que descargar y preparar el sistema de archivos, y definir y configurar los espacios de nombres donde quiere conectarse al contenedor, conectarse a la red... lo que lo convierte en una herramienta muy hostil para un desarrollador.
 
-A compañía dotCloud, onde traballaban os creadores de Docker, e que empregaba LXC para proporciona aos seus clientes un dos primeiros [servizos de aloxamento PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/) que apareceu no mercado, buscando unha forma de facilitar a adopción do seu servizo, e trantando de facer máis accesible a tecnoloxía de contedores aos desenvolvedores de aplicacións, creou o proxecto que sería o precursor de Docker.
+La empresa dotCloud, donde trabajaron los creadores de Docker, y que utilizó LXC para brindar a sus clientes uno de los primeros [servicios de hosting PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/) que apareció en el mercado, buscando la forma de facilitar la adopción de su servicio, y tratando de hacer más accesible la tecnología de contenedores a los desarrolladores de aplicaciones, creó el proyecto que sería el precursor de Docker.
 
-Docker se libera como proxecto de [código aberto](https://github.com/moby/moby) o 13 de marzo de 2013, e na actualidade a pesar do cambio de estratexia e de nome, ten máis de 50.000 estrelas en Github e casi 2.000 contribuidores, e convertiuse na principal tecnoloxía para a xestión de contedores.
+Docker se lanza como un proyecto [de código abierto](https://github.com/moby/moby) el 13 de marzo de 2013 y hoy, a pesar del cambio de estrategia y nombre, tiene más de 50 000 estrellas en Github y casi 2000 colaboradores, y se ha convertido en la tecnología líder para la gestión de contenedores.
 
-* **Saber máis**
+* **Aprende más**
 
- - [A brief history of containers](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
+   - [A brief history of containers](https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016)
 
- - [Confining the omnipotent root](http://phk.freebsd.dk/pubs/sane2000-jail.pdf)
+   - [Confining the omnipotent root](http://phk.freebsd.dk/pubs/sane2000-jail.pdf)
