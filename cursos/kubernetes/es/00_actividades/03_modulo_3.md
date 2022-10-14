@@ -17,7 +17,6 @@ Asemade, e para que o scheduler (o compoñente de K8s encargado de determinar o 
 
 Compre modificar o pod da tarefa 2.3 a) cos seguintes cambios:
 * Mudarlle o nome ó pod, chamarase "pod-practica-2".
-* Hay que lle meter a [política](https://kubernetes.io/docs/concepts/containers/images/) de "ImagePullPolicy: Always".
 * Agregarlle unha sonda de ready e unha de live:
 	* Faránse a través de peticións get a /servidor.
 	* A sonda de ready iniciaráse ós 15 seg de vida do contedor e se repetirá ata cada 5 seg.
@@ -203,7 +202,7 @@ Os tres yaml (namespace.yaml, role.yaml, role_binding.yaml) introduciránse no t
 
 O tar enviarase ó administrador (Francisco Maseda ou Javier Gómez) mediante email. Responderán cun certificado.
 
-### d) Instalación do certificado no microk8s.kubectl
+### d) Instalación do certificado no kubectl
 
 Unha vez obtemos o certificado dos administradores:
 * Agregamos unha nova configuración para o clúster.
@@ -266,13 +265,7 @@ Se tes algunha dúbida ou consulta sobre como realizar a tarefa formúlaa no [Fo
 
 Para poder facer esta práctica compre:
 - Revisar o tema que deixamos neste módulo, sobre todo a sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/06_Ingress_controlando_o_trafico).
-- Compre ter activado o ingress no microk8s. 
-
-Para activar ingress:
-`microk8s.enable ingress`
-
-Lembrade que o ingress está conectado ó porto 80. Polo que é necesario ter ese porto libre na máquina virtual para que todo funcione correctamente. Podemos comprobalo facilmente:
-![actividades31](./../_media/03/actividades31.png)
+- Compre ter crear unha controladora do ingress no clúster de Kind, ou ben crear o clúster co [ficheiro .sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md) resultante da [práctica guiada de Kind](03_configuracion/10_practica_guiada_kind).
 
 Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
 
@@ -322,7 +315,7 @@ Imos crear unha regra de ingress de tal xeito que:
   - /v1 => que levará ó servizo practica-4-v1
   - /v2 => que levará ó servizo practica-4-v2
 
-Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no clúster de microk8s. 
+Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no clúster de Kind. 
 
 Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da vm) faremos no navegador
 

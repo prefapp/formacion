@@ -43,8 +43,8 @@ Existen en Kubernetes dous tipos de [usuarios](https://kubernetes.io/docs/refere
 
 Un usuario regular *non é un obxecto ou artefacto de Kubernetes*. Simplemente, un administrador de Kubernetes crea de diversos xeitos:
 
-- un par de claves SSH 
-- un ficheiro con usuarios e passwords. 
+- Un par de claves SSH 
+- Un ficheiro con usuarios e passwords. 
 - Outros métodos como o KeyStone de Google...
 
 É dicir, a creación de usuarios non está automatizada en Kubernetes nin se pode recorrer a chamadas á API. Trátase de servizos externos que configurarán dalgún xeito un acceso e darán conta (manualmente) a Kubernetes. 
@@ -53,7 +53,7 @@ Por suposto, os servizos administrados de Kubernetes (como AKS) teñen sistemas 
 
 #### ii) Contas de servizos
 
-As contas de servizo sí son artefactos de Kubernetes. O seu papel é diferente: unha conta de servizo (Service Account) permite que determinados pods que están a correr dentro do clúster **poidan facer chamadas ó propio Kubernetes no que están a correr**.
+As contas de servizo si que son artefactos de Kubernetes. O seu papel é diferente: unha conta de servizo (Service Account) permite que determinados pods que están a correr dentro do clúster **poidan facer chamadas ó propio Kubernetes no que están a correr**.
 
 A razón da súa existencia é clara: existen moitas ferramentas e programas que poden correr en Kubernetes e traballan contra a API de K8s para monitorizar tarefas, crear e xestionar elementos auxiliares, e mesmo apoiar ó desenvolvemento de aplicacións. 
 
@@ -68,7 +68,7 @@ O administrador pasa, normalmente, un certificado que debemos integrar na nosa c
 A ferramenta kubectl ten unha configuración que podemos ver, se facemos isto:
 
 ```shell
-microk8s.kubectl config view --raw > $HOME/.kube/config
+kubectl config view --raw > $HOME/.kube/config
 ```
 
 Agora temos exportada a nosa configuración de acceso:
@@ -77,27 +77,27 @@ apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: DATA+OMITTED
-    server: https://127.0.0.1:16443
-  name: microk8s-cluster
+    server: https://127.0.0.1:34023
+  name: kind-kind
 contexts:
 - context:
-    cluster: microk8s-cluster
-    user: admin
-  name: microk8s
-current-context: microk8s
+    cluster: kind-kind
+    user: kind-kind
+  name: kind-kind
+current-context: kind-kind
 kind: Config
 preferences: {}
 users:
-- name: admin
+- name: kind-kind
   user:
-    password: <password>
-    username: admin
+    client-certificate-data: [...]
+    client-key-data: [...]
 ```
 
 Vemos que a nosa configuración de kubectl está dividida en varias partes:
 - **clústers**: cada clúster ó que queramos acceder terá que estar configurado aquí. 
 - **contexts**: xestionan a información de acceso a cada clúster
-- **current-context**: o contexto por defecto co que estamos a traballar (neste momento microk8s)
+- **current-context**: o contexto por defecto co que estamos a traballar (neste momento kind-kind)
 - **users**: credenciais de acceso mediante user/password. 
 
 #### i) Agregar unha nova configuración para traballar contra un clúster de Kubernetes
@@ -109,13 +109,13 @@ O primeiro que teríamos que facer é almacenar o ficheiro crt e a key nalgures 
 Precisamos tamén establecer a información básica do cluster:
 
 ```shell
-microk8s.kubectl config set-cluster <nome> --server=<dirección do cluster> --certificate-authority=<se o hai> 
+kubectl config set-cluster <nome> --server=<dirección do cluster> --certificate-authority=<se o hai> 
 ```
 
 Agora, temos que engadir a información ó noso kubernetes (creando unha nova entrada no users)
 
 ```shell
-microk8s.kubect config set-credentials foo --client-certificate=<ruta do .crt> --client-key=<ruta do .key>
+kubectl config set-credentials foo --client-certificate=<ruta do .crt> --client-key=<ruta do .key>
 ```
 
 Se vemos a nosa config de kubectl teremos unha nova entrada en users para o usuario foo. 
@@ -131,7 +131,7 @@ kubectl config set-context foo-context --cluster=<cluster> --namespace=<ns> --us
 Se queremos traballar de xeito máis cómodo, podemos establecer como contexto por defecto o novo contexto e tódolos nosos comandos irán contra o novo clúster, sen ter que especificar o contexto en cada un deles:
 
 ```shell
-microk8s.kubectl config use-context foo-context
+kubectl config use-context foo-context
 ```
 
 ## Roles e namespaces
@@ -164,7 +164,7 @@ Esta API:
   - api/extensions/v1beta1
   - ...
 
-Dende o noso microk8s podemos consultar extremos de esta API para recoller o estado dos nosos artefactos. 
+Dende o noso clúster podemos consultar extremos de esta API para recoller o estado dos nosos artefactos. 
 
 Estos extremos teñen o seguinte formato: `/api/v1/namespaces/<nome do namespace>/<tipo de recurso>/:<nome do recurso>`
 
@@ -218,7 +218,7 @@ rules:
 
 Vemos como no artefacto establecemos as regras de acceso a recursos (pods) e as accións (get, watch, list). 
 
-Nembargantes, non se dice nada de a qué usuarios afecta. 
+Nembargantes, non se di nada de a qué usuarios afecta. 
 
 A razón e que o Role define regras e permisos pero non usuarios. Para que afecten ós usuarios, compre **vincular os roles**. 
 
