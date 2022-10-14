@@ -1,51 +1,51 @@
-# Qué é Kubernetes?
+# ¿Qué es Kubernetes?
 
-Kubernetes é un framework e unha plataforma de orquestración de contedores que ten como función principal a automatización do despregue, escalado e mantemento de aplicacións en producción que corren nun clúster de nodos ou máquinas.
+Kubernetes es un framework y una plataforma de orquestación de contenedores cuya función principal es automatizar la implementación, el escalado y el mantenimiento de aplicaciones en producción que se ejecutan en un clúster de nodos o máquinas.
 
-Ós creadores de Kubernetes non lles doen prendas en confesar o obxectivo último da súa plataforma:
+Los creadores de Kubernetes no dudan en confesar el objetivo final de su plataforma:
 
-> Mediante Kubernetes queremos posibilitar o tratamento do CPD como se de unha soa máquina se tratase... [Joe Beda, Brendan Burns e Craig McLuckie]
+> A través de Kubernetes queremos hacer posible tratar el CPD como si fuera una sola máquina... [Joe Beda, Brendan Burns y Craig McLuckie]
 
-**Cando dicimos que Kubernetes é un framework...**
+**Cuando decimos que Kubernetes es un framework...**
 
-Estámonos a referir a que nos ofrece un conxunto de fundamentos e mecanismos altamente configurables que permiten construir plataformas á medida das necesidades das empresas e organizacións usuarias do sistema. 
+Nos referimos a lo que nos ofrece un conjunto de bases y mecanismos altamente configurables que nos permiten construir plataformas a la medida de las necesidades de las empresas y organizaciones que utilizan el sistema.
 
-De feito, a meirande parte do tempo, trabállase con plataformas baseadas en Kubernetes onde o proveedor ou administrador ten feito un traballo de adaptación, programación e integración de compoñentes e preparación da contorna, ese é o caso:
+De hecho, la mayoría de las veces se trabaja con plataformas basadas en Kubernetes donde el proveedor o administrador ha hecho un trabajo de adaptación, programación e integración de componentes y preparación del entorno, así es:
 
-- Principais proveedores cloud.
- - [AKS](https://azure.microsoft.com/es-es/services/kubernetes-service/) (Azure Kubernetes Service).
- - [EKS](https://aws.amazon.com/es/eks/) (Amazon Elastic Container Service for Kubernetes).
- - [GKE](https://aws.amazon.com/es/eks/) (Google Kubernetes Engine).
-- Solucións aloxadas en outros proveedores (listado [aquí](https://kubernetes.io/docs/setup/pick-right-solution/#hosted-solutions)).
-- Sistemas baseados en Kubernetes.
- - O [openshift](https://www.redhat.com/es/technologies/cloud-computing/openshift) de RedHat. 
-- Instalacións de kubernetes para desenvolvemento:
- - Kind
- - Minikubes.
- - Minishift.
- - DockerDesktop.
- - MicroK8s.
-- Neste artigo podemos ver con máis profundidade [diferentes solucións](https://betterprogramming.pub/choose-the-right-kubernetes-hosting-solution-a842878fc594) para diferentes tipos de despregues incluíndo Kubernetes en CPDs ou clouds privados ou "on premise".
+- Principales proveedores de nube.
+   - [AKS](https://azure.microsoft.com/es-es/services/kubernetes-service/) (Servicio Azure Kubernetes).
+   - [EKS](https://aws.amazon.com/es/eks/) (Amazon Elastic Container Service for Kubernetes).
+   - [GKE](https://aws.amazon.com/es/eks/) (Google Kubernetes Engine).
+- Soluciones alojadas por otros proveedores (enumeradas [aquí](https://kubernetes.io/partners/#conformance)).
+- Sistemas basados ​​en Kubernetes.
+   - RedHat [openshift](https://www.redhat.com/es/technologies/cloud-computing/openshift).
+- Instalaciones de Kubernetes para desarrollo:
+   - Kind
+   - Minikubes
+   - Minishift.
+   - DockerDesktop.
+   - MicroK8s.
+- En este artículo podemos ver más a fondo [diferentes soluciones](https://betterprogramming.pub/choose-the-right-kubernetes-hosting-solution-a842878fc594) para diferentes tipos de despliegues incluyendo Kubernetes en CPDs o nubes privadas o "en las instalaciones".
 
-A flexibilidade que permite o enfoque de framework de Kubernetes posibilita un gran conxunto de escenarios onde se pode empregar.
+La flexibilidad que permite el enfoque del framework de Kubernetes permite un gran conjunto de escenarios en los que se puede utilizar.
 
-Ó longo deste curso, necesitaremos o uso dunha das ferramentas para desenvolvemento que mencionamos, para poder crear clústeres onde despregar as prácticas. Recomendamos o uso de Kind, pola potencia e flexibilidade que nos aporta. No seguinte enlace podedes acceder á [guía de instalción de kind](https://kind.sigs.k8s.io/docs/user/quick-start)
+A lo largo de este curso, necesitaremos el uso de una de las herramientas de desarrollo que mencionamos, para poder crear clústeres donde se puedan desplegar las prácticas. Recomendamos el uso de Kind, por la potencia y flexibilidad que proporciona. En el siguiente enlace puede acceder a la [tipo de guía de instalación](https://kind.sigs.k8s.io/docs/user/quick-start)
 
-**Cando dicimos que as aplicacións en Kubernetes corren nun clúster de nodos ou máquinas...**
+**Cuando decimos que las aplicaciones en Kubernetes se ejecutan en un grupo de nodos o máquinas...**
 
-Estámonos a referir a que a vocación de Kubernetes é a de superar as limitacións dun só nodo. Esto é, o escalado horizontal, creando un conxunto de máquinas que traballan como se dunha soa se tratase. A través de Kubernetes, creamos un clúster ou agrupación de servidores (físicos ou virtuais) que serán controlados polo sistema. 
+Nos referimos a que la vocación de Kubernetes es superar las limitaciones de un solo nodo. Esto es escalado horizontal, creando un conjunto de máquinas que funcionan como si fueran una sola. A través de Kubernetes, creamos un clúster o agrupación de servidores (físicos o virtuales) que serán controlados por el sistema.
 
-En Kubernetes, a meirande parte do tempo non teremos que nos preocupar de en qué máquina ou nodo están os nosos contedores; de feito, a idea é que nos despreocupemos da infraestructura, xa que K8s "agocha" esa complexidade e da resposta a preguntas como:
+En Kubernetes, la mayor parte del tiempo no tendremos que preocuparnos de en qué máquina o nodo están nuestros contenedores; de hecho, la idea es que no nos importe la infraestructura, ya que K8s "esconde" esa complejidad y responde preguntas como:
 
-- Cantos nodos están a funcionar?
-- Onde debería correr os contedores?
-- Cal é o nodo máis axeitado para lanzar o seguinte contedor?
+- ¿Cuántos nodos se están ejecutando?
+- ¿Hacia dónde deben correr los contenedores?
+- ¿Cuál es el nodo más adecuado para lanzar el próximo contenedor?
 - ...
 
-**Cando dicimos que Kubernetes é un orquestrador de contedores...**
+**Cuando decimos que Kubernetes es un orquestador de contenedores...**
 
-Estamos a dicir que a función fundamental de Kubernetes é a de despregar aplicacións baseadas en contedores garantindo:
+Estamos diciendo que la función principal de Kubernetes es desplegar aplicaciones basadas en contenedores al garantizar:
 
-- Que os contedores que conforman a aplicación están correndo e teñen suficientes recursos computacionais para funcionar.
-- Que esos contedores poden "verse" (teñen acceso por rede) independientemente da máquina ou nodo do clúster onde estén a correr.
-- Que se pode interactúar cos contedores da aplicación como entidade (como conxunto) e de xeito individual para: paralos, escalalos, arrancalos, borralos...
+- Que los contenedores que componen la aplicación estén en ejecución y dispongan de los recursos informáticos suficientes para funcionar.
+- Que esos contenedores puedan "ver" (tener acceso a la red) independientemente de la máquina o nodo del clúster donde se estén ejecutando.
+- Que puedes interactuar con los contenedores de la aplicación como una entidad (como un conjunto) e individualmente para: detener, escalar, iniciar, eliminar...

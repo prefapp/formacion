@@ -1,45 +1,45 @@
-# Artefactos en Kubernetes: o Pod
+# Artefactos en Kubernetes: Pod
 
-Para ser quen despregar e controlar as aplicacións en Kubernetes, póñense á disposición dos usuarios unha serie de elementos básicos que actúan de bloques de construcción mediante os cales pódese expresar unha topoloxía e estrutura moi flexible que se axuste ás necesidades de cada caso.  
+Para poder desplegar y controlar aplicaciones en Kubernetes, se ponen a disposición de los usuarios una serie de elementos básicos que actúan como bloques de construcción a través de los cuales se puede expresar una topología y estructura muy flexible que se ajuste a las necesidades de cada caso.
 
-Antes de lanzar a creación de calquera artefacto de Kubernetes, recorda que é preciso estar conectado a un clúster. No noso caso, como estamos usando clústeres locais para facer probas, crearemos un clúster con Kind, en caso de non telo feito antes:
+Antes de lanzarse a crear cualquier artefacto de Kubernetes, recuerde que debe estar conectado a un clúster. En nuestro caso, dado que usamos clústeres locales para las pruebas, crearemos un clúster con Tipo, si no lo hemos hecho antes:
 
 ```shell
 kind create cluster
 ```
 
-O que segue é unha descrición dos principais elementos e da súa relación co resto do sistema.
+Lo que sigue es una descripción de los elementos principales y su relación con el resto del sistema.
 
 ## Pod
 
-Un [pod](https://kubernetes.io/docs/concepts/workloads/pods/) é o elemento mínimo ou atómico dentro de Kubernetes.
+Un [pod](https://kubernetes.io/docs/concepts/workloads/pods/) es el elemento mínimo o atómico dentro de Kubernetes.
 
-Non podemos pensar nun pod coma nun contedor: o pod consiste en 1..n contedores **agrupados lóxicamente pola súa función.** 
+No podemos pensar en un pod como un contenedor: el pod consta de 1..n contenedores **agrupados lógicamente por su función.**
 
-Deste xeito, os contedores despregados dentro dun pod:
+Por lo tanto, los contenedores desplegados dentro de un pod:
 
-- Irán sempre despregados de forma conxunta nun só nodo ou servidor. 
-- Comparten a configuración de rede.
-- Comparten os volumes e o almacenamento. 
+- Siempre se desplegarán de forma conjunta en un único nodo o servidor.
+- Comparten configuraciones de red.
+- Comparten volúmenes y almacenamiento.
 
 ![Pod](./../_media/02/pod1.png)
 
-Nun pod imos agrupar todos aqueles procesos (aillados en contedores) que teñan que traballar "ó carón dos outros": 
+En un pod agruparemos todos aquellos procesos (aislados en contenedores) que tienen que funcionar "uno al lado del otro":
 
-- poderán falar a través de localhost post 
-- constitúen unha unidade de despregue polo que facilitan o escalado horizontal da aplicación. 
-- poden compartir volumes que "sobreviven" ós reinicios  e ós que teñen acceso o resto dos procesos. 
+- podrán hablar a través de la publicación localhost
+- constituyen una unidad de despliegue por lo que facilitan el escalado horizontal de la aplicación.
+- pueden compartir volúmenes que "sobreviven" a los reinicios y aquellos a los que tienen acceso el resto de procesos.
 
-### a) Definición do pod
+### a) Definición de Pod
 
-Para definir un pod, Kubernetes pon á nosa disposición unha linguaxe potente e descritiva que emprega YAML coma sintaxe básica. 
+Para definir un pod, Kubernetes nos proporciona un lenguaje potente y descriptivo que utiliza YAML como sintaxis básica.
 
-No pod de exemplo que imos a crear:
+En el pod de ejemplo que vamos a crear:
 
-- Só teremos un contedor que monta unha imaxe de ubuntu
-- O contedor dentro do pod, realmente non fai nada, só espera
+- Solo tendremos un contenedor que monte una imagen de ubuntu
+- El contenedor dentro de la cápsula, en realidad no hace nada, solo espera
 
-Nun ficheiro en branco introducimos o seguinte:
+En un archivo en blanco ingresamos lo siguiente:
 
 ```yaml
 # pod_1.yaml
@@ -56,21 +56,21 @@ spec:
   restartPolicy: Never
 ```
 
-Como podemos ver empregamos unha linguaxe declarativa para expresar o que queremos, agora, basta empregar a ferramenta kubectl para facer que este pod "apareza" na nosa instalación de Kubernetes. 
+Como podemos ver, usamos un lenguaje declarativo para expresar lo que queremos, ahora, solo use la herramienta kubectl para que este pod "aparezca" en nuestra instalación de Kubernetes.
 
 ```shell
 kubectl apply -f pod_1.yaml
 ```
 
-A ferramenta kubectl comunícase coa api que se atopa no máster e unha nova estrutura dáse de alta. O sistema comproba que non hai tal pod dentro dos nodos e marca o pod como "necesita crearse". O scheduler elixe un nodo onde correr o pod e este iníciase a través do Kubelet. 
+La herramienta kubectl se comunica con la API en el maestro y se registra una nueva estructura. El sistema verifica que no exista tal pod dentro de los nodos y marca el pod como "necesita ser creado". El planificador elige un nodo donde ejecutar el pod y se inicia a través de Kubelet.
 
-Se corremos este comando
+Si ejecutamos este comando
 
 ```shell
 kubectl get pods
 ```
 
-Veremos a seguinte saída
+Veremos la siguiente salida.
 
 ```shell
 primeiro-pod   0/1     Pending       0          0s
@@ -78,23 +78,23 @@ primeiro-pod   0/1     ContainerCreating   0          0s
 primeiro-pod   1/1     Running             0          2s
 ```
 
-O pod está a correr "nalgures" dentro do noso clúster.
+El pod se está ejecutando "en algún lugar" dentro de nuestro clúster.
 
-Onde? en realidade non nos importa; e ese é precisamente un dos puntos clave de Kubernetes: facer transparente ó usuario a complexidade do clúster e crear unha "vista" do mesmo como se de unha soa máquina se tratase. 
+¿Dónde? realmente no nos importa; y ese es precisamente uno de los puntos clave de Kubernetes: hacer transparente al usuario la complejidad del clúster y crear una “vista” del mismo como si fuera una sola máquina.
 
-### b) Interactuar co pod
+### b) Interactuar con el pod
 
-Como viramos na sección anterior, Kubernetes emprega unha linguaxe declarativa que permite expresar un "deber ser". Despois, mediante a ferramenta kubectl podemos cargar ese "deber ser" no sistema que o aplicará para convertilo nunha realidade dentro do clúster. 
+Como vimos en la sección anterior, Kubernetes utiliza un lenguaje declarativo que permite expresar un "debe ser". Luego, usando la herramienta kubectl podemos cargar ese "debe ser" en el sistema que lo aplicará para hacerlo realidad dentro del clúster.
 
-Xa vimos como listar os pods na sección anterior. 
+Ya vimos cómo enumerar pods en la sección anterior.
 
-Se quixeramos ter máis detalles do noso pod, poderíamos facer:
+Si quisiéramos tener más detalles de nuestro pod, podríamos hacer:
 
 ```shell
 kubectl describe pod/primeiro-pod
 ```
 
-E obteríamos unha morea de datos:
+Y obtendríamos muchos datos:
 
 ```shell
 Name:               primeiro-pod
@@ -151,32 +151,31 @@ Events:
   Normal  Started    15m   kubelet, sutelinco  Started container contedor
 ```
 
-Se quixeramos "entrar" no pod, podemos empregar exec:
+Si quisiéramos "ingresar" al pod, podríamos usar exec:
 
 ```shell
 # indicamos o pod e o contedor no que queremos "ingresar"
 kubectl exec -ti primeiro-pod -c contedor -- bash
 ```
 
-Nótese que a sintaxe do comando é moi parecida ó [exec de Docker](https://docs.docker.com/engine/reference/commandline/exec/). 
+Tenga en cuenta que la sintaxis del comando es muy similar a [exec] de Docker (https://docs.docker.com/engine/reference/commandline/exec/).
 
-Unha vez executada, teríamos unha shell dentro do contedor e poderíamos interactuar co sistema de ubuntu que monta como imaxe. 
+Una vez ejecutado, tendríamos un caparazón dentro del contenedor y podríamos interactuar con el sistema ubuntu que se monta como una imagen.
 
-Para borralo, simplemente pasamos o noso ficheiro de yaml ó sistema:
+Para eliminarlo, simplemente pasamos nuestro archivo yaml al sistema:
 
 ```shell
 kubectl delete -f pod_1.yaml
 ```
+### c) Establecer variables de entorno en el pod
 
-### c) Establecer variables de contorno no pod
+Para aquellos familiarizados con los contenedores de software, no es desconocido que la mayor parte de la configuración se inyecta a través de variables de entorno para poder controlar el programa desde "afuera".
 
-Para aqueles familiarizados cos contedores de software non é descoñecido o feito de que a maior parte da configuración inxectase a través de variables de contorna para poder controlar o programa dende "fora". 
+Kubernetes tiene formas avanzadas de crear variables de entorno, secretos, etc.
 
-Kubernetes ten xeitos avanzados de crear variables de contorna, segredos, etc... 
+Sin embargo, para el módulo de alcance es la forma básica de configurar el entorno.
 
-Nembargantes, para o alcance módulo válenos a forma básica de establecer o entorno. 
-
-Na sección de containers, en cada contedor pódese establecer unha entrada env, para introducir valores:
+En la sección de contenedores, en cada contenedor puede establecer una entrada env, para ingresar valores:
 
 ```yaml
 kind: Pod # o artefacto é un Pod
@@ -195,13 +194,4 @@ spec:
   restartPolicy: Never
 ```
 
-En módulos posteriores veremos xeitos moito máis avanzados de controlar a contorna de execución dun pod e de incluir segredos e outras configuracións.
-
-
-
-
-
-
-
-
-
+En módulos posteriores, veremos formas mucho más avanzadas de controlar el entorno de tiempo de ejecución de un pod e incluir secretos y otras configuraciones.
