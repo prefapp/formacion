@@ -88,7 +88,7 @@ Como dixeramos ó principio desta unidade, K8s debe saber dun pod:
  
  Kubernetes resolve estes problemas a través das sondas (probes).
 
-As sondas son peticións http ou comandos a executar dentro do pod (dos contedores do pod) para determinar se a súa execución e exitosa ou non. En caso de non selo, K8s pode concluir que, ou ben o pod está inservible (o programa principal non está a funcionar) ou todavía non está listo para traballar (o programa principal do pod está todavía a arrancar)
+As sondas son peticións http ou comandos a executar dentro do pod (dos contedores do pod) para determinar se a súa execución é exitosa ou non. En caso de non selo, K8s pode concluir que, ou ben o pod está inservible (o programa principal non está a funcionar) ou todavía non está listo para traballar (o programa principal do pod está todavía a arrancar).
 
 ![pod6.png](../_media/03/pod6.png)
 
@@ -137,12 +137,12 @@ Se o arrancamos:
 
 Input
 ```sh
-microk8s.kubectl apply -f pod_sonda_live.yaml
+kubectl apply -f pod_sonda_live.yaml
 ```
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 
 Output
@@ -154,7 +154,7 @@ Agora, dende outra shell accedemos ó pod:
 
 Input 
 ```sh
-microk8s.kubectl exec -ti pod-sonda-live bash
+kubectl exec -ti pod-sonda-live -- bash
 ```
 
 Output
@@ -179,7 +179,7 @@ E se vamos a ver os detalles do noso pod, veremos o seguinte:
 
 Input
 ```sh
-microk8s.kubectl describe pod pod-sonda-live
+kubectl describe pod pod-sonda-live
 ```
 
 Output
@@ -196,7 +196,7 @@ Vemos que a sonda de live fallou e o contedor se reiniciou. De feito, se vemos a
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 Output
 ```sh

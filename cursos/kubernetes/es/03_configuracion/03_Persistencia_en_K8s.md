@@ -79,13 +79,13 @@ Agora:
 Input
 ```sh
 # arrancamos o pod
-microk8s.kubectl apply -f pod_volume.yaml
+kubectl apply -f pod_con_volume.yaml
 ```
 
 Input
 ```sh
 # exportamos o porto á nosa máquina
-microk8s.kubectl port-forward pod/pod-con-volume --address=0.0.0.0 8888:80
+kubectl port-forward pod/pod-con-volume --address=0.0.0.0 8888:80
 ```
 
 Input
