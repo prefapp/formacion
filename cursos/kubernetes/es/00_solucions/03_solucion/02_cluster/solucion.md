@@ -1,8 +1,8 @@
 # Montar a nosa aplicación nun clúster de Kubernetes.
-[link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, neste caso seria o apartado "Mellorando a nosa aplicación."
+[link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, en este caso sería el apartado "Mejorando nuestra aplicación".
 
 **<u>Punto A:</u>**
-Neste caso so temos que facer os comandos que nos indican.
+En este caso solo tenemos que hacer los comandos que se nos indiquen.
 
 ```mkdir ~/bin
 curl -s -L -o ~/bin/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
@@ -20,27 +20,26 @@ r.castrelo.csr r.castrelo-key.pem
 
 ```
 **<u>Punto B:</u>**
-(os arquivos estan na carpeta onde esta esta solución cos nomes namespace.yaml, role.yaml e role_binding.yaml.
+(los archivos están en la carpeta donde se encuentra esta solución con los nombres namespace.yaml, role.yaml y role_binding.yaml.
 
 **<u>Punto C:</u>**
-Esto seria o envío de arquivos a persoa que o esta a revisar. 
+Esto sería el envío de archivos a la persona que lo está revisando.
 
 **<u>Punto D:</u>**
-Neste caso dannos accesoa  consola de google, polo que non faria falla o certificado, para obter a configuración chegaria con executar o seguinte comando:
-
+En este caso nos dan acceso a la consola de google, por lo que el certificado no fallaría, para obtener la configuración bastaría con ejecutar el siguiente comando:
 ```
 gcloud container clusters get-credentials my-first-cluster-1 --zone europe-west1-b --project formacion-303709
 ```
 
 **<u>Punto E:</u>**
-Para evitar pisar a los compañeros, creamos un contexto diferente, neste caso r-castrelo ainda que a unidade indicanos contexto-platega:
+Para no pisar a nuestros compañeros, creamos un contexto diferente, en este caso r-castrelo aunque la unidad nos dice context-platega:
 
 ```
 kubectl create namespace r-castrelo
 kubectl config set-context --current --namespace=r-castrelo
 ```
 
-E lanzamos o que nos indican da tarefa c:
+Y lanzamos lo que nos dicen de la tarea c:
 ```
 kubectl apply -f config_practica_2.yaml
 kubectl apply -f despregue_practica_2.yaml 

@@ -1,4 +1,4 @@
-## Despregar clúster en Kind con registry e ingress controller
+## Despregar clúster en Kind con registry y ingress controller
 
 ```bash
 #!/bin/sh
