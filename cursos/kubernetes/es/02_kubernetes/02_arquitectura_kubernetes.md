@@ -1,81 +1,81 @@
 # Arquitectura de Kubernetes
 
-Ó falar da arquitectura de Kubernetes, imos distinguir dúas partes:
+Al hablar de la arquitectura de Kubernetes, distinguiremos dos partes:
 
-- Infraestrutura: estamos a nos referir o conxunto de servidores que constitúen o clúster de K8s.
-- Compoñentes: falaremos dos distintos programas e ferramentas que garanten o funcionamento interno de K8s.
+- Infraestructura: nos referimos al conjunto de servidores que componen el clúster K8s.
+- Componentes: hablaremos de los diferentes programas y herramientas que garantizan el funcionamiento interno de K8s.
 
-## a) Infraestrutura de K8s
-
-### Nodos
-
-Kubernetes vaise despregar sobre **nodos**, puidendo ser un nodo:
-
-- Unha máquina física.
-- Un VM ou máquina virtual.
-
-![LinuxContanirs](./../_media/02/nodo.png)
-
-Os nodos teñen como misión fundamental correr as nosas cargas de traballo en forma de contedores. Todas as aplicacións cliente de K8s correrán en nodos dentro do clúster. 
-
-Os nodos, tamén chamados **workers**, son os elementos de composición do clúster de Kubernetes. Un clúster poderá estar composto de 1..N nodos. 
-
-![LinuxContanirs](./../_media/02/nodo1.png)
-
-A arquitectura de K8s é, por tanto, escalable, no sentido de que pódese adaptar ás necesidades da organización mediante o engadido ou supresión de nodos ó sistema. Esta arquitectura baseada nun escalado horizontal é unha das claves de Kubernetes. 
-
-### O máster
-
-Existe unha máquina ou nodo especial ó que dan en chamar "**master**" no mundo de K8s.
-
-O máster ten tres tarefas fundamentais:
-
-- Exportar a API de comunicación co clúster: o frontend do Kubernetes.
-- Controlar o estado de todos os elementos "vivos" do K8s: contedores, nodos, volumes...
-- Xestionar os recursos do clúster, asignando nodos e volumes ó resto dos elementos.
-
-Co máster, podemos completar o noso diagrama da arquitectura de Kubernetes como segue:
-
-![LinuxContanirs](./../_media/02/nodo2.png)
-
-## b) Compoñentes de Kubernetes
-
-Os compoñentes básicas de K8s distribúense entre o **máster** e os **nodos**.
+## a) Infraestructura K8s
 
 ### Nodos
 
-Nos nodos atopamos os seguintes compoñentes:
+Kubernetes se implementará en **nodos**, que puede ser un nodo:
 
-- [**Kubelet**](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/): o encargado de correr contedores no nodo. O seu traballo é o de comunicarse co motor de contedores instalado no nodo (Docker, rkt) e asegurarse que tódolos containers están a funcionar segundo as especificacións establecidas nos pods (ver sección de artefactos).
+- Una máquina física.
+- Una VM o máquina virtual.
 
-![LinuxContanirs](./../_media/02/nodo3.png)
+![Contenedores Linux](./../_media/02/nodo.png)
 
-- [**Kube-proxy**](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/): é un compoñente que corre nos nodos e ten como misión asegurar o cumprimento e vixencia das regras de redes e comunicación segundo están definidas a nivel de clúster.
+La misión principal de los nodos es ejecutar nuestras cargas de trabajo en forma de contenedores. Todas las aplicaciones cliente de K8s se ejecutarán en nodos dentro del clúster.
 
-![LinuxContanirs](./../_media/02/nodo4.png)
+Los nodos, también llamados **worker**, son los elementos que componen el clúster de Kubernetes. Un clúster puede estar compuesto por 1..N nodos.
 
-- **Motor de contedores**: pode ser Docker, rkt, containerd, cri-o. Trátase da ferramenta que xestiona os contedores no nodo a baixo nivel.
-Queda, polo tanto, un esquema do nodo deste xeito:
+![Contenedores Linux](./../_media/02/nodo1.png)
 
-![LinuxContanirs](./../_media/02/nodo5.png)
+La arquitectura de K8s es por tanto escalable, en el sentido de que puede adaptarse a las necesidades de la organización añadiendo o eliminando nodos del sistema. Esta arquitectura escalable es una de las claves de Kubernetes.
 
-O nodo recibe ordes do máster e as executa mediante o Kubelet e o Kube-proxy comunicándose co motor de contedores instalado na máquina.
+### Master
 
-## Máster
+Hay una máquina o nodo especial que llaman "**master**" en el mundo de los K8s.
 
-En concordancia coas tres misións fundamentais do máster de Kubernetes, existen tres grandes compoñentes que corren neste nodo especial:
+El Máster tiene tres tareas fundamentales:
 
-- [**Kube-apiserver**](https://kubernetes.io/docs/concepts/overview/components/#master-components): é o elemento principal de Kubernetes e o que expón a parte máis importante do sistema (a API).
- - Punto de entrada ó clúster e centro de información.
- - Validación de calqueira artefacto dende o punto de vista da sintaxe, regras de marcado...
- - Responsable de manter o estado do clúster a través da manipulación en exclusiva dunha bbdd de clave-valor: o [etcd](https://github.com/etcd-io/etcd).
+- Exportar la API de comunicación con el clúster: el frontend de Kubernetes.
+- Controlar el estado de todos los elementos "vivos" de K8s: contenedores, nodos, volúmenes...
+- Gestionar los recursos del clúster, asignando nodos y volúmenes al resto de elementos.
 
-![LinuxContanirs](./../_media/02/nodo6.png)
+Con master, podemos completar nuestro diagrama de arquitectura de Kubernetes de la siguiente manera:
 
-- O [**kube-controller-manager**](https://kubernetes.io/docs/concepts/overview/components/): a "intelixencia" do Kubernetes. Onde residen tódolos controladores (Deployments, Daemonsets...) que son os artefactos encargados de vixiar e tomar decisións segundo o estado "desexado" e o estado real do clúster.
+![Contenedores Linux](./../_media/02/nodo2.png)
 
-![LinuxContanirs](./../_media/02/nodo7.png)
+## b) Componentes de Kubernetes
 
-- [**Kube-scheduler**](https://kubernetes.io/docs/concepts/overview/components/): encargado de enviar as cargas de traballo (en forma de contedores) ós distintos nodos segundo o seu nivel de ocupación, emprego de CPU e memoria, etc...
+Los componentes principales de K8s se distribuyen entre el **master** y los **nodos**.
+
+### Nodos
+
+En los nodos encontramos los siguientes componentes:
+
+- [**Kubelet**](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/): el encargado de ejecutar contenedores en el nodo. Su trabajo es comunicarse con el motor del contenedor instalado en el nodo (Docker, rkt) y garantizar que todos los contenedores se ejecuten de acuerdo con las especificaciones establecidas en los pods (consulte la sección de artefactos).
+
+![Contenedores Linux](./../_media/02/nodo3.png)
+
+- [**Kube-proxy**](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/): es un componente que se ejecuta en los nodos y tiene la misión de garantizar el cumplimiento y la aplicación de las reglas de red y comunicación definidas a nivel de clúster.
+
+![Contenedores Linux](./../_media/02/nodo4.png)
+
+- **Motor de contenedores**: puede ser Docker, rkt, containerd, cri-o. Esta es la herramienta que gestiona los contenedores en el nodo de bajo nivel.
+Por lo tanto, nos quedamos con un esquema de nodo como este:
+
+![Contenedores Linux](./../_media/02/nodo5.png)
+
+El nodo recibe comandos del master y los ejecuta utilizando Kubelet y Kube-proxy comunicándose con el motor contenedor instalado en la máquina.
+
+## masters
+
+De acuerdo con las tres misiones principales del master de Kubernetes, hay tres componentes principales que se ejecutan en este nodo especial:
+
+- [**Kube-apiserver**](https://kubernetes.io/docs/concepts/overview/components/#master-components): Es el elemento principal de Kubernetes y expone la parte más importante del sistema ( la API).
+ - Punto de entrada al clúster y centro de información.
+ - Validación de cualquier artefacto desde el punto de vista de sintaxis, reglas de marcado...
+ - Responsable de mantener el estado del clúster a través de la manipulación exclusiva de un bbdd clave-valor: el [etcd](https://github.com/etcd-io/etcd).
+
+![Contenedores Linux](./../_media/02/nodo6.png)
+
+- El [**kube-controller-manager**](https://kubernetes.io/docs/concepts/overview/components/): la "inteligencia" de Kubernetes. Donde residen todos los controladores (Deployments, Daemonsets...) que son los artefactos encargados de monitorizar y tomar decisiones según el estado "deseado" y el estado real del clúster.
+
+![Contenedores Linux](./../_media/02/nodo7.png)
+
+- [**Kube-scheduler**](https://kubernetes.io/docs/concepts/overview/components/): encargado de enviar las cargas de trabajo (en forma de contenedores) a los diferentes nodos según su nivel de ocupación, uso de CPU y memoria, etc...
 
 ![LinuxContanirs](./../_media/02/nodo8.png)

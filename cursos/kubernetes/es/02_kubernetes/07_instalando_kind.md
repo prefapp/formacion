@@ -1,24 +1,24 @@
-# Uso de Kind coma ferramenta de desenvolvemento
+# Uso de Kind como herramienta de desarrollo
 
-Ó longo deste curso, necesitaremos o uso dunha das ferramentas para desenvolvemento que mencionamos ó principio do módulo, para poder crear clústeres onde despregar as prácticas. Recomendamos o uso de Kind, pola potencia e flexibilidade que nos aporta. 
+A lo largo de este curso, necesitaremos el uso de una de las herramientas de desarrollo que mencionamos al comienzo del módulo, para poder crear clústeres donde se puedan implementar las prácticas. Recomendamos el uso de Kind, por la potencia y flexibilidad que proporciona.
 
 ## Instalación de kubectl
 
-O primeiro paso será instalar kubectl, que é a ferramenta de liña de comandos de kubernetes, e que nos permitirá comunicarnos cos clústeres que creemos. Para isto, seguimos os pasos que nos indican na [documentación oficial](https://kubernetes.io/docs/tasks/tools/). En Linux, faríamolo do seguinte modo:
+El primer paso será instalar kubectl, que es la herramienta de línea de comandos de kubernetes, y que nos permitirá comunicarnos con los clústeres que creemos. Para ello seguimos los pasos indicados en la [documentación oficial](https://kubernetes.io/docs/tasks/tools/). En Linux, lo haríamos así:
 
-- Descargamos a última release do binario:
+- Descargamos la última versión del binario:
 
 ```shell
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 ```
 
-- Lanzamos a súa instalación:
+- Ponemos en marcha tu instalación:
 
 ```shell
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
-- Comprobamos que kubectl está funcionando, solicitándolle a versión:
+- Comprobamos que kubectl funciona, preguntando por la versión:
 
 ```shell
 kubectl version --output=yaml
@@ -27,28 +27,28 @@ kubectl version --output=yaml
 
 ## Instalación de Kind
 
-Unha vez kubectl esté funcionando, xa podemos instalar kind. No seguinte enlace podedes acceder á [guía de instalación de kind](https://kind.sigs.k8s.io/docs/user/quick-start), onde se explican os pasos a seguir segundo o sistema operativo que se esté utilizando. No caso de Linux, o máis sinxelo será facer a [instalación do binario](https://kind.sigs.k8s.io/docs/user/quick-start#installing-from-release-binaries).
+Una vez que kubectl esté funcionando, podemos instalar kind. En el siguiente enlace se puede acceder a la [guía de instalación de Kind](https://kind.sigs.k8s.io/docs/user/quick-start), donde se explican los pasos a seguir según el sistema operativo que se utilice. En el caso de Linux, lo más fácil será [instalar el binario](https://kind.sigs.k8s.io/docs/user/quick-start#installing-from-release-binaries).
 
-Unha vez rematemos a instalación, xa podemos crear un novo clúster. O xeito máis sinxelo para facelo é mediante a seguinte orde:
+Una vez que hayamos terminado la instalación, ya podemos crear un nuevo clúster. La forma más fácil de hacer esto es usando el siguiente comando:
 
 ```sh
 kind create cluster
 ```
 
-Isto creará un clúster chamado "kind" cos valores por defecto. Pódeselle dar un nome distinto utilizando a flag `--name`.
+Esto creará un clúster llamado "Kind" con los valores predeterminados. Se le puede dar un nombre diferente usando el indicador `--name`.
 
-Unha das vantaxes do uso de kind é a súa flexibilidade na creación dos clústeres: podemos especificar o número de nodos, a imaxe que usan (para poder usar distintas versións de kubernetes), a súa configuración de rede, etc. Podes consultar as distintas posibilidades de configuración que ofrece na súa [documentación](https://kind.sigs.k8s.io/docs/user/configuration/).
+Una de las ventajas de utilizar kind es su flexibilidad a la hora de crear los clústeres: podemos especificar el número de nodos, la imagen que utilizan (para poder utilizar diferentes versiones de kubernetes), su configuración de red, etc. Puedes consultar las diferentes posibilidades de configuración que ofrece en su [documentación](https://kind.sigs.k8s.io/docs/user/configuration/).
 
-Para listar os clústeres que teñamos levantados nun momento determinado, poderemos utilizar a seguinte orde, que devolverá unha lista cos nomes dos clústeres que hai creados:
+Para listar los clústeres que hemos levantado en un momento dado, podemos utilizar el siguiente comando, que nos devolverá una lista con los nombres de los clústeres que se han creado:
 
 ```sh
 kind get clusters
 ```
 
-Por último, ó rematar de usar o clúster, pódese eliminar coa seguinte orde:
+Finalmente, cuando haya terminado de usar el clúster, puede eliminarlo con el siguiente comando:
 
 ```sh
 kind delete cluster
 ```
 
-Isto eliminará o clúster cuxo nome sexa "kind". En caso de que o clúster que queremos borrar teña un nome diferente, podemos indicalo utilizando a flag `--name`.
+Esto eliminará el clúster cuyo nombre es "Kind". En caso de que el clúster que queremos eliminar tenga un nombre diferente, podemos indicarlo mediante el flag `--name`.

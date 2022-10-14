@@ -1,31 +1,31 @@
-# Artefactos en Kubernetes: o Deployment
+# Artefactos en Kubernetes: el Deployment
 
-Na sección anterior exploramos os Pods como artefacto básico de composición de aplicacións dentro de Kubernetes. 
+En la sección anterior, exploramos los Pods como un artefacto de composición de aplicaciones central dentro de Kubernetes.
 
-A pesar de ser un concepto clave para entender o resto do sistema, a verdade é que **rara vez imos empregar directamente un pod** no noso traballo en Kubernetes. A meirande parte do tempo imos traballar con Deployments. 
+A pesar de ser un concepto clave para entender el resto del sistema, lo cierto es que **rara vez usaremos directamente un pod** en nuestro trabajo de Kubernetes. La mayor parte del tiempo vamos a trabajar con Deployments.
 
-## a) Por qué deployments?
+## a) ¿Por qué implementaciones?
 
-Os deployments agregan "intelixencia" ós nosos pods, é dicir, trátase de elementos externos ós pods que os controlan e inspeccionan de xeito constante para poder:
+Los deployments añaden "inteligencia" a nuestros pods, es decir, son elementos externos a los pods que los controlan e inspeccionan constantemente para poder:
 
-- Vixilar (o número de pods correndo é exactamente o especificado). 
-- Escalalos (aumentar ou reducir o seu número segundo as necesidades establecidas)
-- Actualizalos: permiten un cambio de configuración ou de imaxe dos pods dun xeito controlado. 
-- Pausalos / reanudalos
+- Monitor (el número de pods en ejecución es exactamente el especificado).
+- Escalarlos (aumentar o reducir su número según las necesidades establecidas)
+- Actualizarlos: permitir un cambio de configuración o imagen de los pods de forma controlada.
+- Pausar / reanudarlos
 
 ![Deploy1](./../_media/02/deployment.png)
 
-## b) Definir un Deployment
+## b) Definir una implementación
 
-Para definir un deployment, temos que pensar que se trata dunha estrutura que está por enriba do pod:
+Para definir una implementación, tenemos que pensar en ella como una estructura que está por encima del pod:
 
 ![Deploy2](./../_media/02/deployment2.png)
 
-No seguinte exemplo:
+En el siguiente ejemplo:
 
-- Imos crear un deployment de nome "despregue-nginx". 
-- Ten a capacidade de despregar pods de nginx. En cada pod correrá un contedor cunha imaxe de nginx.
-- O contedor ten exposto o porto 80.
+- Vamos a crear un deployment llamado "despregue-nginx".
+- Tiene la capacidad de implementar pods nginx. Cada pod ejecutará un contenedor con una imagen nginx.
+- El contenedor tiene el puerto 80 expuesto.
 
 ```yaml
 # deployment_1.yaml
@@ -53,13 +53,13 @@ spec:
         - containerPort: 80
 ```
 
-Se enviamos este ficheiro ó kubernetes:
+Si enviamos este archivo a kubernetes:
 
 ```shell
 kubectl apply -f deployment_1.yaml
 ```
 
-Veremos como se crea un pod.
+Veremos cómo crear un pod.
 
 ```shell
 despregue-nginx-6dd86d77d-4prgf   0/1     Pending       0          0s
@@ -67,31 +67,31 @@ despregue-nginx-6dd86d77d-4prgf   0/1     ContainerCreating   0          0s
 despregue-nginx-6dd86d77d-4prgf   1/1     Running             0          2s
 ```
 
-E teremos un novo tipo de artefacto: o deployment. 
+Y tendremos un nuevo tipo de artefacto: el deployment.
 
-Podemos listalos:
+Podemos enumerarlos:
 
 ```shell
 kubectl get deploy
 ```
 
-E veremos
+y veremos
 
 ```shell
 NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 despregue-nginx   1/1     1            1           7m48s
 ```
 
-### i) A tarefa de "vixiante" do deployment
+### i) La tarea de "vigilante" del Deployment
 
-Se agora listásemos os pods que temos correndo, e borrásemos o pod de nginx:
+Si ahora enumeramos los pods que tenemos en ejecución y eliminamos el pod de nginx:
 
 ```shell
 # o nome variará na vosa máquina
 kubectl delete pod despregue-nginx-976fb94cd-l8ksl
  ```
 
-Veremos que se borra o pod e que, inmediatamente, se creou un novo:
+Veremos que se elimina el pod y se crea uno nuevo inmediatamente:
 
 ```shell
 despregue-nginx-976fb94cd-l8ksl   1/1     Running   0          90s
@@ -101,28 +101,28 @@ despregue-nginx-976fb94cd-ngw7t   0/1     ContainerCreating   0          0s
 despregue-nginx-976fb94cd-ngw7t   1/1     Running             0          1s
 ```
 
-Qué pasou? Por qué se borrou ese pod e se creou un novo?
+qué sucedió ¿Por qué se eliminó ese pod y se creó uno nuevo?
 
-A razón está no deployment.
+La razón está en el Deployment.
 
-1. O deployment está a vixilar os pods (neste caso hai un só)
-2. Borramos o pod a man (mediante delete pod)
-3. O deployment detecta que non está a correr o pod
-4. Inmediatamente crea un novo pod coa mesma configuración e imaxe
+1. La implementación está monitoreando los pods (en este caso solo hay uno)
+2. Eliminamos el pod a mano (usando delete pod)
+3. La implementación detecta que el pod no se está ejecutando
+4. Cree inmediatamente un nuevo pod con la misma configuración e imagen
 
-É dicir: o deployment controla calqueira alteración ou falla dos pods e procura que o sistema se "recupere" da caída. 
+Es decir: el Deployment controla cualquier alteración o falla de los pods y asegura que el sistema se “recupere” del bloqueo.
 
-### ii) A tarefa de escalado / degradado do deployment
+### ii) La tarea de escalado/degradación de la implementación
 
-Neste momento, temos un pod só correndo o nginx. Imaxinemos que queremos correr tres pods (tres réplicas, posto que terían todos a mesma configuración).
+En este momento, tenemos un solo pod que ejecuta nginx. Imaginemos que queremos ejecutar tres pods (tres réplicas, ya que todos tendrían la misma configuración).
 
-Podemos facer este traballo directamente con [kubectl scale](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment):
+Podemos hacer este trabajo directamente con kubectl scale:
 
 ```shell
  kubectl scale deploy despregue-nginx --replicas=3
 ```
 
-Se vemos os pods teremos:
+Si vemos las Pods tendremos:
 
 ```shell
 >  kubectl get pods -w
@@ -137,7 +137,7 @@ despregue-nginx-976fb94cd-4z54k   1/1     Running             0          2s
 ```
 
 
-E se listamos os deployments:
+Y si enumeramos los Deployments:
 
 ```shell
 > kubectl get deploy
@@ -146,25 +146,25 @@ NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 despregue-nginx   3/3     3            3           22m
 ```
 
-Para voltar á situación inicial dunha soa réplica (pods = 1), abondaría con facer:
+Para volver a la situación inicial de una sola réplica (pods = 1), bastaría con hacer:
 
 ```shell
 kubectl scale deploy despregue-nginx --replicas=1
 ```
 
-E veríamos como dous pods serían eliminados restando soamente un deles. 
+Y veríamos como se eliminarían dos Pods restando sólo una de ellas.
 
 ![Deploy3](./../_media/02/deployment3.png)
 
-### iii) A tarefa de actualización de pods do deployment
+### iii) La tarea de actualizar los módulos de implementación
 
-Nestes exemplos estamos a correr a versión 1.7.9 do nginx. Imaxinemos que queremos correr a versión 1.15. 
+En estos ejemplos, estamos ejecutando la versión 1.7.9 de nginx. Imaginemos que queremos ejecutar la versión 1.15.
 
-Para isto, tamén nos podemos servir do deployment e facer unha actualización ordenada e "civilizada" dos nosos pods. 
+Para ello también podemos usar deployment y hacer una actualización ordenada y “civilizada” de nuestros pods.
 
-Asumamos, tamén, que queremos deixar constancia do cambio no noso artefacto orixinal (deployment_1.yaml)
+Supongamos también que queremos registrar el cambio en nuestro artefacto original (deployment_1.yaml)
 
-Imos editalo e modificar a liña de image do mesmo:
+Editémoslo y modifiquemos la línea de imagen del mismo:
 
 ```yaml
 # deployment_1.yaml
@@ -192,7 +192,7 @@ spec:
         - containerPort: 80
 ```
 
-Basta con aplicar de novo este ficheiro modificado:
+Simplemente vuelva a aplicar este archivo modificado:
 
 ```shell
 # aplicamos o ficheiro
@@ -202,24 +202,16 @@ kubectl apply -f deployment_1.yaml
 kubectl get pods -w
 ```
 
-Veremos que os pods iniciales poñense a estado "terminating" e se lanzan uns novos (coa nova imaxe). 
+Veremos que los pods iniciales pasan al estado de "terminación" y se lanzan otros nuevos (con la nueva imagen).
 
-O deploy encárgase de facer esta tarefa por nos. 
+Deploy maneja esta tarea por nosotros.
 
-Se non queremos modificar o código yaml do noso ficheiro de deploy, existe outra opción: **a edición do artefacto existente en Kubernetes**. 
+Si no queremos modificar el código yaml de nuestro archivo de implementación, existe otra opción: **editar el artefacto existente en Kubernetes**.
 
-Compre empregar o comando **edit**:
+Compre usando el comando **edit**:
 
 ```shell
 kubectl edit deploy despregue-nginx
 ```
 
-O comando kubectl abrirá unha instancia de vim co código en yaml do artefacto para poder facer cambios que, unha vez gardados, faránse automáticamente no deploy e nos seus pods. 
-
-
-
-
-
-
-
-
+El comando kubectl abrirá una instancia vim con el código yaml del artefacto para poder realizar cambios que, una vez guardados, se realizarán automáticamente en el deployment y sus pods.
