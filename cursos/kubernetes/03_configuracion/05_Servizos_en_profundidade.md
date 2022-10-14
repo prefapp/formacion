@@ -115,3 +115,81 @@ Si se desexa expoñer directamente un servizo, este é o método predeterminado.
 A gran desvantaxe é que cada servizo que se expón cun *LoadBalancer* recibirá o seu propio enderezo IP e teremos que pagar por cada servizo exposto, o que pode resultar caro.
 
 Se estas a empregar tráfico HTTP, un Ingress permitirache empregar unha sola IP e facer routing por path e subdominio, como veremos no [seguinte capítulo](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico) do tema.
+
+### LoadBalancer local con Kind
+
+Para probar o funcionamento dos servizos de tipo LoadBalancer nun clúster local, Kind permite a instalación de [metallb](https://metallb.universe.tf/), que nos dará a posibilidade de asignar unha pool de IPs locais ós nosos pods mediante LoadBalancer.
+
+Os pasos a seguir serían:
+
+**1. Creamos un namespace para metallb:**
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
+```
+
+**2. Aplicamos a manifesto de metallb, que creará tódolos artefactos necesarios para o seu funcionamento:**
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
+```
+
+Antes de continuar, debemos agardar a que os pods de metallb se atopen en estado running:
+
+```shell
+kubectl get pods -n metallb-system --watch
+```
+
+**3. Agora, teremos que asignarlle ó metallb o rango de IPs que vai controlar. Para isto, primeiro debemos consultar cal é o rango da rede de kind en docker:**
+
+```shell
+docker network inspect -f '{{.IPAM.Config}}' kind
+```
+
+O cal nos devolverá unha subclase similar a 172.19.0.0/16. Temos que escoller un rango dentro de esta, por exemplo, no caso anterior, as IPs dende a 172.19.255.200 ata a 172.19.255.250, e especificalas nun configmap coma o seguinte:
+
+```yaml
+# configmap_metallb.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 172.19.255.200-172.19.255.250
+```
+**4. Creamos o servizo de tipo LoadBalancer:**
+
+```yaml
+# loadbalancer-service.yaml
+kind: Service
+apiVersion: v1
+metadata:  # esta é a parte de identificación do servizo
+  name: servizo-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:  # esta é a parte de selección
+    app: pod-web
+  ports:  # esta é a parte de especificación propia
+  - port: 6000
+    targetPort: 80
+```
+E obtemos a IP externa coa que foi creado:
+
+```shell
+> kubectl get svc/servizo-loadbalancer -o wide
+NAME                   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)          AGE     SELECTOR
+servizo-loadbalancer   LoadBalancer   10.96.64.63   172.18.255.200   6000:32131/TCP   2m42s   app=pod-web
+```
+
+**5. Con isto LoadBalancer está configurado, polo que xa podemos facer un curl a dita IP para acceder ó noso deploy:**
+
+```shell
+curl 172.18.255.200:6000
+```

@@ -4,147 +4,130 @@
 
 Como falaramos na parte [expositiva](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
 
-No curso, recomendamos [microk8s](https://microk8s.io/) que é un excelente traballo da xente de Canonical e que nos permite, a través de [snap](https://snapcraft.io/), instalar e xestionar un minuclúster de Kubernetes (realmente o "master" e o "nodo" son virtuais e todo corre na nosa Ubuntu local) para facer as prácticas, desenvolver aplicacións, etc...
+No curso, recomendamos a creación dos clústeres locais utilizando Kind. Para isto, debemos ter instalado tanto Kind coma kubectl tal e como se explicou no apartado de [instalación de Kind](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/07_instalando_kind).
 
-### a) Instalación do paquete snap de microk8s
 
-Dende unha shell da nosa ubuntu facemos:
+### a) Creación de clústeres con kind
 
-```shell
-sudo snap install microk8s --classic
-```
-
-E agardamos a que remate a instalación.
-
-Comprobamos o estado:
+O primeiro paso será verificar que Kind está instalado correctamente. Para isto, lanzamos o seguinte comando:
 
 ```shell
-sudo microk8s.status
+kind version
 ```
 
-Que nos debería devolver algo como isto:
-
-![actividades1](./../_media/02/actividades1.png)
-
-### b) Arranque e parado do microk8s
-
-Para arrancar o microk8s basta con facer:
+Que devolverá unha resposta similar á seguinte:
 
 ```shell
-sudo microk8s.start
+kind v0.14.0 go1.18.2 linux/amd64
 ```
 
-Que debería producir algo como esto:
-
-![actividades2](./../_media/02/actividades2.png)
-
-Agora, se facemos un status:
+Agora, creamos un novo clúster en kind:
 
 ```shell
-sudo microk8s.status
+kind create cluster
 ```
 
-Deberíamos obter algo parecido a:
+Que debería producir algo coma isto:
 
-![actividades3](./../_media/02/actividades3.png)
+![actividades2](./../_media/02/actividades11.png)
 
-Para deter o microk8s, compre facer:
+E podemos usar kubectl para ver o nodo que acabamos de crear:
 
 ```shell
-sudo microk8s.stop
+~ > kubectl get nodes
+NAME                 STATUS   ROLES           AGE     VERSION
+kind-control-plane   Ready    control-plane   3m53s   v1.24.0
 ```
-
-E teríamos o sistema detido.
-
-### c) Habilitando os servizos
-
-Por defecto, microk8s instálase sen o servizo de dns, fundamental para traballar con [servizos](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service).
-
-Para habilitalo, basta con facer:
-
-```shell
-sudo microk8s.enable dns
-```
-
-### d) Interactuar co microk8s
-
-A ferramenta principal para traballar contra un Kubernetes é o cli [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
-
-En microk8s, está integrado no comando microk8s.kubectl.
-
-Facendo un:
-
-```shell
-sudo microk8s.kubectl version
-```
-
-Deberíamos ver a nosa versión do cli e do kubernetes.
-
-### e) Habilitar o dashboard
+### b) Habilitar o dashboard:
 
 Kubernetes expón un dashboard para traballar de xeito gráfico e ver o estado do clúster.
 
-Para habilitar o dashboard compre executar:
+Para despregalo cómpre executar:
 
 ```shell
-sudo microk8s.enable dashboard
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
 ```
 
-Agora, para poder velo no navegador, dependerá se estamos a correr o microk8s nunha máquina virtual (VirtualBox) ou o temos directamente correndo na nosa máquina de traballo.
+Isto creará os artefactos precisos para facelo funcionar. 
 
-#### i) Habilitar o dashboard dentro dunha máquina virtual
+A maiores, necesitaremos crear un usuario de test con permisos para acceder ó dashboard. Para isto, crearemos os seguintes artefactos:
 
-O xeito máis sinxelo é facer un port-forward e redirixir a un porto da nosa VM ó que teñamos acceso dende o anfitrión. Nunha shell deixaremos correndo o seguinte comando:
+```yaml
+# dashboard_adminuser.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+```
+
+```yaml
+# dashboard_rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+```
+
+E os aplicamos:
 
 ```shell
-microk8s.kubectl port-forward service/kubernetes-dashboard -n kube-system --address=0.0.0.0 8888:443
+kubectl apply -f dashboard_adminuser.yaml
+kubectl apply -f dashboard_rolebinding.yaml
 ```
 
-No meu caso, empreguei o porto 8888 porque o teño aberto na máquina virtual e redirixido ó porto 8888 do anfitrión.
-
-Agora, compre ir ó navegador e poñendo a dirección `https://localhost:8888` xa se pode acceder ó dashboard de Kubernetes.
-
-![actividades4](./../_media/02/actividades4.png)
-
-En caso de empregar chrome, ver a sección final.
-
-O certificado estará marcado como inseguro.
-
-#### ii) Acceder ó dashboard se o microk8s corre na máquina sen VM
-
-Compre buscar a ip do servizo:
+Lanzamos a seguinte orde para obter o token asociado ó usuario que acabamos de crear:
 
 ```shell
-sudo microk8s.kubectl get services -n kube-system
+kubectl -n kubernetes-dashboard create token admin-user
 ```
 
-E buscar a ip que nos da o sistema:
+E, para habilitar o acceso ó Dashboard, lanzamos:
 
-![actividades5](./../_media/02/actividades5.png)
+```shell
+kubectl proxy
+```
 
-Con esa ip, ponémola no navegador na forma: ```https://10.152.183.223:443``` e accederíamos ó dashboard.
+Deste xeito, kubectl facilitaranos o acceso a través de: http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
-### Addenda. Problemas co certificado auto-firmado
+Entramos neste enlace e introducimos na pantalla de login o token que creamos anteriormente, e xa poderemos ver o dashboard.
 
-O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado polo que pode dar problemas cos navegadores modernos.
+### c) Eliminar o clúster
 
-- En caso de empregar Mozilla Firefox, basta con ir ás opcións avanzadas e aceptar os riscos para ver o panel.
-- No caso do Google Chrome, a cousa é un pelín máis complicada. Compre ir a esta dirección chrome://flags/#allow-insecure-localhost e permitir o localhost inseguro. Despois xa se pode acceder ó dashboard.
+Unha vez rematemos de traballar cun clúster, podemos eliminalo. Para isto faremos:
+
+
+```shell
+kind delete cluster
+```
+
+E o sistema eliminará o clúster local da nosa máquina.
+
+
 
 ### Evaluación
 
 **Evidencias da adquisición dos desempeños**:
-- Captura de pantalla da versión de microk8s instalada (ver parágrafo a).
-- Captura de pantalla do estado do microk8s, co dns (parágrafo c) e o dashboard (parágrafo e) habilitados.
+- Captura de pantalla da versión de Kind (ver parágrafo a).
+- Captura de pantalla da versión dos nodos creados con Kind co dashboard (parágrafo e) habilitado.
 
 **Indicadores de logro**: Deberías ter...
-- Correctamente instalado o microk8s.
-- Habilitados o dns e o dashboard e ser quen de ver o dashboard dende o navegador.
+- Correctamente instalado o Kind.
+- Habilitado o dashboard e feito o acceso dende o navegador.
 
 **Criterios de corrección**:
-- 15 puntos se hai unha captura da pantalla coa saída da versión de microk8s.
-- 10 puntos se hai unha captura da pantalla coa saída do microk8s.status e vense o dns e dashboard activos.
-- 5 puntos se hai unha captura de pantalla do navegador co dashboard de microk8s funcionando.
+- 15 puntos se hai unha captura da pantalla coa saída da versión de Kind.
+- 5 puntos se hai unha captura de pantalla do navegador co dashboard de kubernetes funcionando.
 
 **Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
 
@@ -154,38 +137,12 @@ O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado p
 
 ---
 
-## Os elementos básicos de Kubernetes
-
-Nesta tarefa imos revisar os conceptos sobre Kubernetes (k8s).
-
-Compre ler a [documentación](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes) que temos no módulo.
-
-Esta tarefa non ten entrega.
-
-### Evaluación
-
-**Evidencias da adquisición dos desempeños**:
-- test feito.
-
-**Indicadores de logro**: Deberías ter...
-- test feito dacordo ós teus coñecementos.
-
-**Criterios de corrección**:
-- 20 puntos polo test. 
-
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
-
-**Peso na cualificación**:
-Peso desta tarefa na cualificación final ........................................ 20 puntos
-Peso desta tarefa no seu tema ...................................................... 20 %
-
-----
 
 ## Correndo a nosa primeira aplicación en Kubernetes
 
 Imos comezar a nosa andaina con Kubernetes.
 
-Para poder completar esta práctica compre ter completada a tarefa onde puxemos a funcionar o noso entorno de microk8s.
+Para poder completar esta práctica compre ter completada a tarefa onde puxemos a funcionar o noso entorno de Kind, cun clúster levantado.
 
 Imos a montar unha sinxela aplicación escrita en nodejs que fai o seguinte:
 - Corre un servidor web nun contedor.
@@ -260,7 +217,7 @@ O [servizo](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kuberne
 
 Creamos o artefacto do servizo e o lanzamos.
 
-Comprobamos que está realmente creado no noso microk8s. Que comando empregaremos?
+Comprobamos que está realmente creado no noso clúster. Que comando empregaremos?
 
 Facemos un curl ó clusterIp do noso servizo. Que saída teremos?
 

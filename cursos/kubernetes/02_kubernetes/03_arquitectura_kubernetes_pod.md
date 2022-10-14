@@ -2,6 +2,12 @@
 
 Para ser quen despregar e controlar as aplicacións en Kubernetes, póñense á disposición dos usuarios unha serie de elementos básicos que actúan de bloques de construcción mediante os cales pódese expresar unha topoloxía e estrutura moi flexible que se axuste ás necesidades de cada caso.  
 
+Antes de lanzar a creación de calquera artefacto de Kubernetes, recorda que é preciso estar conectado a un clúster. No noso caso, como estamos usando clústeres locais para facer probas, crearemos un clúster con Kind, en caso de non telo feito antes:
+
+```shell
+kind create cluster
+```
+
 O que segue é unha descrición dos principais elementos e da súa relación co resto do sistema.
 
 ## Pod
@@ -53,7 +59,7 @@ spec:
 Como podemos ver empregamos unha linguaxe declarativa para expresar o que queremos, agora, basta empregar a ferramenta kubectl para facer que este pod "apareza" na nosa instalación de Kubernetes. 
 
 ```shell
-microk8.kubectl apply -f pod_1.yaml
+kubectl apply -f pod_1.yaml
 ```
 
 A ferramenta kubectl comunícase coa api que se atopa no máster e unha nova estrutura dáse de alta. O sistema comproba que non hai tal pod dentro dos nodos e marca o pod como "necesita crearse". O scheduler elixe un nodo onde correr o pod e este iníciase a través do Kubelet. 
@@ -61,7 +67,7 @@ A ferramenta kubectl comunícase coa api que se atopa no máster e unha nova est
 Se corremos este comando
 
 ```shell
-microk8.kubectl get pods
+kubectl get pods
 ```
 
 Veremos a seguinte saída
@@ -85,7 +91,7 @@ Xa vimos como listar os pods na sección anterior.
 Se quixeramos ter máis detalles do noso pod, poderíamos facer:
 
 ```shell
-microk8s.kubectl describe pod/primeiro-pod
+kubectl describe pod/primeiro-pod
 ```
 
 E obteríamos unha morea de datos:
@@ -149,7 +155,7 @@ Se quixeramos "entrar" no pod, podemos empregar exec:
 
 ```shell
 # indicamos o pod e o contedor no que queremos "ingresar"
-microk8s.kubectl exec -ti primeiro-pod -c contedor bash
+kubectl exec -ti primeiro-pod -c contedor -- bash
 ```
 
 Nótese que a sintaxe do comando é moi parecida ó [exec de Docker](https://docs.docker.com/engine/reference/commandline/exec/). 
@@ -159,7 +165,7 @@ Unha vez executada, teríamos unha shell dentro do contedor e poderíamos intera
 Para borralo, simplemente pasamos o noso ficheiro de yaml ó sistema:
 
 ```shell
-microk8s.kubectl delete -f pod_1.yaml
+kubectl delete -f pod_1.yaml
 ```
 
 ### c) Establecer variables de contorno no pod

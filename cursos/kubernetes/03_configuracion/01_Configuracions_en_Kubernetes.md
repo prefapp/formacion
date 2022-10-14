@@ -4,9 +4,9 @@ Un dos problemas que atopamos cos contedores de software é a súa configuració
 
 Dado que un contedor é con contexto aillado compre "inxectar" esa configuración de tal forma que:
 
-* As imaxes estén preparadas para traballar cunha configuración que será dada dende o "exterior"
-* O contedor faga as menus "asuncións" posibles de tal xeito que poida correr en calquera contexto cuns cambios mínimos; sexa en desenvolvemento, testeo, producción...
-* Dado que a información se inxecta dentro do contedor, compre protexer os datos que sexan sensibles: passwords, contrasinais, claves ssh...
+* As imaxes estén preparadas para traballar cunha configuración que será dada dende o "exterior".
+* O contedor faga as menos "asuncións" posibles de tal xeito que poida correr en calquera contexto cuns cambios mínimos; sexa en desenvolvemento, testeo, producción...
+* Dado que a información se inxecta dentro do contedor, cómpre protexer os datos que sexan sensibles: passwords, contrasinais, claves ssh...
 
 A solución aportada por K8s é a de crear dous novos tipos de artefactos:
 
@@ -23,7 +23,7 @@ Estos elementos son repositorios de información que poden ser empregados polos 
 
 Un ConfigMap é un artefacto de Kubernetes que contén información de configuración:
 
-* Ó ser un artefacto, pódese interactuar con él a través do Kubectl para crealo, destruilo, editalo e clonalo
+* Ó ser un artefacto, pódese interactuar con él a través do Kubectl para crealo, destruilo, editalo e clonalo.
 * Centraliza configuracións que poden ser empregadas polos pods para xestionar o seu propio comportamento. 
 
 ### a) Creando un ConfigMap
@@ -48,18 +48,18 @@ data:
   porto: "8080"
 ```
 
-Se a creamos co noso microk8s:
+Se a creamos con kubectl:
 
 Input
 ```sh
-microk8s.kubectl apply -f configuracion_exemplo.yaml
+kubectl apply -f configmap_exemplo.yaml
 ```
 
 Veremos que se creou un novo obxecto no noso k8s:
 
 Input
 ```sh
-microk8s.kubectl get configmap
+kubectl get configmap
 ```
 Output
 ```sh
@@ -71,7 +71,7 @@ E se facemos un describe da mesma:
 
 Input
 ```sh
-microk8s.kubectl describe configmap configuracion-exemplo
+kubectl describe configmap configuracion-exemplo
 ```
 Output
 ```sh
@@ -96,13 +96,13 @@ porto:
 Events:  <none>
 ```
 
-Podemos tamén editala con "kubect edit" ou modificando o yaml e volvendo a facer un "kubectl apply". 
+Podemos tamén editala con "kubectl edit" ou modificando o yaml e volvendo a facer un "kubectl apply". 
 
 Por último, podemos borrala:
 
 Input
 ```sh
-microk8s.kubectl delete configmap configuracion-exemplo
+kubectl delete configmap configuracion-exemplo
 ```
 
 ### b) Empregando o noso configmap
@@ -160,12 +160,12 @@ Se lanzamos isto:
 Input
 ```
 # arrancamos o pod
-microk8s.kubect apply -f pod_exemplo_2.yaml
+kubectl apply -f pod_exemplo_2.yaml
 ```
 Input
 ```
 # e expoñemos un porto
- microk8s.kubectl port-forward pod/pod-saudo --address=0.0.0.0 8888:80
+kubectl port-forward pod/pod-saudo --address=0.0.0.0 8888:80
 ```
 Output
 ```
@@ -278,19 +278,19 @@ Na sección "data" do artefacto, temos a información en formato clave-valor. Os
 Se creamos este segredo no noso k8s:
 
 ```shell
-microk8s.kubectl apply -f o_meu_segredo.yaml
+kubectl apply -f o_meu_segredo.yaml
 ```
 Teremos un artefacto novo no sistema que podemos controlar como sempre:
 
 ```shell
 # podemos listalo
-microk8s.kubectl get secrets
+kubectl get secrets
 
 NAME                                                TYPE                                  DATA   AGE
 meu-segredo                                         Opaque                                1      80s
 
 # podemos borralo
-microk8s.kubectl delete secret meu-segredo
+kubectl delete secret meu-segredo
 
 secret "meu-segredo" deleted
 ```
