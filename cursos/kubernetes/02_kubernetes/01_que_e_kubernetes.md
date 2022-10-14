@@ -20,6 +20,7 @@ De feito, a meirande parte do tempo, trabállase con plataformas baseadas en Kub
 - Sistemas baseados en Kubernetes.
  - O [openshift](https://www.redhat.com/es/technologies/cloud-computing/openshift) de RedHat. 
 - Instalacións de kubernetes para desenvolvemento:
+ - Kind
  - Minikubes.
  - Minishift.
  - DockerDesktop.
@@ -27,6 +28,8 @@ De feito, a meirande parte do tempo, trabállase con plataformas baseadas en Kub
 - Neste artigo podemos ver con máis profundidade [diferentes solucións](https://betterprogramming.pub/choose-the-right-kubernetes-hosting-solution-a842878fc594) para diferentes tipos de despregues incluíndo Kubernetes en CPDs ou clouds privados ou "on premise".
 
 A flexibilidade que permite o enfoque de framework de Kubernetes posibilita un gran conxunto de escenarios onde se pode empregar.
+
+Ó longo deste curso, necesitaremos o uso dunha das ferramentas para desenvolvemento que mencionamos, para poder crear clústeres onde despregar as prácticas. Recomendamos o uso de Kind, pola potencia e flexibilidade que nos aporta. No seguinte enlace podedes acceder á [guía de instalción de kind](https://kind.sigs.k8s.io/docs/user/quick-start)
 
 **Cando dicimos que as aplicacións en Kubernetes corren nun clúster de nodos ou máquinas...**
 

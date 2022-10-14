@@ -81,7 +81,7 @@ kubectl create -f <ficheiros yaml> -n hpa
 
 ```
 
-Veremos que temos un service e un deployment con 0 réplicas. 
+Veremos que temos un service e un deployment cunha réplica. 
 
 Imos facer que esto comece a andar!!!
 
@@ -98,7 +98,10 @@ Para instalalo imos empregar [Helm]():
 ```yaml
 
 # instalar helm (se non o está instalado)
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+# Podes ver as versións dispoñibles en: https://github.com/helm/helm/releases
+wget https://get.helm.sh/helm-v3.9.0-linux-amd64.tar.gz
+tar zvxf helm-v3.9.0-linux-amd64.tar.gz
+mv helm /usr/local/bin
 
 # empregamos o chart para lanzar o metrics-server
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
@@ -151,7 +154,7 @@ A nosa app fai un uso intensivo de CPU polo tanto é a métrica clave para a con
 
 ```yaml
 
-apiVersion: autoscaling/v2beta2 # hai varias versións en funcionamento a día de hoxe
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 
 metadata:
@@ -275,18 +278,18 @@ O HPA tardou aproximadamente 5 min e volver a poñer as réplicas a 1. Podemos m
 **Nota:**: para poder facer esta sección, compre ter unha versión de K8s que o permita. Para comprobalo abonda con facer:
 
 ```yaml
-# comprobar que está autoscaling/v2beta2
+# comprobar que está autoscaling/v2
 
-kubectl api-versions | grep autoscaling/v2beta2
+kubectl api-versions | grep autoscaling/v2
 
-autoscaling/v2beta2
+autoscaling/v2
 
 ```
 
 E metemos os seguintes cambios na definición do noso HPA:
 
 ```yaml
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 
 metadata:
@@ -347,7 +350,7 @@ Despois de parchear o noso HPA con este behavior.
 
 Lanzamos carga ata que escale a 8 réplicas (co curl anterior). 
 
-Cortamos o curl!. 
+Cortamos o curl!
 
 Se vemos o comportamento:
 
