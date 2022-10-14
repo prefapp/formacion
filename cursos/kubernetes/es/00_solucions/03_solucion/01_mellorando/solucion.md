@@ -1,5 +1,5 @@
 # Mellorando a nosa aplicación.
-[link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, neste caso seria o apartado "Mellorando a nosa aplicación."
+[link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, en este caso sería el apartado "Mejorando nuestra aplicación".
 
 **<u>Punto A:</u>**
 ![](images/mellorado_01.png)
