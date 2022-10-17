@@ -1,4 +1,4 @@
-# Montar a nosa aplicación nun clúster de Kubernetes.
+# Monte nuestra aplicación en un clúster de Kubernetes.
 [link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, en este caso sería el apartado "Mejorando nuestra aplicación".
 
 **<u>Punto A:</u>**
@@ -13,7 +13,7 @@ export PATH=$PATH:~/bin
 echo '{"CN":"<r_castrelo>","hosts":[""],"key":{"algo":"rsa","size":2048}}' \
 | cfssl genkey  - | cfssljson -bare r.castrelo
 
-# obteremos dous ficheiros
+# obtendremos dos archivos
 ls
 
 r.castrelo.csr r.castrelo-key.pem
