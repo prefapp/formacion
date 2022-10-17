@@ -30,19 +30,19 @@ El servicio define principalmente:
 Para crear servicios podemos acudir al DSL de K8s.
 
 ```yaml
-# servicio_1.yaml
+# servizo_1.yaml
 
-tipo: Servicio
-apiVersión: v1
-metadatos: # esta es la parte de identificación del servicio
-  nombre: primer servicio
-especificaciones:
-  selector: # esta es la parte de selección
-    aplicación: nginx
-  puertos: # esta es la parte de especificación en sí
-  - protocolo: TCP
-    puerto: 80
-    puerto de destino: 80
+kind: Service
+apiVersion: v1
+metadata:  # esta é a parte de identificación do servizo
+  name: primer-servizo
+spec:
+  selector:   # esta é a parte de selección
+    app: nginx
+  ports:  # esta é a parte de especificación propia
+  - protocol: TCP
+    port: 80
+    targetPort: 80
 ```
 
 Como podemos ver hay tres partes a definir en un servicio:
@@ -59,41 +59,41 @@ Tomando el ejemplo de implementación de nginx de la sección anterior, démosle
 Lanzamos el siguiente deployment:
 
 ```yaml
-# deployment_service.yaml
+# deployment_servizo.yaml
 
-apiVersión: apps/v1
-tipo: Deployment # esta parte define el Deployment
-metadatos:
-  nombre: desplegar-nginx-2
-  Etiquetas:
-    aplicación: nginx-ejemplo
-especificaciones:
-  réplicas: 1
+apiVersion: apps/v1
+kind: Deployment  # esta parte define o Deployment
+metadata:
+  name: despregue-nginx-2
+  labels:
+    app: nginx-exemplo
+spec:
+  replicas: 1
   selector:
-    etiquetas de coincidencia:
-      aplicación: nginx-ejemplo
-  template: # a partir de aquí definimos el pod
-    metadatos:
-      Etiquetas:
-        aplicación: nginx-ejemplo
-    especificaciones:
-      contenedores:
-      - nombre: nginx
-        imagen: nginx:1.15
-        puertos:
-        - puerto contenedor: 80
+    matchLabels:
+      app: nginx-exemplo
+  template: # a partir de aquí definimos o pod
+    metadata:
+      labels:
+        app: nginx-exemplo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.15
+        ports:
+        - containerPort: 80
 ```
 
 lo empezamos
 
-```concha
+```shell
 kubectl apply -f deployment_servizo.yaml
 ```
 
 Lo escalamos a 3 repeticiones.
 
-```concha
-Deployment de escala kubectl deployment-nginx-2 --replicas=3
+```shell
+kubectl scale deploy despregue-nginx-2 --replicas=3
 ```
 
 Y tendríamos el siguiente esquema montado en nuestro clúster:
@@ -103,35 +103,35 @@ Y tendríamos el siguiente esquema montado en nuestro clúster:
 Ahora bien, si queremos otorgar conectividad a nuestro deployment, tendremos que crear un servicio. Para ello, utilizaremos el siguiente artefacto:
 
 ```yaml
-# prueba_servicio.yaml
+# test_servizo.yaml
 
-tipo: Servicio
-apiVersión: v1
-metadatos:
-  nombre: servicio de prueba
-especificaciones:
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-servizo
+spec:
   selector:
-    aplicación: nginx-ejemplo
-  puertos:
-  - protocolo: TCP
-    puerto: 8080
-    puerto de destino: 80
+    app: nginx-exemplo
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
 ```
 
 Creamos el artefacto en el sistema.
 
-```concha
-kubectl apply -f test_service.yaml
+```shell
+kubectl apply -f test_servizo.yaml
 ```
 
 Y listamos los servicios del K8s para ver si realmente lo hemos creado
 
-```concha
-servicios de obtención de kubectl
+```shell
+kubectl get services
 
-NOMBRE TIPO CLÚSTER-IP IP EXTERNA PUERTO(S) EDAD
-kubernetes ClusterIP 10.152.183.1 <ninguno> 443/TCP 26h
-servicio de prueba ClusterIP 10.152.183.239 <ninguno> 8080/TCP 5m19s
+NAME           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+kubernetes     ClusterIP   10.152.183.1     <none>        443/TCP    26h
+test-servizo   ClusterIP   10.152.183.239   <none>        8080/TCP   5m19s
 ```
 
 Lo que acabamos de hacer es lo siguiente:
