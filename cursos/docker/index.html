@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="gl">
 
 <head>
   <meta charset="UTF-8">
@@ -23,8 +23,14 @@
   <script>
     window.$docsify = {
       alias: {
-        '/.*/_navbar.md': '/_navbar.md',
+        '/es/.*/_navbar.md': './es/_navbar.md',
+        '/.*/_navbar.md': './_navbar.md',
+        '/es/.*_sidebar.md': './es/_sidebar.md',
+        '/.*/_sidebar.md': './_sidebar.md',
+        '/es/(.*)': './es/$1',
+        '/(.*)': './$1',
       },
+      fallbackLanguages: 'es',
       auto2top: true,
       coverpage: true,
       executeScript: true,
@@ -33,7 +39,16 @@
       mergeNavbar: true,
       maxLevel: 4,
       subMaxLevel: 3,
-      name: 'PREFAPP',
+      name: '<div>PREFAPP</div>'+
+	    '<div><a href=./es/><button class="ButIdioma">Cambiar a Castellano</button></a></div>',
+      namespaces: [
+        {
+          id: "lang",
+          values: "es",
+          optional: true,
+          selector: "#lang-selector"
+        }
+      ],
       search: {
         noData: {
           '/': 'Sin resultados!'
@@ -81,6 +96,7 @@
           return html + footer;
         });
         }
+
       ]
     }
   </script>

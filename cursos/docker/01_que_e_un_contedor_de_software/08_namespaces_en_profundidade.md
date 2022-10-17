@@ -20,7 +20,7 @@ Existen una serie de comandos que nos permiten interactuar cos namespaces, son:
 - **unshare**: acepta un comando a lanzar como parámetro e crea novos namespaces para él segundo os flags que se lle pasen. 
  - Mediante esta utilidade pódense lanzar procesos conterizados isto é, aillados en namespaces propios para eles e os seus procesos-fillo.
  - Permite un control fino dos namespaces (UTS, pids, rede, usuarios, ipc...)
- - Pódese atopar máis información do comando na páxina do manual de linux.
+ - Pódese atopar máis información do comando na páxina do [manual de linux](https://man7.org/linux/man-pages/man1/unshare.1.html).
 - **nsenter**: trátase do comando inverso ó anterior. Se unshare permítenos aillar un proceso, o comando nsenter permite "entrar" ou unirse a un namespace existente. 
  - Pódese atopar máis información do comando na páxina do [manual de linux](http://man7.org/linux/man-pages/man1/nsenter.1.html).
 
