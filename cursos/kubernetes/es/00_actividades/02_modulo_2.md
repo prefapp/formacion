@@ -147,7 +147,7 @@ Configuremos una aplicación simple escrita en nodejs que haga lo siguiente:
   - El nombre de host.
   - El tiempo de actividad de la aplicación en horas: minutos: segundos.
 
-### a) Implementar en pod
+### a) Desplegar en pod
 
 Para comenzar, implementemos nuestra aplicación en un pod:
 - La imagen a montar será "frmadem/catro-eixos-k8s-ej1", con la etiqueta "v1", esto es: "frmadem/catro-eixos-k8s-ej1:v1".
@@ -174,7 +174,7 @@ Una vez hecho esto, deberíamos poder ver el resultado de la ejecución en nuest
 
 Vemos la **versión** de la aplicación, el **hostname** (el nombre del pod donde se está ejecutando) y el **hh:mm:ss** que se ha estado ejecutando.
 
-### b) Configuración de una implementación
+### b) Configuración de una deployment
 
 Si queremos ejecutar nuestra aplicación con réplicas y controlarlas, debemos usar un [deploy](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/04_arquitectura_kubernetes_deployment).
 
