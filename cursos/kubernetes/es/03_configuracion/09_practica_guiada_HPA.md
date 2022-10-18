@@ -1,10 +1,10 @@
-# Práctica guiada: emprego do HPA
+# Práctica guiada: empleo de la HPA
 
-Imos empregar un HPA para controlar a carga dun deployment sinxelo. 
+Usaremos un HPA para controlar la carga de una implementación simple.
 
 ## 1. Preparativos 🛫
 
-- Imos partir dun namespace novo no noso cluster: **hpa**
+- Comencemos desde un nuevo espacio de nombres en nuestro clúster: **hpa**
 
 ```bash
 
@@ -12,7 +12,7 @@ kubectl create namespace hpa
 
 ```
 
-- Agora imos despregar un deployment que teña unha aplicación de emprego intensivo de cpu. Para que poida facer a media, compre definir unha sección resources.requests para saber cal e o consumo esperado de CPU / Memoria. De non ter estes valores o hpa non poderá facer os cálculos.
+- Ahora vamos a desplegar un deployment que tiene una aplicación con uso intensivo de CPU. Para que pueda hacer el promedio y defina una sección de resources.requests para saber cuál es el consumo esperado de CPU/Memoria. Si no tiene estos valores, el hpa no podrá hacer los cálculos.
 
 ```yaml
 
@@ -48,7 +48,7 @@ spec:
             cpu: 0.25
 
 ```
-- Abrimoslle tráfico mediante un service:
+- Abrimos tráfico a través de un servicio:
 
 ```yaml
 
@@ -71,9 +71,9 @@ spec:
 
 ```
 
-É interesante ver cómo non definimos o campo __replicas__ no deployment. A razón é que non queremos que interferir co traballo do HPA. 
+Es interesante ver cómo no definimos el campo __replicas__ en el deployment. La razón es que no queremos interferir con el trabajo de la HPA.
 
-Agora se aplicamos isto co kubectl:
+Ahora si implementamos esto con kubectl:
 
 ```yaml
 
@@ -81,19 +81,19 @@ kubectl create -f <ficheiros yaml> -n hpa
 
 ```
 
-Veremos que temos un service e un deployment cunha réplica. 
+Veremos que tenemos un servicio y un deployment con una réplica.
 
-Imos facer que esto comece a andar!!!
-
-
-## 2. O noso servidor de métricas ⏱
-
-Para esta práctica imos empregar métricas de tipo resource. Polo tanto necesitamos unha peza ou elemento que recolla métricas do clúster e as sirva nunha das Layer do Api de kubernetes (concretamente no metrics.k8s.io).
+¡¡¡Empecemos con esto!!!
 
 
-Un elemento que nos pode servir é o [metrics server](https://github.com/kubernetes-sigs/metrics-server).
+## 2. Nuestro servidor de métricas ⏱
 
-Para instalalo imos empregar [Helm]():
+Para esta práctica utilizaremos métricas de tipo recurso. Por tanto necesitamos una pieza o elemento que recopile métricas del clúster y las sirva en una de las capas de la API de kubernetes (concretamente en metrics.k8s.io).
+
+
+Un elemento que nos puede servir es el [servidor de métricas](https://github.com/kubernetes-sigs/metrics-server).
+
+Para instalarlo usaremos [Helm](07_Helm.md):
 
 ```yaml
 
@@ -110,7 +110,7 @@ helm upgrade --install metrics-server metrics-server/metrics-server --set args="
 
 ```
 
-Se todo vai ben poderemos facer xa consultas ó api do noso cluster de probas (en Kind):
+Si todo va bien, podremos realizar consultas a la api de nuestro clúster de prueba (en Kind):
 
 ```
 kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/kind-control-plane | jq
@@ -144,13 +144,13 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/kind-control-plane | jq
 
 ```
 
-Xa temos un xeito de obter métricas (CPU/Memoria) dos nosos pods!
+¡Ahora tenemos una forma de obtener métricas (CPU/Memoria) de nuestros pods!
 
-É o momento de arrancar un HPA para a nosa app. 
+Es hora de iniciar un HPA para nuestra aplicación.
 
-## 3. Definindo o HPA 📃
+## 3. Definición del HPA 📃
 
-A nosa app fai un uso intensivo de CPU polo tanto é a métrica clave para a controlar.
+Nuestra aplicación hace un uso intensivo de la CPU, por lo que esta es la métrica clave para monitorear.
 
 ```yaml
 
@@ -189,12 +189,11 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50  
-
 ```
 
-Efectivamente, ó pouco tempo veremos que nos escala o deploy a 1 réplica. 
+De hecho, en poco tiempo veremos que la implementación se escala a 1 réplica.
 
-Non obstante, de consultar o estado do noso hpa obteremos o seguinte:
+Sin embargo, si comprobamos el estado de nuestro hpa obtendremos lo siguiente:
 
 ```bash
 kubectl get hpa -n hpa
@@ -203,24 +202,23 @@ NAME        REFERENCE                  TARGETS         MINPODS   MAXPODS   REPLI
 o-meu-hpa   Deployment/cpu-intensive   <unknown>/50%   1         10        1          2m41s
 ```
 
-Por qué? A resposta é que tarda un pouco en atopar métricas, salvo que non esté ben configurado. 
+¿Por qué? La respuesta es que lleva un tiempo encontrar métricas, a menos que no esté bien configurada.
 
-Agora, imos xerarlle tráfico:
+Ahora, vamos a generar tráfico para ti:
 
 ```bash
 # Exportamos ó noso service ó porto 8084
 
 kubectl port-forward svc/cpu-intensive -n hpa 8084:80
-
 ```
 
-E noutro terminal:
+Y en otra terminal:
 
 ```bash
 watch -n1 "curl localhost:8084/fibo/40"
 ```
 
-Con isto comenzará a xerar tráfico o noso servidor. 
+Con esto nuestro servidor comenzará a generar tráfico. 
 
 ```bash
 # este comando mantennos informados do estado
@@ -233,9 +231,9 @@ o-meu-hpa   Deployment/cpu-intensive   306%/50%   1         10        5         
 o-meu-hpa   Deployment/cpu-intensive   186%/50%   1         10        7          8m31s
 ```
 
-Vemos como o tráfico comeza a ser absorbido polas novas réplicas que o HPA vai levantando.
+Vemos como el tráfico empieza a ser absorbido por las nuevas réplicas que va levantando la HPA.
 
-Deste xeito, chega un momento que volvemos a estar por debaixo 50% de media de consumo
+De esta forma, llega un momento en el que volvemos a estar por debajo del 50% del consumo medio.
 
 ```bash
 kubectl get hpa -n hpa
@@ -257,7 +255,7 @@ o-meu-hpa   Deployment/cpu-intensive   52%/50%    1         10        7         
 o-meu-hpa   Deployment/cpu-intensive   47%/50%    1         10        7          12m
 ``` 
 
-Se paramos o curl que xera tráfico, o pouco tempo vemos que o número de réplicas baixa:
+Si detenemos el curl que genera tráfico, pronto vemos que el número de réplicas cae:
 
 ```bash
 NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
@@ -269,13 +267,13 @@ o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        6          
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        4          25m
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        2          26m
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          26m
-
 ```
-O HPA tardou aproximadamente 5 min e volver a poñer as réplicas a 1. Podemos modificar este comportamento cunha sección __behavior__. 
 
-4. A sección behavior: o control "fino" do noso HPA 🔬
+El HPA tardó unos 5 minutos en volver a establecer las réplicas en 1. Podemos modificar este comportamiento con la sección __behavior__.
 
-**Nota:**: para poder facer esta sección, compre ter unha versión de K8s que o permita. Para comprobalo abonda con facer:
+4. El apartado del comportamiento: el control "fino" de nuestro HPA 🔬
+
+**Nota:**: Para poder hacer esta sección, debes tener una versión de K8s que lo permita. Para comprobarlo, basta con hacer:
 
 ```yaml
 # comprobar que está autoscaling/v2
@@ -286,7 +284,7 @@ autoscaling/v2
 
 ```
 
-E metemos os seguintes cambios na definición do noso HPA:
+Y hacemos los siguientes cambios en nuestra definición de HPA:
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -335,24 +333,20 @@ spec:
       - type: Pods
         value: 5
         periodSeconds: 15
-
 ```
 
+En esta sección:
 
-Nesta sección:
+1. Establecemos una política que le permite descargar 5 pods cada 15 segundos.
+2. Bajamos la ventana de estabilización a 30 segundos.
 
-1. Establecemos unha política que permite baixar de 5 en 5 pods cada 15 seg. 
-2. A ventá de estabilización a baixamos a 30 seg. 
+Ahora, y con el nuevo comportamiento que implementamos, el HPA puede bajar a pasos de 5 pods en períodos de 15 segundos.
 
-Agora, e co novo behavior que puxemos, o HPA é quen de baixar a escalóns de 5 pod en períodos de 15 segundos. 
+Después de parchear nuestro HPA con este comportamiento.
 
-Despois de parchear o noso HPA con este behavior. 
+Liberamos carga hasta escalar a 8 réplicas (con el curl anterior).
 
-Lanzamos carga ata que escale a 8 réplicas (co curl anterior). 
-
-Cortamos o curl!
-
-Se vemos o comportamento:
+¡Cortamos el curl! Y vemos el comportamiento:
 
 ```bash
 kubectl get hpa -n hpa -w                                                                        
@@ -367,8 +361,4 @@ o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          
 
 ```
 
-Como vemos baixou a 1 réplica nun minuto de tempo.
-
-
-
-
+Como vemos, se redujo a 1 réplica en un minuto de tiempo.
