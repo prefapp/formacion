@@ -1,41 +1,41 @@
-# Persistencia en K8s: os volumes
+# Persistencia en K8s: los volúmenes
 
-Ata agora as nosas cargas de traballo estánse a executar en pods. O problema que temos é que, en caso de reiniciarse un pod, ou se o borramos, perdemos datos que poden interesarnos. É dicir: os nosos pods non teñen persistencia. 
+Hasta ahora, nuestras cargas de trabajo se ejecutan en módulos. El problema que tenemos es que si se reinicia un pod, o si lo borramos, perdemos datos que nos pueden interesar. Es decir: nuestros pods no tienen persistencia.
 
-Para poder dotar de persistencia ós nosos pods, Kubernetes ofrece unha solución: os volumes. 
+Para dar persistencia a nuestros pods, Kubernetes ofrece una solución: volúmenes.
 
-## A) Definición de volume
+## A) Definición de volumen
 
-Un volume é un recurso de Kubernetes que é externo ós contedores dos nosos pods e que polo tanto non segue o seu ciclo de vida:
+Un volumen es un recurso de Kubernetes que es externo a los contenedores de nuestros pods y por tanto no sigue su ciclo de vida:
 
-* Non se borra cando se borran ou reinician os contedores dun pod. 
-* Os pods poden acceder a él e montalo como unha ruta máis do seu sistema de ficheiros. 
-* Os volumes poden xestionarse dun xeito totalmente independiente ós pods, deploys e services (volumes persistentes) 
+* No se borra cuando se eliminan o reinician los contenedores de un pod.
+* Los pods pueden acceder y montarlo como otra ruta en su sistema de archivos.
+* Los volúmenes se pueden administrar de forma completamente independiente de los pods, implementaciones y servicios (volúmenes persistentes)
 
-Asemade, os volumes poden ser elementos externos ó propio clúster de Kubernetes:
+Además, los volúmenes pueden ser elementos externos al propio clúster de Kubernetes:
 
-* Poden ser unha unidade NFS que se monta no clúster. 
-* Poder ser un volume iscsi. 
-* Hai posibilidade de conectar elementos propios de proveedores de nube privada e pública. 
+* Puede ser una unidad NFS montada en el clúster.
+* Puede ser un volumen iscsi.
+* Es posible conectar elementos de proveedores de nube pública y privada.
 
-[Aquí](https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes) pódese atopar unha lista extensa de sistemas de almacenamento que pode empregar Kubernetes como base para crear volumes. 
+[Aquí](https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes) podemos ver una lista extensa de sistemas de almacenamiento que Kubernetes puede usar como base para crear volúmenes.
 
 ![pod7.png](../_media/03/pod7.png)
 
-## B) Emprego de volumes locais
+## B) Uso de volúmenes locales
 
-Un dos tipos básicos de volumes son os chamados hostPath. 
+Uno de los tipos básicos de volúmenes son los llamados hostPath.
 
-Permite que o volume creado sexa realmente un directorio do host (nodo onde esté a correr o pod). 
+Permite que el volumen creado sea realmente un directorio en el host (nodo donde se ejecuta el pod).
 
-É moi cómodo para desenvolver e para traballar pero ten serias limitacións:
+Es muy cómodo de desarrollar y de trabajar pero tiene serias limitaciones:
 
-* No momento en que temos máis dun nodo xa non se pode empregar posto que non temos garantido en qué nodo do clúster vai correr o noso pod, polo tanto pode atopar esa ruta ou non. 
-* Se cae o nodo, pérdese toda a información do hostPath.  
+* En el momento en que tenemos más de un nodo ya no se puede utilizar ya que no tenemos garantizado en qué nodo del clúster se ejecutará nuestro pod, por lo tanto puede encontrar esa ruta o no.
+* Si el nodo deja de funcionar, se pierde toda la información de hostPath.
 
-Nembargantes, podemos usalo para ilustrar algúns dos puntos básicos dos volumes. 
+Sin embargo, podemos usarlo para ilustrar algunos de los puntos básicos de los volúmenes.
 
-Partamos deste pod:
+Partimos de este pod:
 
 ```yaml
 # pod_con_volume.yaml
@@ -57,24 +57,24 @@ spec:
       type: DirectoryOrCreate
 ```
 
-Vemos que na sección de volumes [13-17]:
+Vemos que en la sección de volumen [13-17]:
 
-* Declaramos un volume
-* É de tipo hostPath
-* Apuntamos a unha carpeta no noso host (/tmp/logs_apache_k8s)
-* Dicimoslle que o cree se non existe (DirectoryOrCreate)
+* Declaramos un volumen
+* Es de tipo hostPath
+* Apuntamos a una carpeta en nuestro host (/tmp/logs_apache_k8s)
+* Le decimos que lo cree si no existe (DirectoryOrCreate)
 
-Despois, na parte do contedor [10-12]:
+Luego, en la parte del contenedor [10-12]:
 
-* Montamos o volume nunha sección de volumeMounts
-* Establecemos unha ruta de montaxe (/usr/local/apache2/logs)
-* E facemos unha referencia ó volume declarado
+* Montamos el volumen en una sección de montajes de volumen
+* Establecemos una ruta de montaje (/usr/local/apache2/logs)
+* Y hacemos referencia al volumen declarado
 
-Temos o seguinte:
+Tenemos lo siguiente:
 
 ![pod8.png](../_media/03/pod8.png)
 
-Agora:
+Ahora:
 
 Input
 ```sh

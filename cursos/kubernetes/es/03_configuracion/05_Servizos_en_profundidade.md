@@ -1,15 +1,16 @@
-# Servizos en profundidade
+# Servicios en profundidad
 
-No [anterior tema](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos a importancia dos *services* como abstracción dos pods backend para unha aplicación cliente. Mediante os services, calqueira aplicación cliente pode "despreocuparse" de onde se están realmente a facer as chamadas a programas ou aplicacións que lle serven de backend.
+En el [anterior tema](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos la importancia de los *services* como una abstracción de pods backend para una aplicación cliente. Por medio de los services, cualquier aplicación cliente puede "despreocuparse" de dónde se están realizando las llamadas a los programas o aplicaciones que sirven como backend.
 
 ![Servizo2](./../_media/02/servizo2.png)
 
-Neste capítulo imos ver os seguintes tipos de *Service*, cos seus casos de uso e as súas debilidades:
-- ClusterIp
+En este capítulo veremos los siguientes tipos de *Service*, con sus casos de uso y sus debilidades:
+- ClusterIP
 - NodePort
 - LoadBalancer
 
-Despregaremos o seguinte deploy para ilo expoñendo con cada tipo de servizo e apreciar así as diferencias entre cada *service kind* : 
+Desplegaremos el siguiente deploy para mostrarlo con cada tipo de servicio y así apreciar las diferencias entre cada *service kind* : 
+
 ```yaml
 #deploy.yaml
 apiVersion: apps/v1
@@ -37,13 +38,14 @@ spec:
           - containerPort: 80
 ```
 
-Non é mais que un servidor web que mostra unha pequena mensaxe coa versión do servidor e a máquina que sirve os datos.
+No es más que un servidor web que muestra un pequeño mensaje con la versión del servidor y la máquina que sirve los datos.
 
-Se facemos un apply do noso `deploy.yaml`. Teremos 5 pods correndo o servidor web.
+Si hacemos una aplicación de nuestro `deploy.yaml`. Tendremos 5 pods ejecutando el servidor web.
 
+## ClusterIP
 
-## ClusterIp
-Para expoñer o noso deploy imos empregar primeiramente un servicio de tipo `ClusterIp` que é o tipo por defecto nos *services* de kubernetes:
+Para exponer nuestrp deploy, primero usaremos un servicio de tipo `ClusterIp`, que es el tipo por defecto en kubernetes *services*:
+
 ```yaml
 # clusterip-service.yaml
 kind: Service
@@ -58,15 +60,18 @@ spec:
     targetPort: 80
 ```
 
-Se facemos un curl desde dentro veremos que van rotando os pods que devolven a petición: 
+Si hacemos un curl desde dentro veremos que los pods que devuelven la petición van rotando:
+
 ![Servizo1](./../_media/03/servizo1.png)
 
-Sin embargo si facemos un `port-forward` do noso servizo para acceder desde o exterior podemos comprobar que sempre se nos devolve o mesmo pod. 
+Sin embargo, si hacemos un `port-forward' de nuestro servicio para acceder desde el extranjero, podemos comprobar que siempre nos devuelven el mismo pod.
+
 ![Servizo2](./../_media/03/servizo2.png)
 
-
 ## NodePort
-O comando `port-forward`, ainda que lle indiquemos un servizo vai a expoñernos un pod, o primeiro que atope a través do servizo. Se queremos expoñer o servizo temos que utilizar un servizo de tipo `Nodeport`:
+
+El comando `port-forward', aunque indiquemos un servicio, nos mostrará un pod, el primero que encuentre a través del servicio. Si queremos exponer el servicio tenemos que usar un servicio de tipo ``Nodeport'':
+
 ```yaml
 # nodeport-service.yaml
 kind: Service
@@ -83,17 +88,19 @@ spec:
     nodePort: 31415   
 ```
 
-NodePort, como o nome indica, abre un porto específico en todos os nodos do cluster e todo o tráfico que se envía a este porto (`nodePort: 31415`) reenvíase ao servizo.
+NodePort, como sugiere el nombre, abre un puerto específico en todos los nodos del clúster y todo el tráfico enviado a este puerto (`nodePort: 31415`) se reenvía al servicio.
  
 ![Servizo3](./../_media/03/servizo3.png)
 
-Esta opcion ten varios problemas:
-- Solo podes ter un servizo por porto.
-- Solo se poden empregar os portos 30000–32767.
-- Debemos ter un mecanismo de axuste por se cambia a IP do nodo.
+Esta opción tiene varios problemas:
+- Solo se puede tener un servicio por puerto.
+- Solo se pueden usar los puertos 30000–32767.
+- Debemos tener un mecanismo de ajuste en caso de que cambie la IP del nodo.
 
 ## LoadBalancer
-Para solventar as carencias do *Nodeport* aparece un servizo máis avanzado que permite expoñer o noso servizo a través dunha IP pública propia. Para empregar este servicio necesitas un proveedor de Kubernetes, pois o seu despregue proporcionache unha IP externa desde a que acceder ao teu servizo.
+
+Para solucionar las carencias de *Nodeport* aparece un servicio más avanzado que permite exponer nuestro servicio a través de su propia IP pública. Para utilizar este servicio necesitas un proveedor de Kubernetes, ya que su despliegue te proporciona una IP externa desde la que acceder a tu servicio.
+
 ```yaml
 # loadbalancer-service.yaml
 kind: Service
@@ -111,42 +118,42 @@ spec:
 
 ![Servizo4](./../_media/03/servizo4.png)
 
-Si se desexa expoñer directamente un servizo, este é o método predeterminado. Todo o tráfico do porto especificado será reenviado ao servizo. Non hai filtrado, nin enrutamento, etc. Isto significa que poden enviarche case calquera tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC ou calquera outra cousa.
-A gran desvantaxe é que cada servizo que se expón cun *LoadBalancer* recibirá o seu propio enderezo IP e teremos que pagar por cada servizo exposto, o que pode resultar caro.
+Si desea exponer un servicio directamente, este es el método predeterminado. Todo el tráfico en el puerto especificado se reenviará al servicio. Sin filtrado, sin enrutamiento, etc. Esto significa que pueden enviarle casi cualquier tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC o cualquier otro.
+El gran inconveniente es que cada servicio expuesto con un *LoadBalancer* obtendrá su propia dirección IP y tendremos que pagar por cada servicio expuesto, lo que puede ser costoso.
 
-Se estas a empregar tráfico HTTP, un Ingress permitirache empregar unha sola IP e facer routing por path e subdominio, como veremos no [seguinte capítulo](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico) do tema.
+Si estás usando tráfico HTTP, un Ingress te permitirá usar una única IP y hacer enrutamiento por ruta y subdominio, como veremos en el [próximo capítulo](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico) del tema.
 
 ### LoadBalancer local con Kind
 
-Para probar o funcionamento dos servizos de tipo LoadBalancer nun clúster local, Kind permite a instalación de [metallb](https://metallb.universe.tf/), que nos dará a posibilidade de asignar unha pool de IPs locais ós nosos pods mediante LoadBalancer.
+Para probar el funcionamiento de servicios tipo LoadBalancer en un clúster local, Kind permite la instalación de [metallb](https://metallb.universe.tf/), lo que nos dará la posibilidad de asignar un pool de IPs locales a nuestro pods usando LoadBalancer.
 
-Os pasos a seguir serían:
+Los pasos a seguir serían:
 
-**1. Creamos un namespace para metallb:**
+**1. Creamos namespace para metallb:**
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
 ```
 
-**2. Aplicamos a manifesto de metallb, que creará tódolos artefactos necesarios para o seu funcionamento:**
+**2. Aplicamos el manifiesto metallb, el cual creará todos los artefactos necesarios para su funcionamiento:**
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
 ```
 
-Antes de continuar, debemos agardar a que os pods de metallb se atopen en estado running:
+Antes de continuar, debemos esperar hasta que los pods de metallb estén en estado de ejecución:
 
 ```shell
 kubectl get pods -n metallb-system --watch
 ```
 
-**3. Agora, teremos que asignarlle ó metallb o rango de IPs que vai controlar. Para isto, primeiro debemos consultar cal é o rango da rede de kind en docker:**
+**3. Asignar a metallb el rango de IPs que controlará.** Para esto, primero debemos verificar cuál es el rango de red de tipo en la ventana acoplable:
 
 ```shell
 docker network inspect -f '{{.IPAM.Config}}' kind
 ```
 
-O cal nos devolverá unha subclase similar a 172.19.0.0/16. Temos que escoller un rango dentro de esta, por exemplo, no caso anterior, as IPs dende a 172.19.255.200 ata a 172.19.255.250, e especificalas nun configmap coma o seguinte:
+Lo cual nos devolverá una subclase similar a 172.19.0.0/16. Tenemos que escoger un rango dentro de este, por ejemplo, en el caso anterior, las IPs de 172.19.255.200 a 172.19.255.250, y especificarlas en un configmap como el siguiente:
 
 ```yaml
 # configmap_metallb.yaml
@@ -164,7 +171,8 @@ data:
       addresses:
       - 172.19.255.200-172.19.255.250
 ```
-**4. Creamos o servizo de tipo LoadBalancer:**
+
+**4. Creamos el servicio de tipo LoadBalancer:**
 
 ```yaml
 # loadbalancer-service.yaml
@@ -180,7 +188,7 @@ spec:
   - port: 6000
     targetPort: 80
 ```
-E obtemos a IP externa coa que foi creado:
+Y obtenemos la IP externa con la que se creó:
 
 ```shell
 > kubectl get svc/servizo-loadbalancer -o wide
@@ -188,8 +196,9 @@ NAME                   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)    
 servizo-loadbalancer   LoadBalancer   10.96.64.63   172.18.255.200   6000:32131/TCP   2m42s   app=pod-web
 ```
 
-**5. Con isto LoadBalancer está configurado, polo que xa podemos facer un curl a dita IP para acceder ó noso deploy:**
+**5. Ahora, con este LoadBalancer configurado, podemos hacer un `curl` a dicha IP para acceder a nuestro despliegue: **
 
 ```shell
 curl 172.18.255.200:6000
 ```
+
