@@ -5,8 +5,9 @@
 > Complete container solution
 
 - Encapsulación
-- Xestión de imáxenes
-- Aislamento de recursos
+
+- Gestión de imágenes
+- Aislamiento de recursos
 
 [GitHub](https://github.com/prefapp/formacion/tree/master/cursos/docker)
 [Plataforma](https://prefapp.github.io/formacion/)
