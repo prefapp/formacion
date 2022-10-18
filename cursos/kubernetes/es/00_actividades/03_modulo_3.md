@@ -1,362 +1,362 @@
-# Módulo 3: Vogando por augas procelosas: Kubernetes avanzado
-## Mellorando a nosa aplicación.
+# Módulo 3: Navegando en aguas turbulentas: Kubernetes avanzado
+## Mejorando nuestra aplicación.
 
-Para facer esta tarefa, primeiro compre ler a documentación sobre "[avanzando en Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes)".
+Para realizar esta tarea, primero lea la documentación sobre "[Kubernetes avanzado](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/01_Configuracions_en_Kubernetes)".
 
-Imos mellorar o noso despregue de aplicación da tarefa [2.3](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes).
+Vamos a mejorar nuestro despliegue de la aplicación de la tarea [2.3](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes).
 
-Polo tanto, é necesario ter rematada esa tarefa antes de acometer a de este módulo.
+Por lo tanto, es necesario haber completado esa tarea antes de comenzar este módulo.
 
-### a) Mellorando o noso pod
+### a) Mejorando nuestro pod
 
-Unha vez lida a documentación, sacamos en conclusión que unha das melloras que podemos facer ós nosos pods é a de dotalos de sondas que nos permitan determinar:
-* Cando está listo para recibir peticións (readinessProbe).
-* O seu estado de "saúde" (livenessProbe).
+Después de leer la documentación, llegamos a la conclusión de que una de las mejoras que podemos hacer en nuestros pods es equiparlos con sondas que nos permitan determinar:
+* Cuando esté listo para recibir solicitudes (readinessProbe).
+* Su estado de "salud" (livenessProbe).
 
-Asemade, e para que o scheduler (o compoñente de K8s encargado de determinar o nodo do clúster no que van a correr os nosos pods) faga ben o seu traballo, compre introducir limits e requests.
+Además, y para que el programador (el componente de K8s encargado de determinar el nodo del clúster donde se ejecutarán nuestros pods) haga bien su trabajo, es necesario ingresar límites y solicitudes.
 
-Compre modificar o pod da tarefa 2.3 a) cos seguintes cambios:
-* Mudarlle o nome ó pod, chamarase "pod-practica-2".
-* Agregarlle unha sonda de ready e unha de live:
-	* Faránse a través de peticións get a /servidor.
-	* A sonda de ready iniciaráse ós 15 seg de vida do contedor e se repetirá ata cada 5 seg.
-	* A sonda de live iniciarase ós 20 seg e se repetirá cada 10 seg.
-* Por outra banda, imos crear uns limits e requests ós nosos pods:
-	* Como limits, haberá 64Mi e 200m.
-	* Como requests, teremos 48Mi e 150m.
-* Por último imos cambiar a política de pullIimage e obligar a que Kubernetes intente buscar cambios na imaxe do pod cada vez que se arrinca ([imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/)).
+Es necesario que modifique el pod de la tarea 2.3 a) con los siguientes cambios:
+* Renombrar el pod, se llamará "pod-practica-2".
+* Agregue una prueba ready y una live:
+  * Se realizarán a través de peticiones get a /servidor.
+  * La prueba ready comenzará a los 15 segundos de vida útil del contenedor y se repetirá cada 5 segundos.
+  * La prueba live comenzará a los 20 segundos y se repetirá cada 10 segundos.
+* Por otro lado, vamos a crear algunos limits y request a nuestros pods:
+  * Como limits habrá 64Mi y 200m.
+  * Como requests tendremos 48Mi y 150m.
+* Por último, vamos a cambiar la política pullimage y obligar a Kubernetes a buscar cambios en la imagen del pod cada vez que se inicia ([imagePullPolicy](https://kubernetes.io/docs/concepts/containers/images/)).
 
-Con todos istos cambios, hai que xerar un novo yaml que cumpra os requisitos do da tarefa 2.3.a) mais estes novos (o yaml chamaráse pod_mellorado.yaml).
+Con todos estos cambios se debe generar un nuevo yaml que cumpla con los requisitos de la tarea 2.3.a) pero estos nuevos (el yaml se llamará pod_mellorado.yaml).
 
-Compre tamen arrancalo. 
+Hace falta de todos modos.
 
-Unha vez feito teríamos o seguinte:
+Una vez hecho esto tendríamos lo siguiente:
 
 ![tpod1.png](../_media/03/tpod1.png)
 
-### b) Agregando persistencia
+### b) Agregar persistencia
 
-Resulta que a nosa aplicación tiña logs!!
+¡Resulta que nuestra aplicación tenía registros!
 
-Eses logs de acceso estánse a perder por mor de que os nosos pods non teñen persistencia.
+Esos registros de acceso se están perdiendo porque nuestros pods no tienen persistencia.
 
-Imos darlle persistencia ó noso sistema:
-* Borra o pod do apartado anterior.
-* Baseándote en el, crea un novo ficheiro que se chame "pod_mellorado_volume.yaml".
-* No pod hai que facer os seguintes cambios:
-	* Agregar unha nova variable de contorna que estableza os logs RUTA_LOGS=/var/log (os teremos así en /var/log/k8s_access.log).
-	* Compre tamén crear un volume:
-		* Será de tipo __hostPath__.
-		* Ten que apuntar a __/tmp/k8s_logs__.
-		* Ten que chamarse __volume-logs__.
+Démosle persistencia a nuestro sistema:
+* Eliminar el pod de la sección anterior.
+* Basado en él, crear un nuevo archivo llamado "pod_mellorado_volume.yaml".
+* Se deben realizar los siguientes cambios en el pod:
+  * Agregar una nueva variable de entorno que establezca los logs RUTA_LOGS=/var/log (los tendremos así en /var/log/k8s_access.log).
+  * Es necesario crear un volumen:
+  * Será de tipo __hostPath__.
+* Tiene que apuntar a __/tmp/k8s_logs__.
+* Debe llamarse __volume-logs__.
 
-Cando o teñas listo:
-* Arranca o pod.
-* Comproba que na ruta __/tmp/k8s_logs__ hai un log __k8s_access.log__.
-* Fai un port-forward do pod.
-* Faille peticións a __/servidor__.
-* Mostra o contido do log con un tail.
+Cuando lo tengas listo:
+* Inicie el pod.
+* Verifique que haya un registro __k8s_access.log__ en la ruta __/tmp/k8s_logs__.
+* Hacer un port-forward del pod.
+* Hacer solicitudes a __/servidor__.
+* Mostrar contenido de registro con una cola.
 
-O sistema agora, quedaría como segue:
+El sistema ahora se vería así:
 
 ![tpod2.png](../_media/03/tpod2.png)
 
-### c) Engandindo un deploy, un configmap e un servizo
+### c) Agregar un deploy, un configmap y un servicio
 
-Agora que temos o pod ben preparado, imos a metelo dentro dun deploy que o controle.
+Ahora que tenemos el pod bien preparado, pongámoslo dentro de un deploy que lo controle.
 
-* Borra o pod do apartado anterior.
-* Compre crear un deploy:
-	* O seu nome será "despregue-practica-2".
-	* Os pods serán do tipo do apartado anterior (cuidado co selector!!!).
-	* Terá como labels:
-		* "app=pod-practica-2".
-		* "practica=modulo_3_1".
-	* Os pods van empregar un ConfigMaps:
-		* Terá de nome "config-practica-2".
-		* Terá como labels:
-			* "app=pod-practica-2".
-			* "practica=modulo_3_1".
-		* Terá a configuración do:
-			* "PUERTO_APP=80".
-			* "RUTA_LOGS=/var/log".
-	* O despregue expórtase a través dun servizo:
-		* terá de nome "servizo-practica-2".
-		* as súas labels serán:
-			* "app=pod-practica-2".
-			* "practica=modulo_3_1".
-		* Escoitará no porto 80 (port = 80).
+* Eliminar el pod de la sección anterior.
+* Crear deploy:
+  * Su nombre será "despregue-practica-2".
+  * Las cápsulas serán del tipo del apartado anterior (cuidado con el selector!!!).
+  * Tendrá como labels:
+    * "app=pod-practica-2".
+    * "practica=modulo_3_1".
+  * Los pods usarán un ConfigMaps:
+    * Se llamará "config-practica-2".
+    * Tendrá como labels:
+      * "app=pod-practica-2".
+      * "practica=modulo_3_1".
+    * Tendrás la configuración de:
+      * "PUERTO_APP=80".
+      * "RUTA_LOGS=/var/log".
+  * La implementación se exporta a través de un servicio:
+    * se llamará "servicio-práctica-2".
+    * sus labels serán:
+      * "app=pod-practica-2".
+      * "practica=modulo_3_1".
+    * Escuchará en el puerto 80 (port = 80).
 
-Polo tanto, precisamos de tres artefactos:
+Así que necesitamos tres artefactos:
 * Deploy (despregue_practica_2.yaml).
 * ConfigMap (config_practica_2.yaml).
 * Service (servizo_practica_2.yaml).
 
-O diagrama do que temos quedaría como este (non se mostran as sondas e os límites por falta de espazo):
+El diagrama que tenemos se vería así (las sondas y los límites no se muestran por falta de espacio):
 
 ![tpod3.png](../_media/03/tpod3.png)
 
-Unha vez tes todo preparado:
+Una vez que tengas todo listo:
 
-1. Arranca os tres artefactos (pola orde correcta).
-2. Comproba que están a funcionar os tres.
-3. Averigua a ip do servizo.
-4. Escala a 5 réplicas e agarda a que estén ready.
-5. Fai curls ó <ip_servizo>/servidor.
-6. Fai un tail do archivo de logs.
-7. Borra os tres artefactos mediante o emprego de labels non de names.
+1. Inicie los tres artefactos (en el orden correcto).
+2. Compruebe que los tres funcionan.
+3. Averigüe la ip del servicio.
+4. Escale a 5 réplicas y espere a que estén listas.
+5. Realice curl en <ip_servizo>/servidor.
+6. Haga una tail del archivo de logs.
+7. Elimine los tres artefactos utilizando labels en lugar de nombres.
 
 ---
 
 ### Evaluación
 
+**Evidencia de la adquisición de actuaciones**:
+* Envío de un pdf con los contenidos necesarios para llevar a cabo los puntos a) o c) según estos.
 
-**Evidencias da adquisición dos desempeños**:
-* Envío dun pdf cos contidos necesarios para realizar os puntos do a) ó c) segundo estes.
-
-**Indicadores de logro**: Deberías ter...
-* Artefacto co yaml necesario para crear o pod cos requisitos do **punto a)** (pod_mellorado.yaml). Captura de pantalla dos comandos necesarios para:
-	* Arrancar o yaml.
-	* Comprobar que o pod está a correr (e a súa saída).
-* Artefacto co yaml necesario para crear o pod cos requisitos do **punto b)** (pod_mellorado_volume.yaml). Captura de pantalla cos comandos necesarios para:
-	* Arrancar o yaml.
-	* Exportar o pod a un porto da máquina ou host.
-	* Saída do log en /tmp/k8s_logs/k8s_access.log do host.
-* 3 artefactos (ConfigMap, Deploy e Service) cos requisitos do **punto c)** (config_practica_2.yaml, despregue_practica_2.yaml e servizo_practica_2.yaml) Captura de pantalla coas salidas e comandos necesarios para:
-	* Arrancar a estrutura e comprar que está a funcionar.
-	* Escalar o despregue a 5 réplicas.
-	* Saída do tail (en host) de "/tmp/k8s_logs/k8s_access.log".
-	* Borrado dos artefactos (por labels).
+**Indicadores de logros**: Deberías haber...
+* Artefacto con el yaml necesario para crear el pod con los requisitos del **punto a)** (enhanced_pod.yaml). Captura de pantalla de los comandos necesarios para:
+* Inicie el yaml.
+* Compruebe que el pod se está ejecutando (y su salida).
+* Artefacto con el yaml necesario para crear el pod con los requisitos del **punto b)** (enhanced_volume_pod.yaml). Captura de pantalla con los comandos necesarios para:
+* Inicie el yaml.
+* Exporte el pod a un host o puerto de máquina.
+* Registre la salida en /tmp/k8s_logs/k8s_access.log del host.
+* 3 artefactos (ConfigMap, Deploy y Service) con los requisitos del **punto c)** (config_practica_2.yaml, deployment_practica_2.yaml y service_practica_2.yaml) Captura de pantalla con salidas y comandos necesarios para:
+* Poner en marcha la estructura y asegurar que esté funcionando.
+* Escale la implementación a 5 réplicas.
+* Salida de cola (en el host) desde "/tmp/k8s_logs/k8s_access.log".
+* Eliminación de artefactos (por etiquetas).
 
 **Criterios de corrección**:
-* Ata 10 puntos do apartado a):
-	* 8 puntos se o yaml de creación do pod está correcto.
-	* 1 puntos por cada comando / captura de saída correcto.
-* Ata 10 puntos do apartado b):
-	* 7 puntos se o yaml de creación do pod mellorado e con volume está correcto.
-	* 1 punto por cada comando/captura de saída correcto.
-* Ata 20 puntos do apartado c):
-	* 4 puntos se os yaml de deploy, configmap e servizo están correctos.
-	* 2 punto por cada comando/captura de saída correcto.
+* Hasta 10 puntos del apartado a):
+* 8 puntos si la creación del pod yaml es correcta.
+* 1 punto por cada comando de salida/captura correcto.
+* Hasta 10 puntos del apartado b):
+* 7 puntos si el yaml de creación de pod mejorado y con volumen es correcto.
+* 1 punto por cada comando/captura de salida correcto.
+* Hasta 20 puntos del apartado c):
+* 4 puntos si los yaml de implementación, mapa de configuración y servicio son correctos.
+* 2 puntos por cada comando de salida/captura correcta.
 
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
+**Autoevaluación**: autoevalúe esta tarea aplicando los indicadores de logro anteriores.
 
-**Peso na cualificación**:
-* Peso desta tarefa na cualificación final ........................................ 40 puntos
-* Peso desta tarefa no seu tema ...................................................... 40 %
-
+**Peso en calificación**:
+* Peso de este trabajo en la nota final ..........................................40 puntos
+* Peso de esta tarea en su tema ..................................................... 40%
 ___
 
-## Montar a nosa aplicación nun clúster de Kubernetes
+## Montar nuestra aplicación en un clúster de Kubernetes
 
-Imos correr a nosa aplicación nun clúster real de Kubernetes.
+Ejecutemos nuestra aplicación en un clúster real de Kubernetes.
 
-Para facer isto compre revisar a documentación [sobre usuarios e roles](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/04_Namespaces_usuarios_e_roles).
+Para ello revisa la documentación [sobre usuarios y roles](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/04_Namespaces_usuarios_e_roles).
 
-O administrador do clúster vainos pedir unha serie de elementos:
-* Un certificado xerado por nós para poder traballar contra a API do clúster.
-* Un artefacto que cree o noso namespace, onde imos traballar:
-	* O namespace terá o seguinte formato: "<inicial_nome_pila>-<primer_apelido>".
-	* Exemplo: (Francisco Maseda) __f-maseda__.
-* Un artefacto que cree un Role:
-	* Ten que dar permisos sobre os seguintes recursos:
-		* ConfigMaps.
-		* Services.
-		* Pods.
-		* Deploys.
-	* Os permisos serán de lectura e escritura (verbos POST, PUT, PATCH, GET, WATCH, LIST).
-* Un RoleBinding para linkar o Role ó usuario no namespace noso.
+El administrador del clúster nos pedirá una serie de elementos:
+* Un certificado generado por nosotros para poder trabajar contra la API del clúster.
+* Un artefacto que crea nuestro espacio de nombres, donde trabajaremos:
+  * El namespace tendrá el siguiente formato: "<inicial_nombre>-<primer_apelido>".
+  * Ejemplo: (Francisco Maseda) __f-maseda__.
+* Un artefacto que crea un Rol:
+  * Tienes que dar permisos sobre los siguientes recursos:
+    * ConfigMaps.
+    * Services.
+    * Pods
+    * Desploys.
+  * Los permisos serán de lectura y escritura (verbos POST, PUT, PATCH, GET, WATCH, LIST).
+* Un RoleBinding para vincular el Rol al usuario en nuestro namespaces.
 
-Esos obxectos e o certificado **deberán ir nun tar** que remitiremos ó administrador mediante email (para Francisco Maseda ou Javier Gómez).
+Esos objetos y el certificado **deben ir en un tar** que enviaremos al administrador por correo electrónico (para Francisco Maseda o Javier Gómez).
 
-### a) Xerar as nosas credenciais
+### a) Generar nuestras credenciales
 
-Para xerar as nosas credenciais compre seguir esta [guía](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/00_Guia_cert).
+Para generar nuestras credenciales por favor sigue esta [guía](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/00_Guia_cert).
 
-Copiamos á nosa ruta de tar o certificado .csr (por exemplo f.maseda.csr).
+Copiamos el certificado .csr (por ejemplo f.maseda.csr) a nuestra ruta tar.
 
-### b) Crear os artefactos de namespace, Role e RoleBinding
+### b) Cree los artefactos de namespaces, role y RoleBinding
 
-O administrador tamén nos pide que declaremos os artefactos necesarios para crear:
-* Namespace:
-	* O nome do namespace terá o formato do que falamos enriba.
-	* Terá como label: tipo=platega-alumno.
+El administrador también nos pide que declaremos los artefactos necesarios para crear:
+* namespaces:
+  * El nombre del namespaces tendrá el formato del que hablamos anteriormente.
+  * Tendrá como label: tipo=platega-alumno.
 * Role:
-	* Terá como nome "role-alumno".
-	* Compre que teña o label: "tipo=platega-alumno".
-	* Ten que dar permisos sobre os seguintes recursos:
-		* Pods.
-		* Servizos.
-		* Deploys.
-		* ConfigMaps.
-	* Os permisos serán de lectura-escritura (GET, POST, PUT, WATCH, LIST, PATCH).
+  * Tendrá el nombre de "role-alumno".
+  * Tendrá la label: "tipo=platega-alumno".
+  * Tienes que dar permisos sobre los siguientes recursos:
+    * Pods
+    * Services.
+    * Desploys.
+    * ConfigMaps.
+  * Los permisos serán de lectura y escritura (GET, POST, PUT, WATCH, LIST, PATCH).
 * RoleBinding:
-	* Tera como nome binding-alumno.
-	* Aplicaráse ó usuario nomeado co formato que establecemos ( <inicial_nome_pila>-<primer_apelido>).
-	* Compre que teña o label: "tipo=platega-alumno".
-	* Será sobre o namespace creado.
+  * Tendrá el nombre de binding-alumno.
+  * Se aplicará al usuario nombrado con el formato que hayamos establecido (<inicial_primer>-<primer_apellido>).
+  * Tendrá la label: "tipo=platega-alumno".
+  * Será sobre el namespace creado.
 
-Os tres yaml (namespace.yaml, role.yaml, role_binding.yaml) introduciránse no tar a enviar.
+Los tres yamls (namespace.yaml, role.yaml, role_binding.yaml) se ingresarán en el tar que se enviará.
 
-### c) Envío ós administradores do clúster
+### c) Envío a los administradores del clúster
 
-O tar enviarase ó administrador (Francisco Maseda ou Javier Gómez) mediante email. Responderán cun certificado.
+El tar se enviará al administrador (Francisco Maseda o Javier Gómez) por correo electrónico. Responderán con un certificado.
 
-### d) Instalación do certificado no kubectl
+### d) Instalación del certificado en kubectl
 
-Unha vez obtemos o certificado dos administradores:
-* Agregamos unha nova configuración para o clúster.
-* Chamaráse "platega".
-* O server ten como dirección: "https://35.205.163.207".
-* Hai que facer o "insecure-skip-tls-verify=true".
-* Agregamos un novo usuario (co nome tal e como o temos no RoleBinding).
-* Hai que lle meter o certificado que nos devolveu o administrador (opción --embed-certs=true).
-* A key xerada no **apartado a)**.
-* Agregamos un novo contexto.
-* Co nome "contexto-platega".
-* Asociará o clúster "platega" ó noso usuario.
+Una vez que obtengamos el certificado de los administradores:
+* Agregamos una nueva configuración para el clúster.
+* Se llamará "platega".
+* La dirección del servidor es: "https://35.205.163.207".
+* Se debe realizar "insecure-skip-tls-verify=true".
+* Agregamos un nuevo usuario (con el nombre como lo tenemos en el RoleBinding).
+* Se debe insertar el certificado que nos devuelve el administrador (opción --embed-certs=true).
+* La clave generada en la **sección a)**.
+* Agregamos un nuevo contexto.
+* Con el nombre de "contexto-platega".
+* Asociará el clúster "platega" con nuestro usuario.
 
-Listamos os contexts que temos. 
+Enumeramos los contextos que tenemos.
 
-### e) Creación do noso despliegue da tarefa 3.1 no clúster
+### e) Creando nuestro despliegue de la tarea 3.1 en el clúster
 
-Poñemos o current-context a "contexto-platega".
+Establecemos el contexto actual en "contexto-platega".
 
-Lanzamos o configmap, deploy e service do **apartado c)** da tarefa anterior.
+Lanzamos el configmap, deploy y service de la **apartado c)** de la tarea anterior.
 
-Avisamos por mensaxe privada ó administrador de que temos o sistema instalado no clúster.
+Avisamos al administrador por mensaje privado que tenemos el sistema instalado en el clúster.
 
 ---
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-* Envío dun tar por email cos contidos necesarios para realizar os puntos do **a)** e **b)** segundo estes.
+**Evidencia de la adquisición de actuaciones**:
+* Envío de un tar por correo electrónico con los contenidos necesarios para llevar a cabo los puntos de **a)** y **b)** según estos.
 
-**Indicadores de logro**: Deberías ter:
-* Xerado correctamente un certificado según se indica no apartado a).
-* Yaml correctos para:
-	* Crear un namespace coas especificacións do apartado b).
-	* Crear un Role segundo as especificación do apartado b).
-	* Crear un RoleBinding segundos as especificación do apartado b).
-* Lanzar a nosa aplicación no clúster (despois de facer os pasos do apartado c) ) e avisar ós administradores por mensaxe privada.
+**Indicadores de logros**: Debe tener:
+* Generado correctamente un certificado como se indica en el apartado a).
+* Yamls correctos para:
+* Crear un espacio de nombres con las especificaciones del apartado b).
+* Crear un Rol de acuerdo a la especificación del apartado b).
+* Cree un RoleBinding de acuerdo con la especificación de la sección b).
+* Lanzar nuestra aplicación en el clúster (después de realizar los pasos del apartado c) ) y avisar a los administradores por mensaje privado.
 
 **Criterios de corrección**:
-* Ata 20 puntos do apartado a) e b):
-	* 5 puntos se o certificado está correcto.
-	* 5 puntos se o artefacto de creación do namespace é correcto.
-	* 5 puntos se o Role está correcto.
-	* 5 puntos se o RoleBinding está correcto.
-	* 1 puntos por cada comando / captura de saída correcto.
-* Ata 20 puntos do apartado d):
-	* 20 puntos se o desplegue, configmaps e o servizo están a correr no clúster.
+* Hasta 20 puntos del apartado a) y b):
+* 5 puntos si el certificado es correcto.
+* 5 puntos si el artefacto de creación del espacio de nombres es correcto.
+* 5 puntos si el Rol es correcto.
+* 5 puntos si el RoleBinding es correcto.
+* 1 punto por cada comando de salida/captura correcto.
+* Hasta 20 puntos del apartado d):
+* 20 puntos si lo implementa, los mapas de configuración y el servicio se ejecutan en el clúster.
 
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
+**Autoevaluación**: autoevalúe esta tarea aplicando los indicadores de logro anteriores.
 
-Se tes algunha dúbida ou consulta sobre como realizar a tarefa formúlaa no [Foro de consultas](https://www.edu.xunta.gal/platega/mod/forum/view.php?id=110051) deste tema.
+Si tienes alguna duda o consulta sobre cómo realizar la tarea, pregúntala en el [Foro de Preguntas](https://www.edu.xunta.gal/platega/mod/forum/view.php?id=110051) de este tema.
 
-**Peso na cualificación**:
-* Peso desta tarefa na cualificación final ........................................ 40 puntos
-* Peso desta tarefa no seu tema ...................................................... 40 %
+**Peso en calificación**:
+* Peso de este trabajo en la nota final ......................................... 40 puntos
+* Peso de esta tarea en su tema .................................................... 40%
 
 ----
 
-## Conectando a nosa aplicación con ingress
+## Conectando nuestra aplicación con ingress
 
-Para poder facer esta práctica compre:
-- Revisar o tema que deixamos neste módulo, sobre todo a sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/06_Ingress_controlando_o_trafico).
-- Compre ter crear unha controladora do ingress no clúster de Kind, ou ben crear o clúster co [ficheiro .sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md) resultante da [práctica guiada de Kind](03_configuracion/10_practica_guiada_kind).
+Para poder hacer esta práctica, necesitamos:
+- Revisar el tema que dejamos en este módulo, en especial la sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/06_Ingress_controlando_o_trafico).
+- Comprar tener que crear un controlador de ingreso en el cluster Kind, o crear el cluster con el [fichero.sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md) resultante de la [Práctica guiada Kind](03_configuracion/10_practica_guiada_tipo).
 
-Agora que coñecemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress), imos empregalo para montar dúas versións da aplicación do curso e redirixir o tráfico segundo a ruta de acceso. 
+Ahora que sabemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress), lo usaremos para configurar dos versiones de la aplicación del curso y redirigir el tráfico según el acceso sendero.
 
-Deste xeito:
-- En /v1 imos ter a versión 1 da nosa aplicación (a que empregamos nas tarefas dos dous módulos anteriores)
-- En /v2 imos ter a versión 2 da mesma. 
+De este modo:
+- En /v1 tendremos la versión 1 de nuestra aplicación (la que usamos en las tareas de los dos módulos anteriores)
+- En /v2 tendremos la versión 2 del mismo.
 
 
-### a) Creando a nosa infraestrutura
-Partiremos do estrutura básica do módulo 2:
- - Imos ter un deploy
-   - Empregará a imaxe frmadem/catro-eixos-k8s-ej1
-   - A tag será v1
-   - O nome do deploy será practica-4-v1
-   - Non fan falla nin sondas nin limits
-   - O comando a executar e npm run iniciar
-   - Estará nun ficheiro deploy_practica_4_v1.yaml
-- Exporemos un servizo
-  - Conectará cos pods do deploy no porto 8080
-  - O seu porto será o 80
-  - Terá de nome practica-4-v1
-  - Estará nun ficheiro servizo_practica4_v1.yaml
-- Teremos outro deploy
-  - Empregará a imaxe frmadem/catro-eixos-k8s-ej1
-  - A tag será v2
-  - O nome do deploy será practica-4-v2
-  - Estará nun ficheiro deploy_practica_4_v2.yaml
-  - Non fan falla nin sondas nin limits
-  - O comando a executar é npm run iniciar
-- Teremos outro servizo
-  - Conectará cos pods nos porto 8080
-  - O seu porto será tamén o 80
-  - O seu nome será practica-4-v2
-  - Estará nun ficheiro servizo_practica4_v2.yam
+### a) Creando nuestra infraestructura
+Partiremos de la estructura básica del módulo 2:
+ - Vamos a tener un **deploy**.
+   - Se utilizará la imagen `fmadem/catro-axios-k8s-ej1`
+   - La etiqueta será `v1`
+   - El nombre del deployment será *practica-4-v1*
+   - Ni pruebas ni limits deben fallar
+   - El comando para ejecutar es `npm run iniciar`
+   - Estará en un fichero *deploy_practica_4_v1.yaml*
+- Expondremos un **servicio**
+  - Se conectará a los pods de deploy en el puerto 8080
+  - Su puerto será 80
+  - Se llamará *practica-4-v1*
+  - Estará en un fichero *service_practica4_v1.yaml*
+- Tendremos otro **desploy**
+  - Se utilizará la imagen `fmadem/catro-axios-k8s-ej1`
+  - La etiqueta será `v2`
+  - El nombre del deploy será *practica-4-v2*
+  - Estará en un fichero *deploy_practica_4_v2.yaml*
+  - Ni pruebas ni limits deben fallar
+  - El comando para ejecutar es `npm run iniciar`
+- Tendremos otro **servicio**
+  - Se conectará a los pods en el puerto 8080
+  - Su puerto también será 80
+  - Su nombre será *practica-4-v2*
+  - Estará en un fichero *service_practica4_v2.yaml*
 
-Quedaría unha estrutura como a que segue:
+Quedaría una estructura como la siguiente:
 ![actividades32](./../_media/03/actividades32.png)
 
-Agora desplegamos esta estrutura. 
+Ahora desplegamos esta estructura.
 
-### b) Aplicando regras de ingress para conectar todo
+### b) Aplicar reglas de ingress para conectar todo
 
-Imos crear unha regra de ingress de tal xeito que:
+Vamos a crear una regla de ingress de tal manera que:
 
-- A artefacto terá de nome practica-4-ingress
-- Definirá dous paths:
-  - /v1 => que levará ó servizo practica-4-v1
-  - /v2 => que levará ó servizo practica-4-v2
+- El artefacto se llamará* practica-4-ingress*
+- Definir dos paths:
+  - `/v1` => lo que conducirá al servicio *practica-4-v1*
+  - `/v2` => lo que conducirá al servicio *practica-4-v2*
 
-Creada esta configuración (nun ficheiro chamado ingress.yaml) lanzaráse no clúster de Kind. 
+Una vez que se crea esta configuración (en un fichero llamado ingress.yaml), se iniciará en el clúster Kind.
 
-Agora, e dende un porto redirixido da vm ó noso host (que apunte ó porto 80 da vm) faremos no navegador
+Ahora, y desde un puerto redirigido de la vm a nuestro host (que apunta al puerto 80 de la vm) lo haremos en el navegador
 
-`localhost:<porto redirixido>/v1`
+`localhost:<puerto redirigido>/v1`
+
 ![actividades33](./../_media/03/actividades33.png)
 
 `localhost:<porto redirixido>/v2`
+
 ![actividades34](./../_media/03/actividades34.png)
 
 ---
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Envío dun pdf cos contidos necesarios para realizar os puntos do a) e b) segundo estes.
+**Evidencia de la adquisición de actuaciones**:
+- Envío de un pdf con los contenidos necesarios para llevar a cabo los puntos a) yb) según estos.
 
-**Indicadores de logro**: Deberías ter...
-- Artefactos cos yaml para crear os deploys e os servizos v1 e v2 segundo os requisitos do **punto a)** e captura dos comandos necesarios para:
-  - Arrancar os yaml 
-  - Comprobar que os pods están a correr (e a súa saída)
-  - Comprobar que os services e deploys están creados no k8s.
-- Artefacto co ingress segundo os requisitos do **punto b)** e os comandos necesarios para
-  - Arrancar a estrutura
-  - Comprobar que está creada no sistema (e a súa saída)
-- Capturas do navegador coa saída das rutas v1 e v2
+**Indicadores de logros**: Deberías haber...
+- Artefactos con el yaml para crear los deployments y los servicios v1 y v2 de acuerdo a los requerimientos del **punto a)** y capturando los comandos necesarios para:
+  - Iniciar los yaml
+  - Comprobar que los pods se están ejecutando (y su salida)
+  - Compruebe que los servicios y desploys se crean en k8s.
+- Artefacto con la entrada según los requisitos del **punto b)** y los comandos necesarios para
+  - Iniciar la estructura
+  - Comprobar que se crea en el sistema (y su salida)
+- Capturas de pantalla del navegador con salida de rutas v1 y v2
 
 
 **Criterios de corrección**:
-- ata 20 puntos do apartado a)
-  - 5 puntos se os yaml de creación do deploy e service v1 están correctos
-  - 5 puntos se os yaml de creación do deploy e service v2 están correctos
-  - 2 puntos por cada comando ou grupo de comandos para arrancar e listar os artefactos. 
-- ata 10 puntos do apartado b)
-  - 8 puntos se o yaml de creación do ingress é correcto
-  - 1 punto  polo comando de creación e listado do artefacto de ingress
-- ata 10 puntos
-  - 5 puntos por cada unha das capturas de pantalla do navegador para v1 e v2
+- hasta 20 puntos del apartado a)
+  - 5 puntos si los yaml de creación de deploy y servicio v1 son correctos
+  - 5 puntos si los yaml de creación de deploy y servicio v2 son correctos
+  - 2 puntos por cada comando o grupo de comandos para iniciar y listar los artefactos.
+- hasta 10 puntos del apartado b)
+  - 8 puntos si el yaml de creación de ingress es correcto
+  - 1 punto por el comando para crear y listar el artefacto de ingress
+- hasta 10 puntos
+  - 5 puntos por cada una de las capturas de pantalla del navegador para v1 y v2
 
 
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
+**Autoevaluación**: autoevalúe esta tarea aplicando los indicadores de logro anteriores.
 
-**Peso na cualificación**:
-Peso desta tarefa na cualificación final ...................................... 40 puntos
-Peso desta tarefa no seu tema .................................................... 40 %
+**Peso en calificación**:
+- Peso de este trabajo en la nota final .......................................... 40 puntos
+- Peso de esta tarea en su asignatura ........................................... 40%
