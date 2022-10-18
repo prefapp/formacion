@@ -1,16 +1,16 @@
-# Práctica guiada: crear un clúster personalizado con Kind
+# Práctica guiada: creación de un clúster personalizado con Kind
 
-Nesta práctica imos explicar algunhas das opcións que podemos utilizar para crear un clúster de Kind mediante un script.
+En esta práctica explicaremos algunas de las opciones que podemos usar para crear un clúster Kind usando un script.
 
-O clúster que crearemos terá as seguintes características:
+El clúster que crearemos tendrá las siguientes características:
 
-- Contará cun registry local.
-- Terá o número de nodos que especifiquemos.
-- Incluirá unha controladora de Ingress (neste caso, un Nginx).
+- Tendrá un registry local.
+- Tendrá el número de nodos que especifiquemos.
+- Incluirá un controlador Ingress (en este caso, un Nginx).
 
 ## Registry local
 
-Para contar cun registry local, usaremos o script que nos facilita Kind na súa [documentación oficial](https://kind.sigs.k8s.io/docs/user/local-registry/). Nos comentarios do código explicamos o que fai cada parte do script.
+Para tener un registro local, usaremos el script provisto por Kind en su [documentación oficial](https://kind.sigs.k8s.io/docs/user/local-registry/). En los comentarios del código explicamos qué hace cada parte del script.
 
 ```bash
 #!/bin/sh
@@ -58,9 +58,9 @@ EOF
 
 ```
 
-## Modificar o número de nodos
+## Modificar el número de nodos
 
-Unha das características máis interesantes de Kind é que permite o control sobre o número e tipo de nodos que terá o clúster, así como as imaxes que terán instaladas. Por defecto, se non modificamos a configuración, Kind creará un único nodo de tipo master (ó que identifica co rol de control-plane), pero podemos engadirlle tódolos workers que queiramos:
+Una de las características más interesantes de Kind es que permite controlar el número y tipo de nodos que tendrá el clúster, así como las imágenes que tendrán instaladas. Por defecto, si no modificamos la configuración, Kind creará un único nodo de tipo master (el identificado con el rol de control-plane), pero podemos añadirle todos los workers que queramos:
 
 ```yaml
 kind: Cluster
@@ -72,7 +72,7 @@ nodes:
 - role: worker
 ```
 
-Retomando o código do noso script, habería que incluir estes nodos na orden que crea o clúster, é dicir:
+Volviendo al código de nuestro script, debemos incluir estos nodos en el orden que crea el clúster, es decir:
 
 ```bash
 cat <<EOF | kind create cluster --config=-
@@ -89,13 +89,13 @@ nodes:
 - role: worker
 EOF
 ```
-Neste caso, o clúster crearíase con catro nodos: o master e tres workers.
+En este caso, el clúster se crearía con cuatro nodos: el master y tres workers.
 
-## Engadindo un controlador de Ingress con Nginx
+## Agregar un controlador de ingress con Nginx
 
-Para que o noso clúster teña a capacidade de usar Ingress, é necesario que teña instalado un controlador.
+Para que nuestro clúster pueda usar Ingress, debe tener un controlador instalado.
 
-No noso caso, para facilitar a instalación, imos a lanzar o manifesto de ingress-nginx, que despregará automáticamente tódolos artefactos necesarios para que o controlador funcione. Para despregar estes artefactos, é necesario que o clúster estea xa en funcionamento, polo que será o último paso do script.
+En nuestro caso, para facilitar la instalación, vamos a lanzar el manifiesto ingress-nginx, que desplegará automáticamente todos los artefactos necesarios para que el controlador funcione. La implementación de estos artefactos requiere que el clúster ya esté en funcionamiento, por lo que será el último paso del script.
 
 ```bash
 # Install Ingress NGINX controller
@@ -103,4 +103,4 @@ echo "\nInstalling Ingress NGINX controller...\n"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 ```
 
-Podes consultar o resultado final [nesta páxina](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
+Puede consultar el resultado final [en esta página](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).

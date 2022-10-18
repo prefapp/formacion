@@ -1,50 +1,52 @@
-# Helm: o marionetista de Kubernetes
+# Helm: titiritero de Kubernetes
 
 ![helm1](./../_media/03/helm1.jpg)
 
-[Helm](https://helm.sh/) é un dos proxectos máis interesantes dentro da comunidade de Kubernetes. 
+[Helm](https://helm.sh/) es uno de los proyectos más interesantes dentro de la comunidad de Kubernetes.
 
-A idea de Helm é a de controlar un **despregue** (chámanlle release) de tal xeito que:
+La idea de Helm es controlar un **despliegue** (lo llaman release) de tal forma que:
 
-- Mediante un único conxunto de valores (normalmente expresado en YAML):
-  - Tódolos artefactos que o compoñan (deploys, pods, configmaps, services...) teñan reflictidos os valores correctos de configuración.
-  - Se declaren correctamente no clúster de K8s.
-  - Ante un cambio de valores, se reconfiguren os artefactos apropiados. 
-- O release, cun solo comando, poida:
+- Usando un solo conjunto de valores (generalmente expresado en YAML):
+  - Todos los artefactos que lo componen (deploys, pods, configmaps, services...) tienen reflejados los valores de configuración correctos.
+  - Están declarados correctamente en el clúster K8s.
+  - Ante un cambio de valores, se reconfiguran los artefactos correspondientes.
+- El release, con un solo comando, puede:
   - Listarse
-  - Deterse
+  - Detenerse
   - Actualizarse
   - Reconfigurarse
-- As releases partan de planiñas ou [charts](https://github.com/helm/charts) é dicir, repositorios co código necesario para lanzar unha aplicación no kubernetes:
-  - Atópanse en repos públicos.
-  - Hainas de tódolos tipos (mysql, mongo, Wordpress...).
-  - Pódense descargar e empregar ou extendelas como queiramos.
+- Los releases parten de planes o [charts](https://github.com/helm/charts), es decir, repositorios con el código necesario para lanzar una aplicación en Kubernetes:
+  - Se encuentran en repositorios públicos.
+  - Los hay de todos los tipos (mysql, mongo, Wordpress...).
+  - Se pueden descargar y utilizar o ampliar como queramos.
 
-## a) Instalación de helm
+## a) Instalación de Helm
 
-Na nosa ubuntu é moi sinxelo:
+En nuestro ubuntu es muy sencillo:
+
 ```shell
 snap install helm --classic
 ```
 
- **Nota! O binario atópase en /snap/bin/helm, se non se atopa no path podedes ben incluílo ou ben crear un link simbólico, por exemplo a /usr/sbin/helm.*
+ **¡Nota! El binario está en /snap/bin/helm, si no está en la ruta, puede incluirlo o crear un enlace simbólico, por ejemplo, a /usr/sbin/helm.*
 
-En versións previas, era preciso inicializar helm para empezar a traballar con el, mais isto deixou de ser así na versión 3. Se estamos utilizando unha versión máis antiga, teremos que lanzar o seguinte comando: 
+En versiones anteriores era necesario inicializar helm para empezar a trabajar con él, pero en la versión 3 ya no es así. Si estamos usando una versión anterior, tendremos que lanzar el siguiente comando:
 
 ```shell
 helm init
 ```
 
-**Nota!  No caso de dicir que as versións son incompatibles, compre facer `helm init --upgrade`.*
-**Nota(2)! Pode levarlle un minuto iniciar ó helm. Compre agardar ata poder interactuar con él.* 
+**¡Nota! Si dice que las versiones son incompatibles, haga `helm init --upgrade`.*
 
-Agora, podemos crear unha release. 
+**¡Nota 2! helm puede tardar un minuto en ponerse en marcha. Espere hasta que pueda interactuar con él.*
 
-## b) Creando unha release
+Ahora, podemos crear un release.
 
-Para crear unha release, compre descargar a **chart** ou planiña ou indicarlle ó helm que a descargue por sí mesmo. 
+## b) Crear una release
 
-As charts atópanse en repositorios. 
+Para crear un release, descargue el **chart** o el plano o pídale a helm que lo descargue él mismo.
+
+Los charts están en repositorios.
 
 ```shell
 # listamos os repos
@@ -66,19 +68,22 @@ bitnami/apache                                  9.1.18          2.4.54          
 bitnami/argo-cd                                 4.0.6           2.4.8           Argo CD is a continuous delivery tool for Kuber...
 ```
 
-Podemos, por exemplo, instalar unha mariadb:
+Podemos, por ejemplo, instalar un mariadb:
+
 ```shell
 helm install bbdd bitnami/mariadb
 ```
+Para ver el release
 
 ```shell
-# para ver a release
 helm list
+
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
 bbdd    default         1               2022-08-11 10:12:54.717064554 -0400 EDT deployed        mariadb-11.1.7  10.6.8      
 ```
 
-Se exploramos o noso clúster:
+Si exploramos nuestro clúster:
+
 ```shell
 kubectl get pods
 
@@ -87,13 +92,14 @@ bbdd-mariadb-0   1/1     Running   0          98s
 
 ```
 
-Ademáis creou o servizo vinculado ó pod, un segredo para as passwords e un configmap.
+También creó el servicio vinculado al pod, un secreto para password y un configmap.
 
-É dicir, temos instalada unha MariaDB coas mellores prácticas da industria para Kubernetes!
+Es decir, ¡tenemos un MariaDB instalado con las mejores prácticas de la industria para Kubernetes!
 
-Para configurala, habería que ir ó [artifacthub](https://artifacthub.io/packages/helm/bitnami/mariadb), onde nos comentan os valores a modificar para manexar a nosa instalación. 
+Para configurarlo hay que ir a [artifacthub](https://artifacthub.io/packages/helm/bitnami/mariadb), donde nos indican los valores a modificar para gestionar nuestra instalación.
 
-Eses valores, compre metelos nun ficheiro de yaml:
+Ponga esos valores en un archivo yaml:
+
 ```yaml
 # values.yaml
 db:
@@ -102,7 +108,7 @@ db:
   database: test
 ```
 
-Agora relanzamos a nosa release:
+Ahora estamos relanzando nuestro release:
 
 ```shell
 # borramos a release
@@ -112,4 +118,4 @@ helm uninstall bbdd
 helm install maria -f values.yaml bitnami/mariadb
 ```
 
-E teríamos o desplegue cunha base de datos creada e un usuario vinculado á mesma. 
+Y tendríamos el deployment con una base de datos creada y un usuario vinculado a ella.
