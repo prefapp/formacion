@@ -1,4 +1,4 @@
-# Monte nuestra aplicación en un clúster de Kubernetes.
+# Montar nuestra aplicación en un clúster de Kubernetes.
 [link]( https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/03_modulo_3?id=a-creando-a-nosa-infraestrutura) al ejercicio, en este caso sería el apartado "Mejorando nuestra aplicación".
 
 **<u>Punto A:</u>**
