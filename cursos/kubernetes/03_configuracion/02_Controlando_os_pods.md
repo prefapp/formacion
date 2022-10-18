@@ -234,13 +234,6 @@ Lanzamos un pod con nginx. Creamos unha sonda de preparado e, agardando 15 segun
 
 Unha vez que responde, o pod ponse en estado de ready  e estará listo para recibir peticións. 
 
-As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
-
-* Cada vez que se inicia unha nova réplica, o pod non recibirá peticións a través do servizo mentres non esté en estado ready, é dicir: mentres a sonda (readinessProbe) non devolva ok. 
-* Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de ready seguirá sen recibir peticións a través do servizo. 
- 
-Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable.
-
 ### iii) Emprego de sondas con servizos e deploys
 
 As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:

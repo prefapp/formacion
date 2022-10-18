@@ -1,6 +1,6 @@
-# Xeración de certificado
+# Generación de certificado
 
-Para xerar un certificado imos empregar [cfssl](https://cfssl.org/).
+Para generar un certificado usaremos [cfssl](https://cfssl.org/).
 
 ```shell
 # Baixamos o software
@@ -12,7 +12,8 @@ chmod +x ~/bin/{cfssl,cfssljson}
 export PATH=$PATH:~/bin
 ```
 
- Imos empregar un json para xerar o certificado, nunha ruta:
+ Usaremos un json para generar el certificado, en una ruta:
+ 
 ```shell
 echo '{"CN":"<inicial_nome.apelido>","hosts":[""],"key":{"algo":"rsa","size":2048}}' \
 | cfssl genkey  - | cfssljson -bare <inicial_nome.apelido>
