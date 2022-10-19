@@ -99,12 +99,35 @@ Output
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Input
-```sh
-# se facemos un cat dende o host a /tmp/logs_apache_k8s/access_log
+Ahora tenemos que ir a buscar el volumen al nodo de kind. Tenemos que descubrir en qué nodo se encuentra. Para esto usamos el comando:
 
-cat /tmp/logs_apache_k8s/access_log
+Input
 ```
+kubectl describe pod pod-con-volume
+```
+
+Output
+```
+Name:             pod-con-volume
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             multi-node-worker2/172.20.0.3
+Start Time:       Wed, 19 Oct 2022 15:19:47 +0200
+....
+...
+```
+En este caso está en el nodo multi-node-worker2. 
+
+Como cada nodo de Kind es un contenedor docker, puedo abrir un bash en este contenedor para ver los logs en el volumen "persistente".
+
+Input
+```
+docker exec -it multi-node-worker2 bash
+
+root@multi-node-worker2:/# cat /tmp/logs_apache_k8s/access_log 
+```
+
 
 Output
 ```sh
