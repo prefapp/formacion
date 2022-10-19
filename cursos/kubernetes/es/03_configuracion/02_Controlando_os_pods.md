@@ -8,8 +8,8 @@ Por un lado, Kubernetes funciona alojando nuestras cargas de trabajo (en forma d
 
 Por otro lado, nuestras cápsulas deberían poder tener "extremos" u "agujeros" especiales para poder decirle a los K8 dos cosas:
 
-* Si el pod está "vivo", la aplicación se ejecuta sin problemas.
-* Si el pod está "listo": cuando se inicia el pod, cuando está listo para recibir solicitudes.
+* Si el pod está "live", la aplicación se ejecuta sin problemas.
+* Si el pod está "ready": cuando se inicia el pod, cuando está ready para recibir solicitudes.
 
 Ambos problemas se resuelven en Kubernetes mediante límites y sondeos.
 
@@ -79,22 +79,22 @@ Como podemos ver, estamos configurando solicitudes (la cantidad mínima de recur
 
 Los límites se fijan en 128Mi de RAM y 500m o 500 milicores.
 
-## b) pruebas en las vainas
+## b) pruebas en las pods
 
 Como dijimos al comienzo de esta unidad, los K8 deben saber acerca de una cápsula:
 
 * Si está en funcionamiento.
-* Si está listo para recibir solicitudes.
+* Si está ready para recibir solicitudes.
  
  Kubernetes resuelve estos problemas a través de pruebas.
 
-Las pruebas son solicitudes o comandos http que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, los K8 pueden concluir que el módulo no se puede usar (el programa principal no se está ejecutando) o que aún no está listo para funcionar (el programa principal del módulo aún se está iniciando).
+Las pruebas son solicitudes o comandos http que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, los K8 pueden concluir que el módulo no se puede usar (el programa principal no se está ejecutando) o que aún no está ready para funcionar (el programa principal del módulo aún se está iniciando).
 
 ![pod6.png](../_media/03/pod6.png)
 
 Hay dos tipos esenciales de pruebas:
 
-* Readiness probe: prueba para determinar si el contenedor del pod está listo o no para recibir solicitudes.
+* Readiness probe: prueba para determinar si el contenedor del pod está ready o no para recibir solicitudes.
 * Liveness probe: prueba que determina la "salud" del contenedor, si está funcionando correctamente.
 
 ### i) Definición de prueba
@@ -193,7 +193,7 @@ Events:
   Normal   Killing    61s                 kubelet, sutelinco  Container contedor failed liveness probe, will be restarted
 ```
 
-Vemos que la prueba en vivo falló y el contenedor se reinició. De hecho, si miramos la información de los pods:
+Vemos que la prueba en live falló y el contenedor se reinició. De hecho, si miramos la información de los pods:
 
 Input
 ```sh
@@ -233,7 +233,7 @@ spec:
 
 Lanzamos un pod con nginx. Creamos una sonda lista y después de esperar 15 segundos hará un `GET /`. Repetirá esta operación cada 5 segundos hasta que responda con 200.
 
-Una vez que responde, el pod entra en estado listo y estará listo para recibir solicitudes.
+Una vez que responde, el pod entra en estado ready y estará ready para recibir solicitudes.
 
 ### iii) Uso de pruebas con servicios y deploys
 
@@ -243,3 +243,9 @@ Las pruebas en live y ready son muy importantes cuando se trabaja con deploy que
 * Si un pod falla (el programa principal deja de funcionar), la prueba de salud (livenessProbe) detecta el fallo y reinicia el contenedor. Mientras no vuelva a estar **ready** no recibirá peticiones a través del servicio.
  
 Estas dos pruebas nos permiten monitorear los pods y garantizar que no se envíen peticiones a un pod que se encuentra en un estado inestable.
+
+Documentación oficial:
+- [Pruebas en contenedores](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Pruebas](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
+- [http get action v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#httpgetaction-v1-core)
+
