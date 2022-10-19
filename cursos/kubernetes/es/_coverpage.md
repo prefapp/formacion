@@ -5,8 +5,8 @@
 > Production-Grade Container Orchestration
 
 - Escalado
-- Despregue automático
-- Xestión de apps contenerizadas
+- Despliegue automático
+- Gestión de apps contenerizadas
 
 [GitHub](https://github.com/prefapp/formacion/tree/master/cursos/docker)
 [Plataforma](https://prefapp.github.io/formacion/)
