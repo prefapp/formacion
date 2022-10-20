@@ -22,5 +22,6 @@
   - [Ingress: controlando o tráfico de entrada](/03_configuracion/06_Ingress_controlando_o_trafico.md)
   - [Helm: o marionetista de Kubernetes](/03_configuracion/07_Helm.md)
   - [HPA: exprimindo o rendemento do noso k8s](/03_configuracion/08_Adaptandose_as_demandas.md)
+  - [Asignación de Pods a Nodos](03_configuracion/11_Assigning_Pods_to_Nodes.md)
   - [👨‍🏫 Práctica guiada de HPA](/03_configuracion/09_practica_guiada_HPA.md)
   - [📝 Actividades](./00_actividades/03_modulo_3.md)
