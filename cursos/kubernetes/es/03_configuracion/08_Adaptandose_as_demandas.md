@@ -99,21 +99,20 @@ Número de Rèplicas de Pods = Redondeo (valorActualMetrica / valorIdealMetrica 
 
 Esto significa que:
 
-1. El algoritmo calcula el valor actual de la métrica (si es un porcentaje, promedia ese valor entre todos los pods existentes)
-  1.a Si la métrica es de tipo **resource** (CPU o Memoria), el valor individual de cada pod se encuentra en función del uso actual con respecto a las solicitudes especificadas en el pod.
-2. Tome el valor ideal (como se declara en el manifiesto del artefacto)
+1. El algoritmo calcula el valor actual de la métrica (si es un porcentaje, promedia ese valor entre todos los pods existentes). Si la métrica es de tipo **resource** (CPU o Memoria), el valor individual de cada pod se encuentra en función del uso actual con respecto a las solicitudes especificadas en el pod.
+2. Toma el valor ideal (como se declara en el manifiesto del artefacto).
 3. El producto del número actual de réplicas por el cociente entre la métrica actual y la ideal dará como resultado el número de réplicas a mantener.
 
 En ejemplos:
 
-* Uso de 400 cpu, para lo ideal en 100 implica un aumento en los pods = 400/100 == 4.0
-* Elementos en cola 500, lo ideal 300, implica un incremento de pods = 500 / 300 = 2.0 (1.6 redondeado)
+* Uso de cpu 400, lo deseado es 100 --> Implica un aumento en los pods = 400/100 == 4.0
+* Items en cola 500, lo deseado 300 --> Implica un incremento de pods = 500/300 = 2.0 (1.6 redondeado)
 
 #### El problema del uso de la memoria como criterio de escalado/desescalado con HPA
 
 La memoria se puede usar como una métrica en un HPA, sin embargo, es problemática:
 
-1. Muchos lenguajes de programación y tiempos de ejecución liberan memoria poco a poco (o no la liberan directamente)
+1. Muchos lenguajes de programación y tiempos de ejecución liberan memoria poco a poco (o no la liberan directamente).
 2. El uso de memoria no es en muchos casos una medida del nivel de "carga" de un proceso debido a las reservas que hacen algunos frameworks al iniciar.
 
 Por estos motivos, no parece recomendable en la mayoría de los casos utilizar la memoria como criterio de escalado/desescalado de pods.
@@ -126,7 +125,7 @@ Este es un elemento introducido a partir de la versión v2beta1 de HPA. La docum
 
 Podemos por tanto establecer dos grupos de políticas:
 
-* **scaleDown**: Para controlar el escalado de nuestro sistema.
+* **scaleDown**: Para controlar el desescalado de nuestro sistema.
 * **scaleUp**: Para gestionar nuestro incremento de réplicas.
 
 Si nos fijamos en un ejemplo de una política:
