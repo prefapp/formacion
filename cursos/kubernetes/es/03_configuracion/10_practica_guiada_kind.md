@@ -37,7 +37,7 @@ containerdConfigPatches:
     endpoint = ["http://${reg_name}:5000"]
 EOF
 
-# Verificamos que o registry teña acceso á rede do clúster e, se non é así, o conectamos
+# Verificamos que el registry tenga acceso a la red del clúster, y si no, lo conectamos
 if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${reg_name}")" = 'null' ]; then
   docker network connect "kind" "${reg_name}"
 fi
@@ -57,6 +57,13 @@ data:
 EOF
 
 ```
+
+Debemos darle los permisos adecuados al script
+
+```shell
+chmod +x registry-local.sh
+```
+Y lo ejecutamos.
 
 ## Modificar el número de nodos
 
@@ -103,4 +110,4 @@ echo "\nInstalling Ingress NGINX controller...\n"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 ```
 
-Puede consultar el resultado final [en esta página](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
+Puede consultar el resultado final [en esta página](../00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
