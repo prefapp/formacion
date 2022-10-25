@@ -16,11 +16,11 @@ Para tener un registro local, usaremos el script provisto por Kind en su [docume
 #!/bin/sh
 set -o errexit
 
-# Especificamos o nome que queremos para o registry e que porto utilizará
+# Especificamos el nombre que queremos para el registro y que puerto usará
 reg_name='kind-registry'
 reg_port='5001'
 
-# Se o registry non existe, o creamos nun novo contedor
+# Si el registro no existe, lo creamos en un nuevo contenedor
 if [ "$(docker inspect -f '{{.State.Running}}' "${reg_name}" 2>/dev/null || true)" != 'true' ]; then
   docker run \
     -d --restart=always -p "127.0.0.1:${reg_port}:5000" --name "${reg_name}" \
@@ -42,7 +42,7 @@ if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${reg_name}
   docker network connect "kind" "${reg_name}"
 fi
 
-# Documentamos o registry local
+# Documentamos el registry local
 # https://github.com/kubernetes/enhancements/tree/master/keps/sig-cluster-lifecycle/generic/1755-communicating-a-local-registry
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
