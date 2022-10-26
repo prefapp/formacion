@@ -50,9 +50,9 @@ El namespaces **kube-system** es donde residen los principales artefactos maestr
 
 En el espacio **default** es donde crearemos nuestros artefactos.
 
-### ii) Creación de un namespaces
+### ii) Creación de un namespace
 
-Para crear un nuevo namespaces, use un artefacto como el siguiente:
+Para crear un nuevo namespace, use un artefacto como el siguiente:
 
 ```yaml
 # namespace.yaml
@@ -71,13 +71,13 @@ kubectl apply -f namespace.yaml
 
 Y ya tendríamos un nuevo namespaces creado en el sistema.
 
-### iii) Enviar comandos a un namespaces
+### iii) Enviar comandos a un namespace
 
 De forma predeterminada, los comandos que ejecutamos con kubectl siempre se referirán al namespaces **default**.
 
 Podemos cambiar el contexto por defecto a otro namespaces, pero esa es una tarea avanzada que dejaremos para otro módulo.
 
-Por ahora, utilice el indicador **-n <namespaces>** en nuestros comandos para establecer el namespaces en el que ejecutarlos.
+Por ahora, utilice el indicador **-n <namespace>** en nuestros comandos para establecer el namespace en el que ejecutarlos.
 
 ```shell
 # listar os pods do namespace 'desenvolvemento'
@@ -88,7 +88,7 @@ kubectl delete pod foo -n desenvolvemento
 ```
 A todo ello se une un potente sistema de identificación de artefactos en Kubernetes: las etiquetas.
 
-## c) Las etiquetas
+## c) Las etiquetas (labels)
 
 Las etiquetas en Kubernetes son pares clave/valor que identifican un conjunto de objetos.
 

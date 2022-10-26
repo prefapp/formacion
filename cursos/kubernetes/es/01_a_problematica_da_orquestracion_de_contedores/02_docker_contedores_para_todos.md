@@ -46,7 +46,7 @@ XII. [Administración de procesos](https://12factor.net/es/admin-processes): Eje
 
 # Características de Docker
 
-A pesar de la competencia que existía entre los diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ...), y las herramientas que utilizaban para construir su servicio, algunas de código abierto y otras propietarias, Docker Managed se ha consolidado como el principal motor de contenedores debido al hecho de que:
+A pesar de la competencia que existía entre los diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ...), y las herramientas que utilizaban para construir su servicio, algunas de código abierto y otras propietarias, Docker se ha consolidado como el principal motor de contenedores debido al hecho de que:
 
 - Facilita enormemente la gestión de los contenedores.
 - Proporciona un sistema simple para crear, mantener y distribuir imágenes de contenedores.
@@ -58,7 +58,7 @@ A pesar de la competencia que existía entre los diferentes proveedores de PaaS 
    - [Heroku PaaS](https://www.heroku.com/)
    - [The Twelve factor app](https://12factor.net/es/)
 
-# Motor acoplable
+# Docker engine
 
 > Docker Engine, el core de docker, es el componente fundamental de la plataforma y consta de una serie de elementos:
 
@@ -111,7 +111,7 @@ Las imágenes en Docker se componen de **capas**, lo que permite la modularidad 
 
 Para este ejemplo, montaremos una imagen con el servidor web [Apache2](https://httpd.apache.org/).
 
-## 1ra Capa: El sistema base
+## 1ª Capa: El sistema base
 
 Ya sabemos que un contenedor está completamente aislado, a excepción del Kernel, del Sistema Operativo anfitrión. Esto implica que, para que el contenedor funcione, se necesita tener una primera capa en la imagen con las utilidades y programas fundamentales para garantizar el funcionamiento del software que queremos ejecutar dentro del contenedor. En otras palabras, necesitamos un Sistema Operativo como base de la imagen del contenedor.
 
@@ -121,7 +121,7 @@ Nuestra imagen tendría esta estructura:
 
 ![Capa](./../_media/01/capa_1.png)
 
-## 2da Capa: Las dependencias de Apache2
+## 2ª Capa: Las dependencias de Apache2
 
 En este ejemplo, la versión de Apache que se montará es [2.2](https://httpd.apache.org/download.cgi#apache22) que, por supuesto, tiene varias [dependencias](https://httpd.apache.org/docs/2.2/install.html#requirements) específicas del software.
 
@@ -129,7 +129,7 @@ Estas dependencias constituirían una segunda capa en nuestra imagen:
 
 ![Capa](./../_media/01/capa_2.png)
 
-## 3ra Capa: El servidor Apache
+## 3ª Capa: El servidor Apache
 
 Finalmente, agreguemos la capa con nuestro servidor web.
 
@@ -160,7 +160,7 @@ Partimos de un contenedor en ejecución y en base a una imagen:
 
 ![Imagen contenedor](./../_media/01/imaxe_e_contedor_1.png)
 
-En realidad, la imagen se compone de capas propias de la imagen y una capa contenedora. Solo la capa contenedora es **ESCRITURA/LECTURA**.
+En realidad, la imagen se compone de capas propias de la imagen y una capa del container. Solo la capa del container es de **ESCRITURA/LECTURA**.
 
 ![Imagen contenedor](./../_media/01/imaxe_e_contedor_2.png)
 

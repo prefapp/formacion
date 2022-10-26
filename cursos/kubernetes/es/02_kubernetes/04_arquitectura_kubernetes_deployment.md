@@ -1,10 +1,10 @@
-# Artefactos en Kubernetes: el Deployment
+# Artefactos en Kubernetes: Deployment
 
 En la sección anterior, exploramos los Pods como un artefacto de composición de aplicaciones central dentro de Kubernetes.
 
 A pesar de ser un concepto clave para entender el resto del sistema, lo cierto es que **rara vez usaremos directamente un pod** en nuestro trabajo de Kubernetes. La mayor parte del tiempo vamos a trabajar con Deployments.
 
-## a) ¿Por qué implementaciones?
+## a) ¿Por qué necesitamos los deployments?
 
 Los deployments añaden "inteligencia" a nuestros pods, es decir, son elementos externos a los pods que los controlan e inspeccionan constantemente para poder:
 
@@ -15,9 +15,9 @@ Los deployments añaden "inteligencia" a nuestros pods, es decir, son elementos 
 
 ![Deploy1](./../_media/02/deployment.png)
 
-## b) Definir una implementación
+## b) Definir una Deployment
 
-Para definir una implementación, tenemos que pensar en ella como una estructura que está por encima del pod:
+Para definir un deployment, tenemos que pensar en ella como una estructura que está por encima del pod:
 
 ![Deploy2](./../_media/02/deployment2.png)
 
@@ -112,7 +112,7 @@ La razón está en el Deployment.
 
 Es decir: el Deployment controla cualquier alteración o falla de los pods y asegura que el sistema se “recupere” del bloqueo.
 
-### ii) La tarea de escalado/degradación de la implementación
+### ii) La tarea de escalado/desescalado de un deployment
 
 En este momento, tenemos un solo pod que ejecuta nginx. Imaginemos que queremos ejecutar tres pods (tres réplicas, ya que todos tendrían la misma configuración).
 

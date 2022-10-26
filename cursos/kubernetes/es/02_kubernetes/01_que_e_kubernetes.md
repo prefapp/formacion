@@ -27,7 +27,7 @@ De hecho, la mayoría de las veces se trabaja con plataformas basadas en Kuberne
    - MicroK8s.
 - En este artículo podemos ver más a fondo [diferentes soluciones](https://betterprogramming.pub/choose-the-right-kubernetes-hosting-solution-a842878fc594) para diferentes tipos de despliegues incluyendo Kubernetes en CPDs o nubes privadas o "en las instalaciones".
 
-La flexibilidad que permite el enfoque del framework de Kubernetes permite un gran conjunto de escenarios en los que se puede utilizar.
+La flexibilidad que permite el enfoque del framework de Kubernetes posibilita un gran conjunto de escenarios en los que se puede emplear.
 
 A lo largo de este curso, necesitaremos el uso de una de las herramientas de desarrollo que mencionamos, para poder crear clústeres donde se puedan desplegar las prácticas. Recomendamos el uso de Kind, por la potencia y flexibilidad que proporciona. En el siguiente enlace puede acceder a la [tipo de guía de instalación](https://kind.sigs.k8s.io/docs/user/quick-start)
 
