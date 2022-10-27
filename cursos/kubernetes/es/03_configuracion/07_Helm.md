@@ -6,16 +6,16 @@
 
 La idea de Helm es controlar un **despliegue** (lo llaman release) de tal forma que:
 
-- Usando un solo conjunto de valores (generalmente expresado en YAML):
+- Usando **un solo conjunto de valores** (generalmente expresado en YAML):
   - Todos los artefactos que lo componen (deploys, pods, configmaps, services...) tienen reflejados los valores de configuración correctos.
   - Están declarados correctamente en el clúster K8s.
   - Ante un cambio de valores, se reconfiguran los artefactos correspondientes.
-- El release, con un solo comando, puede:
+- El release, con **un solo comando**, puede:
   - Listarse
   - Detenerse
   - Actualizarse
   - Reconfigurarse
-- Los releases parten de planes o [charts](https://github.com/helm/charts), es decir, repositorios con el código necesario para lanzar una aplicación en Kubernetes:
+- Los releases parten de **planes o [charts](https://github.com/helm/charts)**, es decir, repositorios con el código necesario para lanzar una aplicación en Kubernetes:
   - Se encuentran en repositorios públicos.
   - Los hay de todos los tipos (mysql, mongo, Wordpress...).
   - Se pueden descargar y utilizar o ampliar como queramos.
@@ -36,15 +36,15 @@ En versiones anteriores era necesario inicializar helm para empezar a trabajar c
 helm init
 ```
 
-**¡Nota! Si dice que las versiones son incompatibles, haga `helm init --upgrade`.*
+**¡Nota! Si dice que las versiones son incompatibles, es necesario hacer `helm init --upgrade`.*
 
 **¡Nota 2! helm puede tardar un minuto en ponerse en marcha. Espere hasta que pueda interactuar con él.*
 
-Ahora, podemos crear un release.
+Ahora, podemos crear una release.
 
 ## b) Crear una release
 
-Para crear un release, descargue el **chart** o el plano o pídale a helm que lo descargue él mismo.
+Para crear una release, descargue el **chart** o el plano o pídale a helm que lo descargue él mismo.
 
 Los charts están en repositorios.
 
@@ -55,12 +55,12 @@ helm repo list
 NAME            URL
 local           http://127.0.0.1:8879/charts
 
-# Engadimos o repo de bitnami, un dos máis utilizados
+# Agregamos bitnami repo, uno de los más usados
  helm repo add bitnami https://charts.bitnami.com
 
 "bitnami" has been added to your repositories
 
-# Listamos os charts dispoñibles
+# Listamos los charts disponibles
 helm search repo bitnami
 NAME                                    CHART VERSION   APP VERSION                     
 bitnami/airflow                                 13.0.4          2.3.3           Apache Airflow is a tool to express and execute...
@@ -92,13 +92,13 @@ bbdd-mariadb-0   1/1     Running   0          98s
 
 ```
 
-También creó el servicio vinculado al pod, un secreto para password y un configmap.
+También creó el servicio vinculado al pod, un secret para password y un configmap.
 
 Es decir, ¡tenemos un MariaDB instalado con las mejores prácticas de la industria para Kubernetes!
 
 Para configurarlo hay que ir a [artifacthub](https://artifacthub.io/packages/helm/bitnami/mariadb), donde nos indican los valores a modificar para gestionar nuestra instalación.
 
-Ponga esos valores en un archivo yaml:
+Ponga esos valores en un fichero yaml:
 
 ```yaml
 # values.yaml
@@ -108,14 +108,14 @@ db:
   database: test
 ```
 
-Ahora estamos relanzando nuestro release:
+Ahora relanzamos nuestro release:
 
 ```shell
-# borramos a release
+# borramos el release
 helm uninstall bbdd
 
-# relanzamos cos values
+# relanzamos con los values
 helm install maria -f values.yaml bitnami/mariadb
 ```
 
-Y tendríamos el deployment con una base de datos creada y un usuario vinculado a ella.
+Y tendríamos el despliegue con una base de datos creada y un usuario vinculado a ella.

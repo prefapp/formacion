@@ -1,13 +1,15 @@
 # Servicios en profundidad
 
-En el [anterior tema](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos la importancia de los *services* como una abstracción de pods backend para una aplicación cliente. Por medio de los services, cualquier aplicación cliente puede "despreocuparse" de dónde se están realizando las llamadas a los programas o aplicaciones que sirven como backend.
+En el anterior tema sobre la [Arquitectura de K8s](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos la importancia de los *services* como una abstracción de pods backend para una aplicación cliente. Mediante los services cualquier aplicación cliente puede "despreocuparse" de dónde se están realizando las llamadas a los programas o aplicaciones que sirven como backend.
 
 ![Servizo2](./../_media/02/servizo2.png)
 
 En este capítulo veremos los siguientes tipos de *Service*, con sus casos de uso y sus debilidades:
-- ClusterIP
-- NodePort
-- LoadBalancer
+- [Servicios en profundidad](#servicios-en-profundidad)
+  - [ClusterIP](#clusterip)
+  - [NodePort](#nodeport)
+  - [LoadBalancer](#loadbalancer)
+    - [LoadBalancer local con Kind](#loadbalancer-local-con-kind)
 
 Desplegaremos el siguiente deploy para mostrarlo con cada tipo de servicio y así apreciar las diferencias entre cada *service kind* : 
 
@@ -44,33 +46,33 @@ Si hacemos una aplicación de nuestro `deploy.yaml`. Tendremos 5 pods ejecutando
 
 ## ClusterIP
 
-Para exponer nuestrp deploy, primero usaremos un servicio de tipo `ClusterIp`, que es el tipo por defecto en kubernetes *services*:
+Para exponer nuestro deploy primero usaremos un servicio de tipo `ClusterIp`, que es el tipo por defecto en los *services* de k8s:
 
 ```yaml
 # clusterip-service.yaml
 kind: Service
 apiVersion: v1
-metadata:  # esta é a parte de identificación do servizo
+metadata:  # esta es la parte identificativa del servicio
   name: servizo-clusterip
 spec:
-  selector:   # esta é a parte de selección
+  selector:   # esta es la parte de selección
     app: pod-web
-  ports:  # esta é a parte de especificación propia
+  ports:  # esta es la parte de especificación propia
   - port: 80
     targetPort: 80
 ```
 
-Si hacemos un curl desde dentro veremos que los pods que devuelven la petición van rotando:
+Si hacemos varios curl desde dentro de un contenedor veremos que van cambiando los pods que devuelve la petición:
 
 ![Servizo1](./../_media/03/servizo1.png)
 
-Sin embargo, si hacemos un `port-forward' de nuestro servicio para acceder desde el extranjero, podemos comprobar que siempre nos devuelven el mismo pod.
+Sin embargo, si hacemos un `port-forward` de nuestro servicio para acceder desde el exterior, podemos comprobar que siempre nos devuelve el mismo pod.
 
 ![Servizo2](./../_media/03/servizo2.png)
 
 ## NodePort
 
-El comando `port-forward', aunque indiquemos un servicio, nos mostrará un pod, el primero que encuentre a través del servicio. Si queremos exponer el servicio tenemos que usar un servicio de tipo ``Nodeport'':
+El comando `port-forward`, aunque indiquemos un servicio nos mostrará un pod, el primero que encuentre a través del servicio. Si queremos exponer el servicio tenemos que usar un servicio de tipo `Nodeport`:
 
 ```yaml
 # nodeport-service.yaml
@@ -99,7 +101,7 @@ Esta opción tiene varios problemas:
 
 ## LoadBalancer
 
-Para solucionar las carencias de *Nodeport* aparece un servicio más avanzado que permite exponer nuestro servicio a través de su propia IP pública. Para utilizar este servicio necesitas un proveedor de Kubernetes, ya que su despliegue te proporciona una IP externa desde la que acceder a tu servicio.
+Para solucionar las carencias de *Nodeport* aparece un servicio más avanzado que permite exponer nuestro servicio a través de su propia IP pública. Para utilizar este servicio necesitas un proveedor de Kubernetes, ya que su despliegue proporciona una IP externa desde la que acceder a tu servicio.
 
 ```yaml
 # loadbalancer-service.yaml
@@ -119,9 +121,10 @@ spec:
 ![Servizo4](./../_media/03/servizo4.png)
 
 Si desea exponer un servicio directamente, este es el método predeterminado. Todo el tráfico en el puerto especificado se reenviará al servicio. Sin filtrado, sin enrutamiento, etc. Esto significa que pueden enviarle casi cualquier tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC o cualquier otro.
-El gran inconveniente es que cada servicio expuesto con un *LoadBalancer* obtendrá su propia dirección IP y tendremos que pagar por cada servicio expuesto, lo que puede ser costoso.
 
-Si estás usando tráfico HTTP, un Ingress te permitirá usar una única IP y hacer enrutamiento por ruta y subdominio, como veremos en el [próximo capítulo](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico) del tema.
+La gran desventaja es que cada servicio expuesto con un *LoadBalancer* obtendrá su propia dirección IP y tendremos que pagar por cada servicio expuesto, lo que puede ser costoso.
+
+Si estás usando tráfico HTTP, un Ingress te permitirá usar una única IP y hacer enrutamiento por path y subdominio, como veremos en el [siguiente apartado](./06_Ingress_controlando_o_trafico.md) del tema.
 
 ### LoadBalancer local con Kind
 
@@ -135,7 +138,7 @@ Los pasos a seguir serían:
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
 ```
 
-**2. Aplicamos el manifiesto metallb, el cual creará todos los artefactos necesarios para su funcionamiento:**
+**2. Aplicamos el manifiesto metallb**, el cual creará todos los artefactos necesarios para su funcionamiento:
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml

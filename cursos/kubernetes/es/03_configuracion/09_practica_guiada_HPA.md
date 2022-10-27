@@ -4,20 +4,17 @@ Usaremos un HPA para controlar la carga de una implementación simple.
 
 ## 1. Preparativos 🛫
 
-- Comencemos desde un nuevo espacio de nombres en nuestro clúster: **hpa**
+- Comencemos desde un nuevo namespace en nuestro clúster: **hpa**
 
-```bash
-
-kubectl create namespace hpa 
-
+```shell
+kubectl create namespace hpa
 ```
 
 - Ahora vamos a desplegar un deployment que tiene una aplicación con uso intensivo de CPU. Para que pueda hacer el promedio y defina una sección de resources.requests para saber cuál es el consumo esperado de CPU/Memoria. Si no tiene estos valores, el hpa no podrá hacer los cálculos.
 
 ```yaml
-
 #
-# Imos crear un deploy para a aplicación
+# Vamos a crear un deploy para la aplicación
 #
 
 apiVersion: apps/v1
@@ -46,12 +43,10 @@ spec:
         resources:
           requests:
             cpu: 0.25
-
 ```
 - Abrimos tráfico a través de un servicio:
 
 ```yaml
-
 #
 # Abrímoslle tráfico mediante un service
 #
@@ -68,7 +63,6 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-
 ```
 
 Es interesante ver cómo no definimos el campo __replicas__ en el deployment. La razón es que no queremos interferir con el trabajo de la HPA.
@@ -76,9 +70,7 @@ Es interesante ver cómo no definimos el campo __replicas__ en el deployment. La
 Ahora si implementamos esto con kubectl:
 
 ```yaml
-
 kubectl create -f <ficheiros yaml> -n hpa
-
 ```
 
 Veremos que tenemos un servicio y un deployment con una réplica.
@@ -88,15 +80,13 @@ Veremos que tenemos un servicio y un deployment con una réplica.
 
 ## 2. Nuestro servidor de métricas ⏱
 
-Para esta práctica utilizaremos métricas de tipo recurso. Por tanto necesitamos una pieza o elemento que recopile métricas del clúster y las sirva en una de las capas de la API de kubernetes (concretamente en metrics.k8s.io).
-
+Para esta práctica utilizaremos métricas de tipo recurso. Por tanto necesitamos una pieza o elemento que recopile métricas del clúster y las sirva en una de las capas de la API de kubernetes (concretamente en *metrics.k8s.io*).
 
 Un elemento que nos puede servir es el [servidor de métricas](https://github.com/kubernetes-sigs/metrics-server).
 
 Para instalarlo usaremos [Helm](07_Helm.md):
 
 ```yaml
-
 # instalar helm (se non o está instalado)
 # Podes ver as versións dispoñibles en: https://github.com/helm/helm/releases
 wget https://get.helm.sh/helm-v3.9.0-linux-amd64.tar.gz
@@ -107,15 +97,14 @@ mv helm /usr/local/bin
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 
 helm upgrade --install metrics-server metrics-server/metrics-server --set args="{--kubelet-insecure-tls}"
-
 ```
 
 Si todo va bien, podremos realizar consultas a la api de nuestro clúster de prueba (en Kind):
 
-```
+```shell
 kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/kind-control-plane | jq
 
-# Obteremos algo parecido a esto
+# Obtendremos algo parecido a esto
 
 {
   "kind": "NodeMetrics",
@@ -141,7 +130,6 @@ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/kind-control-plane | jq
     "memory": "707676Ki"
   }
 }
-
 ```
 
 ¡Ahora tenemos una forma de obtener métricas (CPU/Memoria) de nuestros pods!
@@ -153,7 +141,6 @@ Es hora de iniciar un HPA para nuestra aplicación.
 Nuestra aplicación hace un uso intensivo de la CPU, por lo que esta es la métrica clave para monitorear.
 
 ```yaml
-
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 
@@ -170,14 +157,12 @@ spec:
     kind: Deployment
     name: cpu-intensive
 
-
   #-------------------------------------------------
   # Nesta parte establecemos os límites do escalado
   #-------------------------------------------------
   minReplicas: 1
   maxReplicas: 10
 
-  
   #---------------------------------------------------
   # Nesta sección definimos os criterios (métricas)
   # segundo as que escalar
@@ -195,7 +180,7 @@ De hecho, en poco tiempo veremos que la implementación se escala a 1 réplica.
 
 Sin embargo, si comprobamos el estado de nuestro hpa obtendremos lo siguiente:
 
-```bash
+```shell
 kubectl get hpa -n hpa
 
 NAME        REFERENCE                  TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
@@ -206,7 +191,7 @@ o-meu-hpa   Deployment/cpu-intensive   <unknown>/50%   1         10        1    
 
 Ahora, vamos a generar tráfico para ti:
 
-```bash
+```shell
 # Exportamos ó noso service ó porto 8084
 
 kubectl port-forward svc/cpu-intensive -n hpa 8084:80
@@ -214,15 +199,15 @@ kubectl port-forward svc/cpu-intensive -n hpa 8084:80
 
 Y en otra terminal:
 
-```bash
+```shell
 watch -n1 "curl localhost:8084/fibo/40"
 ```
 
 Con esto nuestro servidor comenzará a generar tráfico. 
 
-```bash
+```shell
 # este comando mantennos informados do estado
-kubectl get hpa -n hpa -w                                                                          
+kubectl get hpa -n hpa -w
 
 NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          7m55s
@@ -281,7 +266,6 @@ El HPA tardó unos 5 minutos en volver a establecer las réplicas en 1. Podemos 
 kubectl api-versions | grep autoscaling/v2
 
 autoscaling/v2
-
 ```
 
 Y hacemos los siguientes cambios en nuestra definición de HPA:
@@ -348,8 +332,8 @@ Liberamos carga hasta escalar a 8 réplicas (con el curl anterior).
 
 ¡Cortamos el curl! Y vemos el comportamiento:
 
-```bash
-kubectl get hpa -n hpa -w                                                                        
+```shell
+kubectl get hpa -n hpa -w
 
 NAME        REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
 o-meu-hpa   Deployment/cpu-intensive   47%/50%   1         10        8          2m13s
@@ -358,7 +342,6 @@ o-meu-hpa   Deployment/cpu-intensive   5%/50%    1         10        8          
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        7          2m49s
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        2          3m5s
 o-meu-hpa   Deployment/cpu-intensive   0%/50%    1         10        1          3m25s
-
 ```
 
 Como vemos, se redujo a 1 réplica en un minuto de tiempo.

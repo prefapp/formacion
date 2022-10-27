@@ -26,22 +26,24 @@ Ingress es un sistema que actúa como un proxy inverso al exponer **un solo serv
 ### a) Estructura y control de entrada
 
 El [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) consta de:
-- Servidor: generalmente un Nginx, que maneja las conexiones actuando como un proxy inverso.
-- Controlador: una aplicación que controla el servidor reprogramándolo de acuerdo con las reglas que se declaran.
-- Reglas: artefactos de Kubernetes que declaran las acciones que debe realizar Ingress.
+- **Servidor**: generalmente un Nginx, que maneja las conexiones actuando como un proxy inverso.
+- **Controlador**: una aplicación que controla el servidor reprogramándolo de acuerdo con las reglas que se declaran.
+- **Reglas**: artefactos de Kubernetes que declaran las acciones que debe realizar Ingress.
 
-Por lo tanto, para poder utilizar las reglas de Ingress, necesitaremos tener un controlador instalado en nuestro clúster. Posteriormente haremos una práctica guiada explicando cómo configurar este controlador; mientras tanto, puede implementar un clúster listo para trabajar con ingreso con el siguiente [fichero.sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
+Por lo tanto, para poder utilizar las reglas de Ingress, necesitaremos tener un controlador instalado en nuestro clúster. Posteriormente haremos una práctica guiada explicando cómo configurar este controlador; mientras tanto, puede implementar un clúster listo para trabajar con ingress con el siguiente [fichero.sh](../00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md).
 
 #### i) Reglas en ingress
 
 Como dijimos, las reglas de ingress son un artefacto de Kubernetes.
 
 Una regla de ingress se compone de las siguientes partes:
+
 - **Host**: hostname de la petición que determina la aplicación o no de la regla.
 - **Rutas**: la ruta de la petición.
 - **Backend**: el conjunto de *servicio* y *puerto* que configurará a dónde reenviar la petición.
 
 Si vemos una regla simple:
+
 ```yaml
 # exemplo ing.yaml
 apiVersion: networking.k8s.io/v1
@@ -64,6 +66,7 @@ spec:
 Vemos que este es un artefacto K8s, con lo que eso implica (declarativo, puede tener metadatos...)
 
 En el artefacto, se declara:
+
 - Un nombre: "exemplo-ingress"
 - Una regla:
   - El tráfico de entrada por http
@@ -74,13 +77,13 @@ En el artefacto, se declara:
 Ahora,
 
 ```shell
-# creamos o artefacto
+# creamos el artefacto
 kubectl apply -f ing.yaml
 
-# e facemos unha petición
+# y hacemos una petición
 curl localhost:<porto_ingress>/servizo
 
-# responderá o servizo-1
+# responderá el servizo-1
 ```
 
 Obviamente podríamos crear múltiples paths:
@@ -91,8 +94,8 @@ kind: Ingress
 metadata:
   name: ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: "/"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"    # 6
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"  # 7
 spec:
   rules:
   - http:
@@ -115,8 +118,8 @@ spec:
 
 En este ejemplo, tendríamos:
 - Dos caminos '/servizo' y '/test' que se resolverían en dos servicios diferentes.
-- **¡Cuidado!** El puerto es el del servicio, no el puerto de entrada ingress. Eso es importante de recordar.
-- También podemos ver dos annotations (líneas 6 y 7). Estos son datos para controlar el propio ingress.
+- ⚠️ **¡Cuidado!** El puerto es el del servicio, no el puerto de entrada ingress. Esto es importante de recordar.
+- También podemos ver dos `annotations` (líneas 6 y 7). Estos son datos para controlar el propio ingress.
   - En la línea 6 decimos que es necesario que se redirija a `/` desde el servicio backend (`/servizo` o `/test` desaparecerían)
   - En la línea 7 estamos diciendo que no queremos una redirección a 443 (para ssl)
 
@@ -125,12 +128,13 @@ Uno de los elementos clave en ingress es que las reglas se expresan como un arte
 ```shell
 # listar os ingress aplicables 
 kubectl get ing
+
 NAME                 HOSTS   ADDRESS     PORTS   AGE
 o-meu-ingress   *       127.0.0.1   80      7h11m
 
-# poderíamos editalo
+# podríamos editarlo
 kubectl edit ing o-meu-ingress
 
-# poderíamos borralo
+# podríamos borrarlo
 kubectl delete ing o-meu-ingress
 ```

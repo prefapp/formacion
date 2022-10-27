@@ -14,7 +14,7 @@ De ahí el nombre de horizontal: no aumentamos los recursos asignados a un pod e
 
 El HPA es un artefacto independiente de kubernetes: podemos expresarlo en un archivo YAML y tendrá algunas especificaciones.
 
-Conéctese directamente al ReplicaSet que implementa la deployment para aumentar o disminuir el **número de réplicas**.
+Conéctese directamente al ReplicaSet que implementa el deployment para aumentar o disminuir el **número de réplicas**.
 
 Esta arquitectura tiene importantes ventajas:
 
@@ -75,15 +75,15 @@ Como vemos, un HPA tiene tres apartados fundamentales en sus especificaciones:
 
 Las métricas en las que nuestro HPA puede basar su trabajo son de [tres tipos fundamentales](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-metrics-apis):
 
-1. Tipo de recurso (básicamente CPU/memoria) que se puede exponer normalmente a través del [metrics-server](https://github.com/kubernetes-sigs/metrics-server).
-2. Tipo Custom, que toman valores de los servicios de métricas proporcionados por el proveedor (Cloud Monitoring, Cloud Watch...) Se utilizan para que los pods puedan escalar según métricas distintas a las suyas propias.
-3. Tipo External: para escalar nuestros pods según el estado de los servicios externos al nuestro (por ejemplo una cola de mensajes).
+1. **Tipo de recurso** (básicamente CPU/memoria) que se puede exponer normalmente a través del [metrics-server](https://github.com/kubernetes-sigs/metrics-server).
+2. **Tipo Custom**, que toman valores de los servicios de métricas proporcionados por el proveedor (Cloud Monitoring, Cloud Watch...) Se utilizan para que los pods puedan escalar según métricas distintas a las suyas propias.
+3. **Tipo External**: para escalar nuestros pods según el estado de los servicios externos al nuestro (por ejemplo una cola de mensajes).
 
 Estos tres grupos de métricas se exponen a través de APIs específicas:
 
-1. Para métricas de tipo de recurso: metrics.k8s.io.
-2. Para métricas de tipo Custom: custom.metrics.k8s.io.
-3. Para métricas de tipo External: external.metrics.k8s.io.
+1. Para métricas de tipo de recurso: *metrics.k8s.io*.
+2. Para métricas de tipo Custom: *custom.metrics.k8s.io*.
+3. Para métricas de tipo External: *external.metrics.k8s.io*.
 
 Por tanto, y en función del resultado deseado, basaremos nuestro HPA en un tipo de métrica u otra.
 
@@ -94,12 +94,13 @@ El algoritmo que utiliza HPA para interpretar las métricas funciona como se exp
 La idea básica es determinar el número de réplicas a través de una simple operación matemática:
 
 ```
-Número de Rèplicas de Pods = Redondeo (valorActualMetrica / valorIdealMetrica )
+Número de Réplicas de Pods = Redondeo (valorActualMetrica / valorIdealMetrica )
 ```
 
 Esto significa que:
 
-1. El algoritmo calcula el valor actual de la métrica (si es un porcentaje, promedia ese valor entre todos los pods existentes). Si la métrica es de tipo **resource** (CPU o Memoria), el valor individual de cada pod se encuentra en función del uso actual con respecto a las solicitudes especificadas en el pod.
+1. El algoritmo calcula el valor actual de la métrica (si es un porcentaje, promedia ese valor entre todos los pods existentes). 
+   - Si la métrica es de tipo **resource** (CPU o Memoria), el valor individual de cada pod se encuentra en función del uso actual con respecto a las solicitudes especificadas en el pod.
 2. Toma el valor ideal (como se declara en el manifiesto del artefacto).
 3. El producto del número actual de réplicas por el cociente entre la métrica actual y la ideal dará como resultado el número de réplicas a mantener.
 
@@ -146,7 +147,7 @@ Para empezar, vemos que hay dos políticas de desescalada:
 
 * Lo primero que hay que tener en cuenta en el caso de múltiples políticas es que siempre aplica **la que tenga el mayor cambio**.
 
-* En la primera política se expresa que es posible desincrustar hasta un máximo de 4 pods por minuto.
+* En la primera política se expresa que es posible desescalar hasta un máximo de 4 pods por minuto.
 
 * En la segunda política es posible desescalar hasta el 10% del número de pods en un minuto de tiempo.
 
@@ -185,9 +186,8 @@ behavior:
       periodSeconds: 60
 ```
 
-Con el campo stabilizationWindowSeconds aseguramos que el valor más alto aplicado en los últimos 5 minutos es el que prevalece (podría ser el mínimo para cambiar el sesgo).
+Con el campo `stabilizationWindowSeconds` aseguramos que el valor más alto aplicado en los últimos 5 minutos es el que prevalece (podría ser el mínimo para cambiar el sesgo).
 
 El objetivo es evitar las llamadas "flapping pods" o pods que se levantan y lanzan constantemente. Así, si una estabilización pasada tuvo un valor mayor/menor según el sesgo actual, este último no se aplica.
-
 
 En la siguiente sección, haremos una práctica guiada sobre el HPA.

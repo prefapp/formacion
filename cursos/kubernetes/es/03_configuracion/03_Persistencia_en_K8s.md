@@ -1,6 +1,6 @@
-# Persistencia en K8s: los volúmenes
+# Persistencia en K8s: Volúmenes
 
-Hasta ahora, nuestras cargas de trabajo se ejecutan en módulos. El problema que tenemos es que si se reinicia un pod, o si lo borramos, perdemos datos que nos pueden interesar. Es decir: nuestros pods no tienen persistencia.
+Hasta ahora, nuestras cargas de trabajo se ejecutan en pods. El problema que tenemos es que si se reinicia un pod, o si lo borramos, perdemos datos que nos pueden interesar. Es decir: nuestros pods no tienen persistencia.
 
 Para dar persistencia a nuestros pods, Kubernetes ofrece una solución: volúmenes.
 
@@ -9,8 +9,8 @@ Para dar persistencia a nuestros pods, Kubernetes ofrece una solución: volúmen
 Un volumen es un recurso de Kubernetes que es externo a los contenedores de nuestros pods y por tanto no sigue su ciclo de vida:
 
 * No se borra cuando se eliminan o reinician los contenedores de un pod.
-* Los pods pueden acceder y montarlo como otra ruta en su sistema de archivos.
-* Los volúmenes se pueden administrar de forma completamente independiente de los pods, implementaciones y servicios (volúmenes persistentes)
+* Los pods pueden acceder a él y montarlo como otra ruta en su sistema de ficheros.
+* Los volúmenes se pueden administrar de forma completamente independiente de los pods, deploys y services (volúmenes persistentes)
 
 Además, los volúmenes pueden ser elementos externos al propio clúster de Kubernetes:
 
@@ -37,7 +37,7 @@ Sin embargo, podemos usarlo para ilustrar algunos de los puntos básicos de los 
 
 Partimos de este pod:
 
-```yaml
+```yaml showLineNumbers
 # pod_con_volume.yaml
 apiVersion: v1
 kind: Pod
@@ -47,26 +47,26 @@ spec:
   containers:
   - image: frmadem/catro-eixos-k8s-apache2
     name: contedor
-    volumeMounts:
+    volumeMounts:                          #10
     - mountPath: /usr/local/apache2/logs
-      name: volume
-  volumes:
+      name: volume                         #12
+  volumes:                                 #13
   - name: volume
     hostPath:
       path: /tmp/logs_apache_k8s
-      type: DirectoryOrCreate
+      type: DirectoryOrCreate              #17
 ```
 
 Vemos que en la sección de volumen [13-17]:
 
 * Declaramos un volumen
-* Es de tipo hostPath
+* Es de tipo `hostPath`
 * Apuntamos a una carpeta en nuestro host (/tmp/logs_apache_k8s)
-* Le decimos que lo cree si no existe (DirectoryOrCreate)
+* Le decimos que lo cree si no existe (`DirectoryOrCreate`)
 
 Luego, en la parte del contenedor [10-12]:
 
-* Montamos el volumen en una sección de montajes de volumen
+* Montamos el volumen en una sección de `volumeMounts`
 * Establecemos una ruta de montaje (/usr/local/apache2/logs)
 * Y hacemos referencia al volumen declarado
 
@@ -78,19 +78,19 @@ Ahora:
 
 Input
 ```sh
-# arrancamos o pod
+# arrancamos el pod
 kubectl apply -f pod_con_volume.yaml
 ```
 
 Input
 ```sh
-# exportamos o porto á nosa máquina
+# exportamos el puerto a nuestra máquina
 kubectl port-forward pod/pod-con-volume --address=0.0.0.0 8888:80
 ```
 
 Input
 ```sh
-# dende outra shell facemos un curl
+# desde otra shell hacemos un curl
 curl localhost:8888/
 ```
 
@@ -99,7 +99,7 @@ Output
 <html><body><h1>It works!</h1></body></html>
 ```
 
-Ahora tenemos que ir a buscar el volumen al nodo de kind. Tenemos que descubrir en qué nodo se encuentra. Para esto usamos el comando:
+Ahora tenemos que ir a buscar el volumen en el nodo de kind. Tenemos que descubrir en qué nodo se encuentra. Para esto usamos el comando:
 
 Input
 ```
@@ -147,4 +147,3 @@ Output
 127.0.0.1 - - [15/May/2019:14:32:34 +0000] "GET / HTTP/1.1" 200 45 "-" "curl/7.61.0"
 127.0.0.1 - - [15/May/2019:14:32:35 +0000] "GET / HTTP/1.1" 200 45 "-" "curl/7.61.0"
 ```
-

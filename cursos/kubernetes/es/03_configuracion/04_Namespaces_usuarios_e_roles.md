@@ -36,9 +36,8 @@ Por lo tanto, necesita tener un sistema de usuarios.
 ### a) Tipos de usuarios en Kubernetes
 
 En Kubernetes hay dos tipos de [usuarios](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#users-in-kubernetes):
-- Cuentas de servicio
 - Usuarios regulares
-
+- Cuentas de servicio
 #### i) Usuarios regulares
 
 Un usuario regular *no es un objeto o artefacto de Kubernetes*. En pocas palabras, un administrador de Kubernetes crea varias formas:
@@ -49,7 +48,7 @@ Un usuario regular *no es un objeto o artefacto de Kubernetes*. En pocas palabra
 
 Es decir, la creación de usuarios no está automatizada en Kubernetes, ni se puede recurrir a llamadas a la API. Estos son servicios externos que de alguna manera configurarán un acceso e informarán (manualmente) a Kubernetes.
 
-Por supuesto, los servicios gestionados de Kubernetes (como AKS) tienen sus propios sistemas que luego se integran en Kubernetes, pero, como ya hemos dicho, son elementos externos a K8.
+Por supuesto, los servicios gestionados de Kubernetes (como AKS) tienen sus propios sistemas que luego se integran en Kubernetes, pero, como ya hemos dicho, son elementos externos a K8s.
 
 #### ii) Cuentas de servicio
 
@@ -96,29 +95,30 @@ users:
 ```
 
 Vemos que nuestra configuración de kubectl se divide en varias partes:
-- **clusters**: aquí habrá que configurar cada clúster al que queramos acceder.
+- **clústers**: aquí habrá que configurar cada clúster al que queramos acceder.
 - **contexts**: gestionan la información de acceso a cada clúster
 - **current-context**: el contexto predeterminado con el que estamos trabajando (actualmente kind-kind)
-- **users**: credenciales de acceso a través de user/password.
+- **users**: credenciales de acceso mediante user/password.
 
 #### i) Agregar una nueva configuración para trabajar con un clúster de Kubernetes
 
 Un administrador de Kubernetes nos da un certificado para trabajar con un nuevo clúster.
 
-Lo primero que tendríamos que hacer es almacenar el archivo crt y la key en algún lugar de nuestra máquina, por ejemplo `~/.certs/`.
+Lo primero que tendríamos que hacer es almacenar el archivo `crt` y la `key` en algún lugar de nuestra máquina, por ejemplo `~/.certs/`.
 
 También necesitamos establecer la información básica del clúster:
+
 ```shell
-kubectl config set-cluster <nome> --server=<dirección do cluster> --certificate-authority=<se o hai> 
+kubectl config set-cluster <nombre> --server=<dirección-del-cluster> --certificate-authority=<si la hay> 
 ```
 
 Ahora, tenemos que agregar la información a nuestro kubernetes (creando una nueva entrada en usuarios)
 
 ```shell
-kubectl config set-credentials foo --client-certificate=<ruta do .crt> --client-key=<ruta do .key>
+kubectl config set-credentials foo --client-certificate=<ruta-del-.crt> --client-key=<ruta-del-.key>
 ```
 
-Si vemos nuestra configuración de kubectl, tendremos una nueva entrada en users para el usuario foo.
+Si vemos nuestra config de kubectl, tendremos una nueva entrada en users para el usuario foo.
 
 Hace falta que creemos un nuevo contexto para usar estas credenciales y acceder al clúster:
 
@@ -146,38 +146,38 @@ kubectl config use-context foo-context
 
 Un rol de K8s es un artefacto que contiene una serie de reglas que configuran permisos para acceder a los distintos recursos de Kubernetes.
 
-Antes de comenzar con su definición, comprendamos qué son los recursos de la API de Kubernetes.
+Antes de comenzar con su definición, es necesario entender qué son los recursos de la API de Kubernetes.
 
 #### i) Los recursos de la API de Kubernetes
 
-El maestro de K8 exporta una [API RESTful](https://kubernetes.io/docs/reference/using-api/api-concepts/) como punto de entrada al sistema.
+El master de K8s exporta una [API RESTful](https://kubernetes.io/docs/reference/using-api/api-concepts/) como punto de entrada al sistema.
 
 Esta API:
 
 - Acepta verbos REST estándar (POST, GET, PUT, PATCH, DELETE)
 - Cada recurso (sustantivo) en la API corresponde a un artefacto o conjunto de artefactos:
-  - pod, namespaces, servicio...
-  - o a una colección de artefactos
-  - todos los artefactos pertenecen a un tipo
+  - pod, namespaces, service...
+  - o a una colección de artefactos.
+  - todos los artefactos pertenecen a un Kind (tipo)
 - Los puntos finales de API están en ramas:
   - api/v1
   - api/extensiones/v1beta1
   - ...
 
-Desde nuestro clúster podemos consultar los puntos finales de esta API para recopilar el estado de nuestros artefactos.
+Desde nuestro clúster podemos consultar los extremos de esta API para recopilar el estado de nuestros artefactos.
 
-Estos puntos finales tienen el siguiente formato: `/api/v1/namespaces/<nome do namespace>/<tipo de recurso>/:<nome do recurso>`
+Estos puntos finales tienen el siguiente formato: `/api/v1/namespaces/<nombre-del-namespace>/<tipo-de-recurso>/:<nombre-del-recurso>`
 
 Como esto:
 
 ```shell
-# listar os services no namespace de "default"
+# listar los services en el namespace "default"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/services
 
-# recoller a información dun pod chamado "sonda-http"
+# recoger la información de un pod llamado "sonda-http"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http
 
-# ver os logs do pod "sonda-http"
+# ver logs del pod "sonda-http"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http/log
 ```
 
@@ -190,40 +190,40 @@ Podríamos, usando otros verbos, hacer otras cosas:
 curl -X DELETE http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http/
 ```
 
-Una vez que comprendamos la base de la API, podemos comenzar a hablar sobre los roles.
+Una vez que entendemos la base de la API, podemos comenzar a hablar de los roles.
 
 #### ii) Tipos de roles en Kubernetes
 
 Hay dos tipos fundamentales de roles en Kubernetes:
 
 - **Role**: es un artefacto que permite establecer permisos sobre los recursos a nivel de un namespace específico.
-- **ClusterRole**: permite el acceso a recursos globales (nodos) o artefactos (pods, services) en todos los namespaces del sistema.
+- **ClusterRole**: permite acceder a recursos globales (nodos) o artefactos (pods, services) en todos los namespaces del sistema.
 
 Las reglas a dar para un rol se definen de acuerdo a dos dimensiones:
-- Recursos afectados (pods, servicios, deployments...)
-- Acciones que se pueden ejecutar sobre ellos (PUT, POST, GET, LIST)
+- **Recursos** afectados (pods, servicios, deployments...)
+- **Acciones** que se pueden ejecutar sobre ellos (PUT, POST, GET, LIST)
 
-Por lo tanto, un rol que le permita ver los pods pero no modificarlos, eliminarlos o crearlos se vería así (para el namespaces "default"):
+Por lo tanto, un rol que le permita ver los pods pero no modificarlos, eliminarlos o crearlos se vería así (para el namespace "default"):
 
 ```yaml
-apiVersion: rbac.authorization.k8s.io/v1 # a api version é diferente da vista ata agora
+apiVersion: rbac.authorization.k8s.io/v1 # la versión api es diferente de la vista hasta ahora
 kind: Role
 metadata:
   namespace: default
   name: pods-so-lectura
 rules:
-- apiGroups: [""] # establece a API base ou core
-  resources: ["pods"] # recursos ós que da acceso
-  verbs: ["get", "watch", "list"] # accións ou verbos sobre eses recursos
+- apiGroups: [""] # establece la API base en el core
+  resources: ["pods"] # recursos a los que da acceso
+  verbs: ["get", "watch", "list"] # acciones o verbos sobre esos recursos
   ```
 
 Vemos como en el artefacto establecemos las reglas de acceso a los recursos (pods) y las acciones (get, watch, list).
 
 Sin embargo, no se dice nada sobre a qué usuarios afecta.
 
-La razón es que el Rol define reglas y permisos pero no usuarios. Para que afecten a los usuarios, necesita **roles vinculantes**.
+La razón es que el Rol define reglas y permisos pero no usuarios. Para que afecten a los usuarios, necesitas **vincular los roles** (RoleBinding).
 
-### b) Vinculación de roles: el RoleBinding
+### b) Vinculación de roles: RoleBinding
 
 Un [RoleBinding](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings) es un artefacto de Kubernetes que vincula a los usuarios con los roles.
 
