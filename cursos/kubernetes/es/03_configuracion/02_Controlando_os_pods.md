@@ -1,59 +1,59 @@
-# Controlando os pods: límites e sondas
+# Pods de control: límites y pruebas
 
-Sabemos que o pod é a unidade mínima de construcción, o bloque co que facemos as nosas aplicacións. 
+Sabemos que el pod es la unidad de construcción mínima, el bloque de construcción con el que hacemos nuestras aplicaciones.
 
-Sen embargo, e ata agora, non falamos dunha serie de funcionalidades que nos va a permitir traballar moito mellor cos nosos pods. 
+Sin embargo, y hasta ahora, no hemos hablado de una serie de características que nos permitirán trabajar mucho mejor con nuestros pods.
 
-Dunha banda, Kubernetes traballa aloxando as nosas cargas de traballo (en forma de pods) nos nodos dispoñibles, isto implica que, dalgún xeito o K8s debería ser informado da carga que pode esperar do pod así como de o límite máximo que debe permitir para cada un deles. 
+Por un lado, Kubernetes funciona alojando nuestras cargas de trabajo (en forma de pods) en los nodos disponibles. Esto implica que de alguna manera los K8s deben estar informados de la carga que puede esperar del pod, así como el límite máximo que debe permitir para cada uno de ellos.
 
-Por outro lado, os nosos pods deberían poder ter "extremos" ou "buracos" especiais para poder informar ó K8s de dúas cousas:
+Por otra parte, nuestros pods deberían poder tener "extremos" o "agujeros" especiales para poder informar a los K8s dos cosas:
 
-* De se o pod está "vivo": a aplicación está a correr sen problema. 
-* De se o pod está "listo": ó arrancar o pod, cando está preparado para recibir peticións. 
+* Si el pod está "live", la aplicación se ejecuta sin problemas.
+* Si el pod está "ready" cuando se inicia el pod, está preparado para recibir peticiones.
 
-Estos dous problemas resólvense en Kubernetes mediante os límites e as sondas.
+Ambos problemas se resuelven en Kubernetes mediante límites y pruebas.
 
-## a) Límites e requests nos pods
+## a) Límites y requests en pods
 
 ![pod3](../_media/03/pod3.png)
 
-O scheduler é o compoñente que se encarga de aloxar os pods nos diferentes nodos dun clúster de Kubernetes. Podemos pensar que xoga ó Tetris cos nosos pods. Polo tanto, compre que coñeza o "tamaño das pezas" coas que xoga. 
+Scheduler es el componente encargado de alojar los pods en los diferentes nodos de un clúster de Kubernetes. Podemos pensar en ello como jugar al Tetris con nuestros pods. Así que necesita conocer el "tamaño de la pieza" con el que juega.
 
-Nun pod, hai que establecer dúas medidas moi claras:
+En un pod hay que establecer dos medidas muy claras:
 
-* Request: podemos pensar no request como os recursos mínimos que vai necesitar un pod para funcionar. Cando o scheduler fai o despregue dun pod nun nodo, está garantizado que terá eses recursos expresados no seu request. 
-* Limits: esto establece a cantidad que máxima que pode pedir un pod.
+* **Request**: podemos pensar en el request como los recursos mínimos que necesitará un pod para funcionar. Cuando scheduler despliega un pod en un nodo, está garantizando que tendrá esos recursos expresados ​​en el request.
+* **Limits**: Esto establece la cantidad máxima que puede pedir un pod.
  
-Polo tanto un pod pódese expresar en función dos recursos que solicita do seguinte xeito:
+Por lo tanto, un pod se puede expresar en términos de los recursos que solicita de la siguiente manera:
 
 ![pod4](../_media/03/pod4.png)
 
-Obviamente, cando falamos de "recursos", nos estamos a referir a:
+Obviamente, cuando hablamos de "recursos", nos referimos a:
 
-* CPU: que será tratada como indica a [documentación oficial](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu). 
-* Memoria: que terá o tratamento que indica a [comunidade](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) de Kubernetes. 
+* **CPU**: que será tratada como se indica en la [documentación oficial](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu). 
+* **Memoria**: que será tratada según lo indicado por la [comunidad](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) de Kubernetes. 
 
-Deste xeito, os pods teñen sempre o request satisfeito cando son aloxados nun nodo polo scheduler. 
+De esta manera, los pods siempre tienen el request satisfecho cuando son alojados en un nodo por el scheduler.
 
-Agora ben:
+Ahora bien:
 
-* Un pod sempre terá reservados os recursos expresados no seu Request. Pero, se non está a empregar máis, eses recursos poden ser utilizados por outros pods. 
-* Un pod pode solicitar recursos máis aló do seu Request, e sempre ata o seu Limits. 
+* Un pod siempre tendrá reservados los recursos expresados ​​en su Request. Pero, si no está utilizando más, esos recursos pueden ser utilizados por otros pods.
+* Un pod puede solicitar recursos más allá de su Request, y siempre hasta sus Límites.
 
-Polo tanto, podemos pensar que o scheduler crea unha especie de "bolsa de recursos" coa CPU/Memoria non empregados ou inutilizados polos pods e a reparte entre os pods que poden solicitar máis do seu Request ata o Limits expresado no seu artefacto. 
+Por lo tanto, podemos pensar que el scheduler crea una especie de "bolsa de recursos" con la CPU/Memoria no utilizada por los pods y la reparte entre los pods que pueden solicitar más de su Request hasta los Limits expresados ​​en su artefacto.
 
-É nesa parte "verde" do diagrama onde xoga o scheduler, sempre tendo que respetar os Request (a parte amarela) e nunca sobrepasando o Limits que está representado pola cor vermella. 
+Es en esa parte "verde" del diagrama donde juega el scheduler, debiendo siempre respetar la Request (la parte amarilla) y nunca sobrepasar los Limits que está representado por el color rojo.
 
 ![pod5.png](../_media/03/pod5.png)
 
-### i) Emprego de limits e requests nos pods
+### i) Uso de limits y requests en pods
 
-A expresión de requests e limits son os seguintes formatos:
+La expresión de requests y limits tiene los siguientes formatos:
 
-* Memoria: pódese empregar E, P, T, G, M, K para expresar a cantidade de memoria ou os seus equivalentes en potencias de dous (Ei, Pi, Ti, Gi, Mi, Ki.)
-* CPU: mídese en unidades de CPU (independientemente do número de cores) así 200m, implicaría 200 milicores. Hai unha explicación máis detallada neste [artigo](https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b).
+* **Memoria**: `E`, `P`, `T`, `G`, `M`, `K` se pueden utilizar para expresar la cantidad de memoria o sus equivalentes en potencias de dos (`Ei`, `Pi`, `Ti`, `Gi`, `Mi`, `Ki`.)
+* **CPU**: se mide en unidades de CPU (independientemente del número de cores) por lo que `200m` implicaría 200 milicores. Hay una explicación más detallada en este [artículo](https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b).
 
-Na template do pod, reflectise deste xeito:
+En la plantilla del pod, se refleja de esta manera:
 
 ```yaml
 # pod_limits_requests.yaml
@@ -75,43 +75,43 @@ spec:
   restartPolicy: Never
 ```
 
-Como vemos, estamos a establecer uns requests (a cantidade mínima de recursos) en 64Mi de RAM e 250m ou 250 milicores. 
+Como podemos ver, estamos configurando Requests (la cantidad mínima de recursos) en 64Mi de RAM y 250m o 250 milicores.
 
-Os limits están fixados en 128Mi de RAM e 500m ou 500 milicores. 
+Los límites se fijan en 128Mi de RAM y 500m o 500 milicores.
 
-## b) Sondas nos pods
+## b) Pruebas en pods
 
-Como dixeramos ó principio desta unidade, K8s debe saber dun pod:
+Como dijimos al comienzo de esta unidad, los K8s debe saber acerca de un pod:
 
-* Se está levantado e funcionando.
-* Se está listo para recibir peticións.
+* Si está en funcionamiento.
+* Si está ready para recibir peticiones.
  
- Kubernetes resolve estes problemas a través das sondas (probes).
+ Kubernetes resuelve estos problemas a través de pruebas.
 
-As sondas son peticións http ou comandos a executar dentro do pod (dos contedores do pod) para determinar se a súa execución e exitosa ou non. En caso de non selo, K8s pode concluir que, ou ben o pod está inservible (o programa principal non está a funcionar) ou todavía non está listo para traballar (o programa principal do pod está todavía a arrancar)
+Las pruebas son peticiones http o comandos que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, K8s puede concluir que el pods está inservible (el programa principal no está funcionando) o que aún no está ready para funcionar (el programa principal del pod aún se está iniciando).
 
 ![pod6.png](../_media/03/pod6.png)
 
-Existen dous tipos esenciais de sondas:
+Hay dos tipos esenciales de pruebas:
 
-* Readiness probe: sonda para determinar si o contedor do pod está listo ou non para recibir peticions. 
-* Liveness probe: sonda que determina a "saúde" do contedor, si está a funcionar correctamente. 
+* **Readiness probe**: Prueba para determinar si el contenedor del pod está ready o no para recibir peticiones.
+* **Liveness probe**: Prueba que determina la "salud" del contenedor, si está funcionando correctamente.
 
-### i) Definición dunha sonda
+### i) Definición de prueba
 
-As sondas, como dixemos, son programas a executar ou peticións http a realizar. 
+Las pruebas, como decíamos, son programas para ejecutar las peticiones http a realizar.
 
-Unha sonda, sen importar o seu tipo, ten as seguintes partes:
+Una prueba, independientemente de su tipo, tiene las siguientes partes:
 
-* Comando ou URL de petición. 
-* Argumentos do comando
-* Segundos a agardar antes de enviar a primeira sonda. 
-* Segundos a agardar entre o envío dunha sonda e a seguinte. 
+* Comando o URL de petición.
+* Argumentos de comando.
+* Segundos de espera antes de enviar la primera prueba.
+* Segundos de espera entre el envío de una prueba y la siguiente.
  
-Nun exemplo, temos o seguinte pod:
+En un ejemplo, tenemos el siguiente pod:
 
 ```yaml
-# pod_sonda_live.yaml
+# pod_prueba_live.yaml
 kind: Pod
 apiVersion: v1
 metadata:
@@ -129,20 +129,18 @@ spec:
         periodSeconds: 5
 ```
 
-Como vemos, no pod declárase unha sonda de liveness (proba de vida). 
+Como podemos ver, se declara una livenessProbe (Prueba de vida) en el pod. Con el comando `cat /etc/san` y se ejecutará después de los primeros 5 segundos del inicio del contenedor (initialDelaySeconds) y se repetirá cada 5 segundos (periodSeconds).
 
-Executa un comando (cat /etc/san) e vaise a executar tra-los 5 primeiros segundos de arranque do contedor (initialDelaySeconds) e a repitición cada 5 segundos (periodSeconds).  
-
-Se o arrancamos:
+Si lo iniciamos:
 
 Input
 ```sh
-microk8s.kubectl apply -f pod_sonda_live.yaml
+kubectl apply -f pod_sonda_live.yaml
 ```
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 
 Output
@@ -150,11 +148,12 @@ Output
 NAME                                      READY   STATUS             RESTARTS   AGE
 pod-sonda-live                            1/1     Running            0          3m19s
 ```
-Agora, dende outra shell accedemos ó pod:
+
+Ahora, desde otro shell accedemos al pod:
 
 Input 
 ```sh
-microk8s.kubectl exec -ti pod-sonda-live bash
+kubectl exec -ti pod-sonda-live -- bash
 ```
 
 Output
@@ -162,24 +161,24 @@ Output
 root@pod-sonda-live:/#
 ```
 
-E borramos o ficheiro /etc/san
+Y borramos el fichero /etc/san
 
 Input
 ```sh
 root@pod-sonda-live:/# rm /etc/san
 ```
-Ó pouco tempo, veremos que K8s nos "bota fora" do contedor:
+En poco tiempo, veremos que K8s "nos echa" del contenedor:
 
 Output
 ```sh
 root@pod-sonda-live:/# command terminated with exit code 137
 ```
 
-E se vamos a ver os detalles do noso pod, veremos o seguinte:
+Y si vamos a ver los detalles de nuestro pod, veremos lo siguiente:
 
 Input
 ```sh
-microk8s.kubectl describe pod pod-sonda-live
+kubectl describe pod pod-sonda-live
 ```
 
 Output
@@ -192,11 +191,11 @@ Events:
   Normal   Killing    61s                 kubelet, sutelinco  Container contedor failed liveness probe, will be restarted
 ```
 
-Vemos que a sonda de live fallou e o contedor se reiniciou. De feito, se vemos a información dos pods:
+Vemos que la prueba en vida (Liveness probe) falló y el contenedor se reinició. De hecho, si miramos la información de los pods:
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 Output
 ```sh
@@ -204,13 +203,13 @@ NAME                                      READY   STATUS             RESTARTS   
 pod-sonda-live                            1/1     Running            1          8m6s
 ```
 
-E vemos que hai un restart do noso contedor (no momento en que eliminamos o ficheiro). Cando se reinicie, o ficheiro volverá a estar no seu sitio por mor de que está incluído na imaxe. 
+Y vemos que hay un reinicio de nuestro contenedor (en el momento en que borramos el fichero). Cuando se reinicie, el archivo volverá a estar en su sitio porque está incluido en la imagen.
 
-### ii) Definición dunha sonda de tipo petición http
+### ii) Definición de una prueba de tipo de petición http
 
-Neste caso, imos crear unha sonda de ready (pod preparado) mediante unha petición http.
+En este caso, vamos a crear una readinessProbe (pod preparado) mediante una petición http.
 
-Temos o seguinte pod:
+Tenemos el siguiente pod:
 
 ```yaml
 # pod_sonda_http.yaml
@@ -230,22 +229,21 @@ spec:
         periodSeconds: 5
 ```
 
-Lanzamos un pod con nginx. Creamos unha sonda de preparado e, agardando 15 segundos, fara un GET /. Repetirá esta operación cada 5 segundos ata que responda cun 200. 
+Lanzamos un pod con nginx. Creamos una readinessProbe y después de esperar 15 segundos hará un `GET /`. Repetirá esta operación cada 5 segundos hasta que responda con 200.
 
-Unha vez que responde, o pod ponse en estado de ready  e estará listo para recibir peticións. 
+Una vez que responde, el pod entra en estado ready y estará preparado para recibir peticiones.
 
-As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
+### iii) Uso de pruebas con servicios y deploys
 
-* Cada vez que se inicia unha nova réplica, o pod non recibirá peticións a través do servizo mentres non esté en estado ready, é dicir: mentres a sonda (readinessProbe) non devolva ok. 
-* Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de ready seguirá sen recibir peticións a través do servizo. 
+Las pruebas en live y ready son muy importantes cuando se trabaja con deploy que tienen una gran cantidad de réplicas. Pensemos:
+
+* Cada vez que se inicia una nueva réplica, el pod no recibirá solicitudes a través del servicio hasta que esté en estado **ready**, es decir, hasta que la prueba (readinessProbe) no devuelva ok.
+* Si un pod falla (el programa principal deja de funcionar), la prueba de salud (livenessProbe) detecta el fallo y reinicia el contenedor. Mientras no vuelva a estar **ready** no recibirá peticiones a través del servicio.
  
-Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable.
+Estas dos pruebas nos permiten monitorear los pods y garantizar que no se envíen peticiones a un pod que se encuentra en un estado inestable.
 
-### iii) Emprego de sondas con servizos e deploys
+Documentación oficial:
+- [Pruebas en contenedores](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Pruebas](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
+- [http get action v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#httpgetaction-v1-core)
 
-As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
-
-- Cada vez que se inicia unha nova réplica, o pod non recibirá peticións a través do servizo mentres non esté en estado **ready**, é dicir: mentres a sonda (readinessProbe) non devolva ok. 
-- Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de **ready** seguirá sen recibir peticións a través do servizo. 
-
-Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable. 

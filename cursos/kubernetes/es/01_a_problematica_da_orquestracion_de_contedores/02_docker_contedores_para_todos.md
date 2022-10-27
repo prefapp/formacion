@@ -1,204 +1,205 @@
-# Docker: contedores para todos
+# Docker: contenedores para todos
 
-> Docker, a pesar da sua curta vida como proxecto de software aberto, está a producir unha revolución no sector das tecnoloxías da información.
+> Docker, a pesar de su corta vida como proyecto de software abierto, está revolucionando el sector de las tecnologías de la información.
 
-**De xeito similar a revolución que supoxo a adopción dos contedores de mercancías, ao estandarizar as características das caixas nas que se transportan e moven por todo o mundo todo tipo de materias,  o que permiten adaptar e optimizar as infraestructuras polas que se almacenan e desprazan, Docker estandariza o proceso de transporte de software.**
+**De forma similar a la revolución que supone la adopción de contenedores de mercancías, al estandarizar las características de las cajas en las que se transportan y mueven todo tipo de materiales en todo el mundo, lo que permite adaptar y optimizar las infraestructuras en las que se almacenan y mover, Docker estandariza el proceso de transporte de software.**
 
-Dende o punto de vista dun administrador de sistemas, nos permite cambiar a maneira de "transportar" e despregar aplicacións. En vez de ter que recoller as especificacións e dependencias que precisa unha aplicación, e levar a cabo a instalación da mesma  en cada máquina e sistema operativo no que se vaia a aloxar, Docker nos permite definir un "contrato", un interfaz estandard, que separa o que vai dentro de ese contedor (a aplicación e as súas dependencias) do que vai fora, o  entorno onde se vai a aloxar ( o pc doutro desenvolvedor, o servidor físico da organización, os cluster de servidores virtuais na nube...).
+Desde el punto de vista de un administrador de sistemas, nos permite cambiar la forma en que "transportamos" y desplegamos aplicaciones. En lugar de tener que recoger las especificaciones y dependencias que necesita una aplicación, y realizar la instalación de la misma en cada máquina y sistema operativo en el que vaya a estar alojada, Docker nos permite definir un "contrato", una interfaz estándar, que separa lo que va dentro de ese contenedor (la aplicación y sus dependencias) de lo que va fuera, el entorno donde estará alojado (el pc de otro desarrollador, el servidor físico de la organización, los clústeres de servidores virtuales en la nube…).
 
-Dende o punto de vista do desenvolvedor  da aplicación, Docker lle proporciona o poder de controlar de xeito sinxelo o software que precisa a súa aplicación para funcionar. El só se ten que preocupar de proporcionar un artefacto, unha caixa negra que opere con total autonomía dentro dun sistema operativo definido, para que o administrador poida coller esa caixa e testeala, monitorizala e aloxala dentro da súa infraestructura.
+Desde el punto de vista del desarrollador de aplicaciones, Docker le brinda el poder de controlar fácilmente el software que su aplicación necesita para ejecutarse. Solo debe preocuparse de brindar un artefacto, una caja negra que opere con total autonomía dentro de un sistema operativo definido, para que el administrador tome esa caja y la pruebe, monitoree y aloje dentro de su infraestructura.
 
-# A orixe de Docker
+# El origen de Docker
 
-Docker naceu ao abeiro dunha empresa, na actualidade xa extinta (dotCloud Inc.), que tiña como obxectivo facilitar o despregue de aplicacións aos desenvolvedores, liberándoos de ter que preocuparse da infraestructura. Fundada no 2010, polo autor orixinal de Docker (Salomon Hykes), na actualidade xa non está operativa, pero nela xurdiu o xerme de construir unha ferramenta que permitise estandarizar e axilizar o despregue de aplicacións e servizos web,  permitindo **separar claramente as responsabilidades** do equipo de desenvolvemento, da responsabilidade do equipo de operacións, encargado de aloxar e manter a dispoñibilidade da aplicación.
+Docker nació bajo el paraguas de una empresa, ya extinta (dotCloud Inc.), que tenía como objetivo facilitar el despliegue de aplicaciones a los desarrolladores, liberándolos de tener que preocuparse por la infraestructura. Fundado en 2010, por el autor original de Docker (Salomon Hykes), actualmente ya no está operativo, pero es el germen de construir una herramienta que estandarizaría y agilizaría el despliegue de aplicaciones y servicios web, permitiendo **separar claramente las responsabilidades* * del equipo de desarrollo, responsabilidad del equipo de operaciones, encargado de hospedar y mantener la disponibilidad de la aplicación.
 
-Inspirados pola evolución que supuxo na industria do transporte a adopción dos contedores de mercancías, podemos ver [no seguinte video](https://www.youtube.com/watch?v=Q5POuMHxW-0&feature=youtu.be) unha das presentacións máis famosas que fixo o autor orixinal, cando a tecnoloxía aínda non tiña a tracción que ten na actualidade.
+Inspirándonos en la evolución provocada en la industria del transporte por la adopción de contenedores de mercancías, podemos ver [en el siguiente vídeo](https://www.youtube.com/watch?v=Q5POuMHxW-0&feature=youtu.be) uno de las presentaciones más famosas que hizo el autor original, cuando la tecnología aún no tenía la tracción que tiene hoy.
 
-O máximo expoñente de este modelo de plataforma como servicio ([PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)) era por aquel entón [Heroku](https://www.heroku.com/), da cal surxiron unha serie de ideas e boas prácticas, condensadas nun manifesto de 12 regras,  destinadas aos desenvolvedores de aplicacións, que facilitaran a adopción de este tipo de proveedores.
+El máximo exponente de este modelo de plataforma como servicio ([PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)) fue en su momento [Heroku](https://www.heroku.com/), del que surgieron una serie de ideas y buenas prácticas, condensadas en un manifiesto de 12 reglas, destinadas a los desarrolladores de aplicaciones, que facilitarían la adopción de este tipo de proveedores.
 
-De este manifesto  bebe extensamente Docker, sendo a propia ferramenta de gran utilidade cara adoptar este conxunto de boas prácticas nos nosos proxectos de software.
+Docker se basa en gran medida en este manifiesto, siendo una herramienta muy útil para adoptar este conjunto de buenas prácticas en nuestros proyectos de software.
 
-**[The twelve factor app](https://12factor.net/es/)**
+**[La app de los doce factores](https://12factor.net/es/)**
 
-I. [Base de código](https://12factor.net/es/codebase): Usa unha única base de código da que levar o control de versións e múltiples despreges de este código.
+I. [Codebase](https://12factor.net/es/codebase): Utilice un solo código base desde el cual tomar el control de versiones y múltiples implementaciones de este código.
 
-II. [Dependencias](https://12factor.net/es/dependencies): Declara e illa explícitamente as dependencias.
+II. [Dependencias](https://12factor.net/es/dependencies): Declarar y aislar dependencias de forma explícita.
 
-III. [Configuración](https://12factor.net/es/config): Garda a configuración no entorno, non no código.
+III. [Configuración](https://12factor.net/es/config): Guardar configuración en entorno, no en código.
 
-IV. [Backing services](https://12factor.net/es/backing-services): Trata los servicios que soportan a aplicación ("backing services") como recursos enchufables.
+IV. [Backing services](https://12factor.net/es/backing-services): Tratar los servicios que dan soporte a la aplicación ("backing services") como recursos enchufables.
 
-V. [Construir, distribuir, executar](https://12factor.net/es/build-release-run): Separa completamente a fase de construcción da fase de execución.
+V. [Construir, distribuir, ejecutar](https://12factor.net/es/build-release-run): Separa completamente la fase de construcción de la fase de ejecución.
 
-VI. [Procesos](https://12factor.net/es/processes): Executa as aplicacións como un ou máis procesos **sin estado**.
+VI. [Procesos](https://12factor.net/es/processes): Ejecuta aplicaciones como uno o más procesos **sin estado**.
 
-VII. [Asignación de portos](https://12factor.net/es/port-binding): Exporta servicios mediante portos de rede.
+VII. [Asignación de puertos](https://12factor.net/es/port-binding): Exportación de servicios mediante puertos de red.
 
-VIII. [Concurrencia](https://12factor.net/es/concurrency): Escala mediante o modelo de procesos, horizontalmente mellor que verticalmente.
+VIII. [Concurrencia](https://12factor.net/es/concurrency): Escala usando el modelo de proceso, mejor en horizontal que en vertical.
 
-IX. [Descartabilidade](https://12factor.net/es/disposability): Maximiza a robustez con arranques rápidos do teu servicio e paradas limpas.
+IX. [Desechabilidad](https://12factor.net/es/disposability): Maximice la robustez con inicios rápidos y cierres limpios de su servicio.
 
-X. [Similitude entre desenvolvemento e producción](https://12factor.net/es/dev-prod-parity): Manten os entornos (desenvolvemento, preproducción, producción...) tan semellantes como sexa posible.
+X. [Paridad entre desarrollo y producción](https://12factor.net/es/dev-prod-parity): Mantener los entornos (desarrollo, preproducción, producción...) lo más parecido posible.
 
-XI. [Logs](https://12factor.net/es/logs): Trata os logs como un fluxo de eventos.
+XI. [Logs](https://12factor.net/es/logs): Trata los logs como un flujo de eventos.
 
-XII. [Administración de procesos](https://12factor.net/es/admin-processes): Corre as tarefas de xestión/administración como novos procesos do teu servicio, con unha única execución.
+XII. [Administración de procesos](https://12factor.net/es/admin-processes): Ejecuta las tareas de gestión/administración como nuevos procesos de tu servicio, con una única ejecución.
 
 # Características de Docker
 
-A pesar da competencia que existía no seu día entre os diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ....), e as ferramentas que empregaban para construir o seu servizo, unhas de código aberto e outras propietarias,  Docker logrou estableceuse na actualidade como a principal motor de contedores debido a que :
+A pesar de la competencia que existía entre los diferentes proveedores de PaaS (Heroku, Cloudfoundry, Redhat Openshift, ...), y las herramientas que utilizaban para construir su servicio, algunas de código abierto y otras propietarias, Docker se ha consolidado como el principal motor de contenedores debido al hecho de que:
 
-- Facilita enormemente a xestión de contedores.
-- Ofrece un sistema sinxelo de creación,  mantemento e distribución de imaxes de contedores. 
-- Aporta ferramentas de orquestración propias (Docker Swarm), e integrase con  ferramentas de terceiros como Kubernetes.
-- Esfórzase por manter unha serie de [estándares](https://opencontainers.org/) de conterización, que dan cabida a novos proxectos.
+- Facilita enormemente la gestión de los contenedores.
+- Proporciona un sistema simple para crear, mantener y distribuir imágenes de contenedores.
+- Proporciona sus propias herramientas de orquestación (Docker Swarm), y se integra con herramientas de terceros como Kubernetes.
+- Se esfuerza por mantener una serie de [estándares](https://opencontainers.org/) para contenerización, que acomodan nuevos proyectos.
 
-- Ligazóns de interese:
- - [Azure Docs: What is PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)
- - [Heroku PaaS](https://www.heroku.com/)
- - [The Twelve factor app](https://12factor.net/es/)
+- Enlaces de interés:
+   - [Azure Docs: What is PaaS](https://azure.microsoft.com/es-es/overview/what-is-paas/)
+   - [Heroku PaaS](https://www.heroku.com/)
+   - [The Twelve factor app](https://12factor.net/es/)
 
-# Docker Engine
+# Docker engine
 
-> Docker Engine, o core de docker, e o compoñente fundamental da plataforma e se compón dunha serie de elementos:
+> Docker Engine, el core de docker, es el componente fundamental de la plataforma y consta de una serie de elementos:
 
 ![Docker](./../_media/01/engine.png)
 
-Como podemos ver, existen tres compoñentes básicas:
+Como podemos ver, hay tres componentes básicos:
 
-- O [docker-cli](https://docs.docker.com/engine/reference/commandline/cli/): intérprete de comandos que permite interactuar con todo o ecosistema do Docker.
-Unha api REST: que permite dar resposta ós clientes: tanto o docker-cli como calqueira outra libraría ou cliente de terceiros. - A API está ben [documentada](https://docs.docker.com/engine/api/v1.40/).
-- O [dockerd](https://docs.docker.com/engine/reference/commandline/dockerd/): un demonio que corre no host (pode sé-la nosa propia máquina) e que xestiona tódolos contedores, volumes e imaxes do host.
+- El [docker-cli](https://docs.docker.com/engine/reference/commandline/cli/): intérprete de comandos que permite interactuar con todo el ecosistema Docker.
+Una api REST: que te permite responder a los clientes: tanto el docker-cli como cualquier otra librería o cliente de terceros. 
+- La API está bien [documentada](https://docs.docker.com/engine/api/v1.40/).
+- El [dockerd](https://docs.docker.com/engine/reference/commandline/dockerd/): un demonio que se ejecuta en el host (puede ser nuestra propia máquina) y administra todos los contenedores, volúmenes e imágenes de el anfitrión.
 
-Estas tres compoñentes (docker-cli, API-REST e o dockerd) forman o motor do sistema: docker engine. 
+Estos tres componentes (docker-cli, API-REST y dockerd) forman el motor del sistema: docker engine.
 
-Polo tanto, nós imos instalar o docker-engine nunha máquina e interactuar con él dende o propio docker-cli de esa máquina. Pero nada nos impide, coa configuración axeitada, poder interactuar dende o noso docker-cli cos docker daemons doutros hosts. 
+Por lo tanto, vamos a instalar docker-engine en una máquina e interactuar con él desde el propio docker-cli de esa máquina. Pero nada nos impide, con la configuración adecuada, poder interactuar desde nuestro docker-cli con los docker daemons de otros hosts.
 
-**O interior do Docker daemon**
+**El interior del demonio Docker**
 
-> ⚠️ A estrutura interna do dockerd sufriu varias transformacións. A última e máis profunda a mediados do 2016 onde se [dividiu en varios compoñentes](https://www.docker.com/blog/docker-engine-1-11-runc/) para facilitar a sua adopción.
+> ⚠️ La estructura interna de dockerd ha sufrido varias transformaciones. El último y más profundo a mediados de 2016, donde se [dividió en varios componentes](https://www.docker.com/blog/docker-engine-1-11-runc/) para facilitar su adopción.
 
-O proxecto Docker, nos últimos tres anos, fixo importantes cambios para facilita-la súa adopción por parte de grandes empresas e organismos:
+El proyecto Docker, en los últimos tres años, ha realizado cambios importantes para facilitar su adopción por parte de grandes empresas y organizaciones:
 
-- A [doazón á fundación CNCF](https://www.docker.com/blog/docker-donates-containerd-to-cncf/) do seu motor a baixo nivel (o containerd) responsable da xestión dos contedores. Constitúe agora o proxecto autónomo [containerd](https://containerd.io/). que se está comezando a empregar en outros proxectos aparte de Docker (p.ex. Kubernetes)
-- Cambio no modelo de goberno, [transformando](https://www.docker.com/blog/introducing-the-moby-project/) o proxecto de código aberto [docker](https://github.com/moby/moby), no proxecto [Moby](https://www.docker.com/blog/introducing-the-moby-project/), independente da organización Docker Inc., o cal permite dispoñer dun framework común para construir os diferentes "sabores" da docker engine, tanto para a organización de Docker Inc. como para terceiros, partners,  desenvolvedores... (Por exemplo o servicio de Azure Containers se basa actualmente na súa propia compilación de Moby). A partir de ese momento a organización lanzou 2 sabores do docker-engine, docker Comunity Edition e docker Entreprise Edition, que comparten o mesmo código pero levan consigo un modelo de soporte e de custos diferente .
-- Colaboración estreita co organismo de recente creación, a [OCI](https://opencontainers.org/) (Open Container Initiative) para estandariza-los contedores e imaxes. 
-- O emprego da libraría [runc](https://github.com/opencontainers/runc) como endpoint para comunicarse co sistema operativo do host.
+- La [donación a la fundación CNCF](https://www.docker.com/blog/docker-donates-containerd-to-cncf/) de su motor de bajo nivel ([el containerd](https://en.wikipedia.org/wiki/Cloud_Native_Computing_Foundation#Containerd)) encargado de gestionar los contenedores. [Containerd](https://containerd.io/) ahora constituye un proyexto proyecto autónomo, que se está comenzando a usar en proyectos distintos a Docker (por ejemplo, Kubernetes).
+- Cambio en el modelo de gobierno, [transformando](https://www.docker.com/blog/introducing-the-moby-project/) el proyecto de código abierto [docker](https://github.com/moby/moby), en el proyecto [Moby](https://www.docker.com/blog/introducing-the-moby-project/), independiente de la organización Docker Inc., que permite tener un marco común para construir los diferentes " sabores" del motor docker, tanto para la organización de Docker Inc. en cuanto a terceros, socios, desarrolladores... (Por ejemplo, el servicio Azure Containers actualmente se basa en su propia compilación Moby). Desde entonces, la organización ha lanzado 2 versiones de docker-engine, docker Community Edition y docker Enterprise Edition, que comparten el mismo código pero tienen un soporte y un modelo de costos diferentes.
+- Estrecha colaboración con el organismo de reciente creación, [OCI](https://opencontainers.org/) (Open Container Initiative) para estandarizar contenedores e imágenes.
+- El uso de la biblioteca [runc](https://github.com/opencontainers/runc) como punto final para comunicarse con el sistema operativo del host.
 
-Esto implica que, actualmente, a baixo nivel, o demonio de docker emprega varios proxectos independentes, para poder realizar todas as súa tarefas.
+Esto implica que, actualmente, a bajo nivel, el demonio docker utiliza varios proyectos independientes, para poder realizar todas sus tareas.
 
-Estos proxectos constituintes están dispoñibles  para a comunidade, como software libre, e moitos deles incluso xa non pertencen directamente a organización Docker Inc, senón que foron donados a fundacións e grupos alternativos (CNCF, OCI da Linux Fundation ...) , de xeito que garanticen a súa independencia, e así as grandes empresas, e  os grandes actores de cloud na actualidade, como Microsoft ou Google, lles xere confianza para seguir apostando por estas ferramentas para a construcción dos seus propios servizos, e deste xeito, dediquen recursos propios a manter a comunidade.
+Estos proyectos constituyentes están disponibles para la comunidad, como software libre, y muchos de ellos incluso ya no pertenecen directamente a la organización Docker Inc, sino que han sido donados a fundaciones y grupos alternativos (CNCF, OCI da Linux Fundation ...), por lo que que garantizan su independencia, y así las grandes empresas, y los grandes actores de la nube hoy en día, como Microsoft o Google, les dan confianza para seguir apostando por estas herramientas para la construcción de sus propios servicios, y de esta forma dedicar sus propios recursos para mantener la comunidad.
 
 ![Docker](./../_media/01/engine1.png)
 
-*Imaxe cortesía do blogue de [docker](https://i0.wp.com/blog.docker.com/wp-content/uploads/974cd631-b57e-470e-a944-78530aaa1a23-1.jpg?resize=906%2C470&ssl=1).*
+*Imagen cortesía del blog [docker](https://i0.wp.com/blog.docker.com/wp-content/uploads/974cd631-b57e-470e-a944-78530aaa1a23-1.jpg?resize=906%2C470&ssl=1).*
 
-**Ligazóns de interese:**
+**Enlaces de interés:**
 - [Docker overview](https://docs.docker.com/get-started/overview/)
 
-# A imaxe
+# La imagen
 
-> A imaxe é un dos conceptos fundamentáis no mundo da containerización.
+> La imagen es uno de los conceptos fundamentales en el mundo de la contenerización.
 
-Tal e como viramos, a containerización é unha técnica de virtualización que permite illar un proceso dentro dun SO de tal xeito que este último "pensa" que ten toda a máquina para él, puidendo executar versións específicas de software, establéce-lo seu stack de rede ou crear unha serie de usuarios sen afecta-lo resto dos procesos do sistema.
+Como hemos visto, la contenerización es una técnica de virtualización que permite aislar un proceso dentro de un SO de tal manera que este último "piensa" que tiene toda la máquina para sí mismo, pudiendo ejecutar versiones específicas de software, establecer su stack de red o crear una serie de usuarios sin afectar al resto de procesos del sistema.
 
-Unha imaxe abrangue o conxunto de software específico a empregar polo container unha vez arrancado. Intuitivamente, podemos comprender que se trata de algo **estático** e **inmutable**, como pasa por exemplo cunha ISO, que temos que ter almacenado na máquina anfitrioa para poder lanzar containers baseados nesa imaxe.
+Una imagen cubre el conjunto específico de software que utilizará el contenedor una vez que se inicie. Intuitivamente podemos entender que es algo **estático** e **inmutable**, como ocurre por ejemplo con una ISO, que tenemos que tener almacenada en la máquina anfitriona para poder lanzar contenedores basados ​​en esa imagen.
 
-A xestión de imaxes é un dos puntos fortes de Docker.
+La gestión de imágenes es uno de los puntos fuertes de Docker.
 
-As imaxes en Docker están formadas por **capas** o que permite a súa modularidade e reutilización.
+Las imágenes en Docker se componen de **capas**, lo que permite la modularidad y la reutilización.
 
-Para este exemplo, imos montar unha imaxe co servidor web [Apache2](https://httpd.apache.org/).
+Para este ejemplo, montaremos una imagen con el servidor web [Apache2](https://httpd.apache.org/).
 
-## 1ª Capa: O sistema base
+## 1ª Capa: El sistema base
 
-Xa sabemos que un container está completamente illado, coa excepción do Kernel, do Sistema Operativo anfitrión. Isto implica que, para que o container funcione, compre ter unha primeira capa na imaxe coas utilidades e programas fundamentais para garantir o funcionamento do software que queremos correr dentro do container. Noutras palabras, precisamos un Sistema Operativo como base da imaxe do container. 
+Ya sabemos que un contenedor está completamente aislado, a excepción del Kernel, del Sistema Operativo anfitrión. Esto implica que, para que el contenedor funcione, se necesita tener una primera capa en la imagen con las utilidades y programas fundamentales para garantizar el funcionamiento del software que queremos ejecutar dentro del contenedor. En otras palabras, necesitamos un Sistema Operativo como base de la imagen del contenedor.
 
-Para este exemplo, imos elixir unha [Debian Jessie](https://www.debian.org/releases/jessie/). Por suposto, poderíamos ter feito a escolla de calqueira outra distro de Linux que sexa compatible co kernel que esté a correr na máquina anfritión (unha Ubuntu, Centos, Alpine...)
+Para este ejemplo, elijamos un [Debian Jessie](https://www.debian.org/releases/jessie/). Por supuesto, podríamos haber elegido cualquier otra distribución de Linux que sea compatible con el kernel que se ejecuta en la máquina host (Ubuntu, Centos, Alpine...)
 
-A nosa imaxe tería esta estrutura: 
+Nuestra imagen tendría esta estructura:
 
 ![Capa](./../_media/01/capa_1.png)
 
-## 2ª Capa: As dependencias do Apache2
+## 2ª Capa: Las dependencias de Apache2
 
-Neste exemplo, a versión de Apache a montar é a [2.2](https://httpd.apache.org/download.cgi#apache22) que, por suposto, ten unha serie de [dependencias](https://httpd.apache.org/docs/2.2/install.html#requirements) específicas de software. 
+En este ejemplo, la versión de Apache que se montará es [2.2](https://httpd.apache.org/download.cgi#apache22) que, por supuesto, tiene varias [dependencias](https://httpd.apache.org/docs/2.2/install.html#requirements) específicas del software.
 
-Estas dependencias, constituirían unha segunda capa na nosa imaxe: 
+Estas dependencias constituirían una segunda capa en nuestra imagen:
 
 ![Capa](./../_media/01/capa_2.png)
 
-## 3ª Capa: O servidor Apache
+## 3ª Capa: El servidor Apache
 
-Por último, imos agregar a capa co noso servidor web. 
+Finalmente, agreguemos la capa con nuestro servidor web.
 
-A imaxe, por fin, quedaría da seguinte forma:
+La imagen, finalmente, quedaría así:
 
 ![Capa](./../_media/01/capa_3.png)
 
-E listo! Agora xa podemos empregar a imaxe para lanzar containers con **versións específicas** de software e cunha base **Debian** sen preocuparnos do resto de software que poida estar a correr no anfitrión. 
+¡Y hecho! Ahora podemos usar la imagen para lanzar contenedores con **versiones específicas** de software y una base de **Debian** sin preocuparnos por el resto del software que pueda estar ejecutándose en el host.
 
 ![Capas](./../_media/01/capa_total.png)
 
-# Imaxe e contedor
+# Imagen y contenedor
 
-> Nesta sección afirmamos que a imaxe é algo **estático** e **inmutable**, polo que as imaxes non se poden cambiar, agás a través dos métodos establecidos para o desenvolvemento e mantemento de imaxes por parte da suite de Docker (ver o [Dockefile](https://docs.docker.com/engine/reference/builder/)).
+> En esta sección afirmamos que la imagen es algo **estático** e **inmutable**, por lo que las imágenes no se pueden cambiar, excepto a través de los métodos establecidos para el desarrollo y mantenimiento de imágenes por parte de la suite Docker (ver el [Dockefile]( https://docs.docker.com/engine/reference/builder/)).
 
-- Significa isto que un container non pode escribir en disco?
-- Dentro do container, poderemos crear, borrar ou modificar ficheiros?
-- Se a imaxe é algo inmutable, cómo se pode facer todo isto?
-Por suposto, Docker permite que os containers modifiquen o seu sistema de ficheiros, puidendo, se quixer, borrar todas as carpetas e os seus contidos.
+- ¿Significa esto que un contenedor no puede escribir en el disco?
+- Dentro del contenedor, ¿podemos crear, eliminar o modificar archivos?
+- Si la imagen es algo inmutable, ¿cómo se puede hacer todo esto?
+Por supuesto, Docker permite que los contenedores modifiquen su sistema de archivos, pudiendo eliminar todas las carpetas y su contenido si se desea.
 
-Para poder facer isto, Docker emprega un mecanismo coñecido como **copy-on-write** (COW).
+Para poder hacer esto, Docker utiliza un mecanismo conocido como **copy-on-write** (COW).
 
-## O mecanismo de COPY-ON-WRITE
+## El mecanismo COPY-ON-WRITE
 
-O "truco" é concetualmente sinxelo: Docker non corre o noso container directamente sobre a imaxe, senón que, por enriba da última capa da mesma, crea unha nova: **a capa de container**.
+El "truco" es conceptualmente sencillo: Docker no ejecuta nuestro contenedor directamente sobre la imagen, sino que, encima de la última capa de la misma, crea una nueva: **la capa contenedora**.
 
-Partamos dun container correndo e baseado nunha imaxe:
+Partimos de un contenedor en ejecución y en base a una imagen:
 
-![Container imaxe](./../_media/01/imaxe_e_contedor_1.png)
+![Imagen contenedor](./../_media/01/imaxe_e_contedor_1.png)
 
-Realmente, a imaxe está formada polas capas propias da imaxe e por unha capa de container. Tan só a capa de container é de **ESCRITURA/LECTURA**.
+En realidad, la imagen se compone de capas propias de la imagen y una capa del container. Solo la capa del container es de **ESCRITURA/LECTURA**.
 
-![Container imaxe](./../_media/01/imaxe_e_contedor_2.png)
+![Imagen contenedor](./../_media/01/imaxe_e_contedor_2.png)
 
-Deste xeito, os programas correndo no container poden escribir no sistema de ficheiros de xeito natural sen ser conscientes de que, realmente, están a escribir nunha capa asociada ó container e non na imaxe que é inmutable. 
+De esta forma, los programas que se ejecutan en el contenedor pueden escribir en el sistema de archivos de forma natural sin darse cuenta de que en realidad están escribiendo en una capa asociada con el contenedor y no en la imagen inmutable.
 
-![Container imaxe](./../_media/01/imaxe_e_contedor_3.png)
+![Imagen contenedor](./../_media/01/imaxe_e_contedor_3.png)
 
-Isto posibilita que, cada container, poida face-las súas modificacións no sistema de ficheiros sen afectar a outros containers que estén baseados na mesma imaxe, dado que, **cada container ten asociada unha capa de container específica para él**. 
+Esto hace posible que cada contenedor realice cambios en el sistema de archivos sin afectar a otros contenedores que se basan en la misma imagen, ya que **cada contenedor tiene una capa de contenedor específica asociada**.
 
-![Container imaxe](./../_media/01/imaxe_e_contedor_4.png)
+![Imagen contenedor](./../_media/01/imaxe_e_contedor_4.png)
 
-Tal e como podemos ver, este mecanismo é moi útil. Non obstante, esto produce un problema: **a volatilidade dos datos**.
+Como podemos ver, este mecanismo es muy útil. Sin embargo, esto produce un problema: la **volatilidad de los datos**.
 
-O tratamento deste problema e das súas solucións, será obxecto da seguinte sección.
+El tratamiento de este problema y sus soluciones será objeto de la siguiente sección.
 
-# Emprego de comandos
+# Uso de comandos
 
-No tema anterior falamos de que container sempre parte dunha **imaxe** e ten asociada unha capa de **container**, de tal xeito que, mediante o mecanismo de **copy-on-write** (COW) os cambios que faga no sistema de ficheiros quedan reflectidos nesa capa e non na imaxe que, dende o punto de vista do container, é algo **inmutable**.
+En el tema anterior hablamos de cómo un contenedor parte siempre de una **imagen** y tiene asociada una capa de **contenedor**, de modo que, a través del mecanismo de **copy-on-write** (COW), los cambios que hagas en el sistema de archivos se reflejan en esa capa y no en la imagen que, desde el punto de vista del contenedor, es algo **inmutable**.
 
-Non obstante, as imaxes pódense evolucionar. Para facelo a clave está, precisamente, nesa capa de container.
+Sin embargo, las imágenes pueden evolucionar. Para ello, la clave está precisamente en esa capa contenedora.
 
-Partamos dun container que fai cambios no seu sistema de ficheiros.
+Comenzamos con un contenedor que realiza cambios en su sistema de archivos.
 
 ![Container](./../_media/01/crear_container_de_imaxe.png)
 
-Como sabemos, esos cambios quedan reflectidos no súa capa de container.
+Como sabemos, esos cambios se reflejan en la capa de su contenedor.
 
-Se detemos agora o container, de tal xeito que non poida facer máis cambios:
+Si detenemos el contenedor ahora, para que no pueda hacer más cambios:
 
 ![Container](./../_media/01/crear_container_de_imaxe_detido.png)
 
-Nótese que o container está **detido**, non **destruido**, polo tanto o container non está a correr pero está presente no motor de Docker, e polo tanto tamén a súa capa de datos.
+Tenga en cuenta que el contenedor está **detenido**, no **destruido**, por lo que el contenedor no se está ejecutando pero está presente en el motor de Docker y, por lo tanto, también en su capa de datos.
 
-Se agora collemos esa capa de datos propia do container e facemos un **commit**, o que estamos a facer e producir unha nova imaxe que sí que incorpora os cambios da capa de container á súa propia estrutura interna.
+Si ahora tomamos esa capa de datos que pertenecen al contenedor y hacemos un **commit**, lo que estamos haciendo es producir una nueva imagen que incorpora los cambios de la capa del contenedor en su propia estructura interna.
 
 ![Container](./../_media/01/crear_container_de_imaxe_detido_commit.png)
 
-En definitiva, **acabamos de evoluciona-la imaxe**. E os novos containers baseados nesa nova imaxe sí verán os cambios que fixeramos no container orixinal.
+En resumen, **acabamos de evolucionar la imagen**. Y los nuevos contenedores basados ​​en esa nueva imagen verán los cambios que hicimos en el contenedor original.
 
-Este precisamente, é o ciclo de evolución das imaxes en Docker.
+Este es precisamente el ciclo de evolución de las imágenes en Docker.
 
 ![Container](./../_media/01/evolucion_da_imaxe.png)

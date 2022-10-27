@@ -1,15 +1,15 @@
 # Introducción
 
-# A problemática da orquestración de contedores
+# El problema de la orquestación de contenedores
 
-> Nos últimos anos, as tecnoloxías de contedores están provocando un cambio disruptivo na maneira na que as organizacións construen, evolucionan e despregan aplicacións.
+> En los últimos años, las tecnologías de contenedores están provocando un cambio disruptivo en la forma en que las organizaciones crean, evolucionan e implementan aplicaciones.
 
-As plataformas de contedores, fundamentalmente [Docker](https://docker.com/), están sendo usadas para empaquetar aplicacións de xeito que teñan acceso controlado, a un determinado grupo de recursos do sistema operativo que corre nunha máquina  física ou virtual.
+Las plataformas de contenedores, principalmente [Docker](https://docker.com/), se utilizan para empaquetar aplicaciones de tal manera que tienen acceso controlado a un determinado grupo de recursos del sistema operativo que se ejecuta en una máquina física o virtual. .
 
-Se ademáis nos imos a [arquitecturas de microservicios](https://es.wikipedia.org/wiki/Arquitectura_de_microservicios), onde as aplicacións son troceadas en multiples pequenos servicios que se comunican entre eles, o axeitado e empaquetar cada un no seu correspondente contedor.
+Si vamos también a [arquitecturas de microservicios](https://es.wikipedia.org/wiki/Arquitectura_de_microservicios), donde las aplicaciones se dividen en múltiples pequeños servicios que se comunican entre sí, el adecuado y empaquetan cada uno en su contenedor correspondiente
 
-Os beneficios, especialmente para as organizacións que empregan prácticas de integración e despregue continuos (CI/CD) se basean en que os contedores son escalables e efímeros, as instancias das aplicacións ou servicios, correndo sobre esos contedores, van e veñen segundo se necesite (para executar os test, lanzar un novo entorno para o desenvoledor, actualizar a versión da aplicación en producción, escalar...).
+Los beneficios, especialmente para las organizaciones que utilizan prácticas de integración y despliegue continuos (CI/CD), se basan en el hecho de que los contenedores son escalables y efímeros, las instancias de aplicaciones o servicios que se ejecutan en esos contenedores van y vienen según sea necesario (para ejecutar las pruebas, lanzar un nuevo entorno para el desarrollador, actualizar la versión de la aplicación en producción, escalar...).
 
-E esto, levado a escala,  é un gran desafio. Se empregamos 8 contedores para aloxar 4 aplicacións,  a tarefa de desplegar e manter os nosos contedores se pode manexar de xeito manual.  Se pola contra contamos con 2000 contedores e 400 servizos que xestionar, a tarefas de manexalos de xeito manual vólvese realmente dificil.
+Y esto, llevado a escala, es un gran desafío. Si usamos 8 contenedores para alojar 4 aplicaciones, la tarea de implementar y mantener nuestros contenedores se puede manejar manualmente. Si por el contrario tenemos 2000 contenedores y 400 servicios que gestionar, la tarea de gestionarlos manualmente se hace realmente difícil.
 
-A orquestración de contedores consiste en **automatizar o despregue**, **manexo**, **escalado**, **conectividade** e **dispoñibilidade dos contedores** que aloxan as nosas aplicacións.
+La orquestación de contenedores se trata de **automatizar el despliegue, gestión, escalado, conectividad y disponibilidad de los contenedores** que alojan nuestras aplicaciones.

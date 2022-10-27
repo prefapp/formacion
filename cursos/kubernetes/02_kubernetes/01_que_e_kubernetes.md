@@ -16,7 +16,7 @@ De feito, a meirande parte do tempo, trabállase con plataformas baseadas en Kub
  - [AKS](https://azure.microsoft.com/es-es/services/kubernetes-service/) (Azure Kubernetes Service).
  - [EKS](https://aws.amazon.com/es/eks/) (Amazon Elastic Container Service for Kubernetes).
  - [GKE](https://aws.amazon.com/es/eks/) (Google Kubernetes Engine).
-- Solucións aloxadas en outros proveedores (listado [aquí](https://kubernetes.io/docs/setup/pick-right-solution/#hosted-solutions)).
+- Solucións aloxadas en outros proveedores (listado [aquí](https://kubernetes.io/partners/#conformance)).
 - Sistemas baseados en Kubernetes.
  - O [openshift](https://www.redhat.com/es/technologies/cloud-computing/openshift) de RedHat. 
 - Instalacións de kubernetes para desenvolvemento:

@@ -1,115 +1,115 @@
-# A problemática da orquestración de contedores de software
+# El problema de la orquestación de contenedores de software
 
-## Instalar unha aplicación multicontedor
-Este exercicio basease neste exemplo do repositorio de [exemplos de docker](https://github.com/dockersamples/example-voting-app).
+## Instale una aplicación multicontenedor
+Este ejercicio se basa en este ejemplo del repositorio [docker samples](https://github.com/dockersamples/example-voting-app).
 
-### Explicación do proxecto
+### Explicación del proyecto
 
-Xa que estamos en tempos de votación, imos despregar con contedores Docker, unha aplicación de votación electrónica Rindo, que nos permita facer unha sinxela escolla:
+Ya que estamos en tiempos de votaciones, vamos a desplegar con contenedores Docker, una aplicación de votación electrónica de Rindo, que nos permitirá hacer una elección sencilla:
 
-De qué somos? de Nesquik ou de Cola Cao? 
+¿De qué somos? ¿Nesquik o Cola Cao?
 
-O plantexamento é sinxelo, pero para facelo máis interesante, a aplicación vai a empregar unha arquitectura de microservicios composta polos seguintes elementos:
+El enfoque es simple, pero para hacerlo más interesante, la aplicación utilizará una arquitectura de microservicios compuesta por los siguientes elementos:
 
-1. Un panel web onde o usuario vai a votar a opción desexada.
-1. Outro panel web onde se vai poder ver en todo momento os resultados globais da votación.
-1. Un worker que vai a procesar os votos recollidos do servizo de votacións e vai a actualizar os totais para o servizo de resultados
-1. Ademais teremos dous servizos de almacenamento, un con redis, como cola de mensaxes,  para almacenar temporalmente os votos recollidos no servizo de votacións e que posteriormente se procese polo worker
-1. e outro con Postgresql onde o worker irá deixando os totais, segundo vai procesando votos da cola       
+1. Un web panel donde el usuario votará por la opción deseada.
+1. Otro web panel donde se pueden ver en todo momento los resultados de las votaciones globales.
+1. Un Worker que procesará los votos recogidos del servicio de votación y actualizará los totales para el servicio de resultados
+1. Además tendremos dos servicios de almacenamiento, uno con redis, como cola de mensajes, para almacenar temporalmente los votos recogidos en el servicio de votaciones y posteriormente procesados ​​por el Worker
+1. y otro con Postgresql donde el Worker dejará los totales, ya que procesa los votos de la cola
 
-### Os Servizos
+### Los servicios
 
 #### 1. Votación
 
-A aplicación de votacións está escrita en python con [Flask](http://flask.pocoo.org/).
+La aplicación de votación está escrita en python con [Flask](http://flask.pocoo.org/).
 
-Esta aplicación expón un porto ó exterior por onde acepta peticións (porto 80).
+Esta aplicación expone un puerto al exterior donde acepta solicitudes (puerto 80).
 
 ![actividades1](./../_media/01/actividades1.png)
 
-Cando alguén vota, apunta o senso do voto nunha base de datos [Redis](https://redis.io/) (que escoita dentro do contedor no 6379).
+Cuando alguien vota, apunta el sentido del voto a una base de datos [Redis](https://redis.io/) (que escucha dentro del contenedor #6379).
 
 ![actividades2](./../_media/01/actividades2.png)
 
 #### 2. Worker
 
-O worker é un servizo que escoita mensaxes no redis e agrega eses resultados parciais ó resultado final.
+El Worker es un servicio que escucha mensajes en redis y agrega esos resultados parciales al resultado final.
 
-Os resultados fináis atópanse nunha base de datos [PostgreSQL](https://www.postgresql.org/).
+Los resultados finales están en una base de datos [PostgreSQL](https://www.postgresql.org/).
 
-O worker está escrito en [.NET](https://www.microsoft.com/net/).
+El Worker está escrito en [.NET](https://www.microsoft.com/net/).
 
 ![actividades3](./../_media/01/actividades3.png)
 
-#### 3. Servizo de resultados
+#### 3. Servicio de resultados
 
-O servizo de resultados está feito en [nodejs](https://nodejs.org/es/). Este servizo expón (no porto 80) unha páxina en HTML5 e monitoriza constantemente a base de datos PostgreSQL para devolver o estado actual da enquisa.
+El servicio de resultados se realiza en [nodejs](https://nodejs.org/es/). Este servicio expone (en el puerto 80) una página en HTML5 y monitorea constantemente la base de datos de PostgreSQL para devolver el estado actual de la encuesta.
 
 ![actividades4](./../_media/01/actividades4.png)
 
-#### 4. Esquema final dos servizos
+#### 4. Esquema final de servicios
 
-O esquema final dos servizos quedaría como segue:
+El esquema final de servicios sería el siguiente:
 ![actividades5](./../_media/01/actividades5.png)
 
-### As redes
+### Las redes
 
-Vendo o esquema de servizos, parece claro que debería haber dúas redes:
+Mirando el diagrama de servicio, parece claro que debería haber dos redes:
 
-- Unha **privada** onde estén conectados tódolos contedores para comunicarse entre sí
-- Unha **pública** onde teñan conectividade EXCLUSIVAMENTE os contedores de frontend (o de votacións e o de resultados)
+- Un **privado** donde todos los contenedores están conectados para comunicarse entre sí
+- Un **público** donde EXCLUSIVAMENTE los contenedores frontend (votación y resultados) tienen conectividad
 
 ![actividades6](./../_media/01/actividades6.png)
 
-Deste xeito, os contedores de BBDD e o worker están illados do mundo exterior, é dicir, únicamente os contedores que estén na súa rede (privada) poden falar con eles.
+De esta forma, los contenedores BBDD y el Worker quedan aislados del mundo exterior, es decir, solo los contenedores que están en su red (privada) pueden hablar con ellos.
 
-Polo contrario, os contedores de votación e resultados, que expoñen páxinas web, están conectados a ambas redes para poder face-lo traballo de mediación entre o backend e o fronted da nosa aplicación.
+Por el contrario, los contenedores de votaciones y resultados, que exponen páginas web, están conectados a ambas redes para poder mediar entre el backend y el frontend de nuestra aplicación.
 
 
-### Volumes: persistencia
+### Volúmenes: persistencia
 
-Para esta práctica guiada, imos dar persistencia á parte de resultados finais. Isto é, ós datos que están almacenados no PostgreSQL.
+Para esta práctica guiada, vamos a darle persistencia a la parte de resultados finales. Es decir, a los datos que se almacenan en PostgreSQL.
 
-### O docker-compose
+### El docker-compose
 
-Imos agora expresar toda esta infraestructura no DSL de docker-compose.
+Expresemos ahora toda esta infraestructura en el DSL docker-compose.
 
-As imaxes a empregar serán:
+Las imágenes a utilizar serán:
 - Worker: (.Net) [prefapp/votacion_worker](https://hub.docker.com/r/prefapp/votacion_worker/)
 - Votos: (Python) [prefapp/votacion_votar](https://hub.docker.com/r/prefapp/votacion_votar/)
 - Resultados: (NodeJS) [prefapp/votacion_resultados](https://hub.docker.com/r/prefapp/votacion_resultados/)
-- Bbdd resultados: (PostgreSQL) [postgres:9.4](https://hub.docker.com/_/postgres/)
-- Bbdd: (Redis) [redis:alpine](https://hub.docker.com/_/redis/)
+- Resultados de Bbdd: (PostgreSQL) [postgres:9.4](https://hub.docker.com/_/postgres/)
+- Bdd: (Redis) [redis:alpine](https://hub.docker.com/_/redis/)
 
-Para definir a parte de **redes**, quedaría como segue:
+Para definir la parte de **redes**, se vería así:
 ![actividades7](./../_media/01/actividades7.png)
 
-Vemos que creamos dúas redes, unha pública e outra privada. Na parte de **volumes**, imos a crear un volume que despois asociaremos ó servizo de PostgreSQL:
+Vemos que hemos creado dos redes, una pública y otra privada. En la parte de **volúmenes**, vamos a crear un volumen que luego asociaremos con el servicio de PostgreSQL:
 ![actividades8](./../_media/01/actividades8.png)
 
-Pasemos á definición dos **servizos**, comezamos cos de bbdd:
+Pasemos a la definición de **servicios**, comenzando con bbdd:
 ![actividades9](./../_media/01/actividades9.png)
 
-Vemos como se conectan ambos servizos á rede privada. Ademáis, o servizo de bbdd (postgresql) vincula o directorio de datos ó volume creado. Isto otorga persistencia en caso de sucesivos reinicios do sistema.
+Vemos como ambos servicios se conectan a la red privada. Además, el servicio bbdd (postgresql) vincula el directorio de datos al volumen creado. Esto proporciona persistencia en los sucesivos reinicios del sistema.
 
-Apréciase tamén a exposición do porto de redis [6379] para conexións (sempre dende a rede privada).
+También se agradece exponer el puerto redis [6379] para conexiones (siempre desde la red privada).
 
-Vexamos agora o servizo do **worker**:
+Ahora veamos el servicio del **Worker**:
 ![actividades10](./../_media/01/actividades10.png)
 
-O worker tamén está na rede privada. Vemos a etiqueta [depends_on](https://docs.docker.com/compose/compose-file/#depends_on) que establece a orde de arranque dos servizos (dos contedores).
+El Worker también está en la red privada. Vemos la etiqueta [depends_on](https://docs.docker.com/compose/compose-file/#depends_on) que establece el orden de inicio de los servicios (contenedores).
 
-Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do Redis esté en funcionamento.
+Como se indica en esta línea, el contenedor de Workers **no se puede iniciar** antes de que se ejecute el contenedor de Redis.
 
-Pasamos agora á definición do **servizo de votacións**:
+Pasamos ahora a la definición del **servicio de votación**:
 ![actividades11](./../_media/01/actividades11.png)
 
-O servizo de votacións non ten moita sorpresa. Está asociado a ambas redes, a pública e a privada.
+El servicio de votación no tiene sorpresas. Se asocia tanto a redes públicas como privadas.
 
-Asocia o porto 8000 do host ó porto 80 do contedor para asegurá-la conectividade co exterior.
+Asocie el puerto 8000 del host al puerto 80 del contenedor para garantizar la conectividad con el exterior.
 
-**Hai un erro co worker e o nome de este contedor de bbdd, o worker está configurado para conectarse ao nome dns "db", non "bbdd".
-Para solventalo o xeito máis sinxelo é agregar un alias ao host bbdd:**
+**Hay un error con el Worker y este nombre de contenedor de bbdd, el Worker está configurado para conectarse al nombre de dns "db", no a "bbdd".
+Para resolverlo, la forma más fácil es agregar un alias al host bbdd:**
 
 ```yaml
 bbdd:
@@ -120,66 +120,66 @@ bbdd:
         - db
 ```
 
-Por último, imos ver o **servizo de resultados**:
+Finalmente, veamos el **servicio de resultados**:
 ![actividades12](./../_media/01/actividades12.png)
 
-O servizo de resultados tampouco ten moito que comentar. O porto 8001 é o de escoita do servidor e por onde haberá que conectarse para ve-la páxina web coa información.
+El servicio de resultados tampoco tiene mucho que comentar. El puerto 8001 es el puerto de escucha del servidor y donde tendrás que conectarte para ver la página web con la información.
 
-Escribimos un docker-compose.yaml con toda esa información e facemos:
+Escribimos un docker-compose.yaml con toda esa información y hacemos:
 ![actividades13](./../_media/01/actividades13.png)
 
-E ahí o temos!! Se accedemos dende o noso navegador a http://localhost:8000 teríamos o panel de votación e se entramos en  http://localhost:8001 teremos o panel de resultados.
+¡¡Y ahí lo tenemos!! Si accedemos desde nuestro navegador a http://localhost:8000 tendremos el panel de votaciones y si entramos en http://localhost:8001 tendremos el panel de resultados.
 
-Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os resultados en tempo real e sen necesidade de recargar nada.
+Si abrimos dos pestañas, una para cada lado, y votamos, veremos cómo cambian los resultados en tiempo real y sin necesidad de recargar nada.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Pasos 1 ao 4 correctamente realizados segundo estes...
+**Evidencia de la adquisición de actuaciones**:
+- Pasos 1 a 4 realizados correctamente de acuerdo a estos...
 
-**Indicadores de logro**: 
-- Entregar un documento con:
-  - o ficheiro compose onde se foron aplicando as diferentes modificacións indicadas.
-  - o resultado da execución do comando "**docker-compose ps**".
-  - as respostas as seguintes cuestións:
-    - ¿que ocorrería se o servizo de "votacions" tivera unha incidencia e se detivese por un erro da aplicación? Habería algún xeito automático de que se volvese a reactivar?
-    - e se o nodo completo se cae?
-- *Se o preferides, podedes entregar un screencast da consola, con asciinema.org
+**Indicadores de logros**:
+- Presentar un documento con:
+  - el archivo de composición donde se han aplicado las diferentes modificaciones indicadas.
+  - el resultado de ejecutar el comando "**docker-compose ps**".
+  - las respuestas a las siguientes preguntas:
+    - ¿Qué pasaría si el servicio de "votación" tuviera una incidencia y se detuviera por un error de la aplicación? ¿Habría alguna forma automática de reactivarlo?
+    - ¿Qué pasa si todo el nodo se cae?
+- *Si lo prefieres, puedes enviar un screencast de la consola, con asciinema.org
 
 **Criterios de corrección**:
-- Adaptacións indicadas na descripción, completadas correctamente (60 puntos)
+- Adaptaciones indicadas en la descripción, cumplimentadas correctamente (60 puntos)
   - Redis
   - Postgresql
-  - Votacions
+  - Votar
   - Worker
   - Resultados
-- Respostas as cuestións plantexadas  (10 puntos)
+- Respuestas a las preguntas planteadas (10 puntos)
 
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 70 puntos
-- Peso desta tarefa no seu tema ...................................................... 70 %
+**Peso en calificación**:
+- Peso de esta tarea en la calificación final .......................................... 70 puntos
+- Peso de esta tarea en su tema ............................................................. 70%
 
 ---
 
-## Identificar os problemas das aplicacións multicontedor correndo sobre un clúster de nodos
+## Identificar problemas con aplicaciones de varios contenedores que se ejecutan en un clúster de nodos
 
-Vamos a darlle unha volta agora a aplicación anterior, e en vez de desplegala na nosa máquina docker, vamos a desplegala sobre un cluster de nodos docker (docker swarm).
+Ahora cambiemos la aplicación anterior y, en lugar de implementarla en nuestra máquina docker, la implementaremos en un grupo de nodos docker (docker swarm).
 
-Para lanzar este cluster de nodos temos varias opcións:
+Para lanzar este clúster de nodos tenemos varias opciones:
 
-### Opcion 1: A máis sinxela. [Play with Docker](https://labs.play-with-docker.com/).
+### Opción 1: La más sencilla. [Play with docker](https://labs.play-with-docker.com/).
 
-[Play with docker](https://labs.play-with-docker.com/) é unha ferramenta online para prácticar con Docker, sen necesidade de instalar nada no noso equipo local. Para empregalo e construir un cluster de swarm, só temos que facer Login cos nosos datos de [dockerhub](https://hub.docker.com/)  (precisa que teñamos unha conta de hub.docker.com, podedes crear unha totalmente gratuita dende a [páxina de rexistro](https://hub.docker.com/signup)).
+[Play with docker](https://labs.play-with-docker.com/) es una herramienta online para practicar con Docker, sin necesidad de instalar nada en nuestro ordenador local. Para usarlo y construir un clúster de swarm, solo tenemos que iniciar sesión con nuestros datos [dockerhub](https://hub.docker.com/) (necesitamos tener una cuenta hub.docker.com, puede crear una cuenta completa gratis desde la [página de registro](https://hub.docker.com/signup)).
 
-Unha vez arranquedes o laboratorio teredes 4h para facer a práctica, pero se se esgota o tempo ou tedes que abandoar o laboratorio, podedes volver en calquer momento e lanzar novas máquinas docker.
+Una vez que comience el laboratorio, tendrá 4 horas para realizar la práctica, pero si se acaba el tiempo o tiene que abandonar el laboratorio, puede volver en cualquier momento y lanzar nuevas máquinas docker.
 
-Dende aquí podemos construir un cluster lanzando 2 novas instancias:
+Desde aquí podemos construir un clúster lanzando 2 nuevas instancias:
 ![actividades14](./../_media/01/actividades14.png)
 
-Unha vez teñades as 2 instancias operativas, hai que conectalas facendo o cluster Swarm. Para esto podedes escoller o **nodo1** como nodo master, e executar na sua terminal o seguinte comando:
+Una vez que tenga las 2 instancias operativas, debe conectarlas haciendo el clúster Swarm. Para esto, puede elegir **nodo1** como el nodo maestro y ejecutar el siguiente comando en su terminal:
 
 ```shell
 $ docker swarm init --advertise-addr 192.168.0.XX
@@ -192,90 +192,88 @@ docker swarm join --token SWMTKN-1-1ma2gywbmnr8nwf8dr9hg7etrsc5sx0q1wrgwhde5d5v7
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
-Onde a advertise-add e a dirección ip do nodo (192.168.0.xxx).
+Donde la advertise-add es la dirección IP del nodo (192.168.0.xxx).
 
-Na propia inicialización do nodo master do cluster de Swarm xa vos indica que comando teredes que lanzar no **nodo2** (worker) para unirse ao cluster, no meu caso :
+En la misma inicialización del nodo maestro del clúster Swarm, ya te dice qué comando tendrás que lanzar en el **nodo2** (Worker) para unirte al clúster, en mi caso:
 
 ```shell
 docker swarm join --token SWMTKN-1-1ma2gywbmnr8nwf8dr9hg7etrsc5sx0q1wrgwhde5d5v7tuuw1-b7ir4aj81xwcph5d04jrygor5 192.168.0.12:2377
 ```
 
-**E listo xa tedes o cluster de Docker Swarm preparado para desplegar aplicacións.** Ata vos podedes conectar por ssh, empregando o comando indicado  no apartado SSH
+**Y listo, ya tienes el clúster Docker Swarm listo para desplegar aplicaciones.** Incluso puedes conectarte vía ssh, usando el comando indicado en la sección SSH
 ![actividades15](./../_media/01/actividades15.png)
 
 
-### Opción 2: Docker-machine e Virtualbox
+### Opción 2: Docker-machine y Virtualbox
 
-se estamos a usar virtualbox, docker dispón dunha utilidade para crear nodos swarm (**docker-machine**) empregando varias plataformas de virtualización, entre elas VirtualBox ou HyperV:
+Si estamos usando virtualbox, docker tiene una utilidad para crear nodos de Swarm (**docker-machine**) utilizando varias plataformas de virtualización, incluidas VirtualBox o HyperV:
 
-Tedes un exemplo de como construir o cluster con nodos de Virtualbox, na [seguinte páxina dos contidos do curso](WIP).
+Tienes un ejemplo de cómo construir el clúster con nodos de Virtualbox, en el [tema 4 del modulo 6 del Curso de Docker](https://prefapp.github.io/formacion/cursos/docker/#/./06_docker_swarm/04_montando_o_primeiro_cluster_swarm).
 
-### Despregue
+### Desplegar
 
-Empregando o cluster swarm construido no apartado anterior despreguemos sobre él a aplicación de nesquik vs colacao vista no exercicio 1.2.
+Usando el Swarm de clústeres construido en la sección anterior, desplegamos en él la aplicación de nesquik vs colacao vista en el ejercicio 1.2.
 
-#### 1. Para comezar vamos a adaptar o [docker-compose.yaml](https://s3-eu-west-1.amazonaws.com/formacion.4eixos.com/solucions/nesquik_vs_colacao_docker-compose.yml) da aplicación anterior, ao formato v3, preparado para o lanzamento nun swarm, cunha serie de melloras á hora de dar un servicio máis confiable.
+#### 1. Para empezar adaptaremos el [docker-compose.yaml](https://s3-eu-west-1.amazonaws.com/formacion.4eixos.com/solucions/nesquik_vs_colacao_docker-compose.yml) de la aplicación anterior, al formato v3, lista para lanzar en Swarm, con una serie de mejoras a la hora de brindar un servicio más confiable.
 
-Para esto imos ir servizo a servizo agregándolle configuración extra.
+Para ello iremos de servicio en servicio añadiendo configuración extra.
 
-O primeiro que temos que facer e cambiar a versión da especificación de docker-compose, para usar polo menos a 3. (A última revisión do formato é a 3.7)
+Lo primero que debemos hacer es cambiar la versión de la especificación docker-compose, para usar al menos 3. (La última revisión de formato es 3.7)
 
-Básicamente todas as configuracións relativas ao modo swarm están concentradas, dentro de cada servicio, no apartado de ***deploy**, de tal maneira que o único comando que interpreta estas opcións é `docker stack deploy`, e tanto docker-compose up como docker-compose run simplemente evitan esta sección.
+Básicamente todas las configuraciones relacionadas con el modo swarm se concentran, dentro de cada servicio, en la sección ***deploy**, por lo que el único comando que interpreta estas opciones es `docker stack deployment, y tanto docker-compose up como docker -compose run simplemente pase por alto esta sección.
 
-##### 1.1. Redis
-No caso do servicio de redis, só queremos que teña unha única replica, e unha política de reinicio:
+##### 1.1. redis
+En el caso del servicio redis, solo queremos que tenga una sola réplica y una política de reinicio:
 
-- en caso de fallo do container, o cluster de Swarm debe encargarse de levantalo de novo, e que o intente polo menos 3 veces, con 10s entre cada intento, nunha ventá de tempo de 120s
+- en caso de falla del contenedor, el clúster Swarm debe encargarse de levantarlo nuevamente, y que lo intente por lo menos 3 veces, con 10s entre cada intento, en una ventana de tiempo de 120s
 
-##### 1.2 Postgresql
-No caso do servicio de base de datos, como é algo bastante crítico QUE NECESITA PERSISTENCIA, os datos da mesma se teñen que almacenar nun volumen DEPENDENTE DO ANFITRIÓN* onde corre o contedor.
+##### 1.2 PostgreSQL
+En el caso del servicio de base de datos, al ser algo bastante crítico que NECESITA PERSISTENCIA, sus datos deben almacenarse en un volumen DEPENDIENTE DEL ANFITRIÓN*.
 
-Por eso, non podemos permitir que o scheduler do Swarm nos mova a base de datos a outro nodo diferente de onde se arrincaou a primeira vez, e onde van a estar os datos da mesma.
+Por lo tanto, no podemos permitir que el programador Swarm mueva la base de datos a otro nodo diferente de donde se inició la primera vez y donde estarán los datos.
 
-Para esto vamos a agregar unha restricción de xeito que ese servicio só se execute no nodo **Manager**.
+Para esto vamos a agregar una restricción para que este servicio solo se ejecute en el nodo **Manager**.
 
-**Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quere decir que hai partes do Docker Engine que, aínda que veñen cunha funcionalidade xa definida, se permiten intercambiar por outras de outro proveedor para mellorala. Principalmente hai 2 tipos de proveedores de plugins, os que proveen plugins de rede, e os que proveen **plugins para a xestión de volumenes**. Precisamente estos últimos están moi enfocados en tratar de atopar solucións para poder abstraer o volume de datos, do anfitrión, de xeito que se poida mover os contedores dos servicios entre nodos do cluster e continuen a ter os seus datos dispoñibles. Podedes ver algúns deles [aquí](https://store.docker.com/search?type=plugin).*
+**Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quiere decir que hay partes del Docker Engine que, aunque vienen con una funcionalidad ya definida, se pueden cambiar por otras de otro proveedor para mejorarlo.** Existen principalmente 2 tipos de proveedores de complementos, los que brindan **complementos de red** y los que brindan **complementos de administración de volumen**. Precisamente estos últimos están muy centrados en intentar buscar soluciones para poder abstraer el volumen de datos, del host, de forma que los contenedores de servicios puedan moverse entre nodos del clúster y seguir teniendo sus datos disponibles. Puede ver algunos de ellos [aquí](https://store.docker.com/search?type=plugin).*
 
 
-##### 1.3 Votacions
-Para o servicio de votacións, como é unha aplicación que non garda estado en si mesma, e está tendo moita demanda ;) vamos a escalalo a 2 replicas, de xeito que o cluster se encargue de balancear as peticións entre cada unha delas.
+##### 1.3 Votación
+Para el servicio de votaciones, como es una aplicación que no guarda estado en sí misma, y ​​está teniendo mucha demanda ;) la vamos a escalar a 2 réplicas, para que el cluster se encargue de balancear las solicitudes entre cada una de a ellos.
 
-Ademáis cando faga falta actualizar o servicio, queremos que se execute a actualización das 2 replicas á vez, e por suposto, se se cae que automáticamente se volva a arrincar soa.
+Además, cuando sea necesario actualizar el servicio, queremos que la actualización de las 2 réplicas se ejecute al mismo tiempo y, por supuesto, si falla, se reiniciará automáticamente por sí solo.
 
 ##### 1.4 Worker
-Para o nodo worker vamos a agregar 1 única réplica xa que a aplicación que nel corre non soporta máis, e admeáis agregarmoes unha política de restart on-failure.
+Para el nodo de trabajo vamos a agregar 1 única réplica ya que la aplicación que se ejecuta en él ya no es compatible, y también agregaremos una política de reinicio en caso de falla.
 
 ##### 1.5 Resultados:
-Para o nodo de resultados agregemos outras 2 réplicas, de maneira similar ao de votacions.
+Para el nodo de resultados, agreguemos otras 2 réplicas, de manera similar a la votación.
 
-#### 2. Unha vez completado estas adaptacións só queda facer o deploy de esta stack ( o docker-compose v3 que acabamos de adaptar)
+#### 2. Una vez realizadas estas adaptaciones solo queda desplegar este stack (el docker-compose v3 que acabamos de adaptar)
 
-Para esto ben se pode configurar ó noso cliente local de docker para que fale contra o nodo Manager do cluster, ou ben mandar o ficheiro co stack ao nodo master.
+Para esto, puede configurar nuestro cliente docker local para hablar con el nodo Administrador del clúster o enviar el archivo con la pila al nodo maestro.
 
-E finalmente quedaría facer o deploy desta stack e executar contra el o comando para despregala 
+Y finalmente, sería necesario implementar esta pila y ejecutar el comando en su contra para implementarla.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Pasos correctamente realizados segundo estes...
+**Evidencia de la adquisición de actuaciones**:
+- Realizó correctamente los pasos de acuerdo con estos...
 
-**Indicadores de logro**: 
-- Entregar un documento con:
-  - o ficheiro compose/stack onde se foron aplicando as diferentes modificacións indicadas.
-  - os comandos necesarios para levar a cabo o deploy da stack, e como visualizar que ese depregue se está executando correctamente.
-- *Se o preferides, podedes entregar un screencast da consola, con asciinema.org
+**Indicadores de logros**:
+- Presentar un documento con:
+  - el archivo de composición/pila donde se han aplicado las diferentes modificaciones indicadas.
+  - los comandos necesarios para realizar el despliegue de la pila, y como visualizar que ese despliegue se está ejecutando correctamente.
+- *Si lo prefieres, puedes enviar un screencast de la consola, con asciinema.org
 
 **Criterios de corrección**:
-- Adaptacións indicadas no 1.1 ao 1.5 completadas correctamente (15 puntos)
+- Adaptaciones indicadas en 1.1 a 1.5 correctamente cumplimentadas (15 puntos)
   - Redis
   - Postgresql
-  - Votacions
+  - Votar
   - Worker
   - Resultados
-- Comandos necesarios para o apartado 2 correctamente indicados (5 puntos)
+- Comandos necesarios para el apartado 2 correctamente indicados (5 puntos)
 
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: revise y autoevalúe su trabajo
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 20 puntos

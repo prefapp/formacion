@@ -52,3 +52,20 @@ kind delete cluster
 ```
 
 Isto eliminará o clúster cuxo nome sexa "kind". En caso de que o clúster que queremos borrar teña un nome diferente, podemos indicalo utilizando a flag `--name`.
+
+Para crear nós dentro do mesmo clúster Kind podemos usar un yaml que declare a estrutura. Por exemplo, un clúster cun nodo de control e 3 workers.
+
+```
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4  
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+```
+
+Lo podemos desplegar con el comando:
+
+	create cluster --name multi-node –config=config.yaml
+
