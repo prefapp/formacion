@@ -242,3 +242,9 @@ As sondas live e ready son moi importantes cando se traballa con deploy que teñ
 - Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de **ready** seguirá sen recibir peticións a través do servizo. 
 
 Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable. 
+
+
+Documentación oficial:
+- [Container Probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Probas](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
+- [http get action v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#httpgetaction-v1-core)
