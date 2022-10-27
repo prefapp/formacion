@@ -1,12 +1,12 @@
 # Configuraciones en Kubernetes
 
-Uno de los problemas que encontramos con los contenedores de software es su configuración: es decir, cómo establecer los valores y datos que hacen que nuestro sistema funcione como queremos.
+Uno de los problemas que encontramos con los contenedores de software es su configuración, es decir, cómo establecer los valores y datos que hacen que nuestro sistema funcione como queremos.
 
 Dado que un contenedor está aislado del contexto, "inyecta" esa configuración de tal manera que:
 
 * Las imágenes están listas para funcionar con una configuración que se dará desde el "exterior".
 * El contenedor hace la menor cantidad posible de "suposiciones" para que pueda ejecutarse en cualquier contexto con cambios mínimos; ya sea en desarrollo, pruebas, producción...
-* Dado que la información se inyecta dentro del contenedor, debe proteger los datos confidenciales: contraseñas, contraseñas, claves ssh ...
+* Dado que la información se inyecta dentro del contenedor, debe proteger los datos confidenciales: contraseñas, claves ssh ...
 
 La solución proporcionada por K8s es crear dos nuevos tipos de artefactos:
 
@@ -24,9 +24,9 @@ Estos elementos son repositorios de información que los pods pueden utilizar de
 Un ConfigMap es un artefacto de Kubernetes que contiene información de configuración:
 
 * Al ser un artefacto, puedes interactuar con él a través de Kubectl para crearlo, destruirlo, editarlo y clonarlo.
-* Centralice la configuración que pueden usar los pods para administrar su propio comportamiento.
+* Centraliza configuraciones que pueden ser usadas por los pods para administrar su propio comportamiento.
 
-### a) Creación de un mapa de configuración
+### a) Creación de un ConfigMap
 
 Hay varias formas de crear un ConfigMap.
 
@@ -36,14 +36,14 @@ Usemos un artefacto:
 # configmap_exemplo.yaml
 #
 apiVersion: v1
-kind: ConfigMap # o tipo de artefacto
+kind: ConfigMap # tipo de artefacto
 metadata:
   name: configuracion-exemplo # ten un nome
   labels:
-    tipo: "exemplo"  # podemoslle meter labels
+    tipo: "exemplo"  # podemos añadir labels
     modulo: "3"
 data:
-  nome: "Francisco" # aquí temos clave=valor como configuración
+  nome: "Francisco" # aquí tenemos la clave=valor como configuración
   curso: "Kubernetes"
   porto: "8080"
 ```
@@ -105,12 +105,12 @@ Input
 kubectl delete configmap configuracion-exemplo
 ```
 
-### b) Usando nuestro mapa de configuración
+### b) Usando nuestro configmap
 
 Imaginemos que queremos usar un pequeño programa escrito en nodeJS que necesita una configuración simple:
 
-* Un puerto de escucha
-* Un nombre de maestro/estudiante
+* Un puerto de escucha.
+* Un nombre de profesor/alumno.
 * Un curso al que pertenece ese profesor/alumno.
 
 Nuestra aplicación podría ejecutarse en un pod como el siguiente:
@@ -123,7 +123,7 @@ metadata:
 spec:
   containers:
     - name: contedor
-      image: frmadem/prefapp-k8s-ej2   # a imaxe a empregar
+      image: frmadem/prefapp-k8s-ej2   # La imagen a usar
   restartPolicy: Never
 ```
 Tendríamos la siguiente estructura:
@@ -144,7 +144,7 @@ metadata:
 spec:
   containers:
     - name: contedor
-      image: frmadem/prefapp-k8s-ej2   # a imaxe a empregar
+      image: frmadem/prefapp-k8s-ej2   # La imagen a usar
       env:
         - name: "nome"
           value: "Francisco"
@@ -159,12 +159,12 @@ Si lanzamos esto:
 
 Input
 ```
-# arrancamos o pod
+# arrancamos el pod
 kubectl apply -f pod_exemplo_2.yaml
 ```
 Input
 ```
-# e expoñemos un porto
+# y exponemos un puerto
 kubectl port-forward pod/pod-saudo --address=0.0.0.0 8888:80
 ```
 Output
@@ -184,11 +184,11 @@ Hola Francisco benvido/a ó curso de Kubernetes
 
 Sin embargo, esto tendría varios problemas:
 
-* Estaríamos mezclando la configuración del propio pod (sistema) con la configuración del programa (operación interna)
-* No pudimos cambiar fácilmente esta configuración.
+* Estaríamos mezclando la configuración del propio pod (sistema) con la configuración del programa (funcionamiento interno)
+* No podríamos cambiar fácilmente esta configuración.
 
 
-Kubernetes facilita este trabajo al ofrecer un nuevo artefacto: configmap
+Kubernetes facilita este trabajo al ofrecer un nuevo artefacto: el **configmap**
 
 Si usamos el configmap anterior:
 
@@ -196,11 +196,11 @@ Si usamos el configmap anterior:
 # configmap_exemplo.yaml
 #
 apiVersion: v1
-kind: ConfigMap # o tipo de artefacto
+kind: ConfigMap # tipo de artefacto
 metadata:
-  name: configuracion-exemplo # ten un nome
+  name: configuracion-exemplo # tiene un nombre
   labels:
-    tipo: "exemplo"  # podemoslle meter labels
+    tipo: "exemplo"  # podemos ponerle labels
     modulo: "3"
 data:
   nome: "Francisco" # aquí temos clave=valor como configuración
@@ -245,23 +245,23 @@ Si aplicamos este artefacto, obtendríamos lo siguiente:
 
 ![pod2.png](../_media/03/pod2.png)
 
-Sin embargo, a primera vista, el uso de ConfigMaps puede hacerle pensar que es mucho más detallado y complica nuestros pods:
+A primera vista, el uso de ConfigMaps puede hacer pensar que es mucho más detallado y complica nuestros pods, sin embargo:
 
-* Permite que los pods usen configuraciones de diferentes ubicaciones (diferentes mapas de configuración)
+* Permite que los pods usen configuraciones de diferentes ubicaciones (diferentes configmaps)
 * Desacopla o separa la configuración del programa de la configuración del sistema (la propia del pod)
-* Diferentes artefactos (servicios, pods, implementaciones) pueden "extraer" la misma configuración.
+* Diferentes artefactos (servicios, pods, deploys) pueden "extraer" la misma configuración.
 
 Además, en Kubernetes hay formas de crear ConfigMaps desde [archivos y directorios](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) y los nuevos [ConfigMap Generators](https://github.com/kubernetes-sigs/kustomize/blob/master/examples/configGeneration.md).
 
-## Gestión de información confidencial y crítica: Los secretos
+## Gestión de información confidencial y crítica: secrets
 
 Un [secret](https://kubernetes.io/docs/concepts/configuration/secret/#overview-of-secrets) es un artefacto de Kubernetes que usamos para administrar y contener información confidencial: contraseñas, tokens de acceso o claves ssh.
 
-Los secretos se administran para que los pods puedan usarlos, pero como artefactos independientes.
+Los secrets se administran para que los pods puedan usarlos, pero como artefactos independientes.
 
 ### a) Crear un secreto
 
-Hay varias formas de crear un secreto, pero al final todo da como resultado un artefacto que tiene la siguiente estructura:
+Hay varias formas de crear un secret, pero al final todo da como resultado un artefacto que tiene la siguiente estructura:
 
 ```yaml
 # o_meu_segredo.yaml
@@ -273,18 +273,19 @@ type: Opaque
 data: # aquí van os datos
   username: YWRtaW4=
   password: Y29udHJhc2luYWwK
-Na sección "data" do artefacto, temos a información en formato clave-valor. Os valores estarán codificados en base64. 
 ```
+En la sección "data" del artefacto, tenemos la información en formato clave-valor. Los valores estarán codificados en base64.
 
-Si creamos este secreto en nuestro k8s:
+Si creamos este secret en nuestro k8s:
 
 ```shell
 kubectl apply -f o_meu_segredo.yaml
 ```
-Tendremos un nuevo artefacto en el sistema que podremos controlar como de costumbre:
+
+Tendremos un nuevo artefacto en el sistema que podremos controlar como los demás:
 
 ```shell
-# podemos listalo
+# podemos listarlo
 kubectl get secrets
 
 NAME                                                TYPE                                  DATA   AGE
@@ -296,13 +297,13 @@ kubectl delete secret meu-segredo
 secret "meu-segredo" deleted
 ```
 
-Los secretos están protegidos dentro de la API de Kubernetes. También es posible limitar el acceso a ellos para los usuarios del clúster.
+Los secrets están protegidos dentro de la API de Kubernetes. También es posible limitar el acceso a ellos para los usuarios del clúster.
 
-### b) Uso de secretos en pods
+### b) Uso de secrets en pods
 
-Los secretos se pueden usar en pods como volúmenes para montar en su sistema de archivos o como variables de entorno para inyectar en el sistema.
+Los secrets se pueden usar en pods como volúmenes para montar en su sistema de ficheros o como variables de entorno para inyectar en el sistema.
 
-Un pod que usa el secreto anterior:
+Un pod que usa el secret anterior:
 
 ```yaml
 # redis.yaml

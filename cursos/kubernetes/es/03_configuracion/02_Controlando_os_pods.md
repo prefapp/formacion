@@ -4,25 +4,25 @@ Sabemos que el pod es la unidad de construcción mínima, el bloque de construcc
 
 Sin embargo, y hasta ahora, no hemos hablado de una serie de características que nos permitirán trabajar mucho mejor con nuestros pods.
 
-Por un lado, Kubernetes funciona alojando nuestras cargas de trabajo (en forma de pods) en los nodos disponibles, esto implica que, de alguna manera, los K8 deben estar informados de la carga que puede esperar del pod, así como el límite máximo que debe permitir para cada uno. uno de ellos
+Por un lado, Kubernetes funciona alojando nuestras cargas de trabajo (en forma de pods) en los nodos disponibles. Esto implica que de alguna manera los K8s deben estar informados de la carga que puede esperar del pod, así como el límite máximo que debe permitir para cada uno de ellos.
 
-Por otro lado, nuestras cápsulas deberían poder tener "extremos" u "agujeros" especiales para poder decirle a los K8 dos cosas:
+Por otra parte, nuestros pods deberían poder tener "extremos" o "agujeros" especiales para poder informar a los K8s dos cosas:
 
 * Si el pod está "live", la aplicación se ejecuta sin problemas.
-* Si el pod está "ready": cuando se inicia el pod, cuando está ready para recibir solicitudes.
+* Si el pod está "ready" cuando se inicia el pod, está preparado para recibir peticiones.
 
-Ambos problemas se resuelven en Kubernetes mediante límites y sondeos.
+Ambos problemas se resuelven en Kubernetes mediante límites y pruebas.
 
-## a) Límites y solicitudes en pods
+## a) Límites y requests en pods
 
 ![pod3](../_media/03/pod3.png)
 
-Scheduler es el componente encargado de alojar los pods en los diferentes nodos de un clúster de Kubernetes. Podemos pensar en ello como jugar Tetris con nuestras cápsulas. Así que necesita conocer el "tamaño de la pieza" con el que está jugando.
+Scheduler es el componente encargado de alojar los pods en los diferentes nodos de un clúster de Kubernetes. Podemos pensar en ello como jugar al Tetris con nuestros pods. Así que necesita conocer el "tamaño de la pieza" con el que juega.
 
 En un pod hay que establecer dos medidas muy claras:
 
-* Request: podemos pensar en la solicitud como los recursos mínimos que necesitará un pod para funcionar. Cuando el programador implementa un pod en un nodo, se garantiza que tendrá esos recursos expresados ​​en su solicitud.
-* Limits: Esto establece la cantidad máxima que puede pedir un pod.
+* **Request**: podemos pensar en el request como los recursos mínimos que necesitará un pod para funcionar. Cuando scheduler despliega un pod en un nodo, está garantizando que tendrá esos recursos expresados ​​en el request.
+* **Limits**: Esto establece la cantidad máxima que puede pedir un pod.
  
 Por lo tanto, un pod se puede expresar en términos de los recursos que solicita de la siguiente manera:
 
@@ -30,30 +30,30 @@ Por lo tanto, un pod se puede expresar en términos de los recursos que solicita
 
 Obviamente, cuando hablamos de "recursos", nos referimos a:
 
-* CPU: que será tratada como se indica en la [documentación oficial](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu). 
-* Memoria: que será tratada según lo indicado por la [comunidad](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) de Kubernetes. 
+* **CPU**: que será tratada como se indica en la [documentación oficial](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu). 
+* **Memoria**: que será tratada según lo indicado por la [comunidad](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) de Kubernetes. 
 
-De esta manera, los pods siempre tienen la solicitud satisfecha cuando el programador los aloja en un nodo.
+De esta manera, los pods siempre tienen el request satisfecho cuando son alojados en un nodo por el scheduler.
 
-Ahora:
+Ahora bien:
 
-* Un pod siempre tendrá reservados los recursos expresados ​​en su Solicitud. Pero, si no está utilizando más, esos recursos pueden ser utilizados por otros pods.
-* Un pod puede solicitar recursos más allá de su Solicitud, y siempre hasta sus Límites.
+* Un pod siempre tendrá reservados los recursos expresados ​​en su Request. Pero, si no está utilizando más, esos recursos pueden ser utilizados por otros pods.
+* Un pod puede solicitar recursos más allá de su Request, y siempre hasta sus Límites.
 
-Por lo tanto, podemos pensar que el programador crea una especie de "bolsa de recursos" con la CPU/Memoria no utilizada o no utilizada por los pods y la distribuye entre los pods que pueden solicitar más de su Solicitud hasta los Límites expresados ​​en su artefacto.
+Por lo tanto, podemos pensar que el scheduler crea una especie de "bolsa de recursos" con la CPU/Memoria no utilizada por los pods y la reparte entre los pods que pueden solicitar más de su Request hasta los Limits expresados ​​en su artefacto.
 
-Es en esa parte "verde" del diagrama donde juega el planificador, debiendo siempre respetar la Solicitud (la parte amarilla) y nunca sobrepasar los Límites que está representado por el color rojo.
+Es en esa parte "verde" del diagrama donde juega el scheduler, debiendo siempre respetar la Request (la parte amarilla) y nunca sobrepasar los Limits que está representado por el color rojo.
 
 ![pod5.png](../_media/03/pod5.png)
 
-### i) Uso de límites y solicitudes en pods
+### i) Uso de limits y requests en pods
 
-La expresión de solicitudes y límites tiene los siguientes formatos:
+La expresión de requests y limits tiene los siguientes formatos:
 
-* Memoria: E, P, T, G, M, K se pueden utilizar para expresar la cantidad de memoria o sus equivalentes en potencias de dos (Ei, Pi, Ti, Gi, Mi, Ki.)
-* CPU: se mide en unidades de CPU (independientemente del número de cores) por lo que 200m implicaría 200 milicores. Hay una explicación más detallada en este [artículo](https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b).
+* **Memoria**: `E`, `P`, `T`, `G`, `M`, `K` se pueden utilizar para expresar la cantidad de memoria o sus equivalentes en potencias de dos (`Ei`, `Pi`, `Ti`, `Gi`, `Mi`, `Ki`.)
+* **CPU**: se mide en unidades de CPU (independientemente del número de cores) por lo que `200m` implicaría 200 milicores. Hay una explicación más detallada en este [artículo](https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b).
 
-En la plantilla del pod, refleje de esta manera:
+En la plantilla del pod, se refleja de esta manera:
 
 ```yaml
 # pod_limits_requests.yaml
@@ -75,36 +75,36 @@ spec:
   restartPolicy: Never
 ```
 
-Como podemos ver, estamos configurando solicitudes (la cantidad mínima de recursos) en 64 Mi de RAM y 250 mo 250 milicores.
+Como podemos ver, estamos configurando Requests (la cantidad mínima de recursos) en 64Mi de RAM y 250m o 250 milicores.
 
 Los límites se fijan en 128Mi de RAM y 500m o 500 milicores.
 
-## b) pruebas en las pods
+## b) Pruebas en pods
 
-Como dijimos al comienzo de esta unidad, los K8 deben saber acerca de una cápsula:
+Como dijimos al comienzo de esta unidad, los K8s debe saber acerca de un pod:
 
 * Si está en funcionamiento.
-* Si está ready para recibir solicitudes.
+* Si está ready para recibir peticiones.
  
  Kubernetes resuelve estos problemas a través de pruebas.
 
-Las pruebas son solicitudes o comandos http que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, los K8 pueden concluir que el módulo no se puede usar (el programa principal no se está ejecutando) o que aún no está ready para funcionar (el programa principal del módulo aún se está iniciando).
+Las pruebas son peticiones http o comandos que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, K8s puede concluir que el pods está inservible (el programa principal no está funcionando) o que aún no está ready para funcionar (el programa principal del pod aún se está iniciando).
 
 ![pod6.png](../_media/03/pod6.png)
 
 Hay dos tipos esenciales de pruebas:
 
-* Readiness probe: prueba para determinar si el contenedor del pod está ready o no para recibir solicitudes.
-* Liveness probe: prueba que determina la "salud" del contenedor, si está funcionando correctamente.
+* **Readiness probe**: Prueba para determinar si el contenedor del pod está ready o no para recibir peticiones.
+* **Liveness probe**: Prueba que determina la "salud" del contenedor, si está funcionando correctamente.
 
 ### i) Definición de prueba
 
-Las pruebas, como decíamos, son programas para ejecutar o peticiones http para realizar.
+Las pruebas, como decíamos, son programas para ejecutar las peticiones http a realizar.
 
 Una prueba, independientemente de su tipo, tiene las siguientes partes:
 
-* Solicitud de comando o URL.
-* Argumentos de comando
+* Comando o URL de petición.
+* Argumentos de comando.
 * Segundos de espera antes de enviar la primera prueba.
 * Segundos de espera entre el envío de una prueba y la siguiente.
  
@@ -129,9 +129,7 @@ spec:
         periodSeconds: 5
 ```
 
-Como podemos ver, se declara una prueba de actividad en el pod.
-
-Ejecute un comando (cat /etc/san) y se ejecutará después de los primeros 5 segundos del inicio del contenedor (initialDelaySeconds) y se repetirá cada 5 segundos (periodSeconds).
+Como podemos ver, se declara una livenessProbe (Prueba de vida) en el pod. Con el comando `cat /etc/san` y se ejecutará después de los primeros 5 segundos del inicio del contenedor (initialDelaySeconds) y se repetirá cada 5 segundos (periodSeconds).
 
 Si lo iniciamos:
 
@@ -193,7 +191,7 @@ Events:
   Normal   Killing    61s                 kubelet, sutelinco  Container contedor failed liveness probe, will be restarted
 ```
 
-Vemos que la prueba en live falló y el contenedor se reinició. De hecho, si miramos la información de los pods:
+Vemos que la prueba en vida (Liveness probe) falló y el contenedor se reinició. De hecho, si miramos la información de los pods:
 
 Input
 ```sh
@@ -205,11 +203,11 @@ NAME                                      READY   STATUS             RESTARTS   
 pod-sonda-live                            1/1     Running            1          8m6s
 ```
 
-Y vemos que hay un reinicio de nuestro contenedor (en el momento en que borramos el archivo). Cuando se reinicie, el archivo volverá a estar en su lugar porque está incluido en la imagen.
+Y vemos que hay un reinicio de nuestro contenedor (en el momento en que borramos el fichero). Cuando se reinicie, el archivo volverá a estar en su sitio porque está incluido en la imagen.
 
 ### ii) Definición de una prueba de tipo de petición http
 
-En este caso, vamos a crear una sonda ready (pod preparado) mediante una petición http.
+En este caso, vamos a crear una readinessProbe (pod preparado) mediante una petición http.
 
 Tenemos el siguiente pod:
 
@@ -231,9 +229,9 @@ spec:
         periodSeconds: 5
 ```
 
-Lanzamos un pod con nginx. Creamos una sonda lista y después de esperar 15 segundos hará un `GET /`. Repetirá esta operación cada 5 segundos hasta que responda con 200.
+Lanzamos un pod con nginx. Creamos una readinessProbe y después de esperar 15 segundos hará un `GET /`. Repetirá esta operación cada 5 segundos hasta que responda con 200.
 
-Una vez que responde, el pod entra en estado ready y estará ready para recibir solicitudes.
+Una vez que responde, el pod entra en estado ready y estará preparado para recibir peticiones.
 
 ### iii) Uso de pruebas con servicios y deploys
 
