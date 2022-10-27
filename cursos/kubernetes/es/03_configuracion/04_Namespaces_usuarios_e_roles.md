@@ -1,22 +1,22 @@
-# Namespaces, usuarios e roles
+# Namespaces, usuarios y roles
 
-No módulo 2 xa falamos dos namespaces como un xeito de agrupar os artefactos existentes no Kubernetes de xeito que non se produzan colisións de nomes. 
+En el Módulo 2 ya hablamos sobre namespaces como una forma de agrupar los artefactos existentes en Kubernetes para que no se produzcan colisiones de nombres.
 
-Os namespaces teñen outro papel fundamental: o de limitar o acceso dos usuarios a determinados recursos. Pero para facer isto, compre ter en conta dous elementos máis: usuarios e roles. 
+Los namespaces tienen otro papel fundamental: el de limitar el acceso de los usuarios a determinados recursos. Pero para hacer esto, debe considerar dos elementos más: usuarios y roles.
 
-Todo esto é o obxecto da presente unidade.
+Todo esto es el objeto de esta unidad.
 
-Podes pensar nun namespace como un cluster virtual dentro do teu cluster de kubernetes. Pódense ter varios namespaces dentro dun só cluster de kubernetes, e todos están aislados entre sí.
+Puede pensar en un namespaces como un clúster virtual dentro de su clúster de kubernetes. Puede tener varios namespaces dentro de un solo clúster de kubernetes y todos están aislados entre sí.
 
-### Creando namespaces
+### Creación de namespaces
 
-Co shell:
+Con shell:
 
 ```shell
 kubectl create namespace <nome namespace>
 ```
 
-Ou tamén podemos crealo cun archivo .yaml e aplicar
+O también podemos crearlo con un archivo .yaml y aplicar
 ```yaml
 #test.yaml
 kind: Namespace
@@ -29,208 +29,209 @@ metadata:
 
 ## Usuarios
 
-Kubernetes é un sistema pensado para xestionar grandes clúster de máquinas e facer un tratamento delas como si de unha soa se tratase. 
+Kubernetes es un sistema diseñado para administrar grandes clústeres de máquinas y tratarlas como si fueran una sola.
 
-Compre, polo tanto, ter un sistema de usuarios. 
+Por lo tanto, necesita tener un sistema de usuarios.
 
 ### a) Tipos de usuarios en Kubernetes
 
-Existen en Kubernetes dous tipos de [usuarios](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#users-in-kubernetes):
-- Contas de servizo
+En Kubernetes hay dos tipos de [usuarios](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#users-in-kubernetes):
 - Usuarios regulares
-
+- Cuentas de servicio
 #### i) Usuarios regulares
 
-Un usuario regular *non é un obxecto ou artefacto de Kubernetes*. Simplemente, un administrador de Kubernetes crea de diversos xeitos:
+Un usuario regular *no es un objeto o artefacto de Kubernetes*. En pocas palabras, un administrador de Kubernetes crea varias formas:
 
-- un par de claves SSH 
-- un ficheiro con usuarios e passwords. 
-- Outros métodos como o KeyStone de Google...
+- Un par de claves SSH
+- Un fichero con usuarios y contraseñas.
+- Otros métodos como KeyStone de Google...
 
-É dicir, a creación de usuarios non está automatizada en Kubernetes nin se pode recorrer a chamadas á API. Trátase de servizos externos que configurarán dalgún xeito un acceso e darán conta (manualmente) a Kubernetes. 
+Es decir, la creación de usuarios no está automatizada en Kubernetes, ni se puede recurrir a llamadas a la API. Estos son servicios externos que de alguna manera configurarán un acceso e informarán (manualmente) a Kubernetes.
 
-Por suposto, os servizos administrados de Kubernetes (como AKS) teñen sistemas propios que despois integran dentro de Kubernetes pero, como xa dixemos son elementos externos ó K8s. 
+Por supuesto, los servicios gestionados de Kubernetes (como AKS) tienen sus propios sistemas que luego se integran en Kubernetes, pero, como ya hemos dicho, son elementos externos a K8s.
 
-#### ii) Contas de servizos
+#### ii) Cuentas de servicio
 
-As contas de servizo sí son artefactos de Kubernetes. O seu papel é diferente: unha conta de servizo (Service Account) permite que determinados pods que están a correr dentro do clúster **poidan facer chamadas ó propio Kubernetes no que están a correr**.
+Las cuentas de servicio son, de hecho, artefactos de Kubernetes. Su función es diferente: una cuenta de servicio (Service Account) permite que ciertos pods que se ejecutan dentro del clúster **puedan realizar llamadas al propio Kubernetes en el que se ejecutan**.
 
-A razón da súa existencia é clara: existen moitas ferramentas e programas que poden correr en Kubernetes e traballan contra a API de K8s para monitorizar tarefas, crear e xestionar elementos auxiliares, e mesmo apoiar ó desenvolvemento de aplicacións. 
+La razón de su existencia es clara: hay muchas herramientas y programas que pueden ejecutarse en Kubernetes y trabajar con la API de K8s para monitorear tareas, crear y administrar ayudantes e incluso respaldar el desarrollo de aplicaciones.
 
-Algunhas destas ferramentas serán obxecto do seguinte módulo. 
+Algunas de estas herramientas serán el tema del próximo módulo.
 
-### b) Empregar as credencias de usuario normal para traballar contra un Kubernetes
+### b) Usar credenciales de usuario normales para trabajar con Kubernetes
 
-A meirande parte do tempo, os usuarios normais utilizan o kubectl para traballar contra K8s. 
+La mayoría de las veces, los usuarios normales usan kubectl para trabajar con K8.
 
-O administrador pasa, normalmente, un certificado que debemos integrar na nosa configuración de K8s para poder traballar. 
+El administrador suele pasar un certificado que debemos integrar en la configuración de nuestro K8s para poder funcionar.
 
-A ferramenta kubectl ten unha configuración que podemos ver, se facemos isto:
+La herramienta kubectl tiene una configuración que podemos ver, si hacemos esto:
 
 ```shell
-microk8s.kubectl config view --raw > $HOME/.kube/config
+kubectl config view --raw > $HOME/.kube/config
 ```
 
-Agora temos exportada a nosa configuración de acceso:
+Ya tenemos exportada nuestra configuración de acceso:
+
 ```yaml
 apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: DATA+OMITTED
-    server: https://127.0.0.1:16443
-  name: microk8s-cluster
+    server: https://127.0.0.1:34023
+  name: kind-kind
 contexts:
 - context:
-    cluster: microk8s-cluster
-    user: admin
-  name: microk8s
-current-context: microk8s
+    cluster: kind-kind
+    user: kind-kind
+  name: kind-kind
+current-context: kind-kind
 kind: Config
 preferences: {}
 users:
-- name: admin
+- name: kind-kind
   user:
-    password: <password>
-    username: admin
+    client-certificate-data: [...]
+    client-key-data: [...]
 ```
 
-Vemos que a nosa configuración de kubectl está dividida en varias partes:
-- **clústers**: cada clúster ó que queramos acceder terá que estar configurado aquí. 
-- **contexts**: xestionan a información de acceso a cada clúster
-- **current-context**: o contexto por defecto co que estamos a traballar (neste momento microk8s)
-- **users**: credenciais de acceso mediante user/password. 
+Vemos que nuestra configuración de kubectl se divide en varias partes:
+- **clústers**: aquí habrá que configurar cada clúster al que queramos acceder.
+- **contexts**: gestionan la información de acceso a cada clúster
+- **current-context**: el contexto predeterminado con el que estamos trabajando (actualmente kind-kind)
+- **users**: credenciales de acceso mediante user/password.
 
-#### i) Agregar unha nova configuración para traballar contra un clúster de Kubernetes
+#### i) Agregar una nueva configuración para trabajar con un clúster de Kubernetes
 
-Un administrador de Kubernetes danos un certificado para traballar contra un novo clúster. 
+Un administrador de Kubernetes nos da un certificado para trabajar con un nuevo clúster.
 
-O primeiro que teríamos que facer é almacenar o ficheiro crt e a key nalgures na nosa máquina, por exemplo `~/.certs/`. 
+Lo primero que tendríamos que hacer es almacenar el archivo `crt` y la `key` en algún lugar de nuestra máquina, por ejemplo `~/.certs/`.
 
-Precisamos tamén establecer a información básica do cluster:
+También necesitamos establecer la información básica del clúster:
 
 ```shell
-microk8s.kubectl config set-cluster <nome> --server=<dirección do cluster> --certificate-authority=<se o hai> 
+kubectl config set-cluster <nombre> --server=<dirección-del-cluster> --certificate-authority=<si la hay> 
 ```
 
-Agora, temos que engadir a información ó noso kubernetes (creando unha nova entrada no users)
+Ahora, tenemos que agregar la información a nuestro kubernetes (creando una nueva entrada en usuarios)
 
 ```shell
-microk8s.kubect config set-credentials foo --client-certificate=<ruta do .crt> --client-key=<ruta do .key>
+kubectl config set-credentials foo --client-certificate=<ruta-del-.crt> --client-key=<ruta-del-.key>
 ```
 
-Se vemos a nosa config de kubectl teremos unha nova entrada en users para o usuario foo. 
+Si vemos nuestra config de kubectl, tendremos una nueva entrada en users para el usuario foo.
 
-Compre que creemos tamén un novo contexto para empregar estas credencias e acceder ó cluster:
+Hace falta que creemos un nuevo contexto para usar estas credenciales y acceder al clúster:
 
 ```shell
 kubectl config set-context foo-context --cluster=<cluster> --namespace=<ns> --user=foo
 ```
 
-É dicir, definimos un novo contexto facendo referencia ó cluster e ó usuario que queremos empregar para entrar nese clúster. 
+Es decir, definimos un nuevo contexto que hace referencia al clúster y al usuario que queremos usar para ingresar a ese clúster.
 
-Se queremos traballar de xeito máis cómodo, podemos establecer como contexto por defecto o novo contexto e tódolos nosos comandos irán contra o novo clúster, sen ter que especificar o contexto en cada un deles:
+Si queremos trabajar más cómodamente, podemos establecer el nuevo contexto como contexto predeterminado y todos nuestros comandos irán contra el nuevo clúster, sin tener que especificar el contexto en cada uno de ellos:
 
 ```shell
-microk8s.kubectl config use-context foo-context
+kubectl config use-context foo-context
 ```
 
-## Roles e namespaces
+## Roles y namespaces
 
-[Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) emprega un sistema [RBAC](https://en.wikipedia.org/wiki/Role-based_access_control) (Role-Based Access Control) que permite xestionar os permisos do xeito seguinte:
+[Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) utiliza un sistema [RBAC](https://en.wikipedia.org/wiki/Role-based_access_control) (Role-Based Access Control) que le permite administrar los permisos de la siguiente manera:
 
-- Os accesos e permisos se configuran en regras. 
-- As regras agrúpanse nun rol. 
-- O rol se asocia a un ou varios usuarios. 
+- Los accesos y permisos se configuran en reglas.
+- Las reglas se agrupan en un rol.
+- El rol está asociado a uno o más usuarios.
 
 ### a) Roles en Kubernetes
 
-Un rol de K8s é un artefacto que contén unha serie de regras que configuran permisos para acceder ós distintos recursos de Kubernetes. 
+Un rol de K8s es un artefacto que contiene una serie de reglas que configuran permisos para acceder a los distintos recursos de Kubernetes.
 
-Antes de comezar coa súa definición, compre entender o que son os recursos da API de Kubernetes. 
+Antes de comenzar con su definición, es necesario entender qué son los recursos de la API de Kubernetes.
 
-#### i) Os recursos da API de Kubernetes
+#### i) Los recursos de la API de Kubernetes
 
-O máster de K8s exporta unha [API RESTful](https://kubernetes.io/docs/reference/using-api/api-concepts/) como punto de entrada ó sistema.
+El master de K8s exporta una [API RESTful](https://kubernetes.io/docs/reference/using-api/api-concepts/) como punto de entrada al sistema.
 
 Esta API:
 
-- Acepta os verbos estándar REST (POST, GET, PUT, PATCH, DELETE)
-- Cada recurso (sustantivo) na API corresponde a un artefacto ou conxunto de artefactos:
-  - pod, namespace, service...
-  - ou a unha colección de artefactos
-  - tódolos artefactos pertencen a un Kind (tipo)
-- Os extremos da api están en ramas:
+- Acepta verbos REST estándar (POST, GET, PUT, PATCH, DELETE)
+- Cada recurso (sustantivo) en la API corresponde a un artefacto o conjunto de artefactos:
+  - pod, namespaces, service...
+  - o a una colección de artefactos.
+  - todos los artefactos pertenecen a un Kind (tipo)
+- Los puntos finales de API están en ramas:
   - api/v1
-  - api/extensions/v1beta1
+  - api/extensiones/v1beta1
   - ...
 
-Dende o noso microk8s podemos consultar extremos de esta API para recoller o estado dos nosos artefactos. 
+Desde nuestro clúster podemos consultar los extremos de esta API para recopilar el estado de nuestros artefactos.
 
-Estos extremos teñen o seguinte formato: `/api/v1/namespaces/<nome do namespace>/<tipo de recurso>/:<nome do recurso>`
+Estos puntos finales tienen el siguiente formato: `/api/v1/namespaces/<nombre-del-namespace>/<tipo-de-recurso>/:<nombre-del-recurso>`
 
-Así:
+Como esto:
 
 ```shell
-# listar os services no namespace de "default"
+# listar los services en el namespace "default"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/services
 
-# recoller a información dun pod chamado "sonda-http"
+# recoger la información de un pod llamado "sonda-http"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http
 
-# ver os logs do pod "sonda-http"
+# ver logs del pod "sonda-http"
 curl http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http/log
 ```
 
-Vemos que os obxectos que devolve a API de K8s son estruturas en JSON. 
-Poderíamos, empregando outros verbos, facer outras cousas:
+Vemos que los objetos devueltos por la API de K8s son estructuras JSON.
+
+Podríamos, usando otros verbos, hacer otras cosas:
 
 ```shell
 # Borrar un pod chamado "sonda-http"
 curl -X DELETE http://127.0.0.1:8080/api/v1/namespaces/default/pods/sonda-http/
 ```
 
-Unha vez que entendemos a base da API podemos comezar a falar dos roles. 
+Una vez que entendemos la base de la API, podemos comenzar a hablar de los roles.
 
 #### ii) Tipos de roles en Kubernetes
 
-Existen dous tipos fundamentais de roles en Kubernetes:
+Hay dos tipos fundamentales de roles en Kubernetes:
 
-- **Role**: é un artefacto que permite establecer permisos sobre recursos a nivel dun namespace concreto. 
-- **ClusterRole**: permite acceder a recursos globais (nodos) ou a artefactos (pods, services) en tódolos namespaces do sistema. 
+- **Role**: es un artefacto que permite establecer permisos sobre los recursos a nivel de un namespace específico.
+- **ClusterRole**: permite acceder a recursos globales (nodos) o artefactos (pods, services) en todos los namespaces del sistema.
 
-As regras a dar para un rol, defínense conforme a dous dimensións:
-- Recursos ós que afecta (pods, services, deploys...)
-- Accións que se poden executar sobre eles (PUT, POST, GET, LIST)
+Las reglas a dar para un rol se definen de acuerdo a dos dimensiones:
+- **Recursos** afectados (pods, servicios, deployments...)
+- **Acciones** que se pueden ejecutar sobre ellos (PUT, POST, GET, LIST)
 
-Así, un Role que permite ver os pods pero non modificalos nin borralos ou crealos quedaría como sigue (para o namespace "default"):
+Por lo tanto, un rol que le permita ver los pods pero no modificarlos, eliminarlos o crearlos se vería así (para el namespace "default"):
 
 ```yaml
-apiVersion: rbac.authorization.k8s.io/v1 # a api version é diferente da vista ata agora
+apiVersion: rbac.authorization.k8s.io/v1 # la versión api es diferente de la vista hasta ahora
 kind: Role
 metadata:
   namespace: default
   name: pods-so-lectura
 rules:
-- apiGroups: [""] # establece a API base ou core
-  resources: ["pods"] # recursos ós que da acceso
-  verbs: ["get", "watch", "list"] # accións ou verbos sobre eses recursos
+- apiGroups: [""] # establece la API base en el core
+  resources: ["pods"] # recursos a los que da acceso
+  verbs: ["get", "watch", "list"] # acciones o verbos sobre esos recursos
   ```
 
-Vemos como no artefacto establecemos as regras de acceso a recursos (pods) e as accións (get, watch, list). 
+Vemos como en el artefacto establecemos las reglas de acceso a los recursos (pods) y las acciones (get, watch, list).
 
-Nembargantes, non se dice nada de a qué usuarios afecta. 
+Sin embargo, no se dice nada sobre a qué usuarios afecta.
 
-A razón e que o Role define regras e permisos pero non usuarios. Para que afecten ós usuarios, compre **vincular os roles**. 
+La razón es que el Rol define reglas y permisos pero no usuarios. Para que afecten a los usuarios, necesitas **vincular los roles** (RoleBinding).
 
-### b) A vinculación de roles: os RoleBinding
+### b) Vinculación de roles: RoleBinding
 
-Un [RoleBinding](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings) é un artefacto de Kubernetes que fai asociacións entre usuarios e Roles. 
+Un [RoleBinding](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings) es un artefacto de Kubernetes que vincula a los usuarios con los roles.
 
-É a forma de aplicar os roles que teñamos definidos ós usuarios que queremos que estén afectados por eses roles, e polas súas regras. 
+Es la forma de aplicar los roles que hemos definido a los usuarios que queremos que se vean afectados por esos roles, y por sus reglas.
 
-Trátase dun artefacto de Kubernetes polo que ten a súa definición, é declarativo e pódese xestionar como calquer outro dos elementos xa estudiados. 
+Es un artefacto de Kubernetes por lo que tiene su definición, es declarativo y se puede gestionar como cualquier otro de los elementos ya estudiados.
 
-Nun exemplo, imaxinemos que queremos que o Role do apartado anterior afecte ó usuario **"xan"**. 
+En un ejemplo, imaginemos que queremos que el Rol de la sección anterior afecte al usuario **"xan"**. 
 
 ```yaml
 kind: RoleBinding
@@ -248,6 +249,6 @@ roleRef:  # aquí o role que aplicamos
   apiGroup: rbac.authorization.k8s.io
 ```
 
-Dado que existen dous tipos de roles (Role e ClusterRole) tamén existen dous tipos de RoleBinding:
-- **RoleBinding**: para asociar un Role a un namespace.
-- **ClusterRoleBinding**: para asociar un Role ou ClusterRole a todo o clúster. 
+Dado que hay dos tipos de roles (Role y ClusterRole) también hay dos tipos de RoleBinding:
+- **RoleBinding**: para asociar un Rol a un namespaces.
+- **ClusterRoleBinding**: para vincular un Rol o un ClusterRole a todo el clúster.

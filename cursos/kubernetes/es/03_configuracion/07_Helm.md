@@ -1,67 +1,52 @@
-# Helm: o marionetista de Kubernetes
+# Helm: titiritero de Kubernetes
 
 ![helm1](./../_media/03/helm1.jpg)
 
-[Helm](https://helm.sh/) é un dos proxectos máis interesantes dentro da comunidade de Kubernetes. 
+[Helm](https://helm.sh/) es uno de los proyectos más interesantes dentro de la comunidad de Kubernetes.
 
-A idea de Helm é a de controlar un **despregue** (chámanlle release) de tal xeito que:
+La idea de Helm es controlar un **despliegue** (lo llaman release) de tal forma que:
 
-- Mediante un único conxunto de valores (normalmente expresado en YAML)
-  - Tódolos artefactos que o compoñan (deploys, pods, configmaps, services...) teñan reflictidos os valores correctos de configuración
-  - Se declaren correctamente no clúster de K8s
-  - Ante un cambio de valores, se reconfiguren os artefactos apropiados. 
-- O release, cun solo comando, poida:
+- Usando **un solo conjunto de valores** (generalmente expresado en YAML):
+  - Todos los artefactos que lo componen (deploys, pods, configmaps, services...) tienen reflejados los valores de configuración correctos.
+  - Están declarados correctamente en el clúster K8s.
+  - Ante un cambio de valores, se reconfiguran los artefactos correspondientes.
+- El release, con **un solo comando**, puede:
   - Listarse
-  - Deterse
+  - Detenerse
   - Actualizarse
   - Reconfigurarse
-- As releases partan de planiñas ou [charts](https://github.com/helm/charts) é dicir, repositorios co código necesario para lanzar unha aplicación no kubernetes. 
-  - Atópanse en repos públicos
-  - Hainas de tódolos tipos (mysql, mongo, Wordpress...)
-  - Pódense descargar e empregar ou extendelas como queiramos
+- Los releases parten de **planes o [charts](https://github.com/helm/charts)**, es decir, repositorios con el código necesario para lanzar una aplicación en Kubernetes:
+  - Se encuentran en repositorios públicos.
+  - Los hay de todos los tipos (mysql, mongo, Wordpress...).
+  - Se pueden descargar y utilizar o ampliar como queramos.
 
-## a) Instalación de helm
+## a) Instalación de Helm
 
-Na nosa ubuntu é moi sinxelo:
+En nuestro ubuntu es muy sencillo:
+
 ```shell
 snap install helm --classic
 ```
 
- **Nota! O binario atópase en /snap/bin/helm, se non se atopa no path podedes ben incluílo ou ben crear un link simbólico, por exemplo a /usr/sbin/helm.*
+ **¡Nota! El binario está en /snap/bin/helm, si no está en la ruta, puede incluirlo o crear un enlace simbólico, por ejemplo, a /usr/sbin/helm.*
 
-Dado que helm se basa en kubectl, e na configuración que del teñamos, compre instalalo tamén (non o microk8s.kubectl)
+En versiones anteriores era necesario inicializar helm para empezar a trabajar con él, pero en la versión 3 ya no es así. Si estamos usando una versión anterior, tendremos que lanzar el siguiente comando:
 
-```shell
-snap install kubectl --classic
-
-# agora, hai que volcar a configuración de microk8s nun lugar no que o kubectl (e tamén o helm) o poidan atopar
-
-microk8s.kubectl config view --raw > $HOME/.kube/config
-
-# comprobamos que o kubectl nos funciona
-kubectl get nodes
-
-NAME        STATUS   ROLES    AGE   VERSION
-nodo-m      Ready    <none>   22d   v1.14.1
-```
-
-E, por fin, iniciamos o helm
 ```shell
 helm init
 ```
 
-**Nota!  No caso de dicir que as versións son incompatibles, compre facer `helm init --upgrade`.*
-**Nota(2)! Pode levarlle un minuto iniciar ó helm. Compre agardar ata poder interactuar con él.* 
+**¡Nota! Si dice que las versiones son incompatibles, es necesario hacer `helm init --upgrade`.*
 
-O que instalará un pequeno pod no noso microk8s co que helm controla as releases que creemos. 
+**¡Nota 2! helm puede tardar un minuto en ponerse en marcha. Espere hasta que pueda interactuar con él.*
 
-Agora, podemos crear unha release. 
+Ahora, podemos crear una release.
 
-## b) Creando unha release
+## b) Crear una release
 
-Para crear unha release, compre descargar a **chart** ou planiña ou indicarlle ó helm que a descargue por sí mesmo. 
+Para crear una release, descargue el **chart** o el plano o pídale a helm que lo descargue él mismo.
 
-As charts atópanse en repositorios. 
+Los charts están en repositorios.
 
 ```shell
 # listamos os repos
@@ -70,65 +55,67 @@ helm repo list
 NAME            URL
 local           http://127.0.0.1:8879/charts
 
-# Engadimos o repo de stable oficial
- helm repo add stable https://kubernetes-charts.storage.googleapis.com
+# Agregamos bitnami repo, uno de los más usados
+ helm repo add bitnami https://charts.bitnami.com
 
-"stable" has been added to your repositories
+"bitnami" has been added to your repositories
 
-# Listamos os charts dispoñibles
-helm search stable
+# Listamos los charts disponibles
+helm search repo bitnami
 NAME                                    CHART VERSION   APP VERSION                     
-stable/acs-engine-autoscaler            2.2.2           2.1.1                           
-stable/aerospike                        0.2.8           v4.5.0.5                        
-stable/airflow                          2.8.6           1.10.2                       
+bitnami/airflow                                 13.0.4          2.3.3           Apache Airflow is a tool to express and execute...
+bitnami/apache                                  9.1.18          2.4.54          Apache HTTP Server is an open-source HTTP serve...
+bitnami/argo-cd                                 4.0.6           2.4.8           Argo CD is a continuous delivery tool for Kuber...
 ```
 
-Podemos, por exemplo, instalar unha mariadb
+Podemos, por ejemplo, instalar un mariadb:
+
 ```shell
-helm install -n bbdd stable/mariadb
+helm install bbdd bitnami/mariadb
 ```
-
-O parámetro -n dalle un nome á release. 
+Para ver el release
 
 ```shell
-# para ver a release
 helm list
-NAME    REVISION        UPDATED                         STATUS          CHART           APP VERSION     NAMESPACE
-maria   1               Mon May  27 23:40:04 2019        DEPLOYED        mariadb-6.2.0   10.3.15         default
+
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+bbdd    default         1               2022-08-11 10:12:54.717064554 -0400 EDT deployed        mariadb-11.1.7  10.6.8      
 ```
 
-Se exploramos o noso microk8s:
+Si exploramos nuestro clúster:
+
 ```shell
 kubectl get pods
 
-NAME                                      READY   STATUS    RESTARTS   AGE
-maria-mariadb-master-0                    1/1     Running   0          12m
-maria-mariadb-slave-0                     0/1     Running   4          12m
+NAME             READY   STATUS    RESTARTS   AGE
+bbdd-mariadb-0   1/1     Running   0          98s
+
 ```
 
-Ademáis nos creou servizos para o master e o slave, un segredo para as passwords e tres configmaps para o master, o slave e os tests. 
+También creó el servicio vinculado al pod, un secret para password y un configmap.
 
-É dicir, temos instalada unha MariaDb con máster-slave e as mellores prácticas da industria para Kubernetes!
+Es decir, ¡tenemos un MariaDB instalado con las mejores prácticas de la industria para Kubernetes!
 
-Para configurala, habería que ir ó [repo oficial](https://github.com/helm/charts/tree/master/stable/mariadb), onde nos comentan os valores a modificar para manexar a nosa instalación. 
+Para configurarlo hay que ir a [artifacthub](https://artifacthub.io/packages/helm/bitnami/mariadb), donde nos indican los valores a modificar para gestionar nuestra instalación.
 
-Eses valores, compre metelos nun ficheiro de yaml:
+Ponga esos valores en un fichero yaml:
+
 ```yaml
 # values.yaml
 db:
-  user: paco
+  username: paco
   password: segredo
-  name: test
+  database: test
 ```
 
-Agora relanzamos a nosa release:
+Ahora relanzamos nuestro release:
 
 ```shell
-# borramos a release
-helm delete --purge maria
+# borramos el release
+helm uninstall bbdd
 
-# relanzamos cos values
-helm install -n maria -f values.yaml stable/mariadb
+# relanzamos con los values
+helm install maria -f values.yaml bitnami/mariadb
 ```
 
-E teríamos o desplegue cunha base de datos creada e un usuario vinculado á mesma. 
+Y tendríamos el despliegue con una base de datos creada y un usuario vinculado a ella.

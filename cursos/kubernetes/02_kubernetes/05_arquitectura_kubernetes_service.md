@@ -12,7 +12,7 @@ Que os pods poidan comunicarse entre sí conleva unha problemática importante:
 
 Kubernetes resolve este problema mediante un novo artefacto: **o servizo**. 
 
-Un servizo ([service]()) é un artefacto que establece regras de acceso a un pod ou conxunto de pods, é o elemento que garante a conexión ó exterior dos pods. Cando falamos de "exterior" estámonos a referir tanto á conexión dende outros pods ou dende fora do clúster de Kubernetes.  
+Un servizo ([service](https://kubernetes.io/es/docs/concepts/services-networking/service/)) é un artefacto que establece regras de acceso a un pod ou conxunto de pods, é o elemento que garante a conexión ó exterior dos pods. Cando falamos de "exterior" estámonos a referir tanto á conexión dende outros pods ou dende fora do clúster de Kubernetes.  
 
 Trátase dunha construcción que permite abstraer os pods que realmente están a traballar como backend dun frontend ou aplicación cliente. Mediante os services, calqueira aplicación cliente pode "despreocuparse" de onde están realmente a se facer as chamadas a programas ou aplicacións que lle serven de backend.
 

@@ -1,349 +1,304 @@
-# Módulo 2: Kubernetes: navegando nun océano de contedores
+# Módulo 2: Kubernetes: Navegando por un océano de contenedores
 
-## Instalando Kubernetes na nosa máquina local
+## Instalar Kubernetes en nuestra máquina local
 
-Como falaramos na parte [expositiva](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes pódese instalar de moitos xeitos e ten vocación de correr en diferentes contornas (cloud, on premise, bare-metal...) e, tamén, na nosa máquina local.
+Como comentamos en el [expositorio](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes), Kubernetes se puede instalar de muchas formas y tiene vocación de ejecutarse en diferentes entornos (cloud, on-premise, bare-metal...) y también en nuestra máquina local.
 
-No curso, recomendamos [microk8s](https://microk8s.io/) que é un excelente traballo da xente de Canonical e que nos permite, a través de [snap](https://snapcraft.io/), instalar e xestionar un minuclúster de Kubernetes (realmente o "master" e o "nodo" son virtuais e todo corre na nosa Ubuntu local) para facer as prácticas, desenvolver aplicacións, etc...
+En el curso, recomendamos crear clústeres locales usando Kind. Para ello debemos tener instalado tanto Kind como kubectl como se explica en el apartado [instalación de Kind](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/07_instalando_kind).
 
-### a) Instalación do paquete snap de microk8s
 
-Dende unha shell da nosa ubuntu facemos:
+### a) Creación de clústeres con tipo
+
+El primer paso será verificar que Kind esté instalado correctamente. Para ello, emitimos el siguiente comando:
 
 ```shell
-sudo snap install microk8s --classic
+kind version
 ```
 
-E agardamos a que remate a instalación.
-
-Comprobamos o estado:
+Lo que devolverá una respuesta similar a la siguiente:
 
 ```shell
-sudo microk8s.status
+kind v0.14.0 go1.18.2 linux/amd64
 ```
 
-Que nos debería devolver algo como isto:
-
-![actividades1](./../_media/02/actividades1.png)
-
-### b) Arranque e parado do microk8s
-
-Para arrancar o microk8s basta con facer:
+Ahora, creamos un nuevo clúster en especie:
 
 ```shell
-sudo microk8s.start
+kind create cluster
 ```
 
 Que debería producir algo como esto:
 
-![actividades2](./../_media/02/actividades2.png)
+![actividades2](./../_media/02/actividades11.png)
 
-Agora, se facemos un status:
-
-```shell
-sudo microk8s.status
-```
-
-Deberíamos obter algo parecido a:
-
-![actividades3](./../_media/02/actividades3.png)
-
-Para deter o microk8s, compre facer:
+Y podemos usar kubectl para ver el nodo que acabamos de crear:
 
 ```shell
-sudo microk8s.stop
+~ > kubectl get nodes
+NAME                 STATUS   ROLES           AGE     VERSION
+kind-control-plane   Ready    control-plane   3m53s   v1.24.0
 ```
+### b) Habilite dashboard:
 
-E teríamos o sistema detido.
+Kubernetes expone un dashboard para trabajar gráficamente y ver el estado del clúster.
 
-### c) Habilitando os servizos
-
-Por defecto, microk8s instálase sen o servizo de dns, fundamental para traballar con [servizos](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service).
-
-Para habilitalo, basta con facer:
+Para implementarlo necesitas ejecutar:
 
 ```shell
-sudo microk8s.enable dns
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
 ```
 
-### d) Interactuar co microk8s
+Esto creará los artefactos precisos para que funcione.
 
-A ferramenta principal para traballar contra un Kubernetes é o cli [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
+Además, necesitaremos crear un usuario de prueba con permisos para acceder al dashboard. Para ello, crearemos los siguientes artefactos:
 
-En microk8s, está integrado no comando microk8s.kubectl.
+```yaml
+# dashboard_adminuser.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
 
-Facendo un:
+```
+
+```yaml
+# dashboard_rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+```
+
+Y las aplicamos
 
 ```shell
-sudo microk8s.kubectl version
+kubectl apply -f dashboard_adminuser.yaml
+kubectl apply -f dashboard_rolebinding.yaml
 ```
 
-Deberíamos ver a nosa versión do cli e do kubernetes.
-
-### e) Habilitar o dashboard
-
-Kubernetes expón un dashboard para traballar de xeito gráfico e ver o estado do clúster.
-
-Para habilitar o dashboard compre executar:
+Ejecutamos el siguiente comando para obtener el token asociado al usuario que acabamos de crear:
 
 ```shell
-sudo microk8s.enable dashboard
+kubectl -n kubernetes-dashboard create token admin-user
 ```
 
-Agora, para poder velo no navegador, dependerá se estamos a correr o microk8s nunha máquina virtual (VirtualBox) ou o temos directamente correndo na nosa máquina de traballo.
-
-#### i) Habilitar o dashboard dentro dunha máquina virtual
-
-O xeito máis sinxelo é facer un port-forward e redirixir a un porto da nosa VM ó que teñamos acceso dende o anfitrión. Nunha shell deixaremos correndo o seguinte comando:
+Y, para habilitar el acceso al Tablero, lanzamos:
 
 ```shell
-microk8s.kubectl port-forward service/kubernetes-dashboard -n kube-system --address=0.0.0.0 8888:443
+kubectl proxy
 ```
 
-No meu caso, empreguei o porto 8888 porque o teño aberto na máquina virtual e redirixido ó porto 8888 do anfitrión.
+De esta forma, kubectl nos facilitará el acceso a través de: http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
-Agora, compre ir ó navegador e poñendo a dirección `https://localhost:8888` xa se pode acceder ó dashboard de Kubernetes.
+Ingresamos a este enlace e ingresamos el token que creamos anteriormente en la pantalla de inicio de sesión, y podremos ver el dashboard.
 
-![actividades4](./../_media/02/actividades4.png)
+### c) Eliminar el clúster
 
-En caso de empregar chrome, ver a sección final.
+Una vez que hayamos terminado de trabajar con un clúster, podemos eliminarlo. Para ello haremos:
 
-O certificado estará marcado como inseguro.
-
-#### ii) Acceder ó dashboard se o microk8s corre na máquina sen VM
-
-Compre buscar a ip do servizo:
 
 ```shell
-sudo microk8s.kubectl get services -n kube-system
+kind delete cluster
 ```
 
-E buscar a ip que nos da o sistema:
-
-![actividades5](./../_media/02/actividades5.png)
-
-Con esa ip, ponémola no navegador na forma: ```https://10.152.183.223:443``` e accederíamos ó dashboard.
-
-### Addenda. Problemas co certificado auto-firmado
-
-O dashboard escoita no porto 443 e vai por https. O certificado é autofirmado polo que pode dar problemas cos navegadores modernos.
-
-- En caso de empregar Mozilla Firefox, basta con ir ás opcións avanzadas e aceptar os riscos para ver o panel.
-- No caso do Google Chrome, a cousa é un pelín máis complicada. Compre ir a esta dirección chrome://flags/#allow-insecure-localhost e permitir o localhost inseguro. Despois xa se pode acceder ó dashboard.
+Y el sistema eliminará el clúster local de nuestra máquina.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Captura de pantalla da versión de microk8s instalada (ver parágrafo a).
-- Captura de pantalla do estado do microk8s, co dns (parágrafo c) e o dashboard (parágrafo e) habilitados.
+**Evidencia de la adquisición de actuaciones**:
+- Captura de pantalla de la versión Kind (ver párrafo a).
+- Captura de pantalla de la versión de los nodos creados con Kind con el dashboard (inciso e) habilitado.
 
-**Indicadores de logro**: Deberías ter...
-- Correctamente instalado o microk8s.
-- Habilitados o dns e o dashboard e ser quen de ver o dashboard dende o navegador.
+**Indicadores de logros**: Deberías haber...
+- Instalado correctamente el Tipo.
+- El tablero está habilitado y se accede desde el navegador.
 
 **Criterios de corrección**:
-- 15 puntos se hai unha captura da pantalla coa saída da versión de microk8s.
-- 10 puntos se hai unha captura da pantalla coa saída do microk8s.status e vense o dns e dashboard activos.
-- 5 puntos se hai unha captura de pantalla do navegador co dashboard de microk8s funcionando.
+- 15 puntos si hay una captura de pantalla con la salida de la versión Kind.
+- 5 puntos si hay una captura de pantalla del navegador con el panel de control de kubernetes ejecutándose.
 
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
+**Autoevaluación**: autoevalúe esta tarea aplicando los indicadores de logro anteriores.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 30 puntos
-- Peso desta tarefa no seu tema ...................................................... 30 %
+**Peso en calificación**:
+- Peso de esta tarea en la calificación final ....................................... 30 puntos
+- Peso de esta tarea en su tema .......................................................... 30%
 
 ---
+## Ejecutando nuestra primera aplicación en Kubernetes
 
-## Os elementos básicos de Kubernetes
+Comencemos nuestro viaje con Kubernetes.
 
-Nesta tarefa imos revisar os conceptos sobre Kubernetes (k8s).
+Para completar esta práctica, debe haber completado la tarea en la que pusimos en funcionamiento nuestro entorno Kind, con un clúster activo.
 
-Compre ler a [documentación](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/01_que_e_kubernetes) que temos no módulo.
+Configuremos una aplicación simple escrita en nodejs que haga lo siguiente:
+- Ejecutar un servidor web en un contenedor.
+- Cuando recibe una solicitud, muestra la siguiente información en la pantalla:
+  - Versión de la aplicación.
+  - El nombre de host.
+  - El tiempo de actividad de la aplicación en horas: minutos: segundos.
 
-Esta tarefa non ten entrega.
+### a) Desplegar en pod
 
-### Evaluación
+Para comenzar, implementemos nuestra aplicación en un pod:
+- La imagen a montar será "frmadem/catro-eixos-k8s-ej1", con la etiqueta "v1", esto es: "frmadem/catro-eixos-k8s-ej1:v1".
+- El nombre del pod será "pod-practica-1".
+- Se ejecutará como comando "npm" "run" "start".
+- Es necesario configurar una variable de entorno:
+  - "PUERTO_APP" con el valor "80" para que escuche en el puerto 80.
 
-**Evidencias da adquisición dos desempeños**:
-- test feito.
+Se creará un archivo llamado "pod.yaml" y lo ejecutaremos con kubectl apply.
 
-**Indicadores de logro**: Deberías ter...
-- test feito dacordo ós teus coñecementos.
-
-**Criterios de corrección**:
-- 20 puntos polo test. 
-
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
-
-**Peso na cualificación**:
-Peso desta tarefa na cualificación final ........................................ 20 puntos
-Peso desta tarefa no seu tema ...................................................... 20 %
-
-----
-
-## Correndo a nosa primeira aplicación en Kubernetes
-
-Imos comezar a nosa andaina con Kubernetes.
-
-Para poder completar esta práctica compre ter completada a tarefa onde puxemos a funcionar o noso entorno de microk8s.
-
-Imos a montar unha sinxela aplicación escrita en nodejs que fai o seguinte:
-- Corre un servidor web nun contedor.
-- Cando recibe unha petición, amosa por pantalla a seguinte información:
-  - Versión da aplicación.
-  - O hostname.
-  - O uptime da aplicación en horas : minutos : segundos.
-
-### a) Despregue en pod
-
-Para comezar, imos despregar a nosa aplicación nun [pod](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/03_arquitectura_kubernetes_pod):
-- A imaxe a montar será "frmadem/catro-eixos-k8s-ej1", co tag "v1", esto é: "frmadem/catro-eixos-k8s-ej1:v1".
-- O pod terá como nome "pod-practica-1".
-- Executará como comando "npm" "run" "iniciar".
-- Compre configurarlle unha variable de contorna:
-  - "PUERTO_APP" co valor "80" para que escoite no porto 80.
-
-Crearáse un ficheiro chamado "pod.yaml" e o correremos con kubectl apply.
-
-Unha vez feito isto, deberíamos ter algo como o que segue:
+Una vez hecho esto, deberíamos tener algo como lo siguiente:
 
 ![actividades6](./../_media/02/actividades6.png)
 
-Precisamos, agora, probar a nosa aplicación para ver se da resposta. Para iso, imos exportar un porto conectado co pod a través de `kubectl port-forward`.
+Ahora necesitamos probar nuestra aplicación para ver si responde. Para hacer esto, exportemos un puerto conectado al pod a través de `kubectl port-forward`.
 
 ```shell
 kubectl port-forward pod/pod-practica-1 --address 0.0.0.0 <porto_de_elección_do_vm>:80
 ```
 
-Feito isto, deberíamos poder ver o resultado da execución no noso navegador:
+Una vez hecho esto, deberíamos poder ver el resultado de la ejecución en nuestro navegador:
 
 ![actividades7](./../_media/02/actividades7.png)
 
-Vemos a **versión** da aplicación, o **hostname** (o nome do pod onde está a correr) e as **hh:mm:ss** que leva correndo.
+Vemos la **versión** de la aplicación, el **hostname** (el nombre del pod donde se está ejecutando) y el **hh:mm:ss** que se ha estado ejecutando.
 
-### b) Montando un deploy
+### b) Configuración de una deployment
 
-Se queremos correr a nosa aplicación con réplicas e control das mesmas compre que empreguemos un [deploy](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/04_arquitectura_kubernetes_deployment).
+Si queremos ejecutar nuestra aplicación con réplicas y controlarlas, debemos usar un [deploy](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/04_arquitectura_kubernetes_deployment).
 
-Para montar o noso despregue temos que cumprir unha serie de requisitos:
-- O despregue terá como nome "**despregue-practica-1**".
-- Comezará cunha réplica.
-- Os pods escoitarán no porto 8080.
+Para configurar nuestro despliegue tenemos que cumplir una serie de requisitos:
+- El nombre del deployment será "**deploy-practice-1**".
+- Comenzará con una réplica.
+- Los pods escucharán en el puerto 8080.
 
 ![actividades8](./../_media/02/actividades8.png)
 
-Unha vez creado o artefacto, o lanzamos.
+Una vez creado el artefacto, lo lanzamos.
 
-Comproba que realmente tes o deploy e o pod correndo correctamente.
+Verifique que realmente tenga la implementación y el pod ejecutándose correctamente.
 
-Agora o imos a escalar a 5 réplicas. Que comando haberá que empregar?
+Ahora vamos a escalarlo a 5 réplicas. ¿Qué comando se utilizará?
 
-Unha vez que o teñas feito, comproba que realmente hai cinco réplicas correndo.
+Una vez que haya hecho eso, compruebe que en realidad hay cinco réplicas en ejecución.
 
-Volve a establecer as réplicas a 1.
+Vuelva a establecer las réplicas en 1.
 
-Lista os pods que quedan unha vez feita esta operación.
+Enumere los pods restantes una vez realizada esta operación.
 
-### c) Expoñendo a nosa aplicación a través dun servizo
+### c) Exponer nuestra aplicación a través de un servicio
 
-Agora, temos un deploy que ten réplicas e queremos que poida dar resposta calquera delas.
+Ahora, tenemos una implementación que tiene réplicas y queremos que cualquiera de ellas pueda responder.
 
-Para iso, compre montar un servizo.
+Para hacer esto, compre configurar un servicio.
 
-O [servizo](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) que expón o noso deploy ten que ter novamente unha serie de características:
-- O servizo terá como nome "**servizo-practica-1**".
-- O porto do servizo será o 80
-- Conectará cos pods no porto 8080.
-- Quedará o noso sistema como segue:
+El [servicio](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) que expone nuestro deployment debe volver a tener una serie de características:
+- El nombre del servicio será "**servicio-practica-1**".
+- El puerto de servicio será el 80
+- Se conectará a los pods en el puerto 8080.
+- Nuestro sistema será el siguiente:
 
 ![actividades9](./../_media/02/actividades9.png)
 
-Creamos o artefacto do servizo e o lanzamos.
+Creamos el artefacto de servicio y lo lanzamos.
 
-Comprobamos que está realmente creado no noso microk8s. Que comando empregaremos?
+Verificamos que realmente se haya creado en nuestro clúster. ¿Qué comando usaremos?
 
-Facemos un curl ó clusterIp do noso servizo. Que saída teremos?
+Hacemos un curl al clusterIp de nuestro servicio. ¿Qué salida tendremos?
 
-### d) Montando un frontend para a nosa aplicación
+### d) Montaje de un frontend para nuestra aplicación
 
-Agora que temos un deploy cos nosos pods e un servizo que os expón, solo nos resta montar un frontend que faga peticións ó mesmo.
+Ahora que tenemos una implementación con nuestros pods y un servicio que los expone, todo lo que queda es configurar una interfaz que le haga solicitudes.
 
-Para montar este o frontend:
-- Imos empregar a imaxe **frmadem/catro-eixos-k8s-proxy**.
-- Esta imaxe a montaremos nun novo despregue.
-- Este despregue terá:
-  - Unha soa réplica.
-  - O seu nome será "**frontend-practica-1**"./s/1.
-  - Configuraremos como variable de contorna "SERVIZO_INTERNO" que resolverá ó servizo que creamos no punto c).
-  - O pod expoñerá o porto 80.
-- Ademáis do despregue, crearemos un servizo para o noso frontend. Coas seguintes características:
-  - Terá de nome "servizo-frontend-practica-1".
-  - Escoitará no porto 8080 (o porto do servizo será o 8080).
-  - Comunicará cos pods no porto 80.
+Para ensamblar esta interfaz:
+- Usaremos la imagen **frmadem/catro-eixos-k8s-proxy**.
+- Montaremos esta imagen en un nuevo deployment.
+- Este despliegue tendrá:
+  - Una única réplica.
+  - Su nombre será "**frontend-practica-1**"./s/1.
+  - Configuraremos como variable de entorno "SERVIZO_INTERNO" que dará como resultado el servicio que creamos en el punto c).
+  - El pod expondrá el puerto 80.
+- Además de la implementación, crearemos un servicio para nuestra interfaz. Con las siguientes caracteristicas:
+  - Se llamará "service-frontend-practica-1".
+  - Escuchará en el puerto 8080 (el puerto de servicio será el 8080).
+  - Se comunicará con los pods en el puerto 80.
 
-Crearemos os artefactos do deploy de frontend e do servizo de frontend. Quedando a nosa aplicación como segue:
+Crearemos los artefactos de implementación y servicio de frontend. Dejando nuestra aplicación de la siguiente manera:
 
 ![actividades10](./../_media/02/actividades10.png)
 
-Despregamos os nosos artefactos de frontend. Comprobamos que están creados realmente.
+Desplegamos nuestros artefactos frontend. Comprobamos que están realmente creados.
 
-### e) Comprobar que todo está en orde
+### e) Verificar que todo esté en orden
 
-Agora imos exportar (proxy-forward) o noso servizo de frontend. E enviamos unha petición dende o noso navegador, debería sair unha saída como a do punto a).
+Ahora exportemos (proxy-forward) nuestro servicio frontend. Y enviamos una petición desde nuestro navegador, debería salir una salida como la del punto a).
 
-Imos, por último, escalar a 5 réplicas o deploy de prácticas (o de backend non o de frontend).
+Finalmente, vamos a escalar la implementación de la práctica a 5 réplicas (el backend, no el frontend).
 
-Se recargamos o noso navegador, veremos que o pod que nos responde é diferente en cada execución. (vese no hostname).
+Si recargamos nuestro navegador, veremos que el pod que nos responde es diferente en cada ejecución. (ver el hostname).
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Envío dun pdf cos contidos necesarios para realizar os puntos do a) ó e) segundo estes.
+**Evidencia de la adquisición de actuaciones**:
+- Envío de un pdf con los contenidos necesarios para llevar a cabo los puntos a) ae) según estos.
 
-**Indicadores de logro**: Deberías ter...
-- Artefacto co yaml necesario para crear o pod cos requisitos do **punto a**) (pod.yaml). Captura de pantalla dos comandos necesarios para:
-  - Arrancar o yaml.
-  - Comprobar que o pod está a correr (e a súa saída).
-  - Exportar o pod.
-  - Captura do navegador coa saída do pod.
-- Artefacto do yaml necesario para crear o deploy cos requisitos do **punto b**) (deploy.yaml) Captura de pantalla cos comandos necesarios para:
-  - Arrancar o yaml.
-  - Comprobar que o deploy e o pod están a correr (a as súas saídas).
-  - Escalar a cinco réplicas o deploy.
-  - Comprobar que hai cinco réplicas (e a súa saída).
-  - Reducir a unha réplica.
-  - Comprobar que volve a haber unha réplica (e a súa saída).
-- Artefacto co yaml necesario para crear o servizo cos requisitos do **punto c**) (servizo.yaml) Captura da pantalla cos comandos necesarios para:
-  - Arrancar o yaml.
-  - Comprobar que o servizo se creou (e a súa saída).
-  - Curl á ipcluster do servizo (e a súa saída).
-- Artefactos co yaml necesario para crear o deploy e servizo de frontend coas características do **punto d**) Capturas de pantalla dos comandos necesarios para:
-  - Arrancar os yaml.
-  - Comprobar que servizo, deploy e pods están creados (e as súas saídas).
-- Comprobar que todo está en orde segundo o **punto e**):
-  - Comando de exportar o porto do "servizo-frontend-practica-1".
-  - Captura de pantalla do navegador coa saída do ```localhost:<porto forwarded escollido>```.
+**Indicadores de logros**: Deberías haber...
+- Artefacto con el yaml necesario para crear el pod con los requisitos del **punto a**) (pod.yaml). Captura de pantalla de los comandos necesarios para:
+  - Inicie el yaml.
+  - Compruebe que el pod se está ejecutando (y su salida).
+  - Exportar la vaina.
+  - Captura del navegador con salida de pod.
+- Artefacto de Yaml necesario para crear la implementación con los requisitos del **punto b**) (deploy.yaml) Captura de pantalla con los comandos necesarios para:
+  - Inicie el yaml.
+  - Verifique que la implementación y el pod se estén ejecutando (en sus salidas).
+  - Escale a cinco réplicas o implemente.
+  - Comprobar que hay cinco réplicas (y su salida).
+  - Reducir a una réplica.
+  - Comprobar que hay una réplica de nuevo (y su salida).
+- Artefacto con el yaml necesario para crear el servicio con los requisitos del **punto c**) (service.yaml) Captura de pantalla con los comandos necesarios para:
+  - Inicie el yaml.
+  - Comprobar que se ha creado el servicio (y su salida).
+  - Curl al ipcluster del servicio (y su salida).
+- Artefactos con el yaml necesario para crear el servicio de deployment y frontend con las características del **punto d**) Capturas de pantalla de los comandos necesarios para:
+  - Iniciar los yamls.
+  - Comprobar qué servicio, implementación y pods se crean (y sus resultados).
+- Comprobar que todo esté en orden según el **punto e**):
+  - Comando para exportar el puerto de "service-frontend-practica-1".
+  - Captura de pantalla del navegador con la salida de ```localhost:<puerto reenviado elegido>''.
   - Comando para escalar a cinco réplicas.
-  - Tres capturas de navegador con respostas de distintos pods.
+  - Tres capturas del navegador con respuestas de diferentes pods.
 
 **Criterios de corrección**:
-- ata 15 puntos do apartado a):
-  - 7 puntos se o yaml de creación do pod está correcto.
-  - 2 puntos por cada comando / captura de saída correcto.
-- ata 10 puntos do apartado b):
-  - 4 puntos se o yaml de creación do deploy está correcto.
-  - 1 punto por cada comando/captura de saída correcto.
-- ata 7 puntos do apartado c):
-  - 3 puntos se o yaml de creación do servizo está correcto.
-  - 1 punto por cada comando/captura de saída correcto.
-- ata 10 puntos do apartado d):
-  - 2 puntos por cada artefacto correcto (deploy e service).
-  - 1 punto por cada comando/captura de saída correcto.
-- ata 8 puntos do apartado e):
-  - 2 puntos por cada comando/captura de saída correcto.
+- hasta 15 puntos del apartado a):
+  - 7 puntos si la creación del pod yaml es correcta.
+  - 2 puntos por cada comando de salida/captura correcto.
+- hasta 10 puntos del apartado b):
+  - 4 puntos si el yaml de creación del deployment es correcto.
+  - 1 punto por cada comando de salida/captura correcta.
+- hasta 7 puntos del apartado c):
+  - 3 puntos si el yaml de creación del servicio es correcto.
+  - 1 punto por cada comando de salida/captura correcta.
+- hasta 10 puntos del apartado d):
+  - 2 puntos por cada artefacto correcto (despliegue y servicio).
+  - 1 punto por cada comando de salida/captura correcta.
+- hasta 8 puntos del apartado e):
+  - 2 puntos por cada comando de salida/captura correcta.
 
-**Autoavaliación**: Autoavalía esta tarefa aplicando os indicadores de logro anteriores.
+**Autoevaluación**: autoevalúe esta tarea aplicando los indicadores de logro anteriores.
 
-**Peso na cualificación**:
-Peso desta tarefa na cualificación final ...................................... 50 puntos
-Peso desta tarefa no seu tema .................................................... 50 %
+**Peso en calificación**:
+
+-Peso de esta tarea en la nota final ..................................................... 50 puntos
+
+-Peso de esta tarea en su asignatura .................................................. 50%

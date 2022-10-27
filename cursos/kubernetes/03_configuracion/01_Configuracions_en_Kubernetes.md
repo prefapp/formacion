@@ -272,8 +272,9 @@ type: Opaque
 data: # aquí van os datos
   username: YWRtaW4=
   password: Y29udHJhc2luYWwK
-Na sección "data" do artefacto, temos a información en formato clave-valor. Os valores estarán codificados en base64. 
 ```
+
+Na sección "data" do artefacto, temos a información en formato clave-valor. Os valores estarán codificados en base64. 
 
 Se creamos este segredo no noso k8s:
 

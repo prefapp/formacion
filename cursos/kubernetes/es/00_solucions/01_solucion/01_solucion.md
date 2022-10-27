@@ -1,22 +1,22 @@
 # Ejercicio Kubernetes 2
 
-[link](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=correndo-a-nosa-primeira-aplicación-en-kubernetes) al ejercicio.
+[link](https://prefapp.github.io/formacion/cursos/kubernetes/#/./00_actividades/02_modulo_2?id=corredno-a-nosa-primeira-appliquén-en-kubernetes) al ejercicio.
 
-Cuando despliego el Deploy y el servicio hago un curl a la direccion ip del serivicio y no devuelve nada.
-
-
-Si hago un curl a localhost da connection refused
+Cuando implemento Deploy y el servicio, hago un curl en la dirección IP del servicio y no devuelve nada.
 
 
-Si hago un forward funciona perfectamente.
+Si hago un curl a localhost de la conexión rechazada
 
 
-# SOLUCION:
-
-Penso que tes ao reves o targetPort e o port. O targetPort sería o porto do pod donde está arrancado o servicio, e o porte o porto que vai a expoñer o servicio ao exterior, podes ver máis info aquí.
+Si hago un reenvío funciona perfectamente.
 
 
-Con esto debería funcionarche:
+# SOLUCIÓN:
+
+Creo que tienes el targetPort y el puerto al revés. El targetPort sería el puerto del pod donde se inicia el servicio, y el puerto el puerto que expondrá el servicio al exterior, puede ver más información aquí.
+
+
+Esto debería funcionar para usted:
 
 
 # servizo_test.yaml
@@ -35,7 +35,7 @@ spec:
     targetPort: 80
 ```
 
-Lanzando o curl dende calquer pod do cluster:
+Lanzamiento de curl desde cualquier pod en el clúster:
 
 ```
 curl -vv servicio-despregue1.default.svc.cluster.local:8080

@@ -1,114 +1,114 @@
-# Que é a orquestación de contedores?
+# ¿Qué es la orquestación de contenedores?
 
-> A orquestación de contedores consiste fundamentalmente no manexo do ciclo de vida dos contedores, especialmente en entornos dinámicos onde coexisten múltiples aplicacións e servizos. Os equipos de desenrolo e operacións usan a orquestación de contedores para controlar e automatizar un conxunto de tarefas:
+> La orquestación de contenedores se trata fundamentalmente de administrar el ciclo de vida de los contenedores, especialmente en entornos dinámicos donde coexisten múltiples aplicaciones y servicios. Los equipos de desarrollo y operaciones utilizan la orquestación de contenedores para controlar y automatizar un conjunto de tareas:
 
-- Aprovisionamento e despregue de contedores.
-- Redundancia e alta dispoñibilidade dos servicios que corren nos contedores.
-- Escalado horizontal e purgado de contedores para repartir a carga equitativamente entre as máquinas que compoñen a infraestructura de aloxamento.
-- Traslado de contedores dende un anfitrión a outro se hai escasez de recursos nun anfitrión, ou un anfitrión se cae.
-- Descubrimento de servizos (service discovery) entre as partes que compoñen a aplicación.
-- Balanceo de carga entre contedores que compoñen un servizo.
-- Monitorización da saude dos contedores e dos anfitrións que corren no cluster.
-- Exposición ao exterior dos servizos que corren dentro dos contedores.
-- Configuración da aplicación en relación ca infraestructura de contedores onde está aloxada.
+- Suministro y despliegue de contenedores.
+- Redundancia y alta disponibilidad de los servicios que se ejecutan en los contenedores.
+- Escalado y purgado horizontal de contenedores para repartir la carga equitativamente entre las máquinas que componen la infraestructura de alojamiento.
+- Mover contenedores de un host a otro si hay escasez de recursos en un host o si un host deja de funcionar.
+- Descubrimiento de servicios (service discovery) entre las partes que componen la aplicación.
+- Equilibrio de carga entre los contenedores que componen un servicio.
+- Supervisión del estado de contenedores y hosts que se ejecutan en el clúster.
+- Exposición al exterior de los servicios que discurren en el interior de los contenedores.
+- Configuración de la aplicación en relación con la infraestructura del contenedor donde se encuentra alojada.
 
-# O paradigma da conterización
+# El paradigma de la contenerizacion
 
-A estas alturas do curso xa imos comprendendo porqué os containers son un cambio de paradigma no mundo dos sistemas, comparable ó que foi o da virtualización de máquinas.
+A estas alturas del curso ya estamos entendiendo por qué los contenedores son un cambio de paradigma en el mundo de los sistemas, comparable al de la virtualización de máquinas.
 
-- Gracias ós containers podemos illar un proceso e as súas dependencias nunha unidade que se pode arrancar/parar en cuestión de segundos.
-- O custo da containerización en termos de CPU/Memoria é totalmente insignificante.
-- Podemos expresar cómo se constrúe unha imaxe en código (Dockerfile) o que presenta importantísimas [vantaxes](https://en.wikipedia.org/wiki/Infrastructure_as_code).
-- A posibilidade de crear infraestructuras baseadas en micro-servicios ábrese para todo o mundo.
+- Gracias a los contenedores podemos aislar un proceso y sus dependencias en una unidad que se puede iniciar/detener en cuestión de segundos.
+- El costo de contenerización en términos de CPU/Memoria es totalmente insignificante.
+- Podemos expresar cómo construir una imagen en código (Dockerfile), lo que presenta importantes [ventajas](https://en.wikipedia.org/wiki/Infrastructure_as_code).
+- La posibilidad de crear infraestructuras basadas en microservicios está abierta a todos.
 
-Como vemos, a idea é a de romper o noso sistema en unidades funcionais pequenas e manexables que se comunican entre elas para facer un traballo máis grande.
+Como lo vemos, la idea es dividir nuestro sistema en unidades funcionales pequeñas y manejables que se comunican entre sí para hacer un trabajo más grande.
 
-Un simil ó que se recorre moitas veces é ó da programación orientada a obxectos:
+Un símil que se usa a menudo es el de la programación orientada a objetos:
 
-- Igual que na POO temos clases e instancias, na conterización temos imaxes e obxectos. 
-- A idea clave é encapsular funcionalidades en unidades independientes que falan entre sí mediante paso de mensaxes. 
-- A evolución do sistema faise mediante a extensión/creación de novas clases e obxectos non mediante a modificación dos existentes. 
+- Así como en POO tenemos clases e instancias, en contenerización tenemos imágenes y objetos.
+- La idea clave es encapsular la funcionalidad en unidades independientes que se comunican entre sí a través del paso de mensajes.
+- La evolución del sistema se realiza mediante la ampliación/creación de nuevas clases y objetos, no mediante la modificación de los existentes.
 
-Polo tanto, a conterización introduce un novo paradigma de diseño de aplicacións e infraestructuras no que:
+Por lo tanto, la contenerización introduce un nuevo paradigma de diseño de aplicaciones e infraestructuras en el que:
 
-- O sistema se fragmenta en unidades moi pequenas, sendo o bloque mínimo de construcción **o contedor**.
-- Cada unidade ten unha funcionalidade concreta e ben definida ([Separación de intereses](https://en.wikipedia.org/wiki/Separation_of_concerns)).
-- Acadando esta modularidade, as diferentes partes pódense ver como **microservicios** que expoñen una interface clara para comunicarse e que traballan conxuntamente para asegura-lo cumprimento dos obxectivos do sistema como entidade. 
-- Ademáis as nosas aplicación son por fin **escalables horizontalmente**, engandindo novas instancias (containers) podemos aumenta-la potencia da nosa aplicación sen necesidade de recurrir á gaiola do **escalado vertical**.
+- El sistema está fragmentado en unidades muy pequeñas, siendo el bloque de construcción mínimo **el contenedor**.
+- Cada unidad tiene una funcionalidad específica y bien definida ([Separación de intereses](https://en.wikipedia.org/wiki/Separation_of_concerns)).
+- Logrando esta modularidad, las distintas partes pueden ser vistas como **microservicios** que exponen una interfaz clara para comunicarse y que trabajan en conjunto para asegurar el cumplimiento de los objetivos del sistema como entidad.
+- Además, nuestras aplicaciones finalmente son **escalables horizontalmente**, agregando nuevas instancias (contenedores) podemos aumentar la potencia de nuestra aplicación sin tener que recurrir a la jaula del **escalado vertical**.
 
-# O problema do paradigma de orquestración
+# El problema del paradigma de la orquestación
 
-Vale, agora temos claro que hai que romper todo en unidades pequenas que se comunican entre sí. Pero, cómo facemos iso?
+Bien, ahora tenemos claro que tenemos que dividir todo en pequeñas unidades que se comuniquen entre sí. Pero ¿cómo hacemos eso?
 
-Imos comenzar conha simple aplicación en Php dentro dun container:
+Comencemos con una aplicación Php simple dentro de un contenedor:
 
 ![Container](./../_media/01/container_standalonoe.png)
 
-A nosa aplicación quere ter **estado**. A solución obvia é agregar unha base de datos dentro do container:
+Nuestra aplicación quiere tener **estado**. La solución obvia es agregar una base de datos dentro del contenedor:
 
 ![Container](./../_media/01/mega_container.png)
 
-Isto, a pesar de qué sería unha solución obvia, é un horror e unha ruptura do paradigma da containerización:
+Esto, a pesar de lo que sería una solución obvia, es un horror y una ruptura con el paradigma de la contenerización:
 
-- O container non ten unha única preocupación, ten dúas (xestión de bbdd e aplicación en Php).
-- O cambio na bbdd ou na aplicación implica cambiar o resto de unidades.
-- Introducimos dependencias do software de Mysql con respectoSeparación de intereses ó Php e viceversa.
+- El contenedor no tiene una sola preocupación, tiene dos (administración de bbdd y aplicación Php).
+- El cambio en la bbdd o en la aplicación implica cambiar el resto de equipos.
+- Introducimos las dependencias del software Mysql con respecto a la Separación de intereses a Php y viceversa.
 
-O problema sería peor se queremos, por exemplo, engadir soporte para SSL, un servidor web, soporte para métricas e logs.... O noso container crecería e crecería, polo que non amañariamos ningún dos problemas que queremos resolver o por enriba perderíamos as vantaxes da containerización. 
+El problema sería peor si quisiéramos, por ejemplo, agregar soporte para SSL, un servidor web, soporte para métricas y registros... Nuestro contenedor crecería y crecería, por lo que no arreglaríamos ninguno de los problemas que queremos resolver o encima perderíamos las ventajas de la contenerización.
 
-A solución axeitada sería esta:
+La solución correcta sería esta:
 
-![Container](./../_media/01/container_bbdd.png)
+![Contenedor](./../_media/01/container_bbdd.png)
 
-Agora temos dúas unidades independentes en dous containers. Podemos modificar unha sen afecta-la outra. As preocupacións están correctamente separadas. 
+Ahora tenemos dos unidades independientes en dos contenedores. Podemos modificar uno sin afectar al otro. Las preocupaciones están debidamente separadas.
 
-Neste momento, os nosos containers poden ademáis **escalar**, basta con engadir novos containers de aplicación se é necesario:
+En este punto, nuestros contenedores también pueden **escalarse**, solo agregue nuevos contenedores de aplicaciones si es necesario:
 
 ![Container](./../_media/01/escalado_container.png)
 
-E, por suposto, podemos engadir os servicios auxiliares que creamos convintes, sen necesidade de modifica-los containers que xa temos (**encapsulación**).
+Y, por supuesto, podemos añadir los servicios auxiliares que creamos necesarias, sin necesidad de modificar los contenedores que ya tenemos (**encapsulación**).
 
 ![Container](./../_media/01/escalado_funcional.png)
 
-Como podemos ver, a nosa aplicación **crece engandindo novas unidades funcionais**, **non modificando as existentes**. Esto aporta as vantaxes das que xa falaramos na sección previa.
+Como vemos, nuestra aplicación **crece añadiendo nuevas unidades funcionales**, **no modificando las existentes**. Esto trae las ventajas de las que ya te hemos hablado en el apartado anterior.
 
-Pero, xorden preguntas:
+Pero, surgen preguntas:
 
-- Cómo coñece o noso container de Php a dirección e o porto no que escoita o Mysql?
-- Cómo facemos para parar/arrincar todos os containers de vez?
-- Se un container cae e o levantalo cambiou de Ip cómo o sabe o resto?
-- Cómo inxectamos configuracións comúns a tódolos containers?
+- ¿Cómo sabe nuestro contenedor PHP la dirección y el puerto en el que escucha Mysql?
+- ¿Cómo paramos/arrancamos todos los contenedores a la vez?
+- Si se cae un contenedor y al recogerlo ha cambiado la IP, ¿cómo lo sabe el resto?
+- ¿Cómo inyectamos configuraciones comunes a todos los contenedores?
 
-> A estas e outras moitas preguntas trata de dar resposta **a orquestración de containers**.
+> La **orquestación de contenedores** intenta responder a estas y muchas otras preguntas.
 
-# Kubernetes: O estándar de facto
+# Kubernetes: El estándar de facto
 
-![Container](./../_media/01/kubernetes.jpg)
+![Contenedor](./../_media/01/kubernetes.jpg)
 
-Orixinalmente desenrolado por Google, como unha nova [versión aberta](https://github.com/kubernetes/kubernetes) do seu proxecto Borg ([Borg project](https://kubernetes.io/blog/2015/04/borg-predecessor-to-kubernetes/)) pero enfocada na xestión de contedores Docker, estase a convertir na ferramenta de referencia para a orquestación de contedores. E o proxecto principal sobre o que se creou a [Cloud Native Computing Foundation](https://www.cncf.io/), a cal está respaldada polos principais actores tecnolóxicos actuais tales coma Google, Amazon Web Services (AWS), Microsoft, IBM, Intel, Cisco, e RedHat.
+Lanzada originalmente por Google, como una nueva [versión abierta](https://github.com/kubernetes/kubernetes) de su proyecto Borg  ([Borg project](https://kubernetes.io/blog/2015/04/borg-predecessor-to-kubernetes/)) pero centrado en la gestión de contenedores Docker, se está convirtiendo en la herramienta de referencia para la orquestación de contenedores. Y el proyecto principal sobre el que se creó la [Cloud Native Computing Foundation](https://www.cncf.io/), que cuenta con el respaldo de los principales actores tecnológicos de la actualidad como Google, Amazon Web Services (AWS), Microsoft, IBM , Intel, Cisco y RedHat.
 
-Kubernetes continua a gañar en popularidade gracias tamén a cultura DevOps e os seus adeptos, xa que nos permite dispoñer dunha plataforma-como-servicio (PaaS) na nosa propia infraestructura, que ademais crea unha abstracción da capa de harware para permitir que os desenvolvedores se centren en evolucionar as aplicacións da organización, en vez de configurar máquinas.  Ademáis é extremadamente portable, xa que corre en [Amazon Web Services](https://aws.amazon.com/) (AWS), [Microsoft Azure](https://azure.microsoft.com/en-us/), [Google Cloud Platform](https://cloud.google.com/) (GCP), [DigitalOcean](https://www.digitalocean.com/products/kubernetes/),... e por suposto nunha instalación on-premise da propia organización.
+Kubernetes sigue ganando popularidad gracias también a la cultura DevOps y sus seguidores, ya que nos permite tener una plataforma como servicio (PaaS) en nuestra propia infraestructura, lo que también crea una abstracción de la capa de hardware para permitir a los desarrolladores centrarse en la evolución de las aplicaciones de la organización, en lugar de configurar máquinas. También es extremadamente portátil, ya que se ejecuta en [Amazon Web Services](https://aws.amazon.com/) (AWS), [Microsoft Azure](https://azure.microsoft.com/en-us/ ), [Google Cloud Platform](https://cloud.google.com/) (GCP), [DigitalOcean](https://www.digitalocean.com/products/kubernetes/),... y por supuesto en una instalación on-premise de la propia organización.
 
-Ademáis nos permite mover cargas de traballo entre diferentes proveedores sen ter que refacer a aplicación ou redefinir a infraestructura, o cal permite ás organizacións estandarizarse nunha plataforma e evitar atarse a un proveedor (vendor lock-in).
+También nos permite mover cargas de trabajo entre diferentes proveedores sin tener que rehacer la aplicación o redefinir la infraestructura, lo que permite a las organizaciones estandarizarse en una plataforma y evitar estar atadas a un proveedor (vendor lock-in).
 
 # Docker Swarm
 
-Repasando as principais ferramentas na actualidade para levar a cabo as labores de orquestación de contedores, non podemos obviar a propia solución que integra directamente Docker dentro da súa Docker engine: **Docker Swarm**, e que empregaremos nun dos exercicios prácticos.
+Repasando las principales herramientas a día de hoy para realizar trabajos de orquestación de contenedores, no podemos pasar por alto la propia solución que integra directamente Docker dentro de su motor Docker: **Docker Swarm**, y que utilizaremos en uno de los ejercicios prácticos.
 
-Aínda que actualmente a propia [Docker abandou a carreira](https://blog.newrelic.com/technology/docker-kubernetes-future/) de situar Docker Swarm coma o orquestador estandard, en favor de Kubernetes, o cal ofrece xunto con swarm na sua [edición empresarial](https://www.docker.com/enterprise-edition), a súa idea non é xa competir con Kubernetes senón convertir a Swarm nunha ferramentas complementaria a este, gracias a súa facilidade de uso e integración dentro do docker-engine e do cli co xestionamos os contedores.
+Aunque actualmente [Docker ha abandonado la carrera](https://blog.newrelic.com/technology/docker-kubernetes-future/) para posicionar a Docker Swarm como el orquestador estándar, a favor de Kubernetes, que ofrece junto con swarm en su [enterprise edition](https://www.docker.com/enterprise-edition), su idea ya no es competir con Kubernetes sino convertir a Swarm en una herramienta complementaria a este, gracias a su facilidad de uso e integración dentro de docker-engine y de cli gestionamos contenedores.
 
-O enxame de Docker se compón dun conxunto de 2 ou máis máquinas (físicas, virtuais, containers docker!) donde o único requisito que precisan e que corra o demonio de Docker (docker engine). Estas máquinas se conectan entre si formando un cluster, de maneira que actuen como un único sistema, agrupando recursos e permitindo despregar un maior número de servicios, escalalos horizontalmente, poñelos en alta dispoñibilidade... E o mellor de todo e que este cluster se monta con 2 sinxelos comandos, e se xestiona mediante o docker cli.
+ Docker Swarm consiste en un conjunto de 2 o más máquinas (¡Físicas, virtuales, contenedores Docker!) donde el único requisito es que se ejecute el demonio Docker (docker engine). Estas máquinas se conectan entre sí formando un clúster, de forma que actúan como un único sistema, agrupando recursos y permitiendo desplegar un mayor número de servicios, escalarlos horizontalmente, ponerlos en alta disponibilidad… Y lo mejor de todo es que este clúster se monta con 2 comandos simples y se administra mediante la docker cli.
 
-![Container](./../_media/01/swarm.png)
+![Contenedor](./../_media/01/swarm.png)
 
-# Apache Mesos e Marathon
+# Apache Mesos y Maratón
 
-![Container](./../_media/01/mesos_marathon.jpg)
+![Contenedor](./../_media/01/mesos_marathon.jpg)
 
-[Apache Mesos](http://mesos.apache.org/), lixeiramente anterior a Kubernetes, é un proxecto de software aberto orixinalmente desenrolado pola Universidade de California en Berkeley.
+[Apache Mesos](http://mesos.apache.org/), ligeramente anterior a Kubernetes, es un proyecto de software abierto desarrollado originalmente por la Universidad de California en Berkeley.
 
-Actualmente o empregan compañías como [Twitter, Uber, e Paypal](https://www.linux.com/news/4-unique-ways-uber-twitter-paypal-and-hubspot-use-apache-mesos), e a súa lixeira interface permiteo escalar facilmente ata os 10,000 nodos (ou máis), e permite o desenrolo de frameworks sobre él que evolucionen de xeito independente.
+Actualmente lo utilizan empresas como [Twitter, Uber y Paypal](https://www.linux.com/news/4-unique-ways-uber-twitter-paypal-and-hubspot-use-apache-mesos ), y su interfaz liviana le permite escalar fácilmente hasta 10,000 nodos (o más), y permite el desarrollo de frameworks donde evolucionar de forma independiente.
 
-A súa APIs soporta linguaxes populares coma Java, C++, e Python, e ademáis ofrece alta dispoñibilidade por defecto.
+Sus API admiten lenguajes populares como Java, C++ y Python, y también ofrece alta disponibilidad de forma predeterminada.
 
-Pero, pola contra a Swarm ou Kubernetes, Mesos sólo provee manexo do cluster de nodos, polo que existen varios frameworks por riba de Mesos, un dos cais é [Marathon](https://mesosphere.github.io/marathon/), unha plataforma a nivel de producción, para a orquestación de contedores.
+Pero, a diferencia de Swarm o Kubernetes, Mesos solo brinda administración del clúster de nodos, por lo que hay varios frameworks por encima de Mesos, uno de los cuales es [Marathon](https://mesosphere.github.io/marathon/), una plataforma a nivel de producción para la orquestación de contenedores.
