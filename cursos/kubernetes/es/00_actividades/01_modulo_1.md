@@ -148,7 +148,7 @@ Si abrimos dos pestañas, una para cada lado, y votamos, veremos cómo cambian l
 
 **Criterios de corrección**:
 - Adaptaciones indicadas en la descripción, cumplimentadas correctamente (60 puntos)
-  -Redis
+  - Redis
   - Postgresql
   - Votar
   - Worker
