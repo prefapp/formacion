@@ -1,13 +1,13 @@
-# Qué é Terraform?
+# ¿Qué es Terraform?
 
-Terraform é unha ferramenta de software libre para o aprovisionamiento mediante código declarativo. Permite automatizar e xestionar a infraestructura necesaria para desplegar plataformas e servicios sobre ela, incluso cando xa está o despregamento feito.
+Terraform es una herramienta de software libre para el aprovisionamiento a través de código declarativo. Le permite automatizar y administrar la infraestructura necesaria para implementar plataformas y servicios en ella, incluso cuando la implementación ya se ha realizado.
 
 **Para qué sirve**
 
-Os casos de uso principais de Terraform son a creación de nova infraestructura e a xestión de cambios na mesma.
+Los principales casos de uso de Terraform son la creación de nueva infraestructura y la gestión de cambios en ella.
 
-Por outra parte, Terraform facilita enormemente a replicación de infraestructura. Un dos casos máis comunes consiste en replicar as características da infraestructura entre diferentes contornos, como pode ser desarrollo, preproducción e producción.
+Por otro lado, Terraform facilita enormemente la replicación de infraestructura. Uno de los casos más comunes consiste en replicar las características de la infraestructura entre diferentes entornos, como desarrollo, preproducción y producción.
 
-Imaxina que necesitas despregar 5 servidores para executar a túa aplicación. Esta aplicación podería estar formada por unha base de datos e varios componentes en contedores Docker. Se este despliegue o quixeramos facer en Azure, sería necesario preparar a infraestructura previamente. Para isto teríamos que crear as redes, máquinas virtuales, asignar permisos, instalar software como Docker e instanciar os servizos de bases de datos que se precisen.
+Imagine que necesita implementar 5 servidores para ejecutar su aplicación. Esta aplicación podría constar de una base de datos y varios componentes en contenedores Docker. Si quisiéramos desplegar esto en Azure, sería necesario preparar la infraestructura previamente. Para ello tendríamos que crear las redes, máquinas virtuales, asignar permisos, instalar software como Docker e instanciar los servicios de base de datos necesarios.
 
-Todo este procedimiento podería facelo un equipo de infraestructura e é aquí onde entra en xogo Terraform. De esta maneira, é posible automatizar todas estas operaciones de despregamento e incluso abstraer detalles como no orden no que se realiza.
+Todo este procedimiento podría ser realizado por un equipo de infraestructura y aquí es donde entra en juego Terraform. De esta forma, es posible automatizar todas estas operaciones de despliegue e incluso abstraer detalles como el orden en que se realizan.
