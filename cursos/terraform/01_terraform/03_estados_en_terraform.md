@@ -22,7 +22,7 @@ Temos que ter moi en claro, que o noso **"estado desexado"** non é o mesmo que 
 
 Terraform á hora de aplicar o noso estado desexado seguirá os seguintes pasos:
 
-1. Análise dos ficheiros HCL.
+1. Análise dos ficheiros [HCL](https://terraform-infraestructura.readthedocs.io/es/latest/sintaxis/) (HashiCorp Configuration Language).
 2. Usando a información dos nosos ficheiros HCL, constrúese un esquema dos recursos que queremos aprovisionar (**_estado desexado_**), e resólvense as dependencias entre eles para decidir unha orde lóxica na que crealos.
 3. Inspeccionamos o noso **estado actual** (se é que o temos) para comprobar que é o que temos e o que non temos despregado. Este é o **estado percibido** xa que non hai conexión entre o que Terraform cré que existe e o que realmente existe.
 4. A continuación realízase unha análise lóxica entre o noso **estado desexado** e o noso **estado percibido**, para posteriormente decidir que accións [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) son necesarias e a orde das mesmas para alinear o noso **estado percibido** co noso **estado desexado**.
@@ -37,7 +37,7 @@ Neste diagrama vemos que á hora de crear un recurso Terraform debe revisar prim
 
 ## Estados non reconciliados
 
-A pregunta agora sería: ¿qué sucedería se co paso do tempo alguén borra o noso grupo de recursos declarado?, ¿qué sucedería se relanzamos o noso Terarform?
+A pregunta agora sería: ¿qué sucedería se co paso do tempo alguén borra o noso grupo de recursos declarado?, ¿qué sucedería se relanzamos o noso Terraform?
 
 Vamos a ver os pasos que realizaría Terraform:
 
