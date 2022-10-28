@@ -1,4 +1,4 @@
-# Pods de control: límites y pruebas
+# Pods de control: limits & probes
 
 Sabemos que el pod es la unidad de construcción mínima, el bloque de construcción con el que hacemos nuestras aplicaciones.
 
@@ -11,9 +11,9 @@ Por otra parte, nuestros pods deberían poder tener "extremos" o "agujeros" espe
 * Si el pod está "live", la aplicación se ejecuta sin problemas.
 * Si el pod está "ready" cuando se inicia el pod, está preparado para recibir peticiones.
 
-Ambos problemas se resuelven en Kubernetes mediante límites y pruebas.
+Ambos problemas se resuelven en Kubernetes mediante limits y probes.
 
-## a) Límites y requests en pods
+## a) Limits y requests en pods
 
 ![pod3](../_media/03/pod3.png)
 
@@ -79,29 +79,29 @@ Como podemos ver, estamos configurando Requests (la cantidad mínima de recursos
 
 Los límites se fijan en 128Mi de RAM y 500m o 500 milicores.
 
-## b) Pruebas en pods
+## b) Probes en pods
 
 Como dijimos al comienzo de esta unidad, los K8s debe saber acerca de un pod:
 
 * Si está en funcionamiento.
 * Si está ready para recibir peticiones.
  
- Kubernetes resuelve estos problemas a través de pruebas.
+ Kubernetes resuelve estos problemas a través de probes.
 
-Las pruebas son peticiones http o comandos que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, K8s puede concluir que el pods está inservible (el programa principal no está funcionando) o que aún no está ready para funcionar (el programa principal del pod aún se está iniciando).
+Las probes son peticiones http o comandos que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, K8s puede concluir que el pods está inservible (el programa principal no está funcionando) o que aún no está ready para funcionar (el programa principal del pod aún se está iniciando).
 
 ![pod6.png](../_media/03/pod6.png)
 
-Hay dos tipos esenciales de pruebas:
+Hay dos tipos esenciales de probes:
 
 * **Readiness probe**: Prueba para determinar si el contenedor del pod está ready o no para recibir peticiones.
 * **Liveness probe**: Prueba que determina la "salud" del contenedor, si está funcionando correctamente.
 
-### i) Definición de prueba
+### i) Definición de probe
 
-Las pruebas, como decíamos, son programas para ejecutar las peticiones http a realizar.
+Las probes, como decíamos, son programas para ejecutar las peticiones http a realizar.
 
-Una prueba, independientemente de su tipo, tiene las siguientes partes:
+Una probe, independientemente de su tipo, tiene las siguientes partes:
 
 * Comando o URL de petición.
 * Argumentos de comando.
@@ -111,7 +111,7 @@ Una prueba, independientemente de su tipo, tiene las siguientes partes:
 En un ejemplo, tenemos el siguiente pod:
 
 ```yaml
-# pod_prueba_live.yaml
+# pod_probe_live.yaml
 kind: Pod
 apiVersion: v1
 metadata:
@@ -205,7 +205,7 @@ pod-sonda-live                            1/1     Running            1          
 
 Y vemos que hay un reinicio de nuestro contenedor (en el momento en que borramos el fichero). Cuando se reinicie, el archivo volverá a estar en su sitio porque está incluido en la imagen.
 
-### ii) Definición de una prueba de tipo de petición http
+### ii) Definición de una probe de tipo de petición http
 
 En este caso, vamos a crear una readinessProbe (pod preparado) mediante una petición http.
 
@@ -233,17 +233,17 @@ Lanzamos un pod con nginx. Creamos una readinessProbe y después de esperar 15 s
 
 Una vez que responde, el pod entra en estado ready y estará preparado para recibir peticiones.
 
-### iii) Uso de pruebas con servicios y deploys
+### iii) Uso de probes con servicios y deploys
 
-Las pruebas en live y ready son muy importantes cuando se trabaja con deploy que tienen una gran cantidad de réplicas. Pensemos:
+Las probes en live y ready son muy importantes cuando se trabaja con deploy que tienen una gran cantidad de réplicas. Pensemos:
 
 * Cada vez que se inicia una nueva réplica, el pod no recibirá solicitudes a través del servicio hasta que esté en estado **ready**, es decir, hasta que la prueba (readinessProbe) no devuelva ok.
 * Si un pod falla (el programa principal deja de funcionar), la prueba de salud (livenessProbe) detecta el fallo y reinicia el contenedor. Mientras no vuelva a estar **ready** no recibirá peticiones a través del servicio.
  
-Estas dos pruebas nos permiten monitorear los pods y garantizar que no se envíen peticiones a un pod que se encuentra en un estado inestable.
+Estas dos probes nos permiten monitorear los pods y garantizar que no se envíen peticiones a un pod que se encuentra en un estado inestable.
 
 Documentación oficial:
-- [Pruebas en contenedores](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
-- [Pruebas](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
+- [Container probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Probes](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
 - [http get action v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#httpgetaction-v1-core)
 

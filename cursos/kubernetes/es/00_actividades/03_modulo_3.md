@@ -263,7 +263,7 @@ Si tienes alguna duda o consulta sobre cómo realizar la tarea, pregúntala en e
 
 Para poder hacer esta práctica, necesitamos:
 - Revisar el tema que dejamos en este módulo, en especial la sección sobre [ingress](https://prefapp.github.io/formacion/cursos/kubernetes/#/./03_configuracion/06_Ingress_controlando_o_trafico).
-- Comprar tener que crear un controlador de ingreso en el cluster Kind, o crear el cluster con el [fichero.sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md) resultante de la [Práctica guiada Kind](03_configuracion/10_practica_guiada_tipo).
+- Se debe crear un controlador de ingress en el cluster Kind, o crear el cluster con el [fichero.sh](00_solucions/03_solucion/despregar-cluster-con-registry-e-ingress.md) resultante de la [Práctica guiada Kind](03_configuracion/10_practica_guiada_tipo).
 
 Ahora que sabemos [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress), lo usaremos para configurar dos versiones de la aplicación del curso y redirigir el tráfico según el acceso sendero.
 
