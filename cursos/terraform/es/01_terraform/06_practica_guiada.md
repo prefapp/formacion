@@ -1,17 +1,17 @@
-# Módulo 3: Referenciando recursos
-Continuaremos co noso proxecto levantando máis recursos e referenciando para saber como comunicarnos entre os mesmos.
+# Módulo 3: Recursos de referencia
+Seguimos con nuestro proyecto levantando más recursos y referenciando para saber comunicarnos entre todos.
 
-Como estivemos a ver, todo o que podemos facer ca consola de AWS podémolo facer con Terraform, así que tomaremos vantaxe disto e seguiremos creando máis recursos dende o noso Terraform.
+Como hemos visto, todo lo que podemos hacer en la consola de AWS lo podemos hacer con Terraform, así que aprovecharemos esto y seguiremos creando más recursos desde nuestro Terraform.
 
-### 1. O VPC
-> O primeiro que imos a crear é a VPC por levar unha orde lóxica, pero cabe ter en conta que Terraform non sigue unha orde secuencial no momento de ir lendo o código, polo que nos resulta indiferente a orde na que vaiamos colocando os diferentes bloques de elemntos. Iso non quita de que resulta de suma importancia ter unha estructura clara á hora de traballar.
+### 1. VPC
+> Lo primero que vamos a crear es la VPC por seguir un orden lógico, pero hay que tener en cuenta que Terraform no sigue un orden secuencial a la hora de leer el código, por lo que nos es indiferente el orden en el que colocamos los diferentes bloques de elementos. Eso no quita el hecho de que es extremadamente importante tener una estructura clara cuando se trabaja.
 
-As sigras [VPC](https://aws.amazon.com/vpc/) veñen de Virtual Private Cloud, que ven sendo unha red privada e illada no noso entorno de AWS. Podemos crear cantas desexemos e estarán illadas unhas das outras en todo momento. Para crear unha VPC como sempre volvemos a facer uso da [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) e buscamos o recurso de [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc).
+El acrónimo [VPC](https://aws.amazon.com/vpc/) proviene de Virtual Private Cloud, que es una red privada y aislada en nuestro entorno de AWS. Podemos crear tantos como queramos y estarán aislados unos de otros en todo momento. Para crear una VPC volvemos a hacer uso de la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) y buscamos el recurso de [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc).
 
-A configuración e moi sinxela xa que só precisamos definir o cidr_block que é o rango de direccións IP da nosa VPC e podemos darlle un nome ó noso recurso. Podemos inclusive engadirlle unha `tag` para referenciar o recurso no noso AWS, o cal se define con `Name`:
+La configuración es muy sencilla ya que solo necesitamos definir el cidr_block que es el rango de direcciones IP de nuestra VPC y podemos darle un nombre a nuestro recurso. Incluso podemos agregar una `tag` para hacer referencia al recurso en nuestro AWS, que se define con `Name`:
 
 ```terraform
-# Creamos a nosa VPC
+# Creamos nuestra VPC
 resource "aws_vpc" "primeira_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -19,11 +19,11 @@ resource "aws_vpc" "primeira_vpc" {
   }
 }
 ```
-### 2. A subnet
-A continuación iremos a crear unha subnet dentro da nosa VPC que acabamos de crear para segmentar a nosa rede. Igual que nos pasos anteriores na [documentación da subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) especifícase todo de maneira moi sinxela.
+### 2. subnet
+A continuación, vamos a crear una subnet dentro de nuestra VPC que acabamos de crear para segmentar nuestra red. Como en los pasos anteriores en la [documentación de la subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) se especifica de forma muy sencilla.
 
 ```terraform
-# Creamos a nosa subnet dentro da VPC
+# Creamos nuestra subnet dentro de la VPC
 resource "aws_subnet" "primeira_subnet" {
   vpc_id     = aws_vpc.primeira_vpc.id
   cidr_block = "10.0.1.0/24"
@@ -33,114 +33,113 @@ resource "aws_subnet" "primeira_subnet" {
   }
 }
 ```
-Aquí temos varias cousas a destacar:
-- Engadimos un nome ó noso recurso,
-- O `cidr_block` está dentro do rango de direccións especificado na VPC que queremos usar.
-- Referenciamos a VPC mediante `vpc_id`.
-- Engadimos unha `tag` para diferenciar a nosa subnet.
+Aquí hay varias cosas a tener en cuenta:
+- Agregamos un nombre a nuestro recurso.
+- El `cidr_block` está dentro del rango de direcciones especificado en la VPC que queremos usar.
+- Nos referimos a VPC usando `vpc_id`.
+- Agregamos una `tag` para diferenciar nuestra subnet.
 
-Aquí vemos unha cousa moi interesante, que Terraform nos permite referenciar recursos dentro do mesmo ficheiro dunha maneira moi rápida. Neste caso referenciamos a nosa VPC indicando o tipo de recurso, o nome de recurso e a propiedade de éste que nos piden todo separado por puntos. Como vemos no exemplo de arriba quedaríanos tal que así:
+Aquí vemos algo muy interesante, que Terraform nos permite referenciar recursos dentro de un mismo fichero de una forma muy rápida. En este caso nos referimos a nuestra VPC indicando el tipo de recurso, el nombre del recurso y la propiedad de este que nos pide separado por puntos. Como vemos en el ejemplo anterior, quedaría así:
 ```terraform
 vpc_id = aws_vpc.primeira_vpc.id
 ```
-Agora só faltaría realizar un `terraform apply` e lanzaríamos a nosa nova configuración. Se todo está correcto, dentro da consola de AWS no noso apartado de VPC poderíamos ver como temos a nosa VPC funcionando, co `cidr_block` e o `Name` que especificamos:
+
+Ahora solo nos falta realizar un `terraform apply` y lanzaríamos nuestra nueva configuración. Si todo es correcto, dentro de la consola de AWS, en nuestra sección de VPC, podremos ver como tenemos funcionando nuestra VPC, con el `cidr_block` y el `Name` especificados:
 
 ![VPC](./../_media/vpc.png)
 
-Do mismo xeito se imos ó apartado de subnets na nosa consola de AWS poderíamos ver a nosa subnet:
+De la misma manera si vamos a la sección de subnets en nuestra consola de AWS podríamos ver nuestra subnet:
 
 ![VPC](./../_media/subnet.png)
 
-Vemos como a nosa subnet apunta á nosa VPC que nomeamos `production`, e que ten correctamente asignado un nome e o bloque de dirección.
+Vemos como nuestra subnet apunta a nuestra VPC que llamamos `production`, y que se le ha asignado correctamente un nombre y un bloque de dirección.
 
-> ⚠️ Se o entrar vemos máis dunha VPC e unha subnet non nos debemos preocupar, xa que AWS créanos unha VPC cunha serie de subnets por defecto que imos a obviar. 
-
-
+> ⚠️ Si entrando vemos más de una VPC y una subnet. No debemos preocuparnos, ya que AWS crea una VPC con una serie de subnets por defecto que vamos a ignorar.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Captura de pantalla da VPC.
-- Captura de pantalla da subnet dentro da VPC creada.
+**Evidencia de la adquisición de actuaciones**:
+- Captura de pantalla de la VPC.
+- Captura de pantalla de la subnet dentro de la VPC creada.
 
-**Indicadores de logro**: 
-- Creado correctamente os recursos.
-- Uso de TAGS e referencias para enlazar recursos.
+**Indicadores de logros**:
+- Creó correctamente los recursos.
+- Uso de TAGS y referencias para vincular recursos.
 
 **Criterios de corrección**:
-- 5 puntos se hai unha captura da pantalla ca VPC na consola de AWS.
-- 5 puntos se hai unha captura da pantalla ca subnet apuntando á VPC na consola de AWS.
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+- 5 puntos si hay una captura de pantalla de la VPC en la consola de AWS.
+- 5 puntos si hay una captura de pantalla de la subnet que apunta a la VPC en la consola de AWS.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 25 puntos
-- Peso desta tarefa no seu tema ....................................................... 25 %
+**Peso en calificación**:
+- Peso de esta tarea en la calificación final .................................. 25 puntos
+- Peso de esta tarea en su tema ..................................................... 25%
 ---
 
-# Módulo 4: Ficheiros de Terraform
-Mentres estivemos na práctica destes exercicios tal vez percatámonos nuns ficheiros que se foron creando e que resultan fundamentais saber que son e que fan no noso traballo con Terraform. Imos cun anaco de teoría:
+# Módulo 4: Ficheros Terraform
+Mientras practicábamos estos ejercicios, es posible que nos hayamos fijado en algunos ficheros que se han creado. Es fundamental saber qué son y qué hacen en nuestro trabajo con Terraform. Vamos con un poco de teoría:
 
 ### 1. Directorio Terraform
 
-No noso primer comando `terraform init` puidemos comprobar como se crearon unha serie de ficheiros e un directorio. Este directorio créase cando creamos novos plugins, por iso no momento de lanzar o `terraform init` para iniciar o noso Terraform, éste automáticamente xenera este directorio e vai instalar os plugins necesarios para que o noso código poida correr.
+En nuestro primer comando `terraform init` pudimos comprobar cómo se creaban una serie de archivos y un directorio. Este directorio se crea cuando creamos nuevos complementos, por lo que cuando ejecutamos `terraform init` para iniciar nuestro Terraform, genera automáticamente este directorio e instala los plugins necesarios para que nuestro código pueda ejecutarse.
 
-Como só temos un provider, todo o noso código será instalado na mesma carpeta. Poderíamos incluso borrar a nosa carpeta como demostración, e lanzando de novo o `terraform init` volveríase crear automáticamente con plugins necesarios.
+Como solo tenemos un proveedor, todo nuestro código se instalará en la misma carpeta. Incluso podríamos eliminar nuestra carpeta de demostración, y ejecutar `terraform init` la recrearía nuevamente de forma automática con los complementos necesarios.
 
-### 2. O ficheiro terraform.tfstate
+### 2. El fichero terraform.tfstate
 
-O ficheiro [terraform.tfstate](https://www.terraform.io/language/state) representa o noso estado de terraform. Almacena o estado da nosa infraestrutura e configuración e serve para ter constancia e comprobar o noso estado actual para poder comparalo co noso código.
+El fichero [terraform.tfstate](https://www.terraform.io/language/state) representa nuestro estado de terraform. Almacena el estado de nuestra infraestructura y configuración y sirve para registrar y verificar nuestro estado actual para que podamos compararlo con nuestro código.
 
-O ficheiro está en formato [JSON](https://www.json.org/json-en.html), e aínda que podemos editar nel non é recomendable, pois aconséllase traballar usando o CLI.
+El fichero está en formato [JSON](https://www.json.org/json-en.html), y aunque podemos editarlo no es recomendable, ya que se recomienda trabajar con CLI.
 
-Se accedemos podemos ver toda a nosa configuración creada, que neste caso sería a definición do noso provider, a VP e a subnet.
+Si accedemos podremos ver toda nuestra configuración creada, que en este caso sería la definición de nuestro provider, el VPC y la subnet.
 
-Este ficheiro é o **recurso principal** de Terraform para administrar o noso código e no caso de problemas ou incoherencias será a nosa fonte principal de credibilidade para recrear a nosa infraestrutura.
+Este fichero es el **recurso principal** de Terraform para administrar nuestro código y, en caso de problemas o incoherencias, será nuestra principal fuente de credibilidad para recrear nuestra infraestructura.
 
 
-### 3. O ficheiro terraform.tfstate.backup
+### 3. El fichero terraform.tfstate.backup
 
-Como o seu propio nome indica almacénanos un backup do noso ficheiro de estado en caso de que o noso tfstate pérdase ou esté corrupto.
+Como su nombre indica, almacena una copia de seguridad de nuestro fichero de estado en caso de que nuestro tfstate se pierda o este corrupto.
 
-### 4. O ficheiro terraform.tfvars
+### 4. El fichero terraform.tfvars
 
-O tfvars é o ficheiro de [variables de entrada](https://www.terraform.io/language/values/variables) o cal nos permite customizar diferentes aspectos dos nosos módulos de terraform sen necesidade de alterar o código orixe. Esto danos moitísima versatilidade á hora de traballar con diferentes configuracións, facendo así o noso código máis limpo, modular e reutilizable.
+El tfvars es el fichero de [variables de entrada](https://www.terraform.io/language/values/variables) que nos permite personalizar diferentes aspectos de nuestros módulos de terraform sin necesidad de alterar el código fuente. Esto nos da mucha versatilidad a la hora de trabajar con diferentes configuraciones, haciendo así nuestro código más limpio, modular y reutilizable.
 
 ---
 
-# Módulo 5: Metendo as mans na masa
+# Módulo 5: Metiendo las manos en la masa
 
-Neste módulo crearemos todo o que vimos ata agora:
-- Definimos o provider
-- Engadiremos a nosa VPC
-- Creamos un Internet Gateway
-- Creamos unha Route Table
-- Asociamos a nosa subnet ca Route Table
-- Creamos un Security Group para permitir os portos 22 (SSH), 80 (HTTP) e 443 (HTTPS)
-- Creamos unha interfaz de rede cunha IP na subnet creada previamente
-- Asignamos un Elastic IP á interfaz de rede
-- Creamos o par de chaves de acceso
-- Creamos o noso Ubuntu server e instalamos/habilitamos apache2
+En este módulo crearemos todo lo que hemos visto hasta ahora:
+- Definimos el provider.
+- Agregaremos nuestra VPC.
+- Creamos un Internet Gateway.
+- Creamos una Route Table.
+- Asociamos nuestra subnet a la Route Table
+- Creamos un Security Group para permitir los puertos 22 (SSH), 80 (HTTP) y 443 (HTTPS)
+- Creamos una interfaz de red con una IP en la subnet creada previamente.
+- Asignamos una Elastic IP a la interfaz de red.
+- Creamos el par de claves de acceso.
+- Creamos nuestro Ubuntu Server e instalamos/habilitamos apache2.
 
-### 1. Creando a instancia EC2
+### 1. Creando la instancia EC2
 
-A provider o imos aproveitar da práctica guiada anterior:
+El provider aprovechará la práctica guiada anterior:
 
 ```terraform
-# Definimos o noso provider AWS cas credenciais
+# Definimos nuestro provider AWS con las credenciales
 provider "aws" {
   region = "us-east-1"
   access_key = "access_key_ID"
   secret_key = "secret_access_key"
 }
 ```
-Se non recordamos o procedemento sempre podemos [voltar para revisar a documentación](05_practica_guiada.md#2.-Asignando-as-nosas-credenciais).
+Si no recordamos el procedimiento siempre podemos [volver a revisar la documentación](05_practica_guiada.md#2.-Asignando-as-nosas-credenciais).
 
-### 2. Engadimos a VPC
+### 2. Agregamos la VPC
 
-Do mesmo xeito aproveitamos a práctica do [Módulo 3](#1.-O-VPC):
+De igual forma aprovechamos la práctica del [Módulo 3](#1.-O-VPC):
 
 ```terraform
-# Creamos a nosa VPC
+# Creamos nuestra VPC
 resource "aws_vpc" "primeira_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -150,29 +149,28 @@ resource "aws_vpc" "primeira_vpc" {
 ```
 ### 3. Creamos un Internet Gateway
 
-A [Internet Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html) permítenos conectar a nosa VPC e internet,  serve dous propósitos básicos:
-- Proveer dun obxetivo na nos Route Table da VPC para o tráfico direccionable de internet.
-- Realizar a conversión NAT para as instancias que teñan asignadas direccións IPv4 públicas.
+El [Internet Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html) nos permite conectar nuestra VPC e internet, tiene dos propósitos básicos:
+- Proporcionar un objetivo en la Route Table de la VPC para el tráfico de Internet.
+- Realiza la conversión NAT para las instancias a las que tiene asignadas direcciones IPv4 públicas.
 
-Voltamos á [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway):
+Volver a la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway):
 
 ```terraform
-# Creamos a internet gateway
+# Creamos el Internet Gateway
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.primeira_vpc.id
 }
 ```
-En `vpc_id = aws_vpc.primeira_vpc.id` indicamos referenciando á id do noso recurso VPC. 
+En `vpc_id = aws_vpc.primeira_vpc.id` indicamos la referencia al id de nuestro recurso VPC. 
 
+De momento vamos a prescindir de TAGs porque no es necesario para esta actividad.
 
-Polo momento imos prescindir da TAG pois non é necesario para esta actividade.
+### 4. Creamos la Route Table
 
-### 4. Creamos a Route Table
-
-En AWS cada subnet debe estar asociada cunha Route Table, que especifica as rutas permitidas para o tráfico saínte da subred. Sacamos a configuración da [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table):
+En AWS cada subnet debe estar asociada con una Route Table, que especifica las rutas permitidas para el tráfico saliente de la subnet. Sacamos la configuración de la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table):
 
 ```terraform
-# Creamos a Route Table
+# Creamos la Route Table
 resource "aws_route_table" "pro_route_table" {
   vpc_id = aws_vpc.primeira_vpc.id
 
@@ -191,19 +189,19 @@ resource "aws_route_table" "pro_route_table" {
   }
 }
 ```
-Cousas a ter en conta:
-- Referenciamos o `vpc_id = aws_vpc.primeira_vpc.id`.
-- Modificamos o `cidr_block = "0.0.0.0/0"` para que por defecto ruteé todo o tráfico de IPv4.
-- Referenciamos o `gateway_id = aws_internet_gateway.gw.id`.
-- En IPv6 o `cidr_block` xa está provisionado por defecto.
-- Punteamos `egress_only_gateway_id = aws_internet_gateway.gw.id` coa mesma gateway.
+Cosas a considerar:
+- Hacemos referencia a `vpc_id = aws_vpc.primeira_vpc.id`.
+- Modificamos el `cidr_block = "0.0.0.0/0"` para que por defecto enrute todo el tráfico de IPv4.
+- Hacemos referencia a `gateway_id = aws_internet_gateway.gw.id`.
+- En IPv6 el `cidr_block` ya está provisionado por defecto.
+- Apuntamos `egress_only_gateway_id = aws_internet_gateway.gw.id` con la misma Gateway.
 
-### 5. Creamos a nosa subnet
+### 5. Creamos nuestra subnet
 
-Podemos coller de exemplo a subnet creada no [Módulo 3](#2.-A-subnet) e a adaptamos:
+Podemos tomar como ejemplo la subnet creada en el [Módulo 3](#2.-A-subnet) y adaptarla:
 
 ```terraform
-# Creamos a nosa subnet dentro da VPC
+# Creamos nuestra subnet dentro de la VPC
 resource "aws_subnet" "primeira_subnet" {
   vpc_id     = aws_vpc.primeira_vpc.id
   cidr_block = "10.0.1.0/24"
@@ -215,28 +213,28 @@ resource "aws_subnet" "primeira_subnet" {
 }
 ```
 
-Agregamos a `availability_zone = "us-east-1a"` para ter unificados todos os puntos á hora de realización das tarefas.
+Agregamos a `availability_zone = "us-east-1a"` para tener unificados todos los puntos a la hora de realizar las tareas.
 
-#### 6. Asociamos a nosa subnet ca Route Table
+#### 6. Asociamos nuestra subnet con la Route Table
 
-Para asocuar a nosa subnet ca Route Table en AWS temos outro recurso denominado [aws_route_table_association
-](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) que imos a empregar:
+Para asociar nuestra subred con la Route Table en AWS tenemos otro recurso llamado [aws_route_table_association
+](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) que usaremos:
 
 ```terraform
-# Asociamos a subnet ca Route Table
+# Asociamos la subnet con la Route Table
 resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.primeira_subnet.id
   route_table_id = aws_route_table.pro_route_table.id
 }
 ```
-Non imos referenciar este recurso polo que deixamos o nome `a` tal como está, e referenciamos tanto a `subnet_id = aws_subnet.primeira_subnet.id` como a `route_table_id = aws_route_table.pro_route_table.id`.
+No vamos a hacer referencia a este recurso por lo que dejamos el nombre `a` tal como está, y hacemos referencia tanto a `subnet_id = aws_subnet.primeira_subnet.id` como a `route_table_id = aws_route_table.pro_route_table.id`.
 
-### 7. Creamos un Security Group para permitir os portos 22 (SSH), 80 (HTTP) e 443 (HTTPS)
+### 7. Creamos un Security Group para permitir los puertos 22 (SSH), 80 (HTTP) y 443 (HTTPS)
 
-Un security group funciona como un firewall virtual para instancias EC2 para controlar o tráfico entrante e saínte. Actúa no ámbito da instancia non na subnet. Vamos a facer uso da [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group):
+Un security group actúa como un firewall virtual para instancias EC2 para controlar el tráfico entrante y saliente. Actúa en el ámbito de la instancia, no en la subnet. Usemos la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group):
 
 ```terraform
-# Configuración do security group
+# Configuración de el security group
 resource "aws_security_group" "permitir_web" {
   name        = "permitir_trafico_web"
   description = "Permitir trafico web entrante"
@@ -282,39 +280,39 @@ resource "aws_security_group" "permitir_web" {
   }
 }
 ```
-Definimos os seguintes puntos:
-- Asignameos nome, descripción e referenciamos a id da nosa VPC.
-- Diferenciamos entre as regras de `ingress` (entrada) e `egress` (saída).
-- Creamos unha regra para cada un dos casos que queremos:
-  - Tráfico SSH para poder conectarnos por SSH mediante o porto 22.
-  - Tráfico HTTP para poder conectanos por protocolo web mediante o porto 80.
-  - Tráfico HTTPS para poder conectanos por protocolo web seguro mediante o porto 443.
-- No `cidr_blocks` e `ipv6_cidr_blocks` damos acceso ás direccións que queremos, pero xa que estamos a crear un servidor web damos acceso a todos.
-- En `from_port` e `to_port` podemos especificar un rango de portos se así precisamos.
-- Permitimos tódolos portos no `egress`, calquer ip de saída nos`cidr_blocks` e `ipv6_cidr_blocks` e tódolos protocolos indicando `protocol = "-1"`.
+Definimos los siguientes puntos:
+- Asignamos nombre, descripción y hacemos referencia a la id de nuestra VPC.
+- Diferenciamos entre las reglas de `ingress` (entrada) y de `egress` (salida).
+- Creamos una regla para cada uno de los casos que queremos:
+  - Tráfico SSH para poder conectarnos por SSH mediante el puerto 22.
+  - Tráfico HTTP para poder conectarnos por protocolo web mediante el puerto 80.
+  - Tráfico HTTPS para poder conectarnos por protocolo web seguro mediante el puerto 443.
+- En el `cidr_blocks` y `ipv6_cidr_blocks` damos acceso a las direcciones que queramos, pero como estamos creando un servidor web damos acceso a todos.
+- En `from_port` y `to_port` podemos especificar un rango de puertos si es necesario.
+- Permitimos todos los puertos en el `egress`, cualquier ip de salida en el `cidr_blocks` y `ipv6_cidr_blocks` y todos los protocolos que indiquen `protocol = "-1"`.
 
-> Resulta de suma importancia sempre ter moi ben definida as nosas regras de ingress para evitar erros na seguridade da nosa infraestrutura.
+> Es sumamente importante tener siempre muy bien definidas nuestras reglas de entrada para evitar errores en la seguridad de nuestra infraestructura.
 
-### 8. Creamos a interfaz de rede
+### 8. Creamos la interfaz de red
 
-A continuación crearemos unha interfaz de rede, que son esencialmente tarxetas de rede virtuais que podemos engadir ás nosas instancias EC2. Úsanse para habilitar a conexión de rede para as nosas instancias. Aquí temos a [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface):
+A continuación, crearemos una interfaz de red, que son esencialmente tarjetas de red virtuales que podemos agregar a nuestras instancias EC2. Se utilizan para habilitar la conexión de red para nuestras instancias. Aquí está la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface):
 
 ```terraform
-# Creamos  interfaz de rede
+# Creamos la interfaz de red
 resource "aws_network_interface" "nic_servidor_web" {
   subnet_id       = aws_subnet.primeira_subnet.id
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.permitir_web.id]
 }
 ```
-Creamos a nosa interfaz de rede e a vincualamos ca subnet anterior. Asignamos tamén unha lista de IPs das que temos dispoñibles dentro da nosa subnet e referenciamos o noso security group. Esto creános unha IP privada para o host que nos permita realizar tarefas como conexión por VPN ou SSH para administración por exemplo.
+Creamos nuestra interfaz de red y la vinculamos a la subnet anterior. También asignamos una lista de IPs que tenemos disponibles dentro de nuestra subnet y hacemos referencia a nuestro Security group. Esto crea una IP privada para el host que nos permite realizar tareas como conexión por VPN o SSH para administración por ejemplo.
 
-### 9. Asignamos unha Elastic IP
+### 9. Asignamos una Elastic IP
 
-A Elastic IP é un recurso que nos xenera unha IP pública e que nos permite que calquer persona en internet poida acceder mediante esa dirección. Deixo aquí o [link a documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip):
+La IP elástica es un recurso que genera una IP pública y nos permite que cualquier persona en Internet acceda a ella a través de esa dirección. Dejo aquí el [link a documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip):
 
 ```terraform
-# Asignamos a EIP
+# Asignamos la EIP
 resource "aws_eip" "one" {
   vpc                       = true
   network_interface         = aws_network_interface.nic_servidor_web.id
@@ -323,37 +321,37 @@ resource "aws_eip" "one" {
 }
 ```
 
-Nos valores deixamos `vpc = true` xa que o EIP está dentro dunha VPC, referenciamos a network_interface e asociamos cunha IP privada da lista que creamos na interfaz de rede (neste caso só creamos unha).
+En los valores dejamos `vpc=true` ya que el EIP está dentro de una VPC, referenciamos network_interface y lo asociamos a una IP privada de la lista que creamos en la interfaz de red (en este caso solo creamos una).
 
-> Como comentamos antes, Terraform non precisa dunha orde concreta na declaración dos recursos xa que é o suficientemente intelixente para figurar como ir desplegando, **SALVO EXCEPCIÓNS**:
+> Como discutimos antes, Terraform no necesita un orden específico en la declaración de recursos, ya que es lo suficientemente inteligente como para descubrir cómo implementar, **CON EXCEPCIONES**:
 >
-> Na [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) indícase que o EIP require que o IGW sexa deploiado primeiro. Para solventar ese problema engadimos a flag `depends_on` e referenciamos unha lista co obxeto, neste caso o IGW.
+> En la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) se indica que el EIP requiere que se despliegue primero el IGW. Para solventar este problema, agregamos el indicador `depends_on` y hacemos referencia a una lista con el objeto, en este caso, el IGW.
 
 ### 11. Key pairs
 
-Key pairs consta de un par de claves ( pública e privada ) que forman un conxunto de credenciais de seguridade, e que se utilizan para autenticarnos cando nos conectamos a unha instancia EC2 de AWS. EC2 almacena a clave pública na súa instancia e nos almacenamos a clave privada
+Key pairs consisten en un par de claves (pública y privada) que forman un conjunto de credenciales de seguridad, y que se utilizan para autenticarnos cuando nos conectamos a una instancia EC2 de AWS. EC2 almacena la clave pública en su instancia y nosotros almacenamos la clave privada.
 
-> ⚠️ É de suma importancia ter almacenadas as nosas claves privadas nun lugar seguro.
+> ⚠️ Es sumamente importante tener nuestras claves privadas almacenadas en un lugar seguro.
 
-Para a creación das claves accedemos á nosa `consola de AWS -> EC2 -> Network & Security -> Key Pairs`.
+Para la creación de las claves accedemos en `consola de AWS -> EC2 -> Network & Security -> Key Pairs`.
 
-Unha vez dentro na esquina superior dereita prememos o botón de Create key pair:
+Una vez dentro en la esquina superior derecha pulsamos el botón de "Create key pair":
 
 ![Key pair](./../_media/key_pair.png)
 
-> No momento de creación temos dos formatos distintos:
+> En el momento de la creación tenemos dos formatos diferentes:
 >
-> - **.pem** para MacOs ou Linux ( [OpenSSH](https://www.openssh.com/) )
+> - **.pem** para MacOs o Linux ( [OpenSSH](https://www.openssh.com/) )
 > - **.ppk** para usar con Windows ( [Putty](https://www.putty.org/) )
 
-No momento da creación, váisenos descargar automáticamente. Esta clave vainos a permitir conectar co noso servidor cando o deploiemos.
+En el momento de la creación, se descargarán automáticamente. Esta clave nos permitirá conectarnos a nuestro servidor cuando lo implementemos.
 
-### 12. Creamos o noso Ubuntu server e instalamos/habilitamos apache2
+### 12. Creamos nuestro Ubuntu Server e instalamos/habilitamos apache2
 
-Para a creación do noso server vamos a reusar a nosa [instancia creada](05_practica_guiada.md#3.-O-noso-primer-recurso,-a-instancia) e engadimos as diferentes configuracións tal como nos ensina na [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) e instalamos un servidor web ( [apache2] ):
+Para crear nuestro server vamos a reutilizar nuestra [instancia creada](05_practica_guiada.md#3.-O-noso-primer-recurso,-a-instancia) y agregamos las diferentes configuraciones tal como nos enseña la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) e instalamos un servidor web ( [apache2] ):
 
 ```terraform
-# Creamos a nosa instancia EC2 de tipo t2.micro
+# Creamos nuestra instancia EC2 de tipo t2.micro
 resource "aws_instance" "meu_servidor" {
   ami               = "ami-0e472ba40eb589f49"
   instance_type     = "t2.micro"
@@ -377,56 +375,51 @@ resource "aws_instance" "meu_servidor" {
   }
 }
 ```
-Declaramos os seguintes conceptos:
+Declaramos los siguientes conceptos:
 - A `availability_zone = "us-east-1a"` tal como definimos anteriormente
-- A nosa key recén creada co nome que lle demos.
-- O bloque da nosa interfaz de rede en `network_interface`:
-  - O `device_index = 0` se refire á primeira interfaz de rede, xa que empezamos a contar de 0.
-  - A id da nosa interfaz de rede.
-- Para facer a nosa proba dun modo sinxelo vamos a facer uso dun pequeno script que pasaremos á flag `user_data` para que faga o despregue do noso apache2 e comprobar o funcionamento do mesmo.
+- Nuestra key recién creada con el nombre que le dimos.
+- El bloque de nuestra interfaz de red en `network_interface`:
+  - El `device_index = 0` se refiere a la primera interfaz de red, ya que empezamos a contar desde 0.
+  - La id de nuestra interfaz de red.
+- Para hacer nuestra prueba de un modo sencillo vamos a hacer uso de un pequeño script que pasaremos al flag `user_data` para que haga el despliegue de nuestro apache2 y comprobar el funcionamiento del mismo.
 
-Con isto xa quedaría facer un `terraform apply` e se todo está correcto estaría a inicializar a nosa instancia con tódolos recursos creados e cunha IP pública para acceder ó apache2.
+Con esto ya tendríamos que hacer un `terraform apply` y si todo está correcto estaríamos iniciando nuestra instancia con todos los recursos creados y con una IP pública para acceder al apache2.
 
-### 13. Probas
+### 13. Pruebas
 
-Se accedemos á nosa consola de AWS podemos ver como temos unha instancia creada co nome e características que lle demos:
+Si accedemos a nuestra consola de AWS podemos ver como tenemos una instancia creada con el nombre y características que le hemos dado:
 
 ![Instancia creada](./../_media/proba1_aws.png)
 
-Se agora collemos a IP pública que nos otorga e a introducimos no buscador teremos a nosa web funcionando:
+Si ahora cogemos la IP pública que nos da y la introducimos en el buscador, tendremos nuestra web funcionando:
 
 ![Web funcionando](./../_media/proba2_web.png)
 
-Agora imos a conectar por SSH e para iso na páxina da instancia temos un botón superior chamado **Connect** cas instrucións para conectarnos por SSH. No noso caso como user de Linux abrimos o noso cliente e usamos a key descargada previamente para conectarnos:
+Ahora vamos a conectarnos a través de SSH. En la página de la instancia tenemos un botón superior llamado **Connect** con instrucciones para conectarse a través de SSH. En nuestro caso, como user de Linux, abrimos nuestro cliente y usamos la clave previamente descargada para conectarnos:
 
 ![SSH](./../_media/proba3_openssh.png)
 
-Para Windows teríamos que facer uso do cliente [Putty](https://www.putty.org/)
+Para Windows tendríamos que hacer uso del cliente [Putty](https://www.putty.org/)
 
-> ⚠️ Unha vez teñamos toda a práctica feita podemos tirar todo abaixo co `terraform destroy`. Compre saber que aínda que estamos co free tier de Amazon sempre temos limitacións. É mellor sempre non ter activo o que non vaiamos a usar ou non precisemos.
+> ⚠️ Una vez que tengamos toda la práctica hecha podemos derribar todo con `terraform destroy`. Hay que tener en cuenta que aunque estemos con la capa gratuita de AWS tenemos limitaciones. Siempre es mejor no tener activo lo que no vamos a usar o no necesitemos.
 >
-> Ó ficheiro de Terraform darémoslle uso nos seguintes módulos de prácticas.
+> Usaremos el fichero Terraform en los siguientes módulos de práctica.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Captura de pantalla da instancia correndo en AWS
-- Captura de pantalla do server apache2 correndo en IP pública
-- Captura de pantalla de acceso mediante SSH
+**Evidencia de la adquisición de actuaciones**:
+- Captura de pantalla de la instancia que se ejecuta en AWS
+- Captura de pantalla del servidor apache2 ejecutándose en una IP pública
+- Captura de pantalla de acceso vía SSH
 
-**Indicadores de logro**: 
-- Creado correctamente os recursos.
-- Uso de TAGS e referencias para enlazar recursos.
-- O security groups está correctamente definido.
+**Indicadores de logros**:
+- Creó correctamente los recursos.
+- Uso de TAGS y referencias para vincular recursos.
+- Los grupos de seguridad están correctamente definidos.
 
 **Criterios de corrección**:
-- 5 puntos se hai unha captura da instancia na consola de AWS.
-- 5 puntos se hai unha captura da pantalla do apache2 correndo no buscador.
-- 5 puntos se hai acceso correcto mediante SSH
+- 5 puntos si hay una captura de la instancia en la consola de AWS.
+- 5 puntos si hay una captura de pantalla de apache2 ejecutándose en el navegador.
+- 5 puntos si hay acceso correcto vía SSH
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
-
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 40 puntos
-- Peso desta tarefa no seu tema ....................................................... 40 %
----
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
