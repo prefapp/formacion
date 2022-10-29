@@ -1,109 +1,116 @@
-# Módulo 1: Primeiros pasos, configuración e instalación
-Nesta tarefa imos a preparar o noso sistema antes de empezar ca nosa infraestrutura
+# Módulo 1: Primeros pasos, configuración e instalación
+En esta tarea vamos a preparar nuestro sistema antes de iniciar nuestra infraestructura cloud, todo esto desde cero con [AWS](https://aws.amazon.com/) y [Terraform](https://www.terraform.io/).
 
-tura cloud, todo isto dende cero con [AWS](https://aws.amazon.com/) e [Terraform](https://www.terraform.io/).
+Para poder trabajar con el proveedor [AWS](https://aws.amazon.com/) necesitamos la creación de una cuenta en la que utilizaremos el [free tier](https://aws.amazon.com/free) que tenemos en el Basic plan.
 
-Para poder traballar co provider [AWS](https://aws.amazon.com/) precisamos da creación dunha conta na que faremos uso de [free tier](https://aws.amazon.com/free) do que dispoñemos no Basic plan.
-Con este [free tier](https://aws.amazon.com/free) temos un ano de uso completamente gratuito nos servicios especificados sempre con certas limitacións.
+Con este [free tier](https://aws.amazon.com/free) tenemos un año de uso completamente gratuito de los servicios especificados siempre con ciertas limitaciones.
 
-O Basic plan é máis que suficiente para as prácticas e proxectos que vaiamos a deseñar neste curso.
-### 1. Instalación Terraform
+El Basic plan es más que suficiente para las prácticas y proyectos que diseñaremos en este curso.
+### 1. Instalación de Terraform
 
-Para a instalación de [Terraform](https://www.terraform.io/) podemos acceder á páxina de [descargas](https://www.terraform.io/downloads) e ahí temos tódalas opcións dos diferentes SOs. Aquí mostraremos un exemplo de cada un dos sistemas máis empregados
+Para la instalación de [Terraform](https://www.terraform.io/) podemos acceder a la página de [descargas](https://www.terraform.io/downloads) y allí tenemos todas las opciones para los diferentes SO. Aquí mostraremos un ejemplo de cada uno de los sistemas más utilizados
 
 #### 1.1 Windows
-1. Para Windows dispoñemos dun executable o cal extraemos trala descarga nun directorio da nosa elección (por exemplo, c:\terraform).
-2. Actualizamos a path do noso executable na path global do sistema:
+1. Para Windows disponemos de un ejecutable que extraemos después de descargarlo en un directorio de nuestra elección (por ejemplo, c:\terraform).
+2. Actualizamos el path de nuestro ejecutable en el path global del sistema:
 
 `Control Panel` -> `System` -> `System settings` -> `Environment Variables` -> `PATH`
 
-3. Abrimos unha nova terminal para que tome efecto o cambio
-4. Verificamos a configuración da variable global co comando de terraform:
+3. Abrimos una nueva terminal para que se haga efectivo el cambio
+4. Verificamos la configuración de la variable global con el comando terraform:
+
 ```shell
 terraform -version
 ```
+
 #### 1.2 macOS
-Co package manager [brew](https://brew.sh/) podemos realizar a instalación en macOS con dos simples comandos:
+Con el package manager [brew](https://brew.sh/) podemos realizar la instalación en macOS con dos simples comandos:
 ```bash
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 ```
 #### 1.3 Ubuntu/Debian
-Ó igual que en macOS temos o package manager [brew](https://brew.sh/) para instalar de manera idéntica:
+Al igual que en macOS tenemos el package manager [brew](https://brew.sh/) para instalarlo de forma idéntica:
+
 ```bash
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 ```
-Ou temos entre outras a opción mediante [curl](https://curl.se/) e a utilidade [apt](https://linuxize.com/post/how-to-use-apt-command/):
+
+O tenemos, entre otras, la opción [curl](https://curl.se/) y la utilidad [apt](https://linuxize.com/post/how-to-use-apt-command/):
+
 ```bash
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt-get update && sudo apt-get install terraform
 ```
+
 #### 1.4 VSCode extension (opcional)
-[Visual Studio Code](https://code.visualstudio.com/) é un poderoso editor de texto que nos permite traballar dunha maneira moi cómoda e áxil debido á súa versatilidade, facilidade e cantidade de plugins, e que se integra dunha maneira moi sinxela con [Terraform](https://www.terraform.io/).
+[Visual Studio Code](https://code.visualstudio.com/) es un potente editor de texto que nos permite trabajar de forma muy cómoda y ágil por su versatilidad, facilidad y número de plugins, y que se integra en un muy simple con [Terraform](https://www.terraform.io/).
 
-Para instalar a extensión de [Terraform](https://www.terraform.io/) en [Visual Studio Code](https://code.visualstudio.com/) e tan sinxelo como ir ó apartado das extensións, escribimos `terraform` no recadro de búsqueda e instalamos a extensión propia de [HashiCorp](https://www.hashicorp.com/), empresa de [Terraform](https://www.terraform.io/).
+Para instalar la extensión de [Terraform](https://www.terraform.io/) en [Visual Studio Code](https://code.visualstudio.com/) es tan sencillo como ir a la sección de extensiones, escribimos ` terraform' en el cuadro de búsqueda e instalamos la extensión propia de [HashiCorp](https://www.hashicorp.com/), empresa de [Terraform](https://www.terraform.io/).
 
-Podemos facer uso de calquer outro editor de texto de preferencia para a realización das actividades, pero debido á facilidade de uso e integración coas ferramentas que imos a usar recomendamos [Visual Studio Code](https://code.visualstudio.com/).
+Podemos utilizar cualquier otro editor de texto de nuestra preferencia para realizar las actividades, pero por la facilidad de uso e integración con las herramientas que vamos a utilizar, recomendamos [Visual Studio Code](https://code.visualstudio.com/).
 
-### 2. Creación da conta en AWS
+### 2. Creación de la cuenta en AWS
 
-Para a creación da nosa conta accedemos a [aws.amazon.com](https://aws.amazon.com) e vamos a crear a nosa conta AWS, premendo no botón da esquina superior dereita.
+Para crear nuestra cuenta, vaya a [aws.amazon.com](https://aws.amazon.com) y cree nuestra cuenta de AWS haciendo clic en el botón en la esquina superior derecha.
 
 ![Crear conta](./../_media/crear_aws.png)
 
 Requisitos:
-- Conta de correo
+- Cuenta de correo electrónico
 - Número de teléfono
-- Tarxeta de débito crédito
+- Tarjeta de crédito débito
 
-> ⚠️ Aínda que o Basic plan de [AWS](https://aws.amazon.com/) ten custo cero sempre dentro dos [límites de uso](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-limits.html), ó momento de crear a conta xérase un cargo de $1 USD/EUR no proceso de verificación o cal queda pendente. Nun prazo de 3 a 5 días ese cargo desaparece. Lembrar tamén de ir cerrando os recursos a medida que xa non os usemos.
+> ⚠️ El Basic plan de [AWS](https://aws.amazon.com/) tiene costo cero siempre dentro de los [límites de uso](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-limits.html), en el momento de crear la cuenta se genera un cargo de $1 USD/EUR en el proceso de verificación el cual queda pendiente. Dentro de 3 a 5 días esa carga desaparece. También recuerda cerrar los recursos ya que ya no los usamos.
 
 
-Para esta actividade imos a seleccionar o tipo de conta **Personal** e iremos introducindo os nosos datos persoais, así como verificándonos mediante o noso teléfono de contacto.
+Para esta actividad vamos a seleccionar el tipo de cuenta **Personal** e introducir nuestros datos personales, además de verificarnos con nuestro número de teléfono de contacto.
 
-Unha vez terminado logueamos como **ROOT user** e xa estaría listo.
+Una vez terminamos, logueamos como **ROOT user** y estará listo.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Captura de pantalla da versión de Terraform instalada
-- Captura de pantalla da conta en AWS creada
+**Evidencia de la adquisición de actuaciones**:
+- Captura de pantalla de la versión instalada de Terraform
+- Captura de pantalla de la cuenta de AWS creada
 
-**Indicadores de logro**: 
-- Correctamente instalado o Terraform.
-- Correctametne creada a conta de AWS e logueado co perfil ROOT.
+**Indicadores de logros**:
+- Terraform correctamente instalado.
+- Creó correctamente la cuenta de AWS e inició sesión con el perfil ROOT.
 
 **Criterios de corrección**:
-- 5 puntos se hai unha captura da pantalla coa saída da versión de Terraform.
-- 5 puntos se hai unha captura da pantalla coa conta de AWS correctamente creada.
+- 5 puntos si hay una captura de pantalla con la salida de la versión Terraform.
+- 5 puntos si hay una captura de pantalla con la cuenta de AWS creada con éxito.
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 10 puntos
-- Peso desta tarefa no seu tema ....................................................... 10 %
+**Peso en la calificación**:
+- Peso de esta tarea en la calificación final ................................. 10 puntos
+- Peso de esta tarea en su tema .................................................... 10%
 ---
-# Módulo 2: Creando os nosos primeriros recursos
-Terraform está escrito nunha linguaxe chamada **Hashicorp configuration language** e toda a nosa configuración de Terraform vaise atopar en ficheiros con extensión **.tf** onde traballaremos.
+# Módulo 2: Creando nuestros primeros recursos
 
-Para comenzar crearemos a nosa carpeta de traballo e o noso ficheriro de [Terraform](https://www.terraform.io/) **main.tf**, no que definiremos a configuración.
+Terraform está escrito en un lenguaje llamado **Hashicorp configuration language** y toda nuestra configuración de Terraform se encontrará en archivos con extensión **.tf** donde trabajaremos.
 
-Como primeiro paso definiremos o noso [provider](https://registry.terraform.io/browse/providers), que é o plugin que permites ós users controlar unha [API](https://en.wikipedia.org/wiki/API) externa a cal é a responsable de comprender as interaccións coa propia API e expoñer os nosos recursos.
+Para comenzar, crearemos nuestra carpeta de trabajo y nuestro fichero[Terraform](https://www.terraform.io/) **main.tf**, en el que definiremos la configuración.
 
-![Servizos coma pizzas](./../_media/aas.png)
+Como primer paso definiremos nuestro [provider](https://registry.terraform.io/browse/providers), que es el plugin que permite a los usuarios controlar una [API](https://en.wikipedia.org/wiki/API) externa al cual es el responsable de entender las interacciones con la propia API y exponer nuestros recursos.
 
-**Esquema comparativo** *- Servizos coma pizzas*
+![Servicios como pizzas](./../_media/aas.png)
 
-De maneira xeral os nosos providers son [Saas](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#saas) (Terraform Cloud, DNSimple, Cloudfare), [PaaS](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#paas) (Heroku) ou [IaaS](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#iaas) (Alibaba Cloud, OpenStack, Microsoft Azure, AWS), que é o caso que nos ocupa nesta práctica.
+**Esquema comparativo** *- Servicios como pizzas*
 
-Temos toda a información referida ós providers na propia páxina de [providers de Terraform](https://registry.terraform.io/browse/providers).
+En general, nuestros proveedores son [Saas](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#saas) (Terraform Cloud, DNSimple, Cloudfare), [PaaS](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#paas) (Heroku) o [IaaS](https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas#iaas) (Alibaba Cloud, OpenStack, Microsoft Azure, AWS), que es el caso que nos ocupa en esta práctica.
 
-Durante toda a actividade vamos a estar facendo referencia ás **documentacións oficiais** e iremos traballando por bloques, facendo uso das configuración exemplo que a propia docu nos ofrece. Ésta é unha maneira moi áxil, cómoda e eficaz de traballar, xa que nos libra de redactar de máis, nos facilita a tarefa da definición dos diferentes recursos e eliminanos gran parte dos erros de sintaxe.
+Tenemos toda la información relacionada con los proveedores en la propia página de los [providers de Terraform](https://registry.terraform.io/browse/providers).
 
-### 1. Definindo a versión e o provider
-No noso caso o noso provider vai a ser AWS e traballaermos ca conta creada previamente, polo que vamos á paxina de [providers de Terraform](https://registry.terraform.io/browse/providers), entramos en [AWS](https://registry.terraform.io/providers/hashicorp/aws/latest), e no apartado de [Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) buscamos a configuración de noso provider, que neste caso sería a seguinte:
+A lo largo de la actividad estaremos haciendo referencia a la **documentación oficial** y estaremos trabajando por bloques, haciendo uso de las configuraciones de ejemplo que nos ofrece el propio documento. Esta es una forma de trabajar muy ágil, cómoda y eficaz, ya que nos ahorra escribir demasiado, facilita la tarea de definir los diferentes recursos y elimina gran parte de los errores de sintaxis.
+
+### 1. Definición de la versión y provider
+
+En nuestro caso, nuestro proveedor será AWS y trabajaremos con la cuenta creada anteriormente, por lo que nos dirigimos a la página de [providers de Terraform](https://registry.terraform.io/browse/providers), entramos en [AWS](https://registry.terraform.io/providers/hashicorp/aws/latest), y en el apartado de [Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) buscamos la configuración de nuestro provider, que en este caso sería la siguiente:
 ```terraform
 terraform {
   required_providers {
@@ -114,14 +121,14 @@ terraform {
   }
 }
 ```
-Aquí vemos que definimos o noso encabezado con provider requerido e a versión. Neste provider definimos a [region](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/#Regions) (rexións) que son as diferentes zonas físicas na que o noso provider clusteriza os seus datacenter.
+Aquí vemos que definimos nuestro encabezado con el proveedor requerido y la versión. En este proveedor definimos la [region](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/#Regions) que son las diferentes zonas físicas en las que nuestro proveedor clusteriza sus datacenter.
 
-> ⚠️ O óptimo e fixarse nos custos e locallización á hora de escoller unha rexión para traballar, xa que estas mesmas varían unhas das outras. Para a nosa actividade escolleremos **us-east-1** para homoxeneizar tódolos pasos. Deixo aquí unha interesante e breve análise de cálculo de custos na páxina [openupthecloud](https://openupthecloud.com/which-aws-region-cheapest/) entre as diferentes rexións e os principais servizos.
+> ⚠️ Lo mejor es centrarse en los costos y la ubicación al elegir una región para trabajar, ya que estos varían entre sí. Para nuestra actividad elegiremos **us-east-1** para homogeneizar todos los pasos. Dejo aquí un interesante y breve análisis de cálculo de costos en la página [openupthecloud](https://openupthecloud.com/which-aws-region-cheapest/) entre las diferentes regiones y los principales servicios.
 
-### 2. Asignando as nosas credenciais
-No seguinte paso iremos a configurar a autenticación mediante [access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html): As access keys son credenciais de acceso para users IAM ou root. Podemos usalas para identificarnos sen user/pass e xerar acceso os servizos AWS e APIs, como cando usamos o AWS CLI.
+### 2. Asignando nuestras credenciales
+En el siguiente paso configuraremos la autenticación usando [access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html): Las access keys son credenciais de acceso para users IAM o root. Podemos usarlas para identificarnos sin user/pass y generar acceso a los servicios AWS y APIs, como cuando usamos AWS CLI.
 
-Polo momento [hardcodearemos](https://en.wikipedia.org/wiki/Hard_coding) as nosas keys para centrarnos nos aspectos máis básico. Este é un proceso delicado que trataremos máis adiante co sea propio apartado.
+Por el momento [hardcodearemos](https://en.wikipedia.org/wiki/Hard_coding) nuestras keys para centrarnos en los aspectos más básicos. Este es un proceso delicado que trataremos más adelante en su propio apartado.
 
 ```terraform
 # Definimos o noso provider AWS cas credenciais
@@ -131,113 +138,106 @@ provider "aws" {
   secret_key = "secret_access_key"
 }} 
 ```
-Para conseguir as nosas [credenciais](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) teremos que crealas en primer lugar, polo que imos a:
+Para obtener nuestras [credenciales](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) primero debemos crearlas, así que vamos a:
 
-`AWS` -> `nome_usuario` -> `Security Credentials` -> `Access keys (access key ID and secret access key)` -> `Create New Access Key`
+`AWS` -> `nombre_usuario` -> `Security Credentials` -> `Access keys (access key ID and secret access key)` -> `Create New Access Key`
 
-Facemos click e creamos a nosa **access key** co seu **secret** que empregaríamos na definición do noso provider para poder conectar. Temos a opción de descargar as nosas keys en formato [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) o cal nos facilita a tarefa para telas dispoñibles.
+Hacemos click y creamos nuestra **access key** con su **secret** que usaremos en la definición de nuestro proveedor para poder conectarnos. Tenemos la opción de descargar nuestras keys en formato [CSV](https://en.wikipedia.org/wiki/Comma-separated_values), lo que nos facilita tenerlas disponibles.
 
-> ⚠️ **IMPORTANTE:** A práctica de [hardcodear](https://en.wikipedia.org/wiki/Hard_coding) as keys de acceso considérase moi perigosa e insegura, pois expoñemos as nosas credencias creando un risco moi importante na noso código. Máis adiante daremos correción a este problema máis en profundidade. Compre recordar tamén que as credenciais de acceso creadas temos que gardalas sempre nun lugar de difícil acceso e a bo recaudo. No momento de crealas **SÓ AS PODEREMOS VER UNHA VEZ**, debemos ser moi cautelosos neste aspecto.
+> ⚠️ **IMPORTANTE:** La práctica de [hardcodear](https://en.wikipedia.org/wiki/Hard_coding) las keys de acceso se considera muy peligrosa e insegura, porque exponemos nuestras credenciales creando un riesgo muy importante en nuestro código. Más adelante solucionaremos este problema con más profundidad. Recuerde también que las credenciales de acceso creadas deben guardarse siempre en un lugar de difícil acceso y seguro. A la hora de crearlas **SÓLO PODEMOS VERLAS UNA VEZ**, debemos ser cautelosos en este aspecto.
 
-### 3. O noso primer recurso, a instancia
-Unha das enormes vantaxes en Terraform e que a estructura non varía independetemente do provider, o que nos evita ter que aprender diferentes configuracións.
+### 3. Nuestro primer recurso, la instancia
+Una de las grandes ventajas de Terraform es que la estructura no varía independientemente del provider, lo que evita que tengamos que aprender distintas configuraciones.
 
-#### 3.1. Creando a instancia
-A continuación imos a deploiar unha [instancia EC2](https://aws.amazon.com/ec2/features/) que non é máis que un servidor virtual na nube de Amazon. Amazon ofrece [diferentes opcións](https://aws.amazon.com/ec2/instance-types/) customizables en canto a recursos e potencia. Para o noso caso procederemos co recurso EC2 dispoñible de maneira gratuita no noso [free tier](https://aws.amazon.com/free).
+#### 3.1. Creando una instancia
+A continuación implementaremos una [instancia EC2](https://aws.amazon.com/ec2/features/) que no es más que un servidor virtual en la nube de Amazon. Amazon ofrece [diferentes opciones](https://aws.amazon.com/ec2/instance-types/) personalizables en términos de recursos y potencia. En nuestro caso, procederemos con el recurso EC2 disponible de forma gratuita en nuestro [free tier](https://aws.amazon.com/free).
 
-Para saber como proceder volvemos á [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources), e no apartado de recursos introducimos no buscador o recurso que buscamos, neste caso unha instancia en aws -> *aws_instance*
+Para saber cómo proceder volvemos a la [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources), y en el apartado de recursos introducimos en el buscador el recurso que buscamos, en este caso una instancia en aws -> *aws_instance*
 
 ```terraform
-# Creamos a nosa instancia EC2 de tipo t2.micro
+# Creamos nuestra instancia EC2 de tipo t2.micro
 resource "aws_instance" "meu_servidor" {
   ami           = "ami-0e472ba40eb589f49"
   instance_type = "t2.micro"
 }
 ```
-Os [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) son as imaxes que provee AWS para lanzar as instancias e temos de Ubuntu, de Windows, de Red Hat ,de Fedora... Podemos comprobar as AMI gratuitas, dentro do dashboard de AWS, e no apartado de EC2, temos un botón na esquina superior esquerda para lanzar instancias **Launch Instances**. Se prememos nel desplégase unha lista de AMI dispoñibles coa súa ID e se son elixibles para o [free tier](https://aws.amazon.com/free). No momento compre revisar a AMI e non usar a que sale arriba especificada, xa que poden ir cambiando.
+Las [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) son las imágenes proporcionadas por AWS para lanzar las instancias y tenemos Ubuntu, Windows, Red Hat, Fedora... Podemos consultar las AMI gratuitas, dentro del panel de AWS, y en la sección EC2, tenemos un botón en la esquina superior izquierda para lanzar instancias **Launch Instances**. Al hacer clic en él, se muestra una lista de AMI disponibles con su ID y si son elegibles para el [free tier](https://aws.amazon.com/free). Verifique la AMI y no use la especificada anteriormente si no es gratuita, ya que pueden cambiar.
 
-No noso caso escollemos a AMI de Ubuntu Server 18.04 LTS, no cal vemos a id da AMI que indicamos arriba e de tipo **t2.micro** a cal nos permite 750h de uso cada mes durante o primer ano ó rexistrarnos con AWS.
+En nuestro caso elegimos la AMI de Ubuntu Server 18.04 LTS, en la que vemos el id de la AMI indicado arriba y de tipo **t2.micro** lo que nos permite 750h de uso cada mes durante el primer año cuando nos registramos con AWS.
 
 ![AMI Ubuntu 18.04 LTS](./../_media/ami_ubuntu.png)
 
 #### 3.2. Iniciando terraform
-Para lanzar esta instancia teremos que acceder á consola de comandos ou na propia terminal de VSCode, e situándonos na carpeta do noso proxecto lanzar un:
+Para lanzar esta instancia tendremos que acceder a la consola de comandos o a la propia terminal de VSCode, y ubicándonos en la carpeta de nuestro proyecto lanzar un:
 
 ```terraform
-# Iniciamos o terraform na nosa carpeta proxecto
+# Iniciamos terraform en nuestra carpeta proyecto
 terraform init
 ```
-Se  temos todo correcto sairanos unha mensaxe por terfimal:
+Si tenemos todo correcto nos aparecerá un mensaje por terminal:
 
 `Terraform has been successfully initialized`
 
-#### 3.3. Creando a nosa instancia
-A continuación se queremos ver os nosos cambios e ver que todo está actulizado sen aplicar directamente podemos facer:
+#### 3.3. Creando nuestra instancia
+Luego si queremos ver nuestros cambios y ver que todo se actualiza sin aplicar directamente podemos hacer:
 
 ```terraform
-# Lemos o noso estado actual, comparamos e propónsenos os cambios a realizar
+# Leemos nuestro estado actual, comparamos y sugerimos cambios a realizar
 terraform plan
 ```
 
-Móstranos todos os cambios con códigos de color según as accións a tomar:
+Nos muestra todos los cambios con códigos de color según las acciones a realizar:
 
-- <span style="color:green">+</span> create -> obxetos a crear
-- <span style="color:red">-</span> destroy -> obxetos a borrar
-- <span style="color:orange">~</span> update -> obxetos a modificar
+- <span style="color:green">+</span> create -> objetos a crear
+- <span style="color:red">-</span> destroy -> objetos a borrar
+- <span style="color:orange">~</span> update -> objetos a modificar
 
-Unha vez conforme podemos lanzar o apply para confirmar os cambios
+Una vez que estemos satisfechos, podemos iniciar la aplicación para confirmar los cambios
 
 ```terraform
 # Confirmamos/denegamos os cambios á reposta de value: yes/no
 terraform apply
 ```
 
-Co apply complete podemos ir ó nosos dashboard, facemos click en actualizar na esquina superior dereita e teremos a nosa instancia funcionando coa configuración feita.
+Con la aplicación completa, podemos ir a nuestro panel de control, hacer clic en actualizar en la esquina superior derecha y tendremos nuestra instancia ejecutándose con la configuración realizada.
 
 ![Primer lanzamento](./../_media/primer_lanzamento_aws.png)
 
-Aquí podemos ver todos os datos da nosa instancia, dende o estado actual, o tipo `t2.micro` que especificamos, a AMI de Ubuntu correndo. Con só isto teremos deploiada a nosa primeira instancia en AWS usando Terraform.
+Aquí podemos ver todos los datos de nuestra instancia, desde el estado actual, el tipo `t2.micro` que especificamos, hasta la AMI de Ubuntu en ejecución. Con solo esto habremos desplegado nuestra primera instancia en AWS usando Terraform.
 
-Importante ter en conta que si facemos un segundo `terraform apply` **NON** iremos a deploiar unha segunda instancia, xa que traballamos cunha [linguaxe declarativa](https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2).
+Importante tener en cuenta que si hacemos una segunda `terraform apply` **NO** desplegaremos una segunda instancia, ya que trabajamos con un [lenguaje declarativo](https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2).
 
-No canto de volver a executar todo o código, Terraform analiza a configuración e compara co estado actual para ver se temos algún cambio ou modificación, e con eso en base trata de cumprir a nosa declaración. O realmente importante e que nós declaramos un estao final desexado e Terraform encárgase de cumplilo sempre que sexa posible.
+En lugar de volver a ejecutar todo el código, Terraform analiza la configuración y la compara con el estado actual para ver si hay cambios o modificaciones, y en base a eso intenta cumplir con nuestra declaración. Lo realmente importante es que declaramos un estado final deseado y Terraform se encarga de cumplirlo siempre que sea posible.
 
-#### 3.4. Destruindo a nosa instancia
-Para destruir a nosa instancia creado vamos a facer uso do comando `destroy`:
+#### 3.4. Destruyendo nuestra instancia
+Para destruir nuestra instancia creada usaremos el comando `destroy`:
 ```terraform
-# Eliminamos a nosa instancia
+# Eliminamos nuestra instancia
 terraform destroy
 ```
-Previo a eliminación da nosa instancia, ó igual que co resto de comandos móstrasenos unha pantalla cos cambios a acomenter e pídesenos unha confirmación previa á destruir. Ésta información é moi útil xa que nos permite ter un vistazo rápido e directo de todas as modificacións.
+Antes de borrar nuestra instancia, como ocurre con el resto de comandos, se nos muestra una pantalla con los cambios a realizar y se nos pide confirmación. Esta información es muy útil ya que nos permite tener una visión rápida y directa de todas las modificaciones.
 
-> ⚠️ Por defecto `terraform destroy` destrúe toda a nosa infraestrutura
-
-tura e non é unha técnica que vaiamos a utilizar frecuentemente, senón que é máis usual ir facendo `terraform apply` e ir modificando a nosa infraestrutura
-
-tura.
-
-A técnica máis usual para borrar artefactos é borrando no noso ficheiro Terraform o recurso e realizando un `terraform apply`.
+> ⚠️ Por defecto `terraform destroy` destruye toda nuestra infraestructura y no es una práctica que usaremos con frecuencia. Es más habitual hacer `terraform apply` modificando nuestra infraestructura en el fichero Terraform.
 
 ### Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Ficheiro de Terraform coas nosas credencias borradas / pixeladas
-- Captura de pantalla do noso dashboard de AWS coa instancia executándose
-- Captura de pantalla do noso dashboard de AWS coa instancia terminada
+**Evidencia de la adquisición de actuaciones**:
+- Archivo Terraform con nuestras credenciales borrado/pixelado
+- Captura de pantalla de nuestro panel de AWS con la instancia en ejecución
+- Captura de pantalla de nuestro panel de AWS con la instancia terminada
 
-**Indicadores de logro**: 
-- Conectamos correctamente co noso provider de AWS
-- Ficheiro de Terraform lanzado correctamente e en execución sen erros.
-- Borrado da instancia en AWS mediante un `terraform destroy`
+**Indicadores de logros**:
+- Nos hemos conectado con éxito a nuestro proveedor de AWS
+- El archivo Terraform se inició correctamente y se ejecutó sin errores.
+- Eliminación de la instancia en AWS mediante `terraform destroy`
 
 **Criterios de corrección**:
-- 5 puntos se hai unha captura da pantalla ou o código do ficheirto Terraform correctamente estructurado e funcional
-- 5 puntos se hai unha captura da pantalla coa instancia funcionando correctamente no dashboard de AWS.
-- 5 puntos se hai unha captura da pantalla coa instancia finalizada dende a terminal con `terraform destroy`
+- 5 puntos si hay una captura de pantalla o el código del archivo Terraform correctamente estructurado y funcional
+- 5 puntos si hay una captura de pantalla de la instancia ejecutándose correctamente en el panel de AWS.
+- 5 puntos si hay una captura de pantalla con la instancia terminada desde la terminal con `terraform destroy`
 
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 25 puntos
-- Peso desta tarefa no seu tema ....................................................... 25 %
----
+**Peso en calificación**:
+- Peso de esta tarea en la calificación final .................................. 25 puntos
+- Peso de esta tarea en su tema ..................................................... 25%
