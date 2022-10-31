@@ -1,6 +1,6 @@
-# Providers e recursos
-## O provider
-Un [provider](https://www.terraform.io/language/providers) en Terraform é un plugin que permite os usuarios manexar unha API externa. Os plugins de provider funcionan como unha capa de abstracción que permite ó noso Terraform comunicar coas diferentes nubes, providers, databases e servizos.
+# Providers y recursos
+## provider
+Un [provider](https://www.terraform.io/language/providers) en Terraform es un plugin que permite a los usuarios manejar una API externa. Los plugins de proveedores funcionan como una capa de abstracción que permite que nuestro Terraform se comunique con diferentes nubes, proveedores, bases de datos y servicios.
 
 ```mermaid
 flowchart LR
@@ -10,31 +10,31 @@ flowchart LR
     style id3 fill:#baa,stroke:#333,stroke-width:4,color:#000
     style id4 fill:#aaa,stroke:#333,stroke-width:4,color:#000
 ```
-As configuracións en Terraform requiren da declaración do provider do que vamos a facer uso, para instalalo. Poderiamos dicir que é a folla de ruta do noso proveedor, a cal usaremos para según as súas normas montar a infraestructura.
+Las configuraciones en Terraform requieren la declaración del proveedor que vamos a utilizar, para instalarlo. Podríamos decir que es la hoja de ruta de nuestro proveedor, que utilizaremos para montar la infraestructura según sus reglas.
 
-Terraform fai uso dos providers para aprovisionar os recursos, que describen un ou máis obxectos da infraestructura. Cada provider no [Terraform Registry](https://registry.terraform.io/) ten a súa documentación sobre uso e podemos escoller a versión que queremos emplear en todo momento.
+Terraform utiliza proveedores para aprovisionar recursos, que describen uno o más objetos de infraestructura. Cada proveedor del [Terraform Registry](https://registry.terraform.io/) tiene su documentación de uso y podemos elegir la versión que queremos usar en cada momento.
 
-Terraform dispón dunha ampla selección de providers, desenvolvidos por diversas fontes:
+Terraform tiene una amplia selección de proveedores, desarrollados por varias fuentes:
 - HashiCorp
 - Terraform Community
 - Vendedores externos
 
-Podemos ver a lista completa de de providers cos filtros de búsqueda [neste enlance](https://registry.terraform.io/browse/providers), entre os cales destacamos:
+Podemos ver la lista completa de proveedores con los filtros de búsqueda [en este enlace](https://registry.terraform.io/browse/providers), entre los que destacamos:
 - [AWS](https://registry.terraform.io/providers/hashicorp/aws/latest)
 - [Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - [Google Cloud](https://registry.terraform.io/providers/hashicorp/google/latest)
 - [Kubernetes](https://registry.terraform.io/providers/hashicorp/kubernetes/latest)
 - [Alibaba Cloud](https://registry.terraform.io/providers/aliyun/alicloud/latest)
 
-> ⚠️ **IMPORTANTE:** Sen un provider declarado non se pode manexar ningún tipo de configuración, polo que resulta imprescindible no noso código.
+> ⚠️ **IMPORTANTE:** Sin un proveedor declarado, no se puede manejar ninguna configuración, por lo que es esencial en nuestro código.
 
-## Os recursos
-Cada recurso describe un ou máis obxectos da nosa infraestructura. Podemos dividir a declaración dun recurso nos seguintes compoñentes:
+## Los recursos
+Cada recurso describe uno o más objetos en nuestra infraestructura. Podemos dividir la declaración de un recurso en los siguientes componentes:
 
-- **Bloques de recursos**: documentan a sintaxe para a declaración de recursos.
-- **Comportamento de recurso**: explica de maneira máis detallada como o Terraform manexa a declaración dos recursos cando se aplica unha configuración.
-- **Sección de meta-argumentos**: nesta sección definimos argumentos especiais que poden ser empregados con cada tipo de recurso, como `depends_on`, `count`, `for_each`, `provider` e `lifecycle`.
-- **Provisioners**: documentan a configuración das accións posteriores á creación dun recurso usando o povisioner e os bloques de conexión.
+- **Bloques de recursos**: documentar la sintaxis para declarar recursos.
+- **Comportamiento de recurso**: explica con más detalle cómo Terraform maneja la declaración de recursos cuando se aplica una configuración.
+- **Sección de meta-argumentos**: en esta sección definimos argumentos especiales que se pueden usar con cada tipo de recurso, como `depends_on`, `count`, `for_each`, `provider` e `lifecycle`.
+- **Provisioners**: documentan la configuración de acciones tras la creación de un recurso utilizando el provisioner y los bloques de conexión.
 
 ```terraform
 resource "aws_instance" "instancia_exemplo" {
@@ -43,11 +43,10 @@ resource "aws_instance" "instancia_exemplo" {
 }
 ```
 
-Neste exemplo temos un bloque de recurso no que defiini
-Neste recurso de exemplo temos varios puntos a ter en conta:
-- **resource**: É o noso bloque de recurso que usamos para declarar o noso recurso.
-- **"aws_instance"**: O tipo de recurso a declarar. Neste caso é unha instancia do provider AWS como o seu nome indica.
-- **"instancia_exemplo"**: O nome que lle asignamos ó noso recurso. O tipo e nome do recurso en coxunto serven como un identificador para o recurso dado por iso deben ser únicos dentro do módulo.
-- **{}**: o corpo do bloque é todo o que se atopa dentro das chaves `{}` e contén os argumentos para a configuración do propio recurso. No exemplo temo `ami`e `instance_type`que son argumentos definidos específicamente para o tipo de recurso `aws_instance`e definen a imaxe da máquina de Amazon e o tipo de instancia que queremos respectivamente.
+En este ejemplo tenemos un bloque de recursos en el que se definen. Tenemos varios puntos a considerar:
+- **resource**: Es nuestro bloque de recursos que usamos para declarar nuestro recurso.
+- **"aws_instance"**: El tipo de recurso a declarar. En este caso se trata de una instancia del proveedor de AWS como su nombre indica.
+- **"instancia_exemplo"**: El nombre que le asignamos a nuestro recurso. El tipo de recurso y el nombre juntos sirven como un identificador para el recurso dado, por lo que deben ser únicos dentro del módulo.
+- **{}**: El cuerpo del bloque es todo lo que está dentro de las llaves `{}` y contiene los argumentos para la configuración del recurso en sí. En el ejemplo, tenemos `ami` y `instance_type`, que son argumentos definidos específicamente para el tipo de recurso `aws_instance` y definen la imagen de la máquina de Amazon y el tipo de instancia que queremos, respectivamente.
 
-> ⚠️ Os recursos son o elemento máis importante na lenguaxe de Terraform, xa que son a ferramenta que empregamos para declarar toda a nosa infraestructura.
+> ⚠️ Los recursos son el elemento más importante en el lenguaje Terraform, ya que son la herramienta que utilizamos para declarar toda nuestra infraestructura.
