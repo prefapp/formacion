@@ -1,0 +1,10 @@
+############
+
+La instalación de la release wp-volume se compone en:
+- Volumen para bbdd mysql de la release "wp-release"
+- Volumen para el CMS Wordpress de la release "wp-release"
+
+Esta release no debería borrarse y en todo caso debe tener backups periódicos, ya que contiene los datos que deben ser persistentes de la release "wp-release".
+
+############
+
