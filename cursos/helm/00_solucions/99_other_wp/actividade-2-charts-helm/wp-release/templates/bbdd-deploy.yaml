@@ -21,17 +21,17 @@ spec:
       - name: wp-mysql
         image: {{ .Values.images.mysql }}
         env:
-          - name: "MYSQL_ROOT_PASSWORD"
+          - name: MYSQL_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ .Release.Name }}-secret
                 key: root-password
           - name: MYSQL_PASSWORD
             valueFrom:
-              configMapKeyRef:
+              secretKeyRef:
                 name: {{ .Release.Name }}-secret
                 key: user-password
-          - name: "MYSQL_DATABASE"
+          - name: MYSQL_DATABASE
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap

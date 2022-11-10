@@ -15,6 +15,6 @@ spec:
         path: /v2
         backend:
           service:
-            name: servicio-wp
+            name: service-{{ .Release.Name }}
             port:
               number: 80

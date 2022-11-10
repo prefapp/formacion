@@ -5,8 +5,6 @@ images:
 mysql:
     DB_BBDD: "wp-db"
     DB_USER: "user-wp"
-    DB_PASSWORD: "3EDCfR4-5DDS"
-    DB_ROOT_PASSWORD: "845JXSD128sdk"
 
 namespace: "wp-release2"
 

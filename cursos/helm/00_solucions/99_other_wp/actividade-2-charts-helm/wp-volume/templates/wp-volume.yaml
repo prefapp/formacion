@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wp-pv-claim
+  namespace: "wp-release2"
   labels:
     app: deploy-wp
 spec:

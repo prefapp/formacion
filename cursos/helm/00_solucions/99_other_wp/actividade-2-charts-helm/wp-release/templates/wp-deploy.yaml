@@ -25,22 +25,22 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap
-                key: MYSQL_HOST
+                key: DB_HOST
           - name: MYSQL_PASSWORD
             valueFrom:
-              configMapKeyRef:
+              secretKeyRef:
                 name: {{ .Release.Name }}-secret
                 key: user-password
-          - name: "MYSQL_DATABASE"
+          - name: "BBDD"
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap
                 key: "MYSQL_DATABASE"
-          - name: MYSQL_USER
+          - name: DB_USER
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap
-                key: DB_USER
+                key: MYSQL_USER
         envFrom:
           - configMapRef: 
               name: {{ .Release.Name }}-configmap
