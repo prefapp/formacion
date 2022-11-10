@@ -21,22 +21,22 @@ spec:
       - name: deploy-{{ .Release.Name }}
         image: {{ .Values.images.wp }}
         env:
-          - name: HOST
+          - name: WORDPRESS_DB_HOST
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap
-                key: DB_HOST
-          - name: MYSQL_PASSWORD
+                key: MYSQL_HOST
+          - name: WORDPRESS_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ .Release.Name }}-secret
                 key: user-password
-          - name: "BBDD"
+          - name: WORDPRESS_DB_NAME
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap
                 key: "MYSQL_DATABASE"
-          - name: DB_USER
+          - name: WORDPRESS_DB_USER
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-configmap

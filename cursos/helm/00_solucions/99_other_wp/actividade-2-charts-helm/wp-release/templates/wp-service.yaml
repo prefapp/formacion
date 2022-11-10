@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: service-{{ .Release.Name }}
+  name: servicio-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
 spec:
   selector:

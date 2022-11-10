@@ -15,6 +15,6 @@ spec:
         path: /
         backend:
           service:
-            name: service-{{ .Release.Name }}
+            name: servicio-{{ .Release.Name }}
             port:
               number: 80
