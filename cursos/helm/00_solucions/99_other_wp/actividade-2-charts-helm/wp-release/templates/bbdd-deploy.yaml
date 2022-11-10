@@ -1,0 +1,54 @@
+# bbdd-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name: deploy-{{ .Release.Name }}-bbdd
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    app: "wp-mysql"
+    tipo: "practica"
+spec:
+  replicas: {{ if eq (toString .replicas) "0" }} {{ .replicas }} {{ else }} {{ (default 1 .replicas) }} {{ end }}
+  selector:
+    matchLabels:
+      app: wp-mysql
+  template: # a partir de aquí definimos o pod
+    metadata:
+      labels:
+        app: wp-mysql
+    spec:
+      containers:
+      - name: wp-mysql
+        image: {{ .Values.images.mysql }}
+        env:
+          - name: "MYSQL_ROOT_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secret
+                key: root-password
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-secret
+                key: user-password
+          - name: "MYSQL_DATABASE"
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-configmap
+                key: "MYSQL_DATABASE"
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-configmap
+                key: MYSQL_USER
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: wp-db-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: wp-db-persistent-storage
+        persistentVolumeClaim:
+          claimName: wp-db-pv-claim
+
+

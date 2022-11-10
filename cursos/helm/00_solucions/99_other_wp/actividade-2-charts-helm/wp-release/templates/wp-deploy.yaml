@@ -1,0 +1,55 @@
+# wp-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-wp
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    app: "deploy-wp"
+    tipo: "practica"
+spec:
+  replicas: {{ if eq (toString .replicas) "0" }} {{ .replicas }} {{ else }} {{ (default 1 .replicas) }} {{ end }}
+  selector:
+    matchLabels:
+      app: deploy-wp
+  template: 
+    metadata:
+      labels:
+        app: deploy-wp
+    spec:
+      containers:
+      - name: deploy-wp
+        image: {{ .Values.images.wp }}
+        env:
+          - name: HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-configmap
+                key: MYSQL_HOST
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-secret
+                key: user-password
+          - name: "MYSQL_DATABASE"
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-configmap
+                key: "MYSQL_DATABASE"
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-configmap
+                key: DB_USER
+        envFrom:
+          - configMapRef: 
+              name: {{ .Release.Name }}-configmap
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wp-pv-claim
