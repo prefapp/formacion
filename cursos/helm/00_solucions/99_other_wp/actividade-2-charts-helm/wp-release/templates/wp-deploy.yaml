@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy-wp
-  namespace: "{{ .Values.namespace }}"
+  name: deploy-{{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app: "deploy-wp"
+    app: deploy-{{ .Release.Name }}
     tipo: "practica"
 spec:
   replicas: {{ if eq (toString .replicas) "0" }} {{ .replicas }} {{ else }} {{ (default 1 .replicas) }} {{ end }}
   selector:
     matchLabels:
-      app: deploy-wp
+      app: deploy-{{ .Release.Name }}
   template: 
     metadata:
       labels:
-        app: deploy-wp
+        app: deploy-{{ .Release.Name }}
     spec:
       containers:
-      - name: deploy-wp
+      - name: deploy-{{ .Release.Name }}
         image: {{ .Values.images.wp }}
         env:
           - name: HOST

@@ -3,10 +3,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: service-{{ .Release.Name }}
-  namespace: "{{ .Values.namespace }}"
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
-    app: deploy-wp
+    app: deploy-{{ .Release.Name }}
   ports:
   - protocol: TCP
     port: 80

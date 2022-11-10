@@ -3,22 +3,22 @@ apiVersion: apps/v1
 kind: Deployment  
 metadata:
   name: deploy-{{ .Release.Name }}-bbdd
-  namespace: "{{ .Values.namespace }}"
+  namespace: {{ .Values.namespace }}
   labels:
-    app: "wp-mysql"
+    app: {{ .Release.Name }}-mysql
     tipo: "practica"
 spec:
   replicas: {{ if eq (toString .replicas) "0" }} {{ .replicas }} {{ else }} {{ (default 1 .replicas) }} {{ end }}
   selector:
     matchLabels:
-      app: wp-mysql
+      app: {{ .Release.Name }}-mysql
   template: # a partir de aquí definimos o pod
     metadata:
       labels:
-        app: wp-mysql
+        app: {{ .Release.Name }}-mysql
     spec:
       containers:
-      - name: wp-mysql
+      - name: {{ .Release.Name }}-mysql
         image: {{ .Values.images.mysql }}
         env:
           - name: MYSQL_ROOT_PASSWORD

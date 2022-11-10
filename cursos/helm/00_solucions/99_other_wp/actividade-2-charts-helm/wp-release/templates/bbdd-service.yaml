@@ -3,10 +3,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: servicio-{{ .Release.Name }}-bbdd
-  namespace: "{{ .Values.namespace }}"
+  namespace: {{ .Values.namespace }}
 spec:
   selector:  
-    app: wp-mysql
+    app: {{ .Release.Name }}-mysql
   ports:  # esta é a parte de especificación propia
   - protocol: TCP
     port: 3306

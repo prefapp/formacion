@@ -1,5 +1,5 @@
 apiVersion: v2
-name: wp-release
+name: wp
 description: A Helm chart of Wordpress for Kubernetes
 type: application
 version: 0.1.0
