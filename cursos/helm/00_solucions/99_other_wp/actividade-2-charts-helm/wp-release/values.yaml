@@ -1,10 +1,10 @@
+namespace: "wp-release2"
+
 images:
   mysql: "mysql:8.0"
   wp: wordpress:6.1
 
 mysql:
-    DB_BBDD: "wp-db"
-    DB_USER: "user-wp"
-
-namespace: "wp-release2"
+  DB_BBDD: "wp-db"
+  DB_USER: "user-wp"
 
