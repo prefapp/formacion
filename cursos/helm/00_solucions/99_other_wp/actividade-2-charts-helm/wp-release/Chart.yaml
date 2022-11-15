@@ -8,7 +8,7 @@ appVersion: "1.16.0"
 
 # Artefactos de prefapp-helm
 
-dependencies:
-  - name: prefapp-helm
-    version: 0.4.1
-    repository: https://prefapp.github.io/prefapp-helm
+#dependencies:
+#  - name: prefapp-helm
+#    version: 0.4.1
+#    repository: https://prefapp.github.io/prefapp-helm
