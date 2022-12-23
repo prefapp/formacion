@@ -23,7 +23,12 @@
   <script>
     window.$docsify = {
       alias: {
-        '/.*/_navbar.md': '/_navbar.md',
+        '/es/.*/_navbar.md': './es/_navbar.md',
+        '/.*/_navbar.md': './_navbar.md',
+        '/es/.*_sidebar.md': './es/_sidebar.md',
+        '/.*/_sidebar.md': './_sidebar.md',
+        '/es/(.*)': './es/$1',
+        '/(.*)': './$1',
       },
       auto2top: true,
       coverpage: true,
@@ -33,7 +38,16 @@
       mergeNavbar: true,
       maxLevel: 4,
       subMaxLevel: 3,
-      name: 'PREFAPP',
+      name: 'PREFAPP'+
+            '<div><a href=..><button class="ButIdioma">Cambiar ao Galego</button></a></div>',
+      namespaces: [
+         {
+           id: "lang",
+           values: "es",
+           optional: true,
+           selector: "#lang-selector"
+        }
+      ],
       search: {
         noData: {
           '/': 'Sin resultados!'
