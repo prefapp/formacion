@@ -1,39 +1,39 @@
-# Módulo 1: Primeiros pasos, configuración e instalación
+# Módulo 1: Primeros pasos, configuración e instalación
 
-Nesta tarefa imos a instalar Git na nosa máquina,facer a nosa configuración inicial e clonar o noso primer repositorio.
+En esta tarea vamos a instalar Git en nuestra máquina, realizar nuestra configuración inicial y clonar nuestro primer repositorio.
 
 ## 1. Instalación de Git
 
-A continuación imos a instalar Git nos diferentes tipos de SO. Temos varios modos de instalar Git, pero iremos ca/cas maneiras máis comúns ou directas.
+A continuación, instalaremos Git en los diferentes tipos de sistemas operativos. Tenemos varias formas de instalar Git, pero iremos a las formas más comunes o directas.
 
 ### 1.1 Instalación en Windows
 
-Para instalar Git en Windows temos dous opcións principalmente:
-1. **mysisGit**: debemos ir ó seguinte enlace [Git para Windows](https://git-scm.com/download/win), escoller a noso instalador ou tipo de instalador e proceder ca descarga.
+Para instalar Git en Windows tenemos dos opciones principales:
+1. **mysisGit**: debemos ir al enlace [Git para Windows](https://git-scm.com/download/win), elegir nuestro instalador o tipo de instalador y proceder con la descarga.
 
-2. **Github para Windows** é outra forma de instalar Git no noso equipo Windows. Este instalador a maiores do CLI inclúe unha interfaz de usuario moi completa e intuitiva, que pode facilitar moito o traballo.
+2. **Github para Windows** es otra forma de instalar Git en nuestra computadora con Windows. Este instalador además del CLI incluye una interfaz de usuario muy completa e intuitiva, que puede facilitar mucho el trabajo.
 
-> Para comezar e mellor empezar co CLI de Git para familiarizarnos cos comandos.
+> Lo mejor es comenzar con Git CLI para familiarizarse con los comandos.
 
-### 1.2 Instalación en Linux e Unix
+### 1.2 Instalación en Linux y Unix
 
-Podemos instalar Git en Linux de diferentes modos, pero vamos a ver as distintas **ferramentas de administración de paquetes** nas diferentes distribucións:
+Podemos instalar Git en Linux de diferentes maneras, pero veamos las diferentes **herramientas de administración de paquetes** en las diferentes distribuciones:
 
 1. Fedora:
 
     ```bash
-    # ata Fedora 21
+    # hasta Fedora 21
     $ yum install git
-    # Fedora 22 e posteriores
+    # Fedora 22 y posteriores
     $ dnf install git
     ```
 
 2. Debian/Ubuntu:
 
     ```bash
-    # a última versión estable para a nosa release de Debian/ubuntu
+    # la última versión estable para nuestro lanzamiento de Debian/ubuntu
     $ apt-get install git
-    # en Ubuntu este PPA proporciona a última versión estable
+    # en Ubuntu este PPA proporciona la última versión estable
     $ add-apt-repository ppa:git-core/ppa
     $ apt update; apt install git
     ```
@@ -44,20 +44,20 @@ Podemos instalar Git en Linux de diferentes modos, pero vamos a ver as distintas
     $ apk add git
     ```
 
-Para outras versións podemos ver en este enlace -> [Descargas para Linux e Unix](https://git-scm.com/download/linux).
+Para otras versiones podemos ver más en [Descargas para Linux e Unix](https://git-scm.com/download/linux).
 
 ### 1.3 Instalación en Mac
 
-Vamos a ver as formas máis comúns:
-1. Cas ferramentas de Xcode de Línea de Comandos, a partir de Mavericks 10.9 se excutamos **git** dende o noso Terminal se nos mostrará a pregunta de se desexamos instalalo, no caso de que no no teñamos.
+Veamos las formas más comunes:
+1. Cómo funcionan las herramientas de Línea de Comandos de Xcode, a partir de Mavericks 10.9 si ejecutamos **git** desde la Terminal nos preguntará si queremos instalarlo, esto si no lo tenemos.
 
-2. Podemos usar unha versión máis actualizada dende un instalador binario dispoñible [aquí](https://sourceforge.net/projects/git-osx-installer/).
+2. Podemos usar una versión más actualizada de un instalador binario disponible [aquí](https://sourceforge.net/projects/git-osx-installer/).
 
-3. Ferramentas de administración de paquetes:
+3. Herramientas de administración de paquetes:
 
     - Homebrew:
     ```bash
-    # Versión sen interfaz
+    # Versión sin interfaz
     $ brew install git
     # Versión con interfaz GUI
     $ brew install git-gui
@@ -67,35 +67,34 @@ Vamos a ver as formas máis comúns:
     $ sudo port install git
     ```
 
-4. Instalador de Git en OS X no sitio web de [Github Desktop](https://desktop.github.com/).
+4. Instalador de Git en OS X en el sitio web [Github Desktop](https://desktop.github.com/).
 
-### 1.4 Instalaión en VSCode
+### 1.4 Instalación en VSCode
 
-[Visual Studio Code](https://code.visualstudio.com/) é un poderoso editor de texto que nos permite traballar dunha maneira moi cómoda e áxil debido á súa versatilidade, facilidade e cantidade de plugins, e que se integra dunha maneira moi sinxela con [Git](https://git-scm.com/).
+[Visual Studio Code](https://code.visualstudio.com/) es un potente editor de texto que nos permite trabajar de forma muy cómoda y ágil por su versatilidad, facilidad y número de plugins, y que se integra fácilmente con [Git](https://git-scm.com/).
 
-Para instalar a extensión de [Git](https://marketplace.visualstudio.com/items?itemName=donjayamanne.git-extension-pack) en [Visual Studio Code](https://code.visualstudio.com/) e tan sinxelo como ir ó apartado das extensións, escribimos `git` no recadro de búsqueda e instalamos a extensión.
+Para instalar la extensión de [Git](https://marketplace.visualstudio.com/items?itemName=donjayamanne.git-extension-pack) en [Visual Studio Code](https://code.visualstudio.com/) es tan sencillo como ir al apartado de las extensiones, escribir `git` en el cuadro de búsqueda e instalamos la extensión.
 
-Temos moitas opcións que nos facilitan o uso destas extensións, pero en VSCode temos a funcionalidade `Terminal`que nos mostra unha terminal nunha ventana da interfaz na que podemos facer uso do CLI de Git instalado en calquera dos pasos anteriores sen necesidade de agregar ningunha extensión.
+Existen muchas opciones que facilitan el uso de estas extensiones, pero en VSCode tenemos la funcionalidad `Terminal` que nos muestra una terminal en una ventana de interfaz donde podemos hacer uso del Git CLI instalado en cualquiera de los pasos anteriores sin necesidad de agregar una extensión extra.
 
-Podemos facer uso de calquer outro editor de texto de preferencia para a realización das actividades, pero debido á facilidade de uso e integración coas ferramentas que imos a usar recomendamos [Visual Studio Code](https://code.visualstudio.com/).
+Podemos utilizar cualquier otro editor de texto de nuestra preferencia para realizar las actividades, pero por la facilidad de uso e integración con las herramientas que vamos a utilizar, recomendamos [Visual Studio Code](https://code.visualstudio.com/).
 
-> Para comprobar que todo saiu correctamente e averiguala versión de Git que acabamos de instalar facemos uso do comando `git version`.
+> Para comprobar que todo ha ido correctamente y saber la versión de Git que acabamos de instalar utilizamos el comando `git version`.
 
 ## 2. Configuración de Git
 
-Unha vez teñamos instalado Git no noso equipo teremos que configuralo por primeira vez para personalizar o noso entorno.
+Una vez hayamos instalado Git en nuestro ordenador tendremos que configurarlo por primera vez para personalizar nuestro entorno.
 
-Estas configuracións manteranse ó longo das actualizacións pero sempre podremos volver modificalas cando nos sexa necesario.
+Estos ajustes se mantendrán a lo largo de las actualizaciones, pero siempre podremos volver a modificarlos cuando sea necesario.
 
-### 2.1 Ficheiros Git
+### 2.1 Ficheros Git
 
-Git dispón da ferramenta `git config` que nos permite obter e establecer variables de configuracón que controlan o aspecto e funcionamento de Git.
+Git dispone de la herramienta `git config` que nos permite obtener y establecer variables de configuración que controlan la apariencia y funcionamiento de Git.
 
-Temos 3 ficheiros diferentes de configuración onde almacenar estas variables:
-- `etc/gitconfig`: Contén tódolos valores para tódolos usuarios do sistemas e os seus repositorios. **Comando**: `git config --system`.
-- `~/.gitconfig` ou `~/.config/git/config`: Ficheiro específico do noso usuario. **Comando**: `git config --global`.
-- `.git/config`: Ficheiro `config` no directorio Git do repositorio que estamos a usar no momento.
-
+Disponemos de 3 archivos de configuración diferentes donde almacenar estas variables:
+- `etc/gitconfig`: Contiene todos los valores para todos los usuarios del sistema y sus repositorios. **Comando**: `git config --system`.
+- `~/.gitconfig` o `~/.config/git/config`: Fichero específico de nuestro usuario. **Comando**: `git config --global`.
+- `.git/config`: Fichero `config` en el directorio Git del repositorio que estamos usando actualmente.
 ```mermaid
     flowchart TB
         subgraph repo_fich[Ficheiro repositorio]
@@ -110,11 +109,11 @@ Temos 3 ficheiros diferentes de configuración onde almacenar estas variables:
 
     repo_fich --> user_fich --> xeral_fich
 ```
-Cada nivel sobreescribe ó anterior, polo que podemos dispor dunha configuración xeral da máquina, unha por usuario e específicas para cada repositorio.
+Cada nivel sobrescribe al anterior, por lo que podemos tener una configuración general de la máquina, una por usuario y específica para cada repositorio.
 
 ### 2.2 Git config
 
-Imos a comezar ca configuración de Git establecendo o noso nome de usuario e a nosa dirección de correo electrónico. Os commits de Git dan uso desta información, a cal vai incluida neles:
+Comencemos la configuración de Git configurando nuestro nombre de usuario y dirección de correo electrónico. Los commits de Git utilizan esta información, ya que queda incluida en ellos:
 
 ```bash
 # nome de usuario
@@ -123,17 +122,17 @@ $ git config --global user.name "user prefapp"
 $ git config --global user.email user_prefapp@prefapp.com
 ```
 
-Ca opción `--global` temos esta configuración definida para todo o sistema. Para definila de maneira indidual tan só temos que realizar a configuración `git config` desta vez sen o atributo `--global`.
+Con la opción `--global` tenemos definida esta configuración para todo el sistema. Para definirlo individualmente solo tenemos que configurar `git config` esta vez sin el atributo `--global`.
 
-Así mesmo podemos escoller o editor por defecto:
+También podemos elegir el editor por defecto:
 
 ```bash
 $ git config --global core.editor [emacs|vim|vi|...]
 ```
 
-> Se non especificamos nada Git fará uso do editor que teñamos por defecto, xeralmente é Vim.
+> Si no especificamos nada, Git usará el editor que tenemos por defecto, normalmente Vim.
 
-Podemos comprobar a nosa configuración co comando `git config --list`, que nos dará un resultado como o seguinte:
+Podemos comprobar nuestra configuración con el comando `git config --list`, que nos dará un resultado como el siguiente:
 
 ```bash
 $ git config --list
@@ -146,15 +145,15 @@ color.diff=auto
 ...
 ```
 
-Se aparecen claves repetidas e porque Git está lendo en diferentes ficheiros de configuración.
+Si aparecen claves duplicadas es porque Git está leyendo en diferentes archivos de configuración.
 
-> Se queremos comprobar o valor dunha clave específica o recollemos usando `git config <clave>`:
+> Si queremos verificar el valor de una clave específica, la recolectamos usando `git config <key>`:
 
 ```bash
 $ git config --user.name
 user prefapp
 ```
->⚠️ Se temos dúbidas con respecto á configuración ou calquer comando de Git sempre podemos facer uso do manual:
+>⚠️ Si tenemos dudas sobre la configuración o cualquier comando de Git, siempre podemos usar el manual:
 
 ```bash
 $ git help <comando>
@@ -164,20 +163,20 @@ $ man git-<comando>
 
 ## Evaluación
 
-**Evidencias da adquisición dos desempeños**:
-- Resultado da versión de Git instalada.
-- Resultado da configuración inicial.
+**Evidencia de la adquisición de actuaciones**:
+- Resultado de la versión Git instalada.
+- Resultado de la configuración inicial.
 
-**Indicadores de logro**: 
-- Correctamente instalado o Git.
-- Correctamente realizada a configuración inicial.
+**Indicadores de logros**:
+- Git correctamente instalado.
+- Realizada correctamente la configuración inicial.
 
 **Criterios de corrección**:
-- 5 puntos se se instalou Git de maneira correcta.
-- 5 puntos se se realizou a configuración principal de modo axeitado.
-**Autoavaliación**: Revisa e autoavalia o teu traballo aplicando os indicadores de logro.
+- 5 puntos si Git se instaló correctamente.
+- 5 puntos si la configuración principal se realizó correctamente.
+**Autoevaluación**: Revisa y autoevalúa tu trabajo aplicando los indicadores de logro.
 
-**Peso na cualificación**:
-- Peso desta tarefa na cualificación final ........................................ 10 puntos
-- Peso desta tarefa no seu tema ....................................................... 10 %
+**Peso en calificación**:
+- Peso de esta tarea en la calificación final ................................. 10 puntos
+- Peso de esta tarea en su tema .................................................... 10%
 ---
