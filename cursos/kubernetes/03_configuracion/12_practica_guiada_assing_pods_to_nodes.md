@@ -145,7 +145,7 @@ practica-guiada-podstonode-worker3         small    8        yes
 Ahora ya tenemos los nodos preparados con sus labels, vayamos a por faena.
 
 ### 3.1 Con nodeSelector en el spec del manifiesto.
-Supongamos que queremos asegurarnos que un pod de nginx se aloja en un nodo con más memoria. Podemos aprovechar la label `extraram` con `nodeSelectro`
+Supongamos que queremos asegurarnos que un pod de nginx se aloja en un nodo con más memoria. Podemos aprovechar la label `extraram` con `nodeSelector`
 
 ```yaml
 # nuestro-nginx.yaml
