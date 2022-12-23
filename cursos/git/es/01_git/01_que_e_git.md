@@ -1,34 +1,34 @@
 # Historia
 
-[Git](https://git-scm.com/) é un software de control de versións distribuido, que facilita e asegura o traballo colaborativo nos nosos repositorios de código.
+[Git](https://git-scm.com/) es un software de control de versiones distribuido, que facilita y asegura el trabajo colaborativo en nuestros repositorios de código.
 
-Git xurdiu como un novo software de control de versións proxecto para administrar e controlar os cambios de software que se realizaban a través de parches e arquivos. 
+Git surgió como un nuevo proyecto de software de control de versiones para administrar y controlar los cambios de software que se realizaron a través de parches y archivos.
 
-Antiguamente as ferramentas de control de versións tiñan unha mentalidade de servidor central. Cando se quería traballar sobre un ficheiro este se marcaba e quedaba dispoñible únicamente para o usuario que traballaba con él. A solución era perfecta para un traballo individual e centralizado, pero podemos imaxinar as diferentes barreiras que nos formula:
+Las herramientas de control de versiones solían tener una mentalidad de servidor central. Cuando quería trabajar en un archivo, se marcaba y quedaba disponible solo para el usuario que trabajaba con él. La solución era perfecta para el trabajo individual y centralizado, pero podemos imaginar algunas barreras en esta metodología:
 
-- Único punto de erro debido á estructura centralizada.
-- Dificulta o traballo colaborativo.
-- Ralentiza o proxecto, especialmente a medida que este medra.
+- [Punto único de error](https://es.wikipedia.org/wiki/Punto_%C3%BAnico_de_fallo) (SPOF) debido a la estructura centralizada.
+- Dificulta el trabajo colaborativo.
+- Ralentiza el proyecto, especialmente a medida que crece.
 
-Como solución a problemática e para o mantemento de proxecto do kernel de Linux no ano 2002 comezouse a utilizar unha ferramenta de control de versión distribuida chamada Bitkeeper. Puoco tempo despois e a raíz de problemas empresariais co uso de Bitkeeper Linus Torvalds creou Git en 2005 como unha oferta open-source a Bitkeeper, ca experiencia do mesmo e melloras que foron implementando.
+Como solución al problema y para el proyecto de mantenimiento del kernel de Linux en el año 2002 se empezó a utilizar una herramienta de control de versiones distribuidas llamada [Bitkeeper](https://www.bitkeeper.org/). Poco tiempo después y como resultado de problemas comerciales con el uso de Bitkeeper [Linus Torvalds](https://es.wikipedia.org/wiki/Linus_Torvalds) creó Git en 2005 como una oferta de código abierto para Bitkeeper, la experiencia del mismo y las mejoras que se implementaron.
 
-> A día de hoxe Git é unha das ferramentas online de traballo máis usadas do mundo.
+> Hoy Git es una de las herramientas de trabajo en línea más utilizadas en el mundo.
 
-# Sistemas de control de versións
+# Sistemas de control de versiones
 
-Un control de versións é un sistema que rexistra os cambios realizados nun ficheiro ou conxunto de ficheiros ó longo do tempo, nun modo que poidamos recuperar estas versións máis adiante.
+Un control de versiones es un sistema que registra los cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo, de manera que podamos recuperar estas versiones más adelante.
 
-Isto permítenos recuperar versións anteriores nun proxecto, comparar cambios, debugar problemas, ver que agregou unha modificación...
+Esto nos permite revertir versiones anteriores de un proyecto, comparar cambios, depurar problemas, ver quién agregó un cambio...
 
-Temos distintos tipos de sistemas de control de versións:
+Disponemos de diferentes tipos de sistemas de control de versiones:
 
-- Sistemas de control de versións locais
-- Sistemas de control de versións centralizados
-- Sistemas de control de versións distribuidos
+- Sistemas de control de versiones locales
+- Sistemas de control de versiones centralizado
+- Sistemas de control de versiones distribuidos
 
-## Sistemas de control de versións locais
+## Sistemas de control de versiones locales
 
-Os VCS locais conteñen unha sinxela base de datos na que se leva o rexistro de tódolos cambios realizados ós arquivos. Isto almacénase de forma local no propio equipo de traballo e para un mesmo.
+El VCS local contiene una base de datos simple en la que se guarda el registro de todos los cambios realizados en los archivos. Esto se almacena localmente en la computadora del trabajo y para uno mismo.
 
 ```mermaid
   flowchart
@@ -43,18 +43,18 @@ Os VCS locais conteñen unha sinxela base de datos na que se leva o rexistro de 
   Orixe --> Version
 ```
 
-- Vantaxes:
-  - Ferramenta sinxela.
-  - Rápida implementación.
-- Desvantaxes:
-  - Non é váida como ferramenta colaborativa.
-  - Single point of failure.
+- Ventajas:
+   - Herramienta sencilla.
+   - Rápida implementación.
+- Desventajas:
+   - No es útil como herramienta colaborativa.
+   - Punto único de fallo.
 
-## Sistemas de control de versións centralizados
+## Sistemas de control de versiones centralizado
 
-O principal problema que atopamos nos sistemas de control de versións VCS e que no día a día é imprescindible poder colaborar con outros programadores en outros sistemas. Para este inconveniente creáronse os sitemas de control de versións centralizados CVCS.
+El principal problema lo encontramos en los sistemas de control de versiones VCS y que en el día a día son fundamentales poder colaborar con otros programadores en otros sistemas. Los sistemas de control de versiones centralizados CVCS se crearon para solventar esta inconveniencia.
 
-Estos sistemas contan cun único servidor que contén tódolos arquivos versionados e varios clientes que descargan os arquivos dende ese lugar centralizado.
+Estos sistemas cuentan con un único servidor que contiene todos los archivos versionados y varios clientes que descargan los archivos desde esa ubicación centralizada.
 
 ```mermaid
   flowchart
@@ -74,20 +74,19 @@ Estos sistemas contan cun único servidor que contén tódolos arquivos versiona
   Version --> EquipoB
 ```
 
-- Vantaxes:
+- Ventajas:
+   - Todos los colaboradores conocen en cierta medida en qué están trabajando el resto de socios del proyecto.
+   - Los administradores tienen control sobre los permisos de acceso de cada usuario.
+   - La administración es mucho más sencilla que tener que lidiar con las bases de datos locales de cada cliente.
 
-  - Tódolos colaboradores saben ata certo punto en que traballan o resto de compañeiros de proxecto.
-  - Os administradores teñen control sobre os permisos a accesos de cada usuario.
-  - A administración é moito máis sinxela que ter que lidiar cas bases de datos locais de cada cliente.
+- Desventajas:
+  - Punto único de fallo.
 
-- Desvantaxes:
- - Single point of failure.
+## Sistemas de control de versiones distribuidos
 
-## Sistemas de control de versións distribuidos
+Los sistemas de control de versiones distribuidos DVCS ofrecen soluciones a todos los problemas mencionados anteriormente.
 
-Os sistemas de control de versións distribuidos DVCS ofrecen solucións a tódolos problemas anteriormente mencionados.
-
-Os clientes a maiores de descargar a última copia instantánea dos arquivos e replica completamente o repositorio. Con esto eliminamos o SPOF e ante falla do sistema pódese restaurar o proxecto mediante calqueira dos repositorios dispoñibles nos clientes.
+Los clientes más antiguos descargan la última copia instantánea de los archivos y replican completamente el repositorio. Con esto eliminamos el SPOF y en caso de falla del sistema se puede restaurar el proyecto usando cualquiera de los repositorios disponibles en los clientes.
 
 ```mermaid
   flowchart
@@ -113,12 +112,11 @@ Os clientes a maiores de descargar a última copia instantánea dos arquivos e r
 
 ```
 
-- Vantaxes:
+- Ventajas:
+   - Todos los colaboradores conocen en cierta medida en qué están trabajando el resto de socios del proyecto.
+   - Los administradores tienen control sobre los permisos de acceso de cada usuario.
+   - La administración es mucho más sencilla que tener que lidiar con las bases de datos locales de cada cliente.
+   - Con repositorios distribuidos eliminamos el SPOF
 
-  - Tódolos colaboradores saben ata certo punto en que traballan o resto de compañeiros de proxecto.
-  - Os administradores teñen control sobre os permisos a accesos de cada usuario.
-  - A administración é moito máis sinxela que ter que lidiar cas bases de datos locais de cada cliente.
-  - Cos repositorios distribuidos eliminamos o SPOF
-
-- Desvantaxes:
- - Resulta máis complexo de configurar respecto ós VCS e ós DVCS.
+- Desventajas:
+  - Es más complejo de configurar en comparación con VCS y DVCS.
