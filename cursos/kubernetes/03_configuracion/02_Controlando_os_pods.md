@@ -88,7 +88,7 @@ Como dixeramos ó principio desta unidade, K8s debe saber dun pod:
  
  Kubernetes resolve estes problemas a través das sondas (probes).
 
-As sondas son peticións http ou comandos a executar dentro do pod (dos contedores do pod) para determinar se a súa execución e exitosa ou non. En caso de non selo, K8s pode concluir que, ou ben o pod está inservible (o programa principal non está a funcionar) ou todavía non está listo para traballar (o programa principal do pod está todavía a arrancar)
+As sondas son peticións http ou comandos a executar dentro do pod (dos contedores do pod) para determinar se a súa execución é exitosa ou non. En caso de non selo, K8s pode concluir que, ou ben o pod está inservible (o programa principal non está a funcionar) ou todavía non está listo para traballar (o programa principal do pod está todavía a arrancar).
 
 ![pod6.png](../_media/03/pod6.png)
 
@@ -137,12 +137,12 @@ Se o arrancamos:
 
 Input
 ```sh
-microk8s.kubectl apply -f pod_sonda_live.yaml
+kubectl apply -f pod_sonda_live.yaml
 ```
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 
 Output
@@ -154,7 +154,7 @@ Agora, dende outra shell accedemos ó pod:
 
 Input 
 ```sh
-microk8s.kubectl exec -ti pod-sonda-live bash
+kubectl exec -ti pod-sonda-live -- bash
 ```
 
 Output
@@ -179,7 +179,7 @@ E se vamos a ver os detalles do noso pod, veremos o seguinte:
 
 Input
 ```sh
-microk8s.kubectl describe pod pod-sonda-live
+kubectl describe pod pod-sonda-live
 ```
 
 Output
@@ -196,7 +196,7 @@ Vemos que a sonda de live fallou e o contedor se reiniciou. De feito, se vemos a
 
 Input
 ```sh
-microk8s.kubectl get pods
+kubectl get pods
 ```
 Output
 ```sh
@@ -234,13 +234,6 @@ Lanzamos un pod con nginx. Creamos unha sonda de preparado e, agardando 15 segun
 
 Unha vez que responde, o pod ponse en estado de ready  e estará listo para recibir peticións. 
 
-As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
-
-* Cada vez que se inicia unha nova réplica, o pod non recibirá peticións a través do servizo mentres non esté en estado ready, é dicir: mentres a sonda (readinessProbe) non devolva ok. 
-* Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de ready seguirá sen recibir peticións a través do servizo. 
- 
-Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable.
-
 ### iii) Emprego de sondas con servizos e deploys
 
 As sondas live e ready son moi importantes cando se traballa con deploy que teñen un número grande de réplicas. Pensemos:
@@ -249,3 +242,9 @@ As sondas live e ready son moi importantes cando se traballa con deploy que teñ
 - Se un pod falla (o programa principal deixa de funcionar) a sonda de saúde (livenessProbe) detecta o fallo e reinicia o contedor. Mentres non volva a estar en estado de **ready** seguirá sen recibir peticións a través do servizo. 
 
 Estas dúas sondas nos permiten controlar os pods e asegurar que ningunha petición se envía a un pod que esté en estado inestable. 
+
+
+Documentación oficial:
+- [Container Probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Probas](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe)
+- [http get action v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#httpgetaction-v1-core)

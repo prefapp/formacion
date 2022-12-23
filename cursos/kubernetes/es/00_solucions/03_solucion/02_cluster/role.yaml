@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: r-castrelo
+  name: role-alumno
+  labels:
+    tipo: platega-alumno
+rules:
+- apiGroups: [""] # establece a API base ou core
+  resources: ["pods","services","deploys","configmaps"] # recursos ós que da acceso
+  verbs: ["get", "post", "put", "watch", "list", "patch"]

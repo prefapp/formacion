@@ -13,7 +13,7 @@ Como vemos, a idea é a de romper o noso sistema en unidades funcionais pequenas
 
 Un simil ó que se recorre moitas veces é ó da programación orientada a obxectos:
 
-- Igual que na POO temos clases e instancias, na conterización temos imaxes e obxectos. 
+- Igual que na [POO](https://gl.wikipedia.org/wiki/Programaci%C3%B3n_orientada_a_obxectos) temos clases e instancias, na conterización temos imaxes e obxectos. 
 - A idea clave é encapsular funcionalidades en unidades independientes que falan entre sí mediante paso de mensaxes. 
 - A evolución do sistema faise mediante a extensión/creación de novas clases e obxectos non mediante a modificación dos existentes. 
 

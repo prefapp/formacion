@@ -8,34 +8,34 @@ Cada artefacto dentro de Kubernetes recibe dous identificadores únicos:
 
 - Nome: definido na especificación do artefacto, non pode haber dous artefactos que se chamen igual dentro dun namespace. O nome está formado pola especie ou tipo de artefacto e a cadena elixida polo usuario:
   - pod/o-meu-nome
-  - servize/o-meu-nome
+  - service/o-meu-nome
 - UID: Kubernetes asigna un uid a cada artefacto de xeito automático. 
 
 A partires de aquí, podemos facer referencia ós nosos artefactos para interactuar con eles. 
 
 ```shell
 # facer un get dun servizo
-microk8s.kubectl get servize primer-servizo
+kubectl get service primer-servizo
 
 # borrar un pod de nome primeiro-pod
-microk8s.kubectl delete pod primeiro-pod
+kubectl delete pod primeiro-pod
 ```
 
 Dado que existen nomes e identificadores, compre que agrupar os artefactos dun xeito que evite a colisión de nomes: esto é, evitar que de xeito accidental dous usuarios empreguen o mesmo nome e se produza unha colisión. Esta é a razón pola que todo artefacto existe nun espazo de nomes concreto (**namespace**). 
 
 ## b) Os espazos de nome (namespaces)
 
-Cada artefacto existente en K8s pertence a un espacio de nomes. Esto evita colisións, esto é, dous artefactos que se chamen igual. 
+Cada artefacto existente en K8s pertence a un espacio de nomes. Esto evita colisións, isto é, dous artefactos que se chamen igual. 
 
 Ó mesmo tempo, posibilita controlar o acceso dos usuarios ós distintos artefactos, asignándolles namespaces específicos e dereitos sobre os mesmos. 
 
-Realmente, os namespaces posibilitan crear clúster virtuais de K8s dentro dun K8s real. Aportan unha grande flexibilidade e facilitan o traballo con usuarios (desenvolvedores, testeadores, administradores ou alumnos).
+Realmente, os namespaces posibilitan crear clústers virtuais de K8s dentro dun K8s real. Aportan unha grande flexibilidade e facilitan o traballo con usuarios (desenvolvedores, testeadores, administradores ou alumnos).
 
 ### i) Listando os namespaces
 
 Para ver os namespaces:
 ```shell
-microk8s.kubectl get namespaces
+kubectl get namespaces
 NAME              STATUS   AGE
 default           Active   4d1h
 kube-node-lease   Active   4d1h
@@ -43,7 +43,7 @@ kube-public       Active   4d1h
 kube-system       Active   4d1h
 ```
 
-Por defecto, toda instalación de Kubernetes crea dos namespaces (**kube-system** e **default**).
+Por defecto, toda instalación de Kubernetes crea dous namespaces (**kube-system** e **default**).
 
 O namespace **kube-system** é o espazo onde viven os principais artefactos do máster de Kubernetes. 
 
@@ -65,7 +65,7 @@ metadata:
 Agora, basta con envialo ó sistema:
 
 ```shell
-microk8s.kubectl apply -f namespace.yaml
+kubectl apply -f namespace.yaml
 ```
 
 E xa teríamos un novo namespace creado no sistema. 
@@ -80,10 +80,10 @@ Polo pronto, compre empregar o flag **-n <namespace>** nos nosos comandos para e
 
 ```shell
 # listar os pods do namespace 'desenvolvemento'
-microk8s.kubectl get pods -n desenvolvemento
+kubectl get pods -n desenvolvemento
 
 # borrar un pod do namespace 'desenvolvemento'
-microk8s.kubectl delete pod foo -n desenvolvemento
+kubectl delete pod foo -n desenvolvemento
 ```
 
 A todo isto, únese un poderoso sistema de identificación de artefactos en Kubernetes: as etiquetas ou labels. 
@@ -129,7 +129,7 @@ Agora, se creamos este artefacto podemos recuperalo de diversos xeitos:
 
 ```shell
 # ver as labels dos pods
-microk8s.kubectl get pods --show-labels
+kubectl get pods --show-labels
 
 NAME                            READY   STATUS             RESTARTS   AGE     LABELS
 primeiro-pod                    0/1     Pending            0          3m19s   contexto=practicas,entorno=probas,tipo=backend
@@ -138,14 +138,14 @@ primeiro-pod                    0/1     Pending            0          3m19s   co
 E, empregando selectores podemos facer procuras por labels:
 ```shell
 # listar os pods de entorno probas (label entorno = probas)
-microk8s.kubectl get pods -l 'entorno = probas'
+kubectl get pods -l 'entorno = probas'
 
 # listar tódolos artefactos que sexan de probas e de tipo backend
-microk8s.kubectl get all -l 'entorno = probas, tipo = backend'
+kubectl get all -l 'entorno = probas, tipo = backend'
 
 # tamén podemos empregar adverbios como "in"
-microk8s.kubectl get pods 'entorno in (probas, evaluacion)'
+kubectl get pods -l 'entorno in (probas, evaluacion)'
 
 # asemade temos o adverbio 'notin'
-microk8s.kubectl get pods 'entorno notin (evaluacion)'
+kubectl get pods -l 'entorno notin (evaluacion)'
 ```
