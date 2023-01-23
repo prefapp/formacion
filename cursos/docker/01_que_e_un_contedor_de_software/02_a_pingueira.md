@@ -23,3 +23,5 @@ Esto implica que, nun sistema non pode haber dous procesos co mesmo PID, ou dos 
 
 **Σ Webgrafía**
 - Kerrisk, Michael. "LEC: The failure of operating systems and how we can repair it". [en liña](https://lwn.net/Articles/524952/) [Consulta: 6-xan-2019]
+
+
