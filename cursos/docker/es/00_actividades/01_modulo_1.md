@@ -130,7 +130,7 @@ O, si este archivo no existe:
 
 - En un pdf, mostrar las frases necesarias para:
  1. Crear un grupo de control de trabajos de CPU.
- 2. Introducir limitaciones de `cpu_shares` en caso de usar cgroups v1, o de `cpu.weight` en caso de usar cgroups v2.
+ 2. Introducir limitaciones de `cpu_shares` en caso de usar cgroups v1, o de `cpu.max` en caso de usar cgroups v2.
  3. Establecer una relación de limitación de 2:1
  4. Inicie 3 instancias del programa de prueba y muestre las limitaciones de la CPU.
 
