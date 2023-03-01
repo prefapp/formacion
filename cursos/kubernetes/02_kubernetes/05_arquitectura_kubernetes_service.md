@@ -12,7 +12,7 @@ Que os pods poidan comunicarse entre sí conleva unha problemática importante:
 
 Kubernetes resolve este problema mediante un novo artefacto: **o servizo**. 
 
-Un servizo ([service]()) é un artefacto que establece regras de acceso a un pod ou conxunto de pods, é o elemento que garante a conexión ó exterior dos pods. Cando falamos de "exterior" estámonos a referir tanto á conexión dende outros pods ou dende fora do clúster de Kubernetes.  
+Un servizo ([service](https://kubernetes.io/es/docs/concepts/services-networking/service/)) é un artefacto que establece regras de acceso a un pod ou conxunto de pods, é o elemento que garante a conexión ó exterior dos pods. Cando falamos de "exterior" estámonos a referir tanto á conexión dende outros pods ou dende fora do clúster de Kubernetes.  
 
 Trátase dunha construcción que permite abstraer os pods que realmente están a traballar como backend dun frontend ou aplicación cliente. Mediante os services, calqueira aplicación cliente pode "despreocuparse" de onde están realmente a se facer as chamadas a programas ou aplicacións que lle serven de backend.
 
@@ -87,22 +87,23 @@ spec:
 O arrancamos
 
 ```shell
-microk8s.kubectl apply -f deployment_servizo.yaml
+kubectl apply -f deployment_servizo.yaml
 ```
 
 O escalamos a 3 réplicas
 
 ```shell
-microk8s.kubectl scale deploy despregue-nginx-2 --replicas=3
+kubectl scale deploy despregue-nginx-2 --replicas=3
 ```
 
-E teríamos o seguinte esquema montado no noso microk8s:
+E teríamos o seguinte esquema montado no noso clúster:
+
 ![Servizo3](./../_media/02/servizo3.png)
 
 Agora, se queremos otorgar conectividade ó noso despregue, teremos que crear un servizo. Para iso, imos empregar o seguinte artefacto:
 
 ```yaml
-# servizo_test.yaml
+# test_servizo.yaml
 
 kind: Service
 apiVersion: v1
@@ -120,13 +121,13 @@ spec:
 Creamos o artefacto no sistema
 
 ```shell
-microk8s.kubectl apply -f test_servizo.yaml
+kubectl apply -f test_servizo.yaml
 ```
 
 E listamos os servizos do K8s para ver se o temos realmente creado
 
 ```shell
-microk8s.kubectl get services
+kubectl get services
 
 NAME           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 kubernetes     ClusterIP   10.152.183.1     <none>        443/TCP    26h
@@ -148,7 +149,7 @@ Nun diagrama:
 Para testear o noso servizo imos empregar kubectl-run, que nos permite crear un despregue "ad hoc" e executar un comando "dentro" do contedor. 
 
 ```shell
-microk8s.kubectl run test-curl -ti --image=yauritux/busybox-curl sh
+kubectl run test-curl -ti --image=yauritux/busybox-curl sh
 ```
 
 Se executamos este comando aparecerá unha shell especial (a do contedor creado) e dende ahí imos facer un curl ó servizo:
@@ -190,7 +191,7 @@ Commercial support is available at
 Vemos que:
 
 - Calquer pod dentro do kubernetes (e no namespace correcto) ten acceso ó servizo, basta con saber:
-o nome do servizo
+  - o nome do servizo
   - o porto de conexión (do servizo)
   - Non hai que facer ningunha configuración no pod cliente
 - O pod cliente non se preocupa do número de réplicas, do nodo no que está o pod de nginx, a súa ip, etc...
@@ -200,11 +201,11 @@ Para finalizar, temos que borrar todo o que creamos:
 
 ```shell
 # borramos o servizo
-microk8s.kubectl delete -f test_servizo.yaml
+kubectl delete -f test_servizo.yaml
 
 # borramos o despregue
-microk8s.kubectl delete -f despregue_test.yaml
+kubectl delete -f deployment_servizo.yaml
 
 # borramos o despregue de test
-microk8s.kubectl delete deploy test-curl
+kubectl delete pod test-curl
 ```

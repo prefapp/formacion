@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: practica-4-v1
+spec:
+  selector:
+    matchLabels:
+      app: frontend-v1
+  template:
+    metadata:
+      labels:
+        app: frontend-v1
+    spec:
+      containers:
+      - name: pod-practica-v1
+        image: frmadem/catro-eixos-k8s-ej1:v1
+        command: ["npm","run","iniciar"]
+        env:
+        - name: PUERTO_APP
+          value: "8080"
+        ports:
+        - containerPort: 8080

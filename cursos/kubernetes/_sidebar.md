@@ -7,6 +7,7 @@
 - Kubernetes
   - [Que é Kubernetes](./02_kubernetes/01_que_e_kubernetes.md)
   - [Arquitectura de Kubernetes](./02_kubernetes/02_arquitectura_kubernetes.md)
+  - [Instalación de Kind](./02_kubernetes/07_instalando_kind.md)
   - [Artefactos en Kubernetes: o Pod](./02_kubernetes/03_arquitectura_kubernetes_pod.md)
   - [Artefactos en Kubernetes: o Deployment](./02_kubernetes/04_arquitectura_kubernetes_deployment.md)
   - [Artefactos en Kubernetes: o Service](./02_kubernetes/05_arquitectura_kubernetes_service.md)
@@ -22,5 +23,7 @@
   - [Ingress: controlando o tráfico de entrada](/03_configuracion/06_Ingress_controlando_o_trafico.md)
   - [Helm: o marionetista de Kubernetes](/03_configuracion/07_Helm.md)
   - [HPA: exprimindo o rendemento do noso k8s](/03_configuracion/08_Adaptandose_as_demandas.md)
+  - [Asignación de Pods a Nodos](03_configuracion/11_Assigning_Pods_to_Nodes.md)
+  - [👨‍🏫 Práctica guiada de Kind](/03_configuracion/10_practica_guiada_kind.md)
   - [👨‍🏫 Práctica guiada de HPA](/03_configuracion/09_practica_guiada_HPA.md)
   - [📝 Actividades](./00_actividades/03_modulo_3.md)

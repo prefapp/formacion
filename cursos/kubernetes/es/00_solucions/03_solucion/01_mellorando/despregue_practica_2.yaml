@@ -1,0 +1,63 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: despregue-practica-2
+  labels:
+        app: pod-practica-2
+        practica: modulo_3_1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      practica: modulo_3_1
+  template:
+    metadata:
+      labels:
+        app: pod-practica-2
+        practica: modulo_3_1
+    spec:
+      containers:
+      - name: container-web
+        image: frmadem/catro-eixos-k8s-ej1:v1
+        command: ["npm","run","iniciar"]
+        resources:
+          requests:
+            memory: "48Mi"
+            cpu: "150m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m"
+        env:
+          - name: PUERTO_APP
+            valueFrom:
+              configMapKeyRef:
+                name: config-practica-2
+                key: "PUERTO_APP"
+          - name: "RUTA_LOGS"
+            valueFrom:
+              configMapKeyRef:
+                name: config-practica-2
+                key: "RUTA_LOGS"
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        readinessProbe:
+          httpGet:
+            path: /servidor
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /servidor
+            port: 80
+          initialDelaySeconds: 20
+          periodSeconds: 10        
+        volumeMounts:
+          - mountPath: "/var/log"
+            name: volume-logs
+      volumes:
+        - name: volume-logs
+          hostPath:
+            path: /tmp/k8s_logs
+            type: DirectoryOrCreate

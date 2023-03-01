@@ -56,7 +56,7 @@ spec:
 Se enviamos este ficheiro ó kubernetes:
 
 ```shell
-microk8s.kubectl apply -f deployment_1.yaml
+kubectl apply -f deployment_1.yaml
 ```
 
 Veremos como se crea un pod.
@@ -72,7 +72,7 @@ E teremos un novo tipo de artefacto: o deployment.
 Podemos listalos:
 
 ```shell
-microk8s.kubectl get deploy
+kubectl get deploy
 ```
 
 E veremos
@@ -88,7 +88,7 @@ Se agora listásemos os pods que temos correndo, e borrásemos o pod de nginx:
 
 ```shell
 # o nome variará na vosa máquina
- microk8s.kubectl delete pod despregue-nginx-976fb94cd-l8ksl
+kubectl delete pod despregue-nginx-976fb94cd-l8ksl
  ```
 
 Veremos que se borra o pod e que, inmediatamente, se creou un novo:
@@ -114,18 +114,18 @@ A razón está no deployment.
 
 ### ii) A tarefa de escalado / degradado do deployment
 
-Neste momento, temos un pod solo correndo o nginx. Imaxinemos que queremos correr tres pods (tres réplicas, posto que terían todos a mesma configuración).
+Neste momento, temos un pod só correndo o nginx. Imaxinemos que queremos correr tres pods (tres réplicas, posto que terían todos a mesma configuración).
 
 Podemos facer este traballo directamente con [kubectl scale](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment):
 
 ```shell
- microk8s.kubectl scale deploy despregue-nginx --replicas=3
+ kubectl scale deploy despregue-nginx --replicas=3
 ```
 
 Se vemos os pods teremos:
 
 ```shell
->  microk8s.kubectl get pods -w
+>  kubectl get pods -w
 
 despregue-nginx-976fb94cd-ngw7t   1/1     Running   0          7m28s
 despregue-nginx-976fb94cd-4z54k   0/1     Pending   0          0s
@@ -140,7 +140,7 @@ despregue-nginx-976fb94cd-4z54k   1/1     Running             0          2s
 E se listamos os deployments:
 
 ```shell
-> microk8s.kubectl get deploy
+> kubectl get deploy
 
 NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 despregue-nginx   3/3     3            3           22m
@@ -149,7 +149,7 @@ despregue-nginx   3/3     3            3           22m
 Para voltar á situación inicial dunha soa réplica (pods = 1), abondaría con facer:
 
 ```shell
-microk8s.kubectl scale deploy despregue-nginx --replicas=1
+kubectl scale deploy despregue-nginx --replicas=1
 ```
 
 E veríamos como dous pods serían eliminados restando soamente un deles. 
@@ -196,10 +196,10 @@ Basta con aplicar de novo este ficheiro modificado:
 
 ```shell
 # aplicamos o ficheiro
-microk8s.kubectl apply -f deployment_1.yaml
+kubectl apply -f deployment_1.yaml
 
 # facemos un listado dos pods
-microk8s.kubectl get pods -w
+kubectl get pods -w
 ```
 
 Veremos que os pods iniciales poñense a estado "terminating" e se lanzan uns novos (coa nova imaxe). 
@@ -211,7 +211,7 @@ Se non queremos modificar o código yaml do noso ficheiro de deploy, existe outr
 Compre empregar o comando **edit**:
 
 ```shell
-microk8s.kubectl edit deploy despregue-nginx
+kubectl edit deploy despregue-nginx
 ```
 
 O comando kubectl abrirá unha instancia de vim co código en yaml do artefacto para poder facer cambios que, unha vez gardados, faránse automáticamente no deploy e nos seus pods. 
