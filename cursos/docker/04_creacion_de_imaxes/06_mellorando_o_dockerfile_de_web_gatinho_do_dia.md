@@ -123,6 +123,84 @@ CMD ["/usr/bin/python3", "/usr/src/app/app.py"]
 
 Con este Dockerfile e clonando o [repo](https://github.com/prefapp/catweb) en local, podemos ter unha imaxe de "gatiño do día" de 60MB!!!!
 
+### C. Usando BuildKit
+
+Dende a versión 19.03 de Docker podemos usar BuildKit para construír as imaxes.
+
+[BuildKit](https://github.com/moby/buildkit) é un backend encargado de construír imaxes que inclúe características novas, veremos algunhas das máis importantes. 
+
+Cabe resaltar que as últimas versións do cliente de Docker xa o usa por defecto. Para facer explícito o uso de BuildKit usaremos a variable de entorno `DOCKER_BUILDKIT`, tal como se mostra no seguinte exemplo.
+
+```
+DOCKER_BUILDKIT=0 docker build . -t proba-sen-buildkit
+DOCKER_BUILDKIT=1 docker build . -t proba-usando-buildkit
+```
+
+
+#### Paralelismo
+
+Antes construiamos unha imaxen multi-stage procesando o arquivo de forma secuencial. Usando buildkit podemos reducir considerablemente o tempo de construción de imaxes xa que analiza o Dockerfile e crea un grafo de dependencias para determinar que elementos poden ser ignorados, executados en paralelo ou cales teñen que executarse secuencialmente.
+
+Proba a construir a seguinte imaxen sen usar BuildKit e a continuación proba a usalo, cal é a diferencia?
+
+```Dockerfile
+FROM alpine AS capa1
+RUN sleep 10
+ 
+FROM alpine AS capa2
+RUN sleep 10
+ 
+FROM alpine AS final
+```
+
+#### Novos tipos de monturas
+
+Anteriormente vimos a importancia de usar volumes para manter o estado dos contedores. Non obstante, existen outros tipos que nos permiten facer un uso máis eficiente e seguro dos contedores.
+
+##### Segredos
+
+Os segredos permites definir información confidencial que non debería quedar exposta na imaxe pero é necesaria para a execución dun comando. A continuación mostrase un Dockerfile que utiliza esta característica:
+
+```Dockerfile
+FROM python:3
+
+# Procesa a información sensible
+RUN --mount=type=secret,id=confidencial.key md5sum /run/secrets/confidencial.key
+
+COPY app /app
+WORKDIR /app
+CMD ["python","app.py"]
+```
+
+Como se pode observar almacenanse temporalmente no directorio `/run/secrets` pero si mostramos o contido desde dentro dun contedor veremos como está baleiro.
+
+Usaremos o argumento `--secret` para especificar o arquivo:
+
+```
+docker build --secret id=confidencial.key,src=/tmp/segredo .
+```
+
+##### SSH
+
+Tamén nos permite usar claves SSH, esto poderíanos servir para descargar ficheiros usando `scp` ou para clonar un repositorio privado de GitHub como se ve no seguinte exemplo:
+
+```Dockerfile
+# syntax=docker/dockerfile:experimental
+FROM alpine
+# Instala ssh
+RUN apk add --no-cache openssh-client git
+# Descargamos a clave pública de GitHub
+RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+# Clonamos o repositorio
+RUN --mount=type=ssh git clone git@github.com:usuario/repositorio_privado.git myproject
+```
+
+Esta vez usamos o parámetro `--ssh`. Lembra crear unha clave SSH e añadila ao ssh-agent (Consulta a [documentación de GitHub](https://docs.github.com/es/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key))
+
+```
+docker build --ssh default=${SSH_AUTH_SOCK} .
+```
+
 # 🕮 Actividade
 
 >- ✏️ Probemos a construí-la imaxe do "gatiño do día" co multi-stage e vexamos cal é o seu tamaño.
