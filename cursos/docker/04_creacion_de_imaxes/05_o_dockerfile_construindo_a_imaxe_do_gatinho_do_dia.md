@@ -31,7 +31,7 @@ Nesta sentencia establecemos o directorio de traballo actual. O [WORKDIR](https:
 Agora instalamos o software que precisamos:
 
 ```dockerfile
-RUN apt-get update -y && apt-get -y install python3-pip
+RUN apt-get update -y && apt-get -y install python3-pip git
 ```
 
 A sentencia [RUN](https://docs.docker.com/engine/reference/builder/#run) corre un comando dentro dun contedor e almacena os resultados (a capa de contedor) na imaxe que se está a construir.
