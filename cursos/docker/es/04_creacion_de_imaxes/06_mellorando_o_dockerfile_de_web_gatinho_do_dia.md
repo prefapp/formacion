@@ -158,13 +158,13 @@ RUN sleep 10
 FROM alpine AS final
 ```
 
-#### Nuevos tipos de monturas
+#### Nuevos tipos de mounts
 
 Anteriormente, vimos la importancia de usar volúmenes para mantener el estado de los contenedores. Sin embargo, existen otros tipos que nos permiten hacer un uso más eficiente y seguro de los contenedores.
 
-##### Secretos
+##### Secrets
 
-Los secretos permiten definir información confidencial que no debería quedar expuesta en la imagen, pero es necesaria para la ejecución de un comando. A continuación se enseña un Dockerfile que usa esta característica:
+Los secrets permiten definir información confidencial que no debería quedar expuesta en la imagen, pero es necesaria para la ejecución de un comando. A continuación se enseña un Dockerfile que usa esta característica:
 
 ```Dockerfile
 FROM python:3
