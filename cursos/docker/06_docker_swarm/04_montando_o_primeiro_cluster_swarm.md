@@ -4,57 +4,129 @@ Para a creación dun primeiro cluster de nodos con Docker Swarm, vamos a usar 2 
 
 Poderíamos realizar esta tarefa clonando a máquina actual **docker-platega**, ou instalando de novo 2 vps co seu SO Linux e agregándolle o docker engine como vimos no tema 2, pero Docker nos provee dunha ferramenta máis útil para esta labor:
 
-## Docker machine
+Hai varias formas de crear e configurar un clúster con nodos Docker.
 
-[Docker Machine](https://docs.docker.com/machine/overview/#why-should-i-use-it) é unha ferramenta [opensource](https://github.com/docker/machine) mantida pola empresa Docker xunta coa comunidade, que permite instalar e xestionar, dende o noso equipo local, nodos Docker (servidores virtuais co docker-engine instalado) tanto en máquinas virtuais locais (HyperV, VirtualBox, VMWare Player) como en proveedores remotos (AWS, Azure, DigitalOcean ...).
+Poderiamos realizar esta tarefa clonando a máquina actual **docker-platega**, ou instalando de novo 2 vps co seu sistema operativo Linux e engadindo o docker engine como vimos no tema 2. Neste caso usaremos Vagrant para automatizar a creación das máquinas virtuais de VirtualBox.
 
-Para crear o noso primeiro cluster Swarm, vamos a empregar esta ferramenta, para crear 2 novas máquinas virtuais correndo no noso VirtualBox, que van a formar o noso cluster Swarm.
+## Vagrant
 
-Para isto so é necesario realizar os seguintes pasos:
+[Vagrant](https://developer.hashicorp.com/vagrant/intro) é unha ferramenta [opensource](https://github.com/hashicorp/vagrant) utilizada para crear e configurar entornos de desenvolvemento virtualizados. O seu principal obxectivo é simplificar a configuración e xestión de máquinas virtuais con configuracións predefinidas e aprovisionamento automático de software, podendo utilizar diversos provedores de máquinas virtuais (VirtualBox, VMware, Docker...).
 
-### 0) Instalar docker-machine
 
-```sh
-curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
-chmod +x /tmp/docker-machine && \
-sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
+### Creación del cluster
+
+Para crear o clúster primeiro debemos instalar Vagrant:
+
+```
+apt install -y vagrant
 ```
 
-	Atencion Se estamos nun sistema operativo diferente de linux (windows, mac), para poder dispoñer de docker-machine é recomendable instalar o paquete de
+A continuación, necesitamos crear o Vagrantfile.
 
-	[Docker Toolbox](https://docs.docker.com/toolbox/overview/), xa que aínda que está actualmente marcado como legacy, é o que menos problemática xenera co VirtualBox.
+A primeira liña define unha variable chamada $install_docker que contén un script Bash para instalar Docker e engadir o usuario vagabundo ao grupo docker:
 
-### 1) Crear a primeira máquina virtual con docker-machine
-
-```sh
-docker-machine create -d virtualbox vbox01
+```Vagrantfile
+$install_docker = <<-SCRIPT
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sh get-docker.sh
+  sudo usermod -aG docker vagrant
+SCRIPT
 ```
 
-> Con -d se especifica o driver a empregar,  vbox01 será o nome da vm xenerada.
+A seguinte liña inicializa un obxecto de configuración Vagrant:
 
-Este comando descarga unha imaxen de Virtualbox dunha distribución moi lixeira de Linux (boot2docker) co demonio de Docker instalado, e crea a máquina vitual co demonio de Docker arrancado.
-
-### 2) Crear a segunda máquina virtual con docker-machine
-
-```sh
-docker-machine create -d virtualbox vbox02
+```Vagrantfile
+Vagrant.configure("2") do |config|
 ```
 
-### 3) Iniciar o swarm nunha delas (por exemplo na vbox1)
+A liña `config.vm.box` especifica a caixa base para usar para a máquina virtual. Neste caso, usa ubuntu/focal64, que está baseado en Ubuntu 20.04:
 
-```sh
-docker-machine ssh vbox01 "docker swarm init --advertise-addr <MANAGER-IP>"
+```Vagrantfile
+  config.vm.box = "ubuntu/focal64"
 ```
 
-A MANAGER-IP  é a ip que ten configurada o nodo na interfaz que se vai  a usar para conectarse  cos demais nodos
+O bloque `config.vm.provider` define a configuración do provedor da máquina virtual. Neste caso, configure a asignación de memoria e CPU para a máquina virtual creada por VirtualBox:
 
-### 4) Unir a outra máquina ao swarm
-
-```sh
-docker-machine ssh vbox02 "docker swarm join --token xxxxxxxxxxxxxx <MANAGER-IP>:2377"
+```Vagrantfile
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = "2"
+  end
 ```
 
-O token para unir a máquina ao swarm nolo indican no anterior punto 3, ao facer o *swarm init*.
+A liña `config.vm.synced_folder` establece unha carpeta sincronizada entre a máquina host e a máquina virtual. Neste caso, o directorio actual da máquina host está montado como `/vagrant` na máquina virtual convidada. Isto permítenos pasar o token para unir o worker ao clúster docker swarm, ademais de poder enviar arquivos con máis comodidade:
 
-E listo, con estos 4 pasos xa temos un cluster swarm creado con 2 máquinas. Agora podemos agregar máis máquinas ao cluster, ou lanzar sobre él unha aplicación.
+```Vagrantfile
+  config.vm.synced_folder ".", "/vagrant"
+```
 
+O bloque `config.vm.define` crea dúas máquinas virtuais con diferentes enderezos IP nunha rede privada. A primeira máquina virtual defínese como un xestor de Docker Swarm co enderezo IP 192.168.56.10, mentres que a segunda máquina virtual defínese como un traballador de Docker Swarm co enderezo IP 192.168.56.11:
+
+```Vagrantfile
+  # Manager node
+  config.vm.define "manager" do |manager|
+    manager.vm.network "private_network", ip: "192.168.56.10"
+
+    manager.vm.provision "shell", inline: $install_docker
+
+    manager.vm.provision "shell", inline: <<-SHELL
+      # Set up Docker Swarm as a manager
+      sudo docker swarm init --advertise-addr 192.168.56.10
+      sudo docker swarm join-token worker | grep token > /vagrant/worker_token
+    SHELL
+  end
+
+  # Worker node
+  config.vm.define "worker" do |worker|
+    worker.vm.network "private_network", ip: "192.168.56.11"
+
+    worker.vm.provision "shell", inline: $install_docker
+
+    worker.vm.provision "shell", inline: <<-SHELL
+      # Join Docker Swarm as a worker
+      cat /vagrant/worker_token | sh
+    SHELL
+  end
+```
+
+Finalmente temos o seguinte Vagrantfile.
+
+```Vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = "2"
+  end
+
+  config.vm.synced_folder ".", "/vagrant"
+
+  # Manager node
+  config.vm.define "manager" do |manager|
+    manager.vm.network "private_network", ip: "192.168.56.10"
+
+    manager.vm.provision "shell", inline: $install_docker
+
+    manager.vm.provision "shell", inline: <<-SHELL
+      # Set up Docker Swarm as a manager
+      sudo docker swarm init --advertise-addr 192.168.56.10
+      sudo docker swarm join-token worker | grep token > /vagrant/worker_token
+    SHELL
+  end
+
+  # Worker node
+  config.vm.define "worker" do |worker|
+    worker.vm.network "private_network", ip: "192.168.56.11"
+
+    worker.vm.provision "shell", inline: $install_docker
+
+    worker.vm.provision "shell", inline: <<-SHELL
+      # Join Docker Swarm as a worker
+      cat /vagrant/worker_token | sh
+    SHELL
+  end
+end
+```
+
+Para iniciar as máquinas virtuais usaremos `vagrant up`. Para acceder ao nodo xestor podemos facelo a través de ssh co comando `vagrant ssh manager`.
