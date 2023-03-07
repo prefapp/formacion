@@ -1,8 +1,0 @@
-- Creación de imaxes
-  - [Revisitando as imaxes: o overlayfs](./01_creacion_de_imaxes/01_revisando_as_imaxes_o_overlayfs.md)
-  - [Emprego de comandos](./01_creacion_de_imaxes/02_emprego_de_comandos.md)
-  - [Exemplo: creando imaxe mediante comandos](./01_creacion_de_imaxes/03_exemplo_creando_imaxe_maediante_comandos.md)
-  - [O Dockerfile](./01_creacion_de_imaxes/04_o_dockerfile.md)
-  - [O Dockerfile: construíndo a imaxe do "gatiño do día"](./01_creacion_de_imaxes/05_o_dockerfile_construindo_a_imaxe_do_gatinho_do_dia.md)
-  - [Mellorando o Dockerfile da web "gatiño do día"](./01_creacion_de_imaxes/06_mellorando_o_dockerfile_de_web_gatinho_do_dia.md)
-  - [📝 Actividades](./00_actividades/01_modulo_1.md)
