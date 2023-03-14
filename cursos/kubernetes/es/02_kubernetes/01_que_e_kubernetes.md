@@ -2,6 +2,26 @@
 
 Kubernetes es un framework y una plataforma de orquestación de contenedores cuya función principal es automatizar la implementación, el escalado y el mantenimiento de aplicaciones en producción que se ejecutan en un clúster de nodos o máquinas.
 
+# ¿Qué es un clúster de kubernetes?
+
+Un clúster de Kubernetes se compone de los siguientes componentes principales:
+
+- Nodo de trabajo (Worker Node): Es una máquina virtual o física que ejecuta aplicaciones y cargas de trabajo. Cada nodo de trabajo es administrado por el maestro de Kubernetes y es responsable de ejecutar los contenedores Docker que contienen las aplicaciones y los servicios que se ejecutan en el clúster.
+
+- Maestro de Kubernetes (Kubernetes Master): Es el cerebro del clúster de Kubernetes. El maestro de Kubernetes es responsable de administrar y coordinar los nodos de trabajo, programar contenedores, monitorizar la salud del clúster y proporcionar una API para interactuar con el clúster.
+
+- Kubernates API Server: Es el punto de entrada para todas las solicitudes de API de Kubernetes y es responsable de validar y configurar la API del clúster.
+
+- Etcd: Es una base de datos distribuida y consistente que almacena el estado del clúster de Kubernetes.
+
+- Controlador de Kubernetes (Kubernetes Controller): Es un componente que se ejecuta en el maestro de Kubernetes y es responsable de garantizar que el clúster esté en el estado deseado. Los controladores de Kubernetes incluyen controladores de replicación, controladores de estado, controladores de demonios, entre otros.
+
+- Planeador (Kubernetes Scheduler): Es un componente que se ejecuta en el maestro de Kubernetes y es responsable de asignar las cargas de trabajo a los nodos de trabajo. El planeador toma en cuenta factores como los recursos disponibles, la capacidad de los nodos y las políticas de tolerancia a fallos al tomar decisiones de programación.
+
+- Proxy de servicio (Kubernetes Service Proxy): Es un componente que se ejecuta en cada nodo de trabajo y es responsable de enrutar el tráfico de red hacia los contenedores que ejecutan los servicios de la aplicación.
+
+Todos estos componentes trabajan juntos para administrar y orquestar los contenedores Docker que contienen las aplicaciones y los servicios que se ejecutan en el clúster de Kubernetes.
+
 Los creadores de Kubernetes no dudan en confesar el objetivo final de su plataforma:
 
 > A través de Kubernetes queremos hacer posible tratar el CPD como si fuera una sola máquina... [Joe Beda, Brendan Burns y Craig McLuckie]
