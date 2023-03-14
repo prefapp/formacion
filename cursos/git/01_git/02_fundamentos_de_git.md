@@ -9,13 +9,13 @@ A diferencia de outros VCS, Git manexa os seus datos como un conxunto de copias 
 
 **- Outros VCS:**
 
-![VCS version flow](../_media/VCS_version_flow.png)
+![VCS version flow](../_media/01_git/VCS_version_flow.png)
 
 Os cambios almacénanse como cambios na versión da base de cada ficheiro.
 
 **- Git instantáneas:**
 
-![GIT version flow](../_media/GIT_version_flow.png)
+![GIT version flow](../_media/01_git/GIT_version_flow.png)
 
 Os cambios almacénanse como instantáneas no proxecto a través do tempo.
 
