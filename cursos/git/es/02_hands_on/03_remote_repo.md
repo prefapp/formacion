@@ -20,9 +20,13 @@ Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a util
 
 ## Github 
 
-<p align="center"  >
-  <img src="../_media/02_hands_on/github-logo.png" alt="Logo github" style="max-width:280px;"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;max-width:280px;">
+
+![](../_media/02_hands_on/github-logo.png)
+
+  </div>
+</div>
 
 GitHub ofrece una amplia gama de características y herramientas para desarrolladores de software, incluyendo alojamiento de repositorios de código, seguimiento de problemas, gestión de proyectos, integración continua y entrega continua, herramientas de revisión de código, entre otros.
 
@@ -75,9 +79,13 @@ El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos
 
 ## Lectura de buenas prácticas en Github
 
-<p align="center"  >
-  <img src="../_media/02_hands_on/lecturas.jpg" alt="Lecturas buenas prácticas github" style="max-width:280px;"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;max-width:280px;">
+
+![](../_media/02_hands_on/lecturas.jpg)
+
+  </div>
+</div>
 
 - Repositorios: https://docs.github.com/es/repositories/creating-and-managing-repositories/best-practices-for-repositories
 - Organizaciones: https://docs.github.com/es/organizations/collaborating-with-groups-in-organizations/best-practices-for-organizations

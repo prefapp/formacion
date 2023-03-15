@@ -8,10 +8,13 @@ Un proyecto GIT, consta de tres secciones principales en local:
 
 Desde el directorio GIT en local se subirá a la forja de repositorios (Remote repo) que se haya escogido.
 
-<p align="center">
-  <img src="../_media/02_hands_on/ciclos-de-trabajo-Git.png" alt="Development git"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
 
+![](../_media/02_hands_on/ciclos-de-trabajo-Git.png)
+
+  </div>
+</div>
 
 Según las anterior imagen, nuestro trabajo en Git puede tener tres estados: confirmado (committed), modificado (modified), y preparado (staged). 
 - Confirmado: significa que los datos están almacenados de manera segura en tu base de datos local. 
@@ -25,9 +28,13 @@ La creación de ramas es una función disponible en la mayoría de los sistemas 
 
 Cuando quieres añadir una nueva función o solucionar un error, independientemente de su tamaño, generas una nueva rama para alojar estos cambios. Esto hace que resulte más complicado que el código inestable se fusione con el código base principal, y te da la oportunidad de limpiar tu historial futuro antes de fusionarlo con la rama principal.
 
-<p align="center">
-  <img src="../_media/02_hands_on/branch.png" alt="Gráfico de branching"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/branch.png)
+
+  </div>
+</div>
 
 Los tipos de ramas más usados en git son:
 - **Main**: La rama principal o por defecto (main) es la rama principal de un repositorio Git. Contiene el código estable y debe ser utilizada como la base para crear nuevas ramas. Hace algún tiempo, la coonvención general para la rama principal era llamarla **master**, pero se ha cambiado por razones de inclusión.
@@ -44,9 +51,13 @@ Existen diversas estrategias de creación de ramas, hablaremos más adelante de 
 
 La siguiente imagen ilustra un ejemplo de ramificación:
 
-<p align="center">
-  <img src="../_media/02_hands_on/branch-git.png" alt="Ejemplo de ramificación"/>
-</p> 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/branch-git.png)
+
+  </div>
+</div>
 
 Hay que tener en cuenta que al crear una bifurcación de la rama principal pueden crearse conflictos con otros compañeros que colaboren en el proyecto. 👀 Para evitarlos, es importante:
 - Antes de crear una nueva rama, asegurar de que tu copia local de la rama principal está actualizada.

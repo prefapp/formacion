@@ -38,9 +38,13 @@ Y la otra parte, algunas buenas prácticas para los revisores de una pull reques
 ## Ship / Show / Ask
 _Extraído del artículo de Rouan Wilsenach ["Ask / Show / Ask"](https://martinfowler.com/articles/ship-show-ask.html)_
 
-<p align="center">
-  <img src="../_media/02_hands_on/ship_show_ask.png" alt="Ship / Show / Ask"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/ship_show_ask.png)
+
+  </div>
+</div>
 
 Cada vez que haces un pull request eliges una de las tres opciones: Ship, Show o Ask.
 
@@ -57,9 +61,13 @@ Funciona muy bien cuando:
 - Cuando no son cambios críticos.
 - Tienes la suficiente confianza en tu experiencia y en la experiencia de tu equipo.
 
-<p align="center">
-  <img src="../_media/02_hands_on/ship.png" alt="Ship"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/ship.png)
+
+  </div>
+</div>
 
 ### Show 
 
@@ -77,9 +85,13 @@ Funciona muy bien cuando:
 - Cuando no son cambios críticos.
 - Tienes la suficiente confianza en tu experiencia y en la experiencia de tu equipo.
 
-<p align="center">
-  <img src="../_media/02_hands_on/show.png" alt="Show"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/show.png)
+
+  </div>
+</div>
 
 ### Ask
 Con la opción ask hacemos una pausa. Con nuestros cambios en una rama abrimos un Pull Request contra la rama principal y esperamos la retroalimentación antes de fusionar. Tal vez no estamos seguros de haber tomado el enfoque correcto. Tal vez hay algún código con el que no estamos del todo contentos pero no estamos seguros de cómo mejorarlo. Tal vez hayamos hecho un experimento y queramos ver qué piensa la gente.
@@ -96,7 +108,11 @@ Funciona muy bien cuando:
 - Cuando los cambios son críticos.
 - El código es colaborativo y mantenido por un equipo o comunidad.
 
-<p align="center">
-  <img src="../_media/02_hands_on/ask.png" alt="Ask"/>
-</p>
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../_media/02_hands_on/ask.png)
+
+  </div>
+</div>
 
