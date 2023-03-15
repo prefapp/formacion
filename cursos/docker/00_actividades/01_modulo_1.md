@@ -130,10 +130,9 @@ Ou, se non existe este ficheiro:
 ```
 
 - Nun pdf, mostrar as sentencias necesarias para:
- 1. Crear un grupo de control de emprego de cpu. 
- 2. Introducir limitacións de `cpu_shares` en caso de usar cgroups v1, ou de `cpu.max` en caso de usar cgroups v2.
- 3. Establecer unha ratio de limitación de 2:1
- 4. Lanzar 3 instancias do programa de test e mostrar co top as limitación de cpu. 
+ 1. Crear os grupos de control necesarios. 
+ 2. Introducir limitacións de `cpu_shares` en caso de usar cgroups v1, ou de `cpu.max` en caso de usar cgroups v2. Establecendo unha ratio de limitación de 2:1.
+ 3. Lanzar 3 instancias do programa de test e mostrar co top as limitación de cpu. 
 
 ---
 

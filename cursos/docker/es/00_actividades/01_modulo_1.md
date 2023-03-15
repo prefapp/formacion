@@ -128,11 +128,10 @@ O, si este archivo no existe:
 /usr/local/bin/matho-primes 0 9999999999 > /dev/null &
 ```
 
-- En un pdf, mostrar las frases necesarias para:
- 1. Crear un grupo de control de trabajos de CPU.
- 2. Introducir limitaciones de `cpu_shares` en caso de usar cgroups v1, o de `cpu.max` en caso de usar cgroups v2.
- 3. Establecer una relación de limitación de 2:1
- 4. Inicie 3 instancias del programa de prueba y muestre las limitaciones de la CPU.
+- En un pdf, mostrar las capturas necesarias para:
+ 1. Crear los grupos de control necesarios.
+ 2. Introducir limitaciones de `cpu_shares` en caso de usar cgroups v1, o de `cpu.max` en caso de usar cgroups v2. Estableciendo una relación de limitación de 2:1.
+ 3. Inicie 3 instancias del programa de prueba, y muestre con top las limitaciones de la CPU.
 
 ---
 
