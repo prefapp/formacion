@@ -6,3 +6,4 @@
   - [Secciones git - Ramificación - Fusión](./02_hands_on/01_git_sections.md)
   - [Comandos básicos](./02_hands_on/02_basic_commands.md)
   - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
+  - [Pull request](02_hands_on/04_pull_request.md)
