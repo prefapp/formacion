@@ -7,3 +7,4 @@
   - [Comandos básicos](./02_hands_on/02_basic_commands.md)
   - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
   - [Pull request](02_hands_on/04_pull_request.md)
+  - [Práctica guiada - Clonar repo, creación de ramas, primer commit y push request](02_hands_on/05_Guided_practice-Cloning_ repo_branch_creation_first_commit_push_request.md)
