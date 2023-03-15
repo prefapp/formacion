@@ -1,4 +1,4 @@
-# Práctica guiada - Clonar repo, creación de ramas, primer commit y push request.
+# Práctica guiada - Clonar repo, creación de ramas, primer commit y push request
 
 Hemos pasado por unas largas lecturas teóricas, así que esta práctica será muy corta. En esta práctica guiada vamos a clonar un repositorio, crear una rama, realizar un primer commit y crear un pull request.
 
