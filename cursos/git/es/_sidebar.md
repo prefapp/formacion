@@ -5,3 +5,4 @@
 - Capítulo 2 - Manos a la obra
   - [Secciones git - Ramificación - Fusión](./02_hands_on/01_git_sections.md)
   - [Comandos básicos](./02_hands_on/02_basic_commands.md)
+  - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
