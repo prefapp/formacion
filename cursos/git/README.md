@@ -18,7 +18,10 @@ Además de contar con una arquitectura distribuida, Git se ha diseñado teniendo
   
 Seas desarrollador, diseñador... de marketing, de recursos humanos... para gestión de productos, de proyectos, de equipos... Git es para ti ❤️
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto">
 
-<p align="center">
-  <img src="_media/README/development_git.png" alt="Development git"/>
-</p>
+![](_media/README/development_git.png)
+
+  </div>
+</div>
