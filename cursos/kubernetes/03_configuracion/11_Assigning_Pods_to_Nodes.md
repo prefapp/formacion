@@ -1,56 +1,54 @@
-> Necesita traducción al gallego 👀
-
 # Asignación de Pods a Nodos 🚀
-*nodeSelector, nodeAffinity y nodeName*
+*nodeSelector, nodeAffinity e nodeName*
 
 📚 [Documentación oficial](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) 
 
 ![](https://vergaracarmona.es/wp-content/uploads/2022/10/Historia-de-los-contenedores.png)
 
-En Kubernetes, los pods se programan en los nodos mediante *kube-scheduler*. El *kube-scheduler* es un proceso de *control-plane* que **asigna los pods a los nodos**. Determina qué nodos son lugares válidos para cada pod según las restricciones establecidas y los recursos disponibles. Sin embargo, puede haber casos en los que tengamos un pod que requiera de la GPU para funcionar según nuestras expectativas. En este supuesto, podemos necesitar controlar la programación del pod para asignar el pod a un nodo que tenga GPU disponible.
+En Kubernetes, os pods prográmanse nos nodos mediante *kube-scheduler*. O *kube-scheduler* é un proceso de *control-plane* que **asigna os pods ós nodos**. Determina qué nodos son lugares válidos para cada pod segundo as restriccións establecidas e os recursos dispoñibles. Nembargantes, pode haber casos nos que teñamos un pod que requira da GPU para funcionar segundo as nosas expectativas. Neste suposto, podemos necesitar controlar a programación do pod para asignalo a un nodo que teña GPU dispoñible.
 
-Hay varias formas de controlar la programación (*kube-scheduler*) y todos los enfoques recomendados utilizan *labels* para facilitar la selección.
+Hai varias formas de controlar a programación (*kube-scheduler*) e tódolos enfoques recomendados utilizan *labels* para facilitar a selección.
 
-## ✔️ Labels en los nodos
+## ✔️ Labels nos nodos
 
-Antes de seguir avanzando, veamos las sintaxis que nos servirán para manejar *labels* en los nodos:
+Antes de seguir avanzando, vexamos as sintaxis que nos servirán para manexar *labels* nos nodos:
 
-Añadir label a un nodo:
+Engadir label a un nodo:
 
 ``` shell
 # Sintaxis
 kubectl label nodes <NODE-NAME> <KEY>=<VALUE>
 
-# Ejemplo:
+# Exemplo:
 kubectl label nodes node01 gpu=yes
 
 ```
 
-Listar los nodos con la colunma de todas las labels separadas por comas. Podemos concretar el nodo que queremos ver si ponemos su nombre:
+Listar os nodos coa columna de tódalas labels separadas por comas. Podemos concretar o nodo que queremos ver se poñemos seu nome:
 
 ``` shell
 # Sintaxis
 kubectl get nodes <NODE-NAME> --show-labels
 
-# Ejemplos:
+# Exemplos:
 kubectl get nodes --show-labels
 
 kubectl get nodes nodo-01 --show-labels
 ```
 
-Borrar una label:
+Borrar unha label:
 
 ``` shell
 # Sintaxis
 kubectl label node <NODE-NAME> <LABEL>-
 
-# Ejemplo:
+# Exemplo:
 kubectl label node node01  gpu-
 ```
 
 ## ✔️ nodeSelector
 
-`nodeSelector` es la forma más sencilla de asignar pods a los nodos. En la `spec` del Pod podemos añadir el campo `nodeSelector` con las *labels* que tiene nuestro nodo destino. Kubernetes sólo programará el Pod en los nodos que tienen las mismas *labels*. 
+`nodeSelector` é a forma máis sinxela de asignar pods ós nodos. Na `spec` do Pod podemos engadir o campo `nodeSelector` coas *labels* que ten noso nodo destino. Kubernetes só programará o Pod nos nodos que teñen as mesmas *labels*. 
 
 ```yaml
 apiVersion: v1
@@ -62,14 +60,14 @@ spec:
   - name: nginx
     image: nginx
   nodeSelector: 
-    gpu: "yes" # Label para seleccionar el nodo
+    gpu: "yes" # Label pra seleccionar o nodo
 ```
 
-⚠️ Si no hay nodos disponibles con la *label* especificada el Pod quedará en estado pendiente.
+⚠️ Se non hai nodos dispoñibles coa *label* especificada o Pod quedará en estado pendente.
 
-### 🚧 Prueba nodeSelector
+### 🚧 Proba nodeSelector
 
-Vamos a especificar una etiqueta en el archivo de definición del pod que no está disponible en la etiqueta del nodo.
+Imos especificar unha etiqueta no arquivo de definición do pod que non está dispoñible na etiqueta do nodo.
 
 ```yaml
 # nginx-pod.yaml
@@ -86,17 +84,17 @@ spec:
     ssd: "yes"
 ```
 
-Cree el pod con el manifiesto anterior y observe el estado del pod:
+Cre o pod co manifesto anterior e observe o seu estado:
 
 ``` shell
 # Crear pod
 kubectl create -f nginx-pod.yaml
 
-# Inspeccionar los eventos del pod
+# Inspeccionar os eventos do pod
 kubectl describe pod nginx-pod  | grep -A5 Events
 ```
 
-Output:
+Saída:
 ```
 Events:
   Type     Reason            Age    From               Message
@@ -104,33 +102,32 @@ Events:
   Warning  FailedScheduling  12m    default-scheduler  0/2 nodes are available: 2 node(s) didn't match Pod's node affinity/selector. preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
 ```
 
-En la demostración anterior, podemos ver que *nginx-pod* está en un estado pendiente debido a la falta de coincidencia de labels. Por lo tanto, tenemos que tener mucho cuidado al especificar una label en el archivo de definición del Pod.
+Na demostración anterior, podemos ver que *nginx-pod* está nun estado pendente debido á falla de coincidencia de labels. Porén, temos que ter moito cuidado ó especificar unha label no arquivo de definición do Pod.
 
 ## ✔️ nodeAffinity
 
-`nodeAffinity` funciona como `nodeSelector` pero es más expresivo y nos permite especificar *soft rules*. Como hemos visto en la fase anterior, si no hay nodos disponibles con la label especificada el pod quedará en estado pendiente. Utilizando la regla de `nodeAffinity` podemos superar este problema de modo que el planificador despliegue el Pod incluso si no puede encontrar un nodo coincidente.
+`nodeAffinity` funciona como `nodeSelector` pero é máis expresivo e permítenos especificar *soft rules*. Como vimos na fase anterior, se non hai nodos dispoñibels coa label especificada o pod quedará en estado pendente. Utilizando a regra de `nodeAffinity` podemos superar este problema de modo que o planificador despregue o Pod incluso se non pode atopar un nodo coincidente.
 
 Tipos de `nodeAffinity`:
 
-- `requiredDuringSchedulingIgnoredDuringExecution`: *kube-scheduler* no puede programar el Pod a menos que se cumpla la regla.
-- `preferredDuringSchedulingIgnoredDuringExecution`: *kube-scheduler* intenta encontrar un nodo que cumpla la regla. Si no hay un nodo que cumpla la regla, el planificador sigue desplegando el Pod.
+- `requiredDuringSchedulingIgnoredDuringExecution`: *kube-scheduler* non pode programar o Pod a menos que se cumpra a regra.
+- `preferredDuringSchedulingIgnoredDuringExecution`: *kube-scheduler* intenta atopar un nodo que cumpra la regla. Se non hai un nodo que cumpra a regra, o planificador segue despregando o Pod.
 
-La frase común entre los dos tipos de `nodeAffinity` es
-`IgnoredDuringExecution`. Significa que después de programar un pod en un nodo, si la etiqueta que determinó la selección del nodo se borra, el Pod se ejecutará tal cual. El pod no se verá afectado.
+A frase común entre os dous tipos de `nodeAffinity` é `IgnoredDuringExecution`. Significa que despois de programar un pod nun nodo, se a etiqueta que determinou a selección do nodo bórrase, o Pod executarase tal cal. O pod non se verá afectado.
 
-Otra gran ventaja de la `nodeAffinity` es que podemos especificar una lista de valores con un *operador*. Supongamos que tenemos tres tipos de nodos disponibles y cada tipo está etiquetado como:
+Outra gran vantaxe da `nodeAffinity` é que podemos especificar unha lista de valores cun *operador*. Supoñamos que temos tres tipos de nodos dispoñibles e cada tipo está etiquetado como:
 - `size: large`
 - `size: medium`
 - `size: small` 
 
-Queremos asignar nuestro pod en nodos grandes y medianos. En ese caso, si utilizamos `nodeSelector`  podremos especificar solo una *label* cada vez, ya sea `size: large` o `size: medium`. Pero si usamos `nodeAffinity` podremos especificar ambas como en una lista de valores y el Pod se desplegará en el los dos nodos.
+Queremos asignar noso pod en nodos grandes e medianos. Nese caso, se utilizamos `nodeSelector`  poderemos especificar só unha *label* cada vez, sexa `size: large` ou `size: medium`. Pero se utilizamos `nodeAffinity` poderemos especificar ambas coma nunha lista de valores e o Pod despregarase nos dous nodos.
 
 ### 🔍 requiredDuringSchedulingIgnoredDuringExecution
 
-Vamos a crear un despliegue con una regla de afinidad de nodo especificada en el manifiesto:
+Imos crear un despregue cunha regra de afinidade de nodo especificada no manifesto:
 
 ```yaml
-# Ejemplo 1 requiredDuringSchedulingIgnoredDuringExecution
+# Exemplo 1 requiredDuringSchedulingIgnoredDuringExecution
 
 apiVersion: apps/v1
 kind: Deployment
@@ -165,10 +162,10 @@ spec:
           name: webserver
 ```
 
-Podemos utilizar el campo `operator` para especificar un operador lógico que Kubernetes utilizará para implementar las reglas. Puede ser `In`, `NotIn`, `Exists`, `DoesNotExist`, `Gt` y `Lt`.
+Podemos utilizar o campo `operator` para especificar un operador lóxico que Kubernetes utilizará para implementar as regras. Pode ser `In`, `NotIn`, `Exists`, `DoesNotExist`, `Gt` e `Lt`.
 
 ```yaml
-# Ejemplo 2 requiredDuringSchedulingIgnoredDuringExecution
+# Exemplo 2 requiredDuringSchedulingIgnoredDuringExecution
 
 apiVersion: apps/v1
 kind: Deployment
@@ -202,12 +199,12 @@ spec:
 
 ### 🔍 preferredDuringSchedulingIgnoredDuringExecution
 
-En la regla `preferredDuringSchedulingIgnoredDuringExecution` podemos especificar un `weight` entre 1 y 100 para cada instancia. Si varios nodos cumplen los requisitos, *kube-scheduler* añade el valor del peso para esa expresión a una suma. Los nodos con el total más alto se priorizan y los pods se programan en el nodo que tiene la mayor prioridad.
+Na regra `preferredDuringSchedulingIgnoredDuringExecution` podemos especificar un `weight` entre 1 e 100 para cada instancia. Se varios nodos cumpren os requisitos, *kube-scheduler* engade o valor do peso para esa expresión a unha suma. Os nodos co total máis alto priorízanse e os pods prográmanse no nodo que ten a maior prioridade.
 
-Supongamos que tenemos dos nodos que cumplen los requisitos: uno con `size: large` y otro con `size: medium`. En ese caso *kube-scheduler* tendrá en cuenta el peso de cada nodo y añadirá el peso a las otras puntuaciones para ese nodo y programará el Pod en el nodo con la puntuación final más alta.
+Supoñamos que temos dous nodos que cumpren os requisitos: un con `size: large` e outro con `size: medium`. Nese caso *kube-scheduler* tendrá en conta o peso de cada nodo e engadirá o peso ás outras puntuacións para ese nodo e programará o Pod no nodo coa puntuación final máis alta.
 
 ```yaml
-# Ejemplo 1 preferredDuringSchedulingIgnoredDuringExecution
+# Exemplo 1 preferredDuringSchedulingIgnoredDuringExecution
 
 apiVersion: v1
 kind: Pod
@@ -236,9 +233,9 @@ spec:
     image: nginx
 ```
 
-### 🚧 Prueba preferredDuringSchedulingIgnoredDuringExecution
+### 🚧 Proba preferredDuringSchedulingIgnoredDuringExecution
 
-Desplegar un pod con `nodeAffinity` tipo `preferredDuringSchedulingIgnoredDuringExecution`. Añadir especificaciones a la lista de valores que no están disponibles como una *label* en los nodos.
+Despregar un pod con `nodeAffinity` tipo `preferredDuringSchedulingIgnoredDuringExecution`. Engadir especificacións á lista de valores que non están dispoñibles como unha *label* nos nodos.
 
 ```yaml
 # webserver-pod.yamlapiVersion: v1
@@ -270,7 +267,7 @@ spec:
     image: nginx
 ```
 
-Ahora, desplegamos el pod y observamos el estado:
+Agora, despregamos o pod e observamos o estado:
 
 ```shell
 kubectl create -f webserver-pod.yaml
@@ -278,7 +275,7 @@ kubectl create -f webserver-pod.yaml
 kubectl get pods webserver
 ```
 
-Output:
+Saída:
 
 ```shell
 --------------------------------------------------
@@ -286,22 +283,22 @@ NAME        READY   STATUS    RESTARTS   AGE
 webserver   1/1     Running   0          4m4s
 ```
 
-A diferencia del `nodeSelector`, aunque no haya ninguna *label* coincidente disponible en los nodos, los Pods se despliegan igual. 
+A diferenza do `nodeSelector`, aínda que non haxa ningunha *label* coincidente dispoñíbel nos nodos, os Pods despréganse igual. 
 
 ## ✔️ nodeName
 
-`nodeName` es la forma más directa de programar un pod en el nodo deseado. Si el campo `nodeName` se especifica en la `spec` del Pod, *kube-scheduler* intenta desplegar el Pod en el nodo indicado.
+`nodeName` é a forma máis directa de programar un pod no nodo desexado. Se o campo `nodeName` especifícase na `spec` do Pod, *kube-scheduler* intenta despregar o Pod no nodo indicado.
 
-Hay algunas deficiencias de `nodeName`:
+`nodeName` ten algunhas deficiencias:
 
-- Si el nodo indicado no existe el Pod no se ejecutará.
-- Si el nodo indicado no tiene los recursos para acomodar el Pod, el Pod no se ejecutará.
-- Los nombres de los nodos en entornos cloud no siempre son predecibles o estables.
+- Se o nodo indicado non existe o Pod non se executará.
+- Se o nodo indicado non ten os recursos para acomodar o Pod, o Pod non se executará.
+- Os nomes dos nodos en entornos na nube non sempre son predecíbels ou estábels.
 
-A continuación se muestra un ejemplo de manifiesto de un Pod utilizando el campo `nodeName`:
+A continuación amósase un exemplo de manifesto dun Pod utilizando o campo `nodeName`:
 
 ```yaml
-# Ejemplo de nodeName
+# Exemplo de nodeName
 apiVersion: v1
 kind: Pod
 metadata:

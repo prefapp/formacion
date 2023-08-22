@@ -6,17 +6,17 @@ En está práctica repasaremos las distintas formas para asginar Pods a los nodo
  - [RedHat](https://docs.openshift.com/container-platform/4.1/nodes/scheduling/nodes-scheduler-node-selectors.html)
 
 Veremos como asociar un Pod a un nodo en concreto de distintas formas:
-- Con `nodeSelector` en el `spec` del manifiesto. ([Ver](#con-nodeselector-en-el-spec-del-manifiesto))
+- Con `nodeSelector` en el `spec` del manifiesto. ([Ver](#_31-con-nodeselector-en-el-spec-del-manifiesto))
 - Con `nodeAffinity` en el `spec` indicando unas reglas de dos tipos:
-  - `requiredDuringSchedulingIgnoredDuringExecution`. ([Ver](#requiredduringschedulingignoredduringexecution))
-  - `preferredDuringSchedulingIgnoredDuringExecution`. ([Ver](#preferredduringschedulingignoredduringexecution))
+  - `requiredDuringSchedulingIgnoredDuringExecution`. ([Ver](#_321-deploy-practica-guiada-1))
+  - `preferredDuringSchedulingIgnoredDuringExecution`. ([Ver](#_322-deploy-practica-guiada-2))
 - Indicando el nombre del nodo en el `spec` con `nodeName`. ([Ver](#indicando-el-nombre-del-nodo-en-el-spec-con-nodename))
 
 
 ## 1. Requísitos para la práctica ✏️
 ---
-- Es importante tener preparado nuestro laboratorio de pruebas, como se apuntaba anteriormente, en este caso se empleará un clúster personalizado con Kind siguiendo la "[Práctica guiada: crear un clúster personalizado con Kind](10_practica_guiada_kind.md)".
-- Se debe leer y digerir la documentación "[Asignación de Pods a Nodos](11_Assigning_Pods_to_Nodes.md)"
+- Es importante tener preparado nuestro laboratorio de pruebas, como se apuntaba anteriormente, en este caso se empleará un clúster personalizado con Kind siguiendo la "[Práctica guiada: crear un clúster personalizado con Kind](03_configuracion/10_practica_guiada_kind.md)".
+- Se debe leer y digerir la documentación "[Asignación de Pods a Nodos](03_configuracion/11_Assigning_Pods_to_Nodes.md)"
 - Cualquier duda consultar la [documentación oficial](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) de Kubernetes sobre la asignación de Pods a Nodos.
 
 
