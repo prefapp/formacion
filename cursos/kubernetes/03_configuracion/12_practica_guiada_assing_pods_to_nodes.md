@@ -1,38 +1,36 @@
-> Necesita traducción al gallego 👀
-
 # Práctica guiada: Asignar Pods a nodos
 
-En está práctica repasaremos las distintas formas para asignar Pods a nodos específicos dentro de nuestro clúster. La práctica la desarrollaremos en un clúster local creado con la herramienta Kind, pero lo podemos hacer de la misma manera con cualquier otra herramienta de creación de clústers locales o con cualquier proveedor de cloud:
+Nesta práctica repasaremos as distintas formas para asignar Pods a nodos específicos dentro de noso clúster. A práctica desenvolverémola nun clúster local creado coa ferramenta Kind, pero o podemos facer da mesma maneira con calquera outra ferramenta de creación de clústers locais ou con calquera proveedor de cloud:
  -  [AWS](https://www.eksworkshop.com/beginner/140_assigning_pods/)
   -  [Azure](https://learn.microsoft.com/en-us/azure/aks/operator-best-practices-advanced-scheduler#control-pod-scheduling-using-node-selectors-and-affinity)
  - [RedHat](https://docs.openshift.com/container-platform/4.1/nodes/scheduling/nodes-scheduler-node-selectors.html)
 
 Veremos como asociar un Pod a un nodo en concreto de distintas formas:
-- Con `nodeSelector` en el `spec` del manifiesto. ([Ver](#con-nodeselector-en-el-spec-del-manifiesto))
-- Con `nodeAffinity` en el `spec` indicando unas reglas de dos tipos:
-  - `requiredDuringSchedulingIgnoredDuringExecution`. ([Ver](#requiredduringschedulingignoredduringexecution))
-  - `preferredDuringSchedulingIgnoredDuringExecution`. ([Ver](#preferredduringschedulingignoredduringexecution))
-- Indicando el nombre del nodo en el `spec` con `nodeName`. ([Ver](#indicando-el-nombre-del-nodo-en-el-spec-con-nodename))
+- Con `nodeSelector` no `spec` do manifesto. ([Ver](#_31-con-nodeselector-no-spec-do-manifesto))
+- Con `nodeAffinity` no `spec` indicando unhas regras de dous tipos:
+  - `requiredDuringSchedulingIgnoredDuringExecution`. ([Ver](#_321-deploy-practica-guiada-1))
+  - `preferredDuringSchedulingIgnoredDuringExecution`. ([Ver](#_322-deploy-practica-guiada-2))
+- Indicando o nome do nodo no `spec` con `nodeName`. ([Ver](#indicando-o-nome-do-nodo-no-spec-con-nodename))
 
 
-## 1. Requísitos para la práctica ✏️
+## 1. Requísitos para a práctica ✏️
 ---
-- Es importante tener preparado nuestro laboratorio de pruebas, como se apuntaba anteriormente, en este caso se empleará un clúster personalizado con Kind siguiendo la "[Práctica guiada: crear un clúster personalizado con Kind](10_practica_guiada_kind.md)".
-- Se debe leer y digerir la documentación "[Asignación de Pods a Nodos](11_Assigning_Pods_to_Nodes.md)"
-- Cualquier duda consultar la [documentación oficial](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) de Kubernetes sobre la asignación de Pods a Nodos.
+- É importante ter preparado noso laboratorio de probas, coma se apuntaba anteriormente, neste caso emplearase un clúster personalizado con Kind seguindo a "[Práctica guiada: crear un clúster personalizado con Kind](03_configuracion/10_practica_guiada_kind.md)".
+- Se debe ler e dixerir a documentación "[Asignación de Pods a Nodos](03_configuracion/11_Assigning_Pods_to_Nodes.md)"
+- Calquera duda consultar a [documentación oficial](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) de Kubernetes sobre a asignación de Pods a Nodos.
 
 
 ## 2. Preparativos 🛫
 ---
-### 2.1 Creando el clúster con kind
+### 2.1 Creando o clúster con kind
 
-Prepararemos un manifiesto de configuración del clúster de Kind con un nodo control-plane y 3 workers. Debe constar:
+Prepararemos un manifesto de configuración do clúster de Kind cun nodo control-plane e 3 workers. Debe constar:
 
-- El nombre del clúster será `practica-guiada-podstonode`
-- El role de cada nodo (1 control-plane y 3 workers).
-- Cada worker tendrá la label con la key `size` y los values {`large` | `medium` | `small`}
+- O nome do clúster será `practica-guiada-podstonode`
+- O role de cada nodo (1 control-plane e 3 workers).
+- Cada worker terá a label coa key `size` e os values {`large` | `medium` | `small`}
 
-Manifiesto completo:
+Manifesto completo:
 
 ```yaml
 # config_practica-guiada-PodsToNodos.yaml
@@ -54,12 +52,12 @@ nodes:
 
 ```
 
-Input
+Entrada
 ```shell
 kind create cluster --config config_practica-guiada-PodsToNodos.yaml
 ```
 
-Output
+Saída
 ```shell
 Creating cluster "practica-guiada-podstonode" ...
  ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
@@ -77,19 +75,19 @@ kubectl cluster-info --context kind-practica-guiada-podstonode
 Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
 ```
 
-Ahora ya podremos ver los nodos y sus etiquetas con `kubectl`:
+Agora xa poderemos ver os nodos e súas etiquetas con `kubectl`:
 
 ```shell
 kubectl get nodes --show-labels
 ```
 
-Podemos especificar la columna concreta de salida de este modo:
+Podemos especificar a columna concreta de saída deste modo:
 
 ```shell
 kubectl get nodes -o custom-columns='NAME:metadata.name,'SIZE\ LABEL':metadata.labels.size'
 ```
 
-Output
+Saída
 ```shell
 NAME                                       SIZE LABEL
 practica-guiada-podstonode-control-plane   <none>
@@ -99,22 +97,22 @@ practica-guiada-podstonode-worker3         small
 
 ```
 
-Una vez creado el clúster ¡nos damos cuenta que nos hemos olvidado de indicar algunas labels!
+Unha vez creado o clúster... dámonos conta que olvidámonos de indicar algunhas labels!
 
-Son las siguientes:
+Son as seguintes:
 
 - worker --> cpu=2, extra-ram=no
 - worker2 --> cpu=4, extra-ram=yes
 - worker3 --> cpu=8, extra-ram=yes
 
 
-No pasa nada, podemos indicarlas mediante la siguiente sintaxis:
+Non pasa nada, podemos indicalas mediante a seguinte sintaxis:
 
 ```shell
 kubectl label nodes <NODE-NAME> <KEY>=<VALUE>
 ```
 
-Los comandos serían los siguientes:
+Os comandos serían os seguintes:
 
 ```shell
 kubectl label nodes practica-guiada-podstonode-worker cpu=2 extraram=no
@@ -124,13 +122,13 @@ kubectl label nodes practica-guiada-podstonode-worker2 cpu=4 extraram=yes
 kubectl label nodes practica-guiada-podstonode-worker3 cpu=8 extraram=yes
 ```
 
-Podemos ver el resultado final de las labels añadidas mediante el siguiente comando:
+Podemos ver o resultado final das labels engadidas mediante o seguinte comando:
 
 ```shell
 kubectl get nodes -o custom-columns="NAME:metadata.name,SIZE:metadata.labels.size,CPU:metadata.labels.cpu,EXTRA-RAM:metadata.labels.extraram"
 ```
 
-Output
+Saída
 ```shell
 NAME                                       SIZE     CPU      EXTRA-RAM
 practica-guiada-podstonode-control-plane   <none>   <none>   <none>
@@ -142,13 +140,13 @@ practica-guiada-podstonode-worker3         small    8        yes
 
 ## 3. Asignar pods a nodos concretos 🎯
 ---
-Ahora ya tenemos los nodos preparados con sus labels, vayamos a por faena.
+Agora xa temos os nodos preparados coas súas labels, vaiamos pola faena.
 
-### 3.1 Con nodeSelector en el spec del manifiesto.
-Supongamos que queremos asegurarnos que un pod de nginx se aloja en un nodo con más memoria. Podemos aprovechar la label `extraram` con `nodeSelector`
+### 3.1 Con nodeSelector no spec do manifesto.
+Supoñamos que queremos asegurarnos que un pod de nginx alóxase nun nodo con máis memoria. Podemos aproveitar a label `extraram` con `nodeSelector`
 
 ```yaml
-# nuestro-nginx.yaml
+# noso-nginx.yaml
 
 apiVersion: v1
 kind: Pod
@@ -158,70 +156,70 @@ spec:
   containers:
   - name: nginx
     image: nginx
-  nodeSelector:  # Aquí indicamos la Label
+  nodeSelector:  # Aquí indicamos a Label
     extraram: "yes"
 ```
 
 
-Input
+Entrada
 ```shell
-kubectl apply -f nuestro-nginx.yaml
+kubectl apply -f noso-nginx.yaml
 
 kubectl get pods
 
 ```
 
-Output
+Saída
 ```shell
 NAME        READY   STATUS    RESTARTS   AGE
 nginx-pod   1/1     Running   0          7s
 
 ```
 
-Comprobamos si ha quedado en el nodo correcto. Podemos ver todos los pods, el estado y su nodo con el siguiente comando:
+Comprobamos se quedou no nodo correcto. Podemos ver tódolos pods, o estado e seu nodo co seguinte comando:
 
 ```shell
 kubectl get pod -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName --all-namespaces
 ```
-Pero en este caso nos interesa tan solo el pod desplegado con al etiqueta, si todo ha salido bien debería estar en el worker2 o en el worker3
+Pero neste caso interésanos tan so o pod despregado coa etiqueta, se todo saiu ben debería estar no worker2 ou no worker3
 
-Input
+Entrada
 ```shell
 kubectl get pod/nginx-pod -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 
 ```
 
-Output
+Saída
 ```shell
 NAME        STATUS    NODE
 nginx-pod   Running   practica-guiada-podstonode-worker3
 ```
 
-Parece que hemos tenido éxito. 🏁
+Parece que tivemos éxito. 🏁
 
 
-### 3.2 Con nodeAffinity en el spec indicando unas reglas de dos tipos:
-Ahora imaginemos que queremos desplegar 2 Deploys bajo unas reglas concretas:
+### 3.2 Con nodeAffinity no spec indicando unhas regras de dous tipos:
+Agora imaxinemos que queremos despregar 2 Deploys baixo unhas regras concretas:
 - **Deploy-practica-guiada-1**: 
-  - Sabemos que utilizará hasta 3 CPU. (Necesitamos un nodo de 3 o más cpu)
+  - Sabemos que utilizará ata 3 CPU. (Necesitamos un nodo de 3 ou máis cpu)
   - Necesitará un extra de ram.
   - Queremos 2 réplicas.
-  - No necesitará mucho espacio, la prioridad es que cumpla los anteriores requisitos. 
-  - Es preferible que no este disponible si no cumple estas condiciones. 
+  - Non necesitará moito espazo, a prioridade é que cumpra os anteriores requisitos. 
+  - É preferíbel que non esté dispoñible se non cumpre estas condiciones. 
 - **Deploy-practica-guiada-2**: 
-  - Necesitará mucho espacio.
+  - Necesitará moito espacio.
   - Queremos 3 réplicas
-  - Nos interesa la alta disponibilidad del mismo, por ello, aunque no cumpla la regla es prioritario que el deploy quede running. 
+  - Interésanos a alta dispoñibilidade do mesmo, por ilo, aínda que non cumpra a regra é prioritario co deploy quede running. 
 
 #### 3.2.1 <u>Deploy-practica-guiada-1</u>
 
-Según los requísitos, para cumplir el objetivo los pods se deben desplegar en estos nodos:
+Según os requisitos, para cumprir o obxectivo os pods débense despregar nestos nodos:
 
 NAME                                   | SIZE   | CPU | EXTRA-RAM
 --------------------------------------:|:------:|:---:|:---:
 **practica-guiada-podstonode-worker2** | medium | 4   | yes
 **practica-guiada-podstonode-worker3** | small  | 8   | yes
 
-Para cumplir con la condición de que no este disponible si no está en uno de estos, utilizaremos el affinity de tipo `requiredDuringSchedulingIgnoredDuringExecution`. Dentro indicaremos los parámetros requeridos:
+Para cumprir coa condición de que non este dispoñible se non está nun destes, utilizaremos o affinity de tipo `requiredDuringSchedulingIgnoredDuringExecution`. Dentro indicaremos os parámetros requeridos:
 
 ```yaml
 affinity:
@@ -229,15 +227,15 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: cpu       # Primera condición, en la label cpu
-          operator: gt   # Le damos un operador "mayor que"
-          values: "3"    # Con el valor 3
-        - key: extraram  # segunda condición, en la label extraram
-          operator: In   # Le damos un operador "dentro de"
-          values: "yes"  # Con el valor yes
+        - key: cpu       # Primeira condición, na label cpu
+          operator: gt   # Dámoslle un operador "maior que"
+          values: "3"    # Co valor 3
+        - key: extraram  # segunda condición, na label extraram
+          operator: In   # Dámoslle un operador "dentro de"
+          values: "yes"  # Co valor yes
 ```
 
-El manifiesto deploy quedará así:
+O manifesto deploy quedará así:
 
 ```yaml
 # Deploy-practica-guiada-1.yaml
@@ -274,7 +272,7 @@ spec:
         image: nginx
 ```
 
-Desplegamos el pod y comprobamos donde se ha desplegado:
+Despregamos o pod e comprobamos onde se despregou:
 
 ```shell
 kubectl apply -f Deploy-practica-guiada-1.yaml
@@ -289,17 +287,17 @@ practica-1-nginx-pod-6fcc76cff5-qmkv9   Running   practica-guiada-podstonode-wor
 
 ```
 
-Lo conseguimos 🏁
+Conseguímolo 🏁
 
 #### 3.2.2 <u>Deploy-practica-guiada-2</u> 
 
-Según los requísitos, para cumplir el objetivo el pod se debe desplegar en este nodo:
+Según os requisitos, para cumprir o obxectivo o pod débese despregar neste nodo:
 
 NAME                                   | SIZE   | CPU | EXTRA-RAM
 --------------------------------------:|:------:|:---:|:---:
 **practica-guiada-podstonode-worker**  | large  | 2   | no
 
-Para cumplir con la condición de que se despliegue aunque no este large utilizaremos el affinity tipo `preferredDuringSchedulingIgnoredDuringExecution`. Dentro indicaremos los parámetros requeridos:
+Para cumprir coa condición de que se despregue aínda que non esté large utilizaremos o affinity tipo `preferredDuringSchedulingIgnoredDuringExecution`. Dentro indicaremos os parámetros requeridos:
 
 ```yaml
   affinity:
@@ -308,13 +306,13 @@ Para cumplir con la condición de que se despliegue aunque no este large utiliza
         - weight: 50           
           preference:
             matchExpressions:
-            - key: size       # Le indicamos la label de size
-              operator: In    # Le indicamos el operador "Dentro de"
+            - key: size       # Indicamoslle a label de size
+              operator: In    # Indicamoslle o operador "Dentro de"
               values:
-              - "large"       # Indicamos nuestra prioridad en el valor de la label
+              - "large"       # Indicamos nosa prioridade no valor da label
 ```
 
-El manifiesto deploy quedará así:
+O manifesto deploy quedará así:
 
 ```yaml
 # Deploy-practica-guiada-2.yaml
@@ -348,7 +346,7 @@ spec:
         image: nginx
 ```
 
-Desplegamos el pod y comprobamos donde se ha desplegado:
+Despregamos o pod e comprobamos onde se despregou:
 
 ```shell
 kubectl apply -f Deploy-practica-guiada-1.yaml
@@ -364,13 +362,13 @@ practica-1-nginx-pod-6fcc76cff5-6q9lw     Running   practica-guiada-podstonode-w
 practica-1-nginx-pod-6fcc76cff5-qmkv9     Running   practica-guiada-podstonode-worker3
 ```
 
-¡Eureka! ¡Lo tenemos! 🏁
+Eureka! O temos! 🏁
 
 #### 3.2.3 <u>Deploy-practica-guiada-3</u> 
 
-Pero ¿qué pasaría si quisieramos en este último deploy un nodo con la etiqueta ultralarge? ¿Se desplegaría igual?
+Pero, qué pasaría se quiseramos neste último deploy un nodo coa etiqueta ultralarge? Desplegaríase igual?
 
-Cambiamos el valor de la etiqueta por `ultralarge`, desplegamos y comprobamos:
+Cambiamos o valor da etiqueta por `ultralarge`, despregamos e comprobamos:
 
 ```shell
 kubectl apply -f Deploy-practica-guiada-1.yaml
@@ -389,18 +387,18 @@ practica-1-nginx-pod-6fcc76cff5-6q9lw     Running   practica-guiada-podstonode-w
 practica-1-nginx-pod-6fcc76cff5-qmkv9     Running   practica-guiada-podstonode-worker3
 ```
 
-Como podemos ver, los pods `practica-1-nginx-pod-3-...` se han repartido en cualquier nodo sin importar la condición preferente que indicamos.
+Como podemos ver, os pods `practica-1-nginx-pod-3-...` repartíronse en calquera nodo sen importar a condición preferente que indicamos.
 
-*Nota: para las anteriores comprobaciones puedes abrir una segunda terminal y dejar monitorizando el comando añadiendo delante `watch`:* 
+*Nota: para as anteriores comprobacións podes abrir unha segunda terminal e deixar monitorizando o comando engadindo diante `watch`:* 
 
 ```shell
 watch kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 
 ```
-*Cada tres segundos actualizará el comando automáticamente.*
+*Cada tres segundos actualizará o comando automáticamente.*
 
-### Indicando el nombre del nodo en el `spec` con `nodeName`.
+### Indicando o nome do nodo no `spec` con `nodeName`.
 
-En esta ocasión vamos a desplegar un pod indicando el nombre del nodo en donde queremos que se ubique con `nodeName`. El manifiesto quedará así:
+Nesta ocasión imos despregar un pod indicando o nome do nodo onde queremos que se ubique con `nodeName`. O manifesto quedará así:
 
 ```yaml
 # Pod-nodename-practica-guiada.yaml
@@ -416,7 +414,7 @@ spec:
   nodeName: practica-guiada-podstonode-worker
 
 ```
-Desplegamos y comprobamos:
+Despregamos e comprobamos:
 
 ```shell
 kubectl apply -f Deploy-practica-guiada-1.yaml
@@ -436,6 +434,6 @@ practica-1-nginx-pod-6fcc76cff5-6q9lw     Running   practica-guiada-podstonode-w
 practica-1-nginx-pod-6fcc76cff5-qmkv9     Running   practica-guiada-podstonode-worker3
 ```
 
-Esto es lo que nos tiene que arrojar el comando al final de la práctica. Veremos que nuestro último pod se ha ubicado exactamente donde indicamos en `spec`.
+Isto é o que nos ten que lanzar o comando ó final da práctica. Veremos que noso último pod ubicouse exactamente onde indicamos en `spec`.
 
-Después de las primeras prácticas esto era muy fácil 🏁
+Despois das primeiras prácticas isto era moi fácil 🏁
