@@ -34,7 +34,7 @@ RUN apt-get update
 RUN apt-get install -y nginx
 
 # Declaramos que o punto de entrada ó container e un nginx en foreground
-ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off"]
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
 
 # O porto para conectar o container co mundo exterior e o 80
 EXPOSE 80
