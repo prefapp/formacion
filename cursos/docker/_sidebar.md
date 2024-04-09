@@ -13,7 +13,7 @@
 
 - Docker
   - [Docker](./02_docker/01_docker.md)
-  - [Un pouco de hitoria](./02_docker/02_un_pouco_de_historia.md)
+  - [Un pouco de historia](./02_docker/02_un_pouco_de_historia.md)
   - [Docker: contedores para todos](./02_docker/03_docker_contedores_para_todos.md)
   - [Docker Engine](./02_docker/04_docker_engine.md)
   - [Comandos básicos](./02_docker/05_comandos_basicos.md)
