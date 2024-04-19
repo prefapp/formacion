@@ -96,7 +96,7 @@ Para configurala, habería que ir ó [artifacthub](https://artifacthub.io/packag
 Eses valores, compre metelos nun ficheiro de yaml:
 ```yaml
 # values.yaml
-db:
+auth:
   username: paco
   password: segredo
   database: test
