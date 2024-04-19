@@ -54,7 +54,7 @@ NAME            URL
 local           http://127.0.0.1:8879/charts
 
 # Engadimos o repo de bitnami, un dos máis utilizados
- helm repo add bitnami https://charts.bitnami.com
+ helm repo add bitnami https://charts.bitnami.com/bitnami
 
 "bitnami" has been added to your repositories
 
