@@ -238,7 +238,8 @@ spec:
 Despregar un pod con `nodeAffinity` tipo `preferredDuringSchedulingIgnoredDuringExecution`. Engadir especificacións á lista de valores que non están dispoñibles como unha *label* nos nodos.
 
 ```yaml
-# webserver-pod.yamlapiVersion: v1
+# webserver-pod.yaml
+apiVersion: v1
 kind: Pod
 metadata:
   name: webserver
