@@ -27,7 +27,7 @@ Polo tanto, a definición dun HPA, implica a creación dun novo artefacto de kub
 
 ```yaml
 
-# Definición completa en: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#horizontalpodautoscaler-v2beta2-autoscaling
+# Definición completa en: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 
 apiVersion: autoscaling/v2beta2 # hai varias versións en funcionamento a día de hoxe
 kind: HorizontalPodAutoscaler
