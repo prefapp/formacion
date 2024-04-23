@@ -349,7 +349,7 @@ spec:
 Despregamos o pod e comprobamos onde se despregou:
 
 ```shell
-kubectl apply -f Deploy-practica-guiada-1.yaml
+kubectl apply -f Deploy-practica-guiada-2.yaml
 
 kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 
 ```
@@ -371,7 +371,7 @@ Pero, qué pasaría se quiseramos neste último deploy un nodo coa etiqueta ultr
 Cambiamos o valor da etiqueta por `ultralarge`, despregamos e comprobamos:
 
 ```shell
-kubectl apply -f Deploy-practica-guiada-1.yaml
+kubectl apply -f Deploy-practica-guiada-2.yaml
 
 kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 
 ```
