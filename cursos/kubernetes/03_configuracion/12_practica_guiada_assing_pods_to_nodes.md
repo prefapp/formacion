@@ -417,7 +417,7 @@ spec:
 Despregamos e comprobamos:
 
 ```shell
-kubectl apply -f Deploy-practica-guiada-1.yaml
+kubectl apply -f Pod-nodename-practica-guiada.yaml
 
 kubectl get pods -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName 
 ```
