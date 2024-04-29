@@ -49,9 +49,10 @@ Por otra parte, si la flexibilidad es total:
 
 Dagger aporta, aquí, su estrategia:
 
-a) El equipo de plataforma emplea las características modulares y de neutralidad de lenguaje de dagger para ofrecer un conjunto de librerías y rutinas de trabajo en plataforma. 
+* a) El equipo de plataforma emplea las características modulares y de neutralidad de lenguaje de dagger para ofrecer un conjunto de librerías y rutinas de trabajo en plataforma. 
 Estos elementos constituyen el marco de trabajo que permite que el control resida en el equipo de plataforma. 
-b) Por otra parte, los equipos de desarrollo emplean los módulos y funciones ofrecidas por plataforma en sus propios workflows utilizando el lenguaje de su preferencia y adaptándolo a sus necesidades específicas, obteniendo así la flexibilidad que reclaman y, manteniéndose al mismo tiempo dentro del marco ofrecido por plataforma. 
+
+* b) Por otra parte, los equipos de desarrollo emplean los módulos y funciones ofrecidas por plataforma en sus propios workflows utilizando el lenguaje de su preferencia y adaptándolo a sus necesidades específicas, obteniendo así la flexibilidad que reclaman y, manteniéndose al mismo tiempo dentro del marco ofrecido por plataforma. 
 
 
 
