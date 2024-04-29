@@ -22,7 +22,7 @@ En este caso, el chart de **MariaDB** puede recibir ciertos parámetros de confi
 - En cuanto a la base de datos a crear:
   - Tendrá como nombre: datos-maria
   - Contará con un usuario, cuyo nombre y contraseña tengan el formato: `{Inicial_nombre}-{1º_Apellido}`
-- Se deshabilitará la persistencia para el **master** y el **slave**.
+- Se deshabilitará la persistencia para el **master** y el **slave**. Pista: hay que buscar elementos ```<feature>.enabled``` y ponerlos a ```false``` para que desactivarlos. 
 
 ### c) Creando la release
 Una vez hemos establecido los valores correcto de configuración dentro del fichero correspondiente, procederemos a instalar una aplicación de MariaDB, aplicando los parámetros de los ficheros.
