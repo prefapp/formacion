@@ -30,7 +30,7 @@ Nosotros vamos a añadir una [Subchart de mysql](https://artifacthub.io/packages
   #nueva dependencia
   dependencies:
   - name: mysql
-    version: "8.3.1" 
+    version: "10.1.0" 
     repository: https://charts.bitnami.com/bitnami
   ```
 
