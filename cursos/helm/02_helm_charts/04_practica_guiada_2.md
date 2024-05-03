@@ -69,7 +69,7 @@ data:
 
 
 ## Añadir un Ingress para nuestro servicio
-Actualmente estamos accediendo a nuestro servidor php haciendo un `kubectl port-forward` del servicio. Esto método es válido para hacer pruebas y comprobar que nuestra aplicación funciona correctamente, sin embargo no es una manera correcta de exponer nuestra aplicación al mundo. Como vimos en el [módulo 3 de curso de Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/05_Ingress_controlando_o_trafico), la forma adecuada de exponer nuestro servicio al mundo es utilizando un **ingress**.
+Actualmente estamos accediendo a nuestro servidor php haciendo un `kubectl port-forward` del servicio. Esto método es válido para hacer pruebas y comprobar que nuestra aplicación funciona correctamente, sin embargo no es una manera correcta de exponer nuestra aplicación al mundo. Como vimos en el [módulo 3 de curso de Kubernetes](https://prefapp.github.io/formacion/cursos/kubernetes/#/03_configuracion/06_Ingress_controlando_o_trafico), la forma adecuada de exponer nuestro servicio al mundo es utilizando un **ingress**.
 
 Para añadir un **ingress** a nuestro proyecto vamos a necesitar dos elementos:
 - Un artefacto de kubernetes `ingress.yaml` en el que definiremos las reglas de ingress.
