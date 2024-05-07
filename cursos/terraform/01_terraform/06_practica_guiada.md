@@ -316,7 +316,7 @@ A Elastic IP é un recurso que nos xenera unha IP pública e que nos permite que
 ```terraform
 # Asignamos a EIP
 resource "aws_eip" "one" {
-  vpc                       = true
+  domain                    = "vpc"
   network_interface         = aws_network_interface.nic_servidor_web.id
   associate_with_private_ip = "10.0.1.50"
   depends_on                = [aws_internet_gateway.gw]
