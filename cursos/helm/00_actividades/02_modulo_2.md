@@ -24,7 +24,7 @@ Evidencias de adquisición de los desempeños:
 1. Lanzar helm install al menos 2 veces con diferentes nombres y comprobar que estan a funcionar los 2 a la vez.
 1. Tener acceso al wordpress desde el exterior sin utilizar portforwarding.
 
-Ejercicio resuelto [aqui](../00_solucions/helm_wordpress)
+Ejercicio resuelto [aqui](https://github.com/prefapp/formacion/tree/master/cursos/helm/00_solucions/helm_wordpress)
 
 # Actividade-2
 
