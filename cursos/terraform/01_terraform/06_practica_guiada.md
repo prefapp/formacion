@@ -365,12 +365,12 @@ resource "aws_instance" "meu_servidor" {
     network_interface_id = aws_network_interface.nic_servidor_web.id
   }
   
-  user_data = <<- EOF
-              #!/bin/bash
-              sudo apt update -y
-              sudo apt install apache2 -y
-              sudo systemctl start apache2
-              sudo bash -c 'echo O meu primer server > /var/www/html/index.html'
+  user_data = <<-EOF
+                #!/bin/bash
+                sudo apt update -y
+                sudo apt install apache2 -y
+                sudo systemctl start apache2
+                sudo bash -c 'echo O meu primer server > /var/www/html/index.html'
               EOF
   tags = {
     Name = "meu-servidor"
