@@ -113,7 +113,7 @@ Debemos seguir los siguiente pasos para configurar todo correctamente:
 1. Dentro de `/templastes` debemos crear un artefacto de kubernetes de tipo *Ingress* donde definiremos las reglas de redireccionamiento:
   ```yaml
   #templates/ingress.yaml
-  apiVersion: networking.k8s.io/v1beta1
+  apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
     name: {{ .Release.Name }}-ingress
