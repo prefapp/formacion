@@ -109,7 +109,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "5.48.0"
     }
   }
 }
@@ -147,7 +147,14 @@ A continuación imos a deploiar unha [instancia EC2](https://aws.amazon.com/ec2/
 
 Para saber como proceder volvemos á [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources), e no apartado de recursos introducimos no buscador o recurso que buscamos, neste caso unha instancia en aws -> *aws_instance*
 
+Ademais, creamos unha VPC (Virtual Private Clode), unha rede aillada, similar a tradicional que se empregaría no centro de datos, cos beneficios da infraestructura de AWS.
+
 ```terraform
+# Create a VPC
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
+}
+
 # Creamos a nosa instancia EC2 de tipo t2.micro
 resource "aws_instance" "meu_servidor" {
   ami           = "ami-0e472ba40eb589f49"
