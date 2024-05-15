@@ -2,9 +2,9 @@
 
 Un proyecto GIT, consta de tres secciones principales en local:
 
-- Directorio de trabajo (Working dir) – donde se agregan, borran y editan los archivos.
-- Área de preparación (INDEX. Staging area) – donde se preparan (Indexan) los cambios.
-- Directorio git (HEAD. local repo) – donde se confirman los cambios efectuados dejando un mensaje en el registro.
+- **Directorio de trabajo (Working dir)** – donde se agregan, borran y editan los archivos.
+- **Área de preparación (INDEX. Staging area)** – donde se preparan (Indexan) los cambios.
+- **Directorio git (HEAD. local repo)** – donde se confirman los cambios efectuados dejando un mensaje en el registro.
 
 Desde el directorio GIT en local se subirá al repositorio remoto (Remote repo) que se haya escogido.
 
@@ -16,10 +16,10 @@ Desde el directorio GIT en local se subirá al repositorio remoto (Remote repo) 
   </div>
 </div>
 
-Según las anterior imagen, nuestro trabajo en Git puede tener tres estados: modificado (modified), preparado (staged) y confirmado (committed).
-- Modificado: significa que has modificado el archivo pero todavía no lo has confirmado a tu base de datos. 
-- Preparado: significa que has marcado un archivo modificado en su versión actual para que vaya en tu próxima confirmación.
-- Confirmado: significa que los datos están almacenados de manera segura en tu base de datos local.
+Según la anterior imagen, nuestro trabajo en Git puede tener tres estados: modificado (modified), preparado (staged) y confirmado (committed).
+- **Modificado**: significa que has modificado el archivo pero todavía no lo has confirmado a tu base de datos. 
+- **Preparado**: significa que has marcado un archivo modificado en su versión actual para que vaya en tu próxima confirmación.
+- **Confirmado**: significa que los datos están almacenados de manera segura en tu base de datos local.
 
 
 ## Ramificación (Branching)

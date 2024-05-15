@@ -109,19 +109,19 @@ No olvides consultar la [guía oficial de comandos de git](https://git-scm.com/d
     Esto es útil cuando has olvidado añadir algo al commit anterior.
     ⚠️ Ojo. No lo hagas si ya has hecho push del commit.
 
-8. Imagina que has modificado varios archivos de un repositorio, pero solo quieres hacer commit de un archivo.¿Como puedo hacer commit de un sólo fichero de mi repositorio?
+8. Imagina que has modificado varios archivos de un repositorio, pero solo quieres hacer commit de uno de ellos. ¿Como puedo hacer commit de un sólo fichero de mi repositorio?
 
     ```bash
     git commit -m "Aquí tu mensaje del commit" archivo.txt
     ```
 
-9. En caso de que hayamos añadido al staging con git add un archivo que aun no esta listo para subir, podemos volver atrás con:
+9. En caso de que hayamos añadido al staging con `git add` un archivo que aun no esta listo para subir, podemos volver atrás con:
 
     ```bash
     git rm --cached nombrefichero.txt
     ```
     
-    o si queremos sacar del staging todos los archivos por que nos hemos equivocado haciendo un `git add .` podemos utilizar 
+    o, si queremos sacar del staging todos los archivos por que nos hemos equivocado haciendo un `git add .`, podemos utilizar 
     ```bash
     git reset HEAD. 
     ```
