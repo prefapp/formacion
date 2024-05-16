@@ -14,7 +14,7 @@ Además de contar con una arquitectura distribuida, Git se ha diseñado teniendo
 - [Página oficial de GIT](https://git-scm.com/)
 - [Book oficial en español de GIT](https://git-scm.com/book/es/v2)
 - [Por qué utilizar Git en tu organización](https://www.atlassian.com/es/git/tutorials/why-git) 
-- [La catedral y el bazar](_media/README/catedralbazar.pdf)
+- [La catedral y el bazar](https://github.com/prefapp/formacion/blob/master/cursos/git/_media/02_hands_on/catedralbazar.pdf)
   
 Seas desarrollador, diseñador... de marketing, de recursos humanos... para gestión de productos, de proyectos, de equipos... Git es para ti ❤️
 
