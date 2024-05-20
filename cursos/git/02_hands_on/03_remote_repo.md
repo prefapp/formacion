@@ -73,6 +73,8 @@ Nunca se deben hardcodear las credenciales de acceso a los servicios externos en
 
 El buen uso de `.gitignore` implica incluir en el archivo únicamente los archivos y directorios que no deben ser rastreados. Es importante mantenerlo actualizado, añadiendo nuevos archivos o directorios que deban ser ignorados a medida que se vayan creando. También se puede utilizar el archivo `.gitignore` para excluir archivos que contengan información confidencial, como claves de acceso o contraseñas.
 
+Repositorio con una colección de plantillas de `.gitignore` para diferentes lenguajes y entornos se puede encontrar en [GitHub](https://github.com/github/gitignore). 👀 
+
 `.gitattributes` es un archivo que le indica a Git cómo manejar archivos específicos. Se puede utilizar para establecer atributos de archivos, como el tipo de final de línea, el modo de ejecución, el conjunto de caracteres y la difusión binaria. También se puede utilizar para establecer reglas para la fusión de archivos.
 
 El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos correctos para los archivos del proyecto, de tal manera que se puedan manejar adecuadamente en Git. Por ejemplo, si trabajas en un proyecto que utiliza diferentes sistemas operativos, se puede utilizar `.gitattributes` para establecer el tipo de final de línea que debe ser utilizado, asegurando la compatibilidad entre los diferentes sistemas operativos.
