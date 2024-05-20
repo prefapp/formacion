@@ -4,17 +4,17 @@ Una forja, también conocida como plataforma de alojamiento de código, es un se
 
 Algunas de las forjas de código abierto más populares son:
 
-- **[GitHub](https://github.com/)**: Es una de las forjas de código abierto más populares y utilizadas. Es propiedad de Microsoft y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos, seguimiento de problemas y control de versiones. 
+- **[GitHub](https://github.com/)**: es una de las forjas de código abierto más populares y utilizadas. Es propiedad de Microsoft y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos, seguimiento de problemas y control de versiones. 
 
-- **[GitLab](https://about.gitlab.com/)**: Es otra de las forjas de código abierto basadas en Git más populares y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También cuenta con opciones avanzadas de integración continua y entrega continua.
+- **[GitLab](https://about.gitlab.com/)**: es otra de las forjas de código abierto basadas en Git más populares y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También cuenta con opciones avanzadas de integración continua y entrega continua.
 
-- **[Bitbucket](https://bitbucket.org/)**: Es una forja de código abierto basada en Git y propiedad de Atlassian que ofrece servicios de alojamiento de repositorios Git y Mercurial, seguimiento de problemas y control de versiones. También cuenta con opciones de integración continua y entrega continua.
+- **[Bitbucket](https://bitbucket.org/)**: es una forja de código abierto basada en Git y propiedad de Atlassian que ofrece servicios de alojamiento de repositorios Git y Mercurial, seguimiento de problemas y control de versiones. También cuenta con opciones de integración continua y entrega continua.
 
-- **[GitKraken](https://www.gitkraken.com/)**: Es una forja de código abierto basada en Git que ofrece una interfaz gráfica de usuario intuitiva para trabajar con repositorios Git. También cuenta con opciones de integración con otras herramientas de desarrollo.
+- **[GitKraken](https://www.gitkraken.com/)**: es una forja de código abierto basada en Git que ofrece una interfaz gráfica de usuario intuitiva para trabajar con repositorios Git. También cuenta con opciones de integración con otras herramientas de desarrollo.
 
-- **[SourceForge](https://sourceforge.net/)**: Aunque no se limita exclusivamente a Git, también ofrece servicios de alojamiento de repositorios Git, seguimiento de problemas y control de versiones.
+- **[SourceForge](https://sourceforge.net/)**: aunque no se limita exclusivamente a Git, también ofrece servicios de alojamiento de repositorios Git, seguimiento de problemas y control de versiones.
 
-- **[Gitea](https://gitea.io/en-us/)**: Es otra forja de código abierto basada en Git que ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También es compatible con otros sistemas de control de versiones, como Mercurial y Subversion.
+- **[Gitea](https://gitea.io/en-us/)**: es otra forja de código abierto basada en Git que ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También es compatible con otros sistemas de control de versiones, como Mercurial y Subversion.
 
 Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a utilizar en el curso. Haremos un recorrido por la documentación que sí o sí tienes que leer para el buen uso de la plataforma.
 
@@ -34,9 +34,9 @@ Características:
 
 - **[Alojamiento de repositorios Git](https://docs.github.com/es/repositories)**: GitHub ofrece alojamiento gratuito de repositorios Git públicos, así como alojamiento de repositorios privados para equipos que desean mantener el control sobre su código fuente.
 
-- **[Seguimiento de problemas](https://docs.github.com/es/issues)** (Issues): La función de seguimiento de problemas de GitHub permite a los equipos de desarrollo crear y gestionar problemas y errores relacionados con el código fuente. Los usuarios pueden asignar problemas a miembros del equipo y realizar un seguimiento del estado de resolución del problema.
+- **[Seguimiento de problemas](https://docs.github.com/es/issues)** (Issues): la función de seguimiento de problemas de GitHub permite a los equipos de desarrollo notificar y gestionar problemas y errores relacionados con el código fuente. Los usuarios pueden asignar estas issues a miembros del equipo y realizar un seguimiento del estado de resolución del problema.
 
-- **[Gestión de proyectos](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)** (Projects): La función de gestión de proyectos de GitHub permite a los equipos de desarrollo organizar sus tareas y proyectos en tableros Kanban personalizables. Los usuarios pueden crear tareas, asignarlas a miembros del equipo y realizar un seguimiento del progreso del proyecto.
+- **[Gestión de proyectos](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)** (Projects): la función de gestión de proyectos de GitHub permite a los equipos de desarrollo organizar sus tareas y proyectos en tableros Kanban personalizables. Los usuarios pueden crear tareas, asignarlas a miembros del equipo y realizar un seguimiento del progreso del proyecto.
 
 - **[Integración continua y entrega continua](https://docs.github.com/es/actions)**: GitHub Actions es una función de integración continua y entrega continua (CI/CD) integrada en la plataforma GitHub. Los usuarios pueden crear flujos de trabajo automatizados para compilar, probar y desplegar su código de forma automática.
 
@@ -44,7 +44,7 @@ Características:
 
 - **[Opción en línea de comandos](https://docs.github.com/es/github-cli)**: GitHub también ofrece una herramienta en línea de comandos (CLI) que permite a los usuarios interactuar con la plataforma de GitHub directamente desde la línea de comandos. La CLI de GitHub admite una amplia gama de comandos y opciones para interactuar con repositorios, problemas, solicitudes de extracción y más.
 
-Como has visto en los anteriores hipervínculos, en la [documentación de Github](https://docs.github.com/es) podrás encontrar multitud de información sobre la plataforma, sus funcionalidades, etc. Así como una serie de tutoriales que te pueden ayudar a comenzar con la plataforma y con git si es tu primera vez. Es interesante revisar la documentación para extraer las buenas prácticas que se recomiendan.
+Como hemos visto en los anteriores hipervínculos, en la [documentación de Github](https://docs.github.com/es) podrás encontrar multitud de información sobre la plataforma, sus funcionalidades, etc., así como una serie de tutoriales que te pueden ayudar a comenzar con la plataforma y con Git si es tu primera vez. Es interesante revisar la documentación para extraer las buenas prácticas que se recomiendan.
 
 ## Protección de ramas
 
@@ -52,26 +52,28 @@ Las mejores prácticas de seguridad en GitHub recomiendan [proteger las ramas pr
 
 Algunas buenas prácticas para proteger las ramas principales son:
 
-- **Designar owners**: Asigna a propietarios de la rama principal y requerir que sean ellos quienes aprueben cambios en la rama principal.
+- **Designar owners**: asigna a propietarios de la rama principal y requerir que sean ellos quienes aprueben cambios en la rama principal.
 
-- **Requerir revisiones de código de propietarios (Owners)**: Requiere que los cambios en la rama principal sean aprobados por propietarios de la rama principal.
+- **Requerir revisiones de código por los propietarios (Owners)**: requiere que los cambios en la rama principal sean aprobados por los propietarios de la rama principal.
 
-- **Configura las revisiones necesarias**: Configura las revisiones necesarias para cada rama, asegurándote de que haya suficientes revisores y que estén calificados para realizar revisiones de código. También puedes configurar la cantidad mínima de aprobaciones que se necesitan antes de permitir un merge.
+- **Configura las revisiones necesarias**: configura las revisiones necesarias para cada rama, asegurándote de que haya suficientes revisores y de que estén calificados para realizar revisiones de código. También puedes configurar la cantidad mínima de aprobaciones que se necesitan antes de permitir un merge.
 
-- **Limita el acceso a las ramas**: Solo los miembros del equipo o los colaboradores que necesiten acceder a una rama deberían tener permiso para hacerlo. Esto se puede lograr a través de la configuración de permisos en GitHub.
+- **Limita el acceso a las ramas**: solo los miembros del equipo o los colaboradores que necesiten acceder a una rama deberían tener permiso para hacerlo. Esto se puede lograr a través de la configuración de permisos en GitHub.
 
-- **Usa herramientas de integración continua**: Usa herramientas de integración continua, como Travis CI o CircleCI, para realizar pruebas automáticas en cada commit y pull request. Esto te permitirá detectar y solucionar errores rápidamente. Más adelante veremos Github Action.
+- **Usa herramientas de integración continua**: usa herramientas de integración continua, como Travis CI o CircleCI, para realizar pruebas automáticas en cada commit y pull request. Esto te permitirá detectar y solucionar errores rápidamente. Más adelante veremos las Github Actions.
 
-- **Limita el acceso a las credenciales**: Limita el acceso a las credenciales, como claves SSH o contraseñas de acceso a la cuenta de GitHub. Solo los miembros del equipo que necesiten acceder a estas credenciales deberían tener permiso para hacerlo.
+- **Limita el acceso a las credenciales**: limita el acceso a las credenciales, como claves SSH o contraseñas de acceso a la cuenta de GitHub. Solo los miembros del equipo que necesiten acceder a estas credenciales deberían tener permiso para hacerlo.
 
 ## secrets
-Nunca se deben harcodear las credenciales de acceso a los servicios externos en el código fuente. Por ejemplo, si se utiliza una API de terceros, como GitHub, para realizar una tarea, nunca se deben incluir las credenciales de acceso a la API en el código fuente. En su lugar, se debe utilizar variables de entorno o secretos para almacenar las credenciales de acceso a la API. 
+Nunca se deben hardcodear las credenciales de acceso a los servicios externos en el código fuente. Por ejemplo, si se utiliza una API de terceros, como GitHub, para realizar una tarea, nunca se deben incluir las credenciales de acceso a la API en el código fuente. En su lugar, se debe utilizar variables de entorno o secretos para almacenar las credenciales de acceso a la API. 
 
 ## .gitignore y .gitattributes
 
 `.gitignore` es un archivo que le indica a Git qué archivos o directorios deben ser ignorados durante el proceso de seguimiento de cambios. En otras palabras, Git no rastreará los cambios en los archivos y directorios que estén listados en `.gitignore`. Es importante utilizar `.gitignore` para evitar el seguimiento de archivos innecesarios que no deben formar parte de tu repositorio, como archivos temporales, archivos de compilación o archivos generados automáticamente.
 
 El buen uso de `.gitignore` implica incluir en el archivo únicamente los archivos y directorios que no deben ser rastreados. Es importante mantenerlo actualizado, añadiendo nuevos archivos o directorios que deban ser ignorados a medida que se vayan creando. También se puede utilizar el archivo `.gitignore` para excluir archivos que contengan información confidencial, como claves de acceso o contraseñas.
+
+Repositorio con una colección de plantillas de `.gitignore` para diferentes lenguajes y entornos se puede encontrar en [GitHub](https://github.com/github/gitignore). 👀 
 
 `.gitattributes` es un archivo que le indica a Git cómo manejar archivos específicos. Se puede utilizar para establecer atributos de archivos, como el tipo de final de línea, el modo de ejecución, el conjunto de caracteres y la difusión binaria. También se puede utilizar para establecer reglas para la fusión de archivos.
 

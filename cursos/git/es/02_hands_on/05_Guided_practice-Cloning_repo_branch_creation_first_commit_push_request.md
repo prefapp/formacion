@@ -2,6 +2,30 @@
 
 Hemos pasado por unas largas lecturas teóricas, así que esta práctica será muy corta. En esta práctica guiada vamos a clonar un repositorio, crear una rama, realizar un primer commit y crear un pull request.
 
+## Crear una cuenta en Github
+
+Para poder realizar esta práctica, será necesario tener un usuario en una plataforma para repositorios remotos. Si no lo tienes todavía, puedes crearlo en Github, accediendo a [https://github.com/signup](https://github.com/signup).
+
+![](../_media/02_hands_on/github-signup.png)
+
+## Crear un nuevo repositorio
+
+Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra máquina. En Github, los pasos a seguir son:
+
+- En la esquina superior derecha de cualquier página, seleccionar la opción '+' > New repository.
+
+![](../_media/02_hands_on/github-create-repo.png)
+
+- En la página que se nos abre, cubrimos las siguientes opciones:
+
+  - Repository name: mi-primer-repositorio.
+  - Seleccionamos "Public".
+  - Seleccionamos "Add a README file".
+
+  El resto de opciones se pueden dejar por defecto, por lo que pinchamos en "Create repository".
+
+- Copiamos la ruta de nuestro repositorio, que será algo similar a "https://github.com/username/mi-primer-repositorio".
+
 ## Clonar el repositorio
 
 - Abre la línea de comandos (terminal) en tu computadora. Navega hasta la carpeta donde quieres clonar el repositorio usando el comando `cd <ruta_de_la_carpeta>`.
@@ -9,15 +33,16 @@ Hemos pasado por unas largas lecturas teóricas, así que esta práctica será m
 
 ## Crear una rama
 
-- Navega hasta la carpeta del repositorio clonado usando el comando `cd <nombre_del_repositorio>`.
+- Navega hasta la carpeta del repositorio clonado usando el comando `cd mi-primer-repositorio`.
 - Crea una nueva rama usando el comando `git branch <nombre_de_la_rama>`.
 - Cambia a la nueva rama usando el comando `git checkout <nombre_de_la_rama>`.
 
 ## Realizar el primer commit
 
 - Crea un nuevo archivo o modifica uno existente en la carpeta del repositorio.
-- Agrega los cambios al área de preparación (staging area) usando el comando git add <nombre_del_archivo_modificado> o git add . para agregar todos los cambios realizados.
-- Confirma los cambios realizados usando el comando git commit -m "<mensaje_del_commit>". Asegúrate de incluir un mensaje descriptivo que indique qué cambios se realizaron.
+- Ejecuta `git status` para ver qué ficheros tienen cambios locales.
+- Agrega los cambios al área de preparación (staging area) usando el comando `git add <nombre_del_archivo_modificado>` o `git add .` para agregar todos los cambios realizados. Puedes ejecutar de nuevo `git status` para comprobar cómo ahora el fichero aparece en el área de staging.
+- Confirma los cambios realizados usando el comando `git commit -m "<mensaje_del_commit>"`. Asegúrate de incluir un mensaje descriptivo que indique qué cambios se realizaron.
 
 ## Crear pull request
 

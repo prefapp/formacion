@@ -2,11 +2,11 @@
 
 Un proyecto GIT, consta de tres secciones principales en local:
 
-- Directorio de trabajo (Working dir) – donde se agregan, borran y editan los archivos.
-- Área de preparación (INDEX. Staging area) – donde se preparan (Indexan) los cambios.
-- Directorio git (HEAD. local repo) – donde se confirman los cambios efectuados dejando un mensaje en el registro.
+- **Directorio de trabajo (Working dir)** – donde se agregan, borran y editan los archivos.
+- **Área de preparación (INDEX. Staging area)** – donde se preparan (Indexan) los cambios.
+- **Directorio git (HEAD. local repo)** – donde se confirman los cambios efectuados dejando un mensaje en el registro.
 
-Desde el directorio GIT en local se subirá a la forja de repositorios (Remote repo) que se haya escogido.
+Desde el directorio GIT en local se subirá al repositorio remoto (Remote repo) que se haya escogido.
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
@@ -16,10 +16,10 @@ Desde el directorio GIT en local se subirá a la forja de repositorios (Remote r
   </div>
 </div>
 
-Según las anterior imagen, nuestro trabajo en Git puede tener tres estados: confirmado (committed), modificado (modified), y preparado (staged). 
-- Confirmado: significa que los datos están almacenados de manera segura en tu base de datos local. 
-- Modificado: significa que has modificado el archivo pero todavía no lo has confirmado a tu base de datos. 
-- Preparado: significa que has marcado un archivo modificado en su versión actual para que vaya en tu próxima confirmación.
+Según la anterior imagen, nuestro trabajo en Git puede tener tres estados: modificado (modified), preparado (staged) y confirmado (committed).
+- **Modificado**: significa que has modificado el archivo pero todavía no lo has confirmado a tu base de datos. 
+- **Preparado**: significa que has marcado un archivo modificado en su versión actual para que vaya en tu próxima confirmación.
+- **Confirmado**: significa que los datos están almacenados de manera segura en tu base de datos local.
 
 
 ## Ramificación (Branching)
@@ -37,17 +37,17 @@ Cuando quieres añadir una nueva función o solucionar un error, independienteme
 </div>
 
 Los tipos de ramas más usados en git son:
-- **Main**: La rama principal o por defecto (main) es la rama principal de un repositorio Git. Contiene el código estable y debe ser utilizada como la base para crear nuevas ramas. Hace algún tiempo, la coonvención general para la rama principal era llamarla **master**, pero se ha cambiado por razones de inclusión.
+- **Main**: La rama principal o por defecto (main) es la rama principal de un repositorio Git. Contiene el código estable y debe ser utilizada como la base para crear nuevas ramas. Hace algún tiempo, la convención general para la rama principal era llamarla **master**, pero se ha cambiado por razones de inclusión.
 - **Feature**: Una rama de característica (feature) se utiliza para desarrollar nuevas funcionalidades en un proyecto. Se crea a partir de la rama principal y se elimina una vez que la nueva funcionalidad se ha integrado en la rama principal.
 - **Fix**: Una rama de corrección (fix) se utiliza para corregir errores o fallos en el código. Se crea a partir de la rama principal o de una rama de característica, y una vez que se ha corregido el error, se integra de nuevo en la rama principal o en la rama de característica correspondiente.
 - **Hotfix**: Una rama de corrección urgente (hotfix) se utiliza para corregir errores críticos que deben ser solucionados inmediatamente. Se crea a partir de la rama principal y se integra de forma inmediata en la rama principal y en las ramas de característica correspondientes.
 - **Test**: Una rama de pruebas (test) se utiliza para realizar pruebas de integración o de rendimiento en el código. Se crea a partir de la rama principal o de una rama de característica, y una vez que se han realizado las pruebas, se integra en la rama principal o en la rama de característica correspondiente.
-- **Release**: Una rama de liberación (release) se utiliza para preparar una nueva versión del software para su lanzamiento. Se crea a partir de la rama principal y se utiliza para hacer ajustes finales, correcciones de errores y pruebas de última hora antes de que la nueva versión sea lanzada.
+- **Release**: Una rama de lanzamiento (release) se utiliza para preparar una nueva versión del software para su publicación. Se crea a partir de la rama principal y se utiliza para hacer ajustes finales, correcciones de errores y pruebas de última hora antes de que la nueva versión sea lanzada.
 - **Experimental**: Una rama experimental (experimental) se utiliza para desarrollar nuevas funcionalidades o probar ideas que aún no han sido completamente definidas. Esta rama se utiliza para experimentar y no suele integrarse directamente en la rama principal.
 - **Refactor**: Una rama de refactorización (refactor) se utiliza para realizar cambios en el código que mejoran la calidad o la eficiencia del mismo, pero que no añaden nuevas funcionalidades. Se crea a partir de la rama principal o de una rama de característica y se integra de nuevo en la rama correspondiente una vez que se han realizado los cambios.
 - **Doc**: Una rama de documentación (doc) se utiliza para actualizar o mejorar la documentación del proyecto. Esta rama se crea a partir de la rama principal y se integra de nuevo en la rama principal una vez que se han realizado los cambios en la documentación.
 
-Existen diversas estrategias de creación de ramas, hablaremos más adelante de ello. Lo importante es tener claro cuál es la estrategia que se utiliza en cada proyecto para poder adaptarte a ella. 
+Existen diversas estrategias de creación de ramas, hablaremos de ello más adelante. Lo importante es tener claro cuál es la estrategia que se utiliza en cada proyecto para poder adaptarte a ella. 
 
 La siguiente imagen ilustra un ejemplo de ramificación:
 
@@ -81,16 +81,13 @@ Las **versiones de lanzamiento** se utilizan para identificar versiones estables
 Para crear un lanzamiento en Git, se pueden seguir los siguientes pasos:
 
 1. Crear una etiqueta que identifique la versión del lanzamiento, utilizando el comando git tag, como se ha descrito anteriormente.
-2. Crear una rama de lanzamiento a partir de la rama principal o de una rama de estabilización.
-3. Realizar las pruebas y correcciones necesarias en la rama de lanzamiento.
-4. Realizar la integración de la rama de lanzamiento en la rama principal.
-5. Crear una publicación del lanzamiento, que incluya los archivos binarios o código fuente de la versión lanzada, junto con la documentación y los archivos de configuración necesarios para su uso.
+2. Crear la release, que incluirá los archivos binarios o código fuente de la versión lanzada, junto con la documentación y los archivos de configuración necesarios para su uso.
 
 Las releases pueden ser útiles para comunicar a los usuarios, colaboradores o clientes del software qué funcionalidades y correcciones se han incluido en una versión específica del software, y para proporcionar una forma fácil de descargar y utilizar el software lanzado. Para ello, se puede añadir un fichero `changelog.md` o similar a la raíz del repositorio, donde se incluya una lista de cambios en cada versión del software.
 
 ## Fusión
 
-La fusión de ramas en Git es el proceso de combinar los cambios realizados en una rama con los cambios realizados en otra rama. La fusión de ramas es una de las funciones principales de Git, y permite a los equipos de desarrollo trabajar en paralelo en diferentes características o correcciones de errores en diferentes ramas, y luego integrar los cambios en una rama común para crear una versión estable del software.
+La fusión (merge) de ramas en Git es el proceso de combinar los cambios realizados en una rama con los cambios realizados en otra rama. La fusión de ramas es una de las funciones principales de Git, y permite a los equipos de desarrollo trabajar en paralelo en diferentes características o correcciones de errores en diferentes ramas, y luego integrar los cambios en una rama común para crear una versión estable del software.
 
 Para fusionar dos ramas en Git, se puede utilizar el comando git merge. Por ejemplo, si se quiere fusionar la rama "feature" con la rama "main", se puede hacer lo siguiente:
 
