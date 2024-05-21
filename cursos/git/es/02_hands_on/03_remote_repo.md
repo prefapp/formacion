@@ -1,6 +1,6 @@
 # Forjas de código abierto
 
-Una forja, también conocida como plataforma de alojamiento de código, es un servicio web que permite alojar repositorios de código fuente y control de versiones. Esto ofrece a los desarrolladores la posibilidad almacenar y compartir código fuente, así como colaborar en proyectos de código abierto. Además, garantiza un seguimiento de los problemas y errores, controlar las versiones del código y realizar la integración continua y la entrega continua.
+Una forja, también conocida como plataforma de alojamiento de código, es un servicio web que permite alojar repositorios de código fuente y control de versiones. Esto ofrece a los desarrolladores la posibilidad de almacenar y compartir código fuente, así como colaborar en proyectos de código abierto. Además, garantiza un seguimiento de los problemas y errores, controlar las versiones del código y realizar la integración continua y la entrega continua.
 
 Algunas de las forjas de código abierto más populares son:
 

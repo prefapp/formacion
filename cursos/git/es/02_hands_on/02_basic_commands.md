@@ -47,13 +47,17 @@ No olvides consultar la [guía oficial de comandos de git](https://git-scm.com/d
     git log --pretty=oneline --graph --decorate --all
     ```
 
-    Un ejemplo vistoso de lo que puedes conseguir:
+    Un ejemplo vistoso de lo que puedes conseguir es el siguiente:
 
     ```bash
-    git log --pretty=format:"%C(yellow)%h%Cred%d%Creset  -  %C(cyan)%an%Creset:  '%s'    %Cgreen(%cr)%Creset"
+    git log --graph --pretty=format:"%C(yellow)%h%Cred%d%Creset  -  %C(cyan)%an%Creset:  '%s'    %Cgreen(%cr)%Creset"
     ```
 
-    Y para no tener que acordarme del comando lo tengo definido con un alias (gglog) en mi archivo zshrc.
+    Que devuelve un resultado como el siguiente:
+
+    ![](../../_media/02_hands_on/git-log-format.png)
+
+    Y para no tener que recordar el comando se puede definir un alias (por ejemplo, `gglog`) en el archivo `.zshrc`/`.bashrc`.
 
 4. Si no quieres pasar por la fase de staging de Git, si añades el parámetro `-a` al commit, te saltas la necesidad de ejecutar `git add` sobre esos ficheros.
 
@@ -135,5 +139,5 @@ Un cheatsheet es una hoja de referencia rápida que contiene los comandos más u
 - Cheatsheet de [GitLab](https://about.gitlab.com/images/press/git-cheat-sheet.pdf)
 - Cheatsheet de [GitHub](https://education.github.com/git-cheat-sheet-education.pdf)
 - Cheatsheet de [Atlassian](https://www.atlassian.com/es/git/tutorials/atlassian-git-cheatsheet)
-- Cheatseet de [Git Tower](https://www.git-tower.com/blog/git-cheat-sheet/)
+- Cheatsheet de [Git Tower](https://www.git-tower.com/blog/git-cheat-sheet/)
 - Cheatsheet de [Cheatography](https://cheatography.com/itsellej/cheat-sheets/git-commands/)

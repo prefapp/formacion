@@ -1,98 +1,102 @@
 # Comandos básicos git
 
-Los comandos más utilizados:
+Os comandos máis utilizados:
 
-- `git init`: inicializa un nuevo repositorio Git vacío en la carpeta actual.
-- `git add`: agrega cambios de archivos específicos o de todos los archivos nuevos o modificados al área de preparación.
-- `git commit`: crea un nuevo commit con los cambios en el área de preparación y un mensaje de commit descriptivo.
-- `git status`: muestra el estado actual del repositorio, incluyendo los archivos modificados, los archivos en el área de preparación y los commits pendientes.
-- `git log`: muestra el historial de commits del repositorio, incluyendo los mensajes de commit, los autores y las fechas de cada commit.
-- `git branch`: muestra una lista de ramas en el repositorio, y también se puede utilizar para crear, eliminar y cambiar de rama.
-- `git checkout`: cambia de rama, crea una nueva rama, o cambia el estado de los archivos en el repositorio.
-- `git merge`: fusiona dos ramas en una rama común, y también se puede utilizar para resolver conflictos de fusión.
-- `git pull`: descarga y fusiona los cambios más recientes de un repositorio remoto en el repositorio local.
-- `git push`: envía los cambios locales a un repositorio remoto.
-- `git diff`: muestra las diferencias entre dos archivos o entre dos commits, y también se puede utilizar para comparar los cambios entre dos ramas.
-- `git reset`: deshace cambios en el repositorio, ya sea eliminando los cambios del área de preparación o eliminando un commit específico.
-- `git rm`: elimina archivos del repositorio y también los elimina del área de preparación.
-- `git mv`: cambia el nombre de un archivo o mueve un archivo de una ubicación a otra, y también actualiza el estado del repositorio y el área de preparación.
-- `git stash`: guarda temporalmente los cambios en una pila de cambios y restablece el repositorio a su estado anterior, lo que puede ser útil para cambiar rápidamente de rama o para guardar cambios inacabados.
-- `git tag`: crea una etiqueta para un commit específico, lo que puede ser útil para marcar versiones o hitos importantes.
-- `git remote`: muestra una lista de los repositorios remotos asociados con el repositorio local, y también se puede utilizar para agregar, eliminar y actualizar repositorios remotos.
-- `git fetch`: descarga los cambios más recientes de un repositorio remoto en el repositorio local, pero no fusiona los cambios con la rama actual.
-- `git clone`: crea una copia completa de un repositorio remoto en una nueva carpeta local.
+- `git init`: inicializa un novo repositorio Git baleiro na carpeta actual.
+- `git add`: agrega cambios de arquivos específicos ou de tódolos arquivos novos ou modificados á área de preparación.
+- `git commit`: crea un novo commit cos cambios agregados á área de preparación e unha mensaxe de commit descritiva.
+- `git status`: amosa o estado actual do repositorio, incluíndo os arquivos modificados, os arquivos que se atopan na área de preparación e os commits pendentes.
+- `git log`: amosa o historial de commits do repositorio, incluíndo as mensaxes de commit, os autores e as datas de cada commit.
+- `git branch`: amosa unha lista de ramas no repositorio, e tamén pódese utilizar para crear, eliminar e cambiar de rama.
+- `git checkout`: cambia de rama, crea unha nova rama ou cambia o estado dos arquivos no repositorio.
+- `git merge`: fusiona dúas ramas nunha rama común, e tamén se pode utilizar para resolver conflitos de fusión.
+- `git pull`: descarga e fusiona os cambios máis recentes dun repositorio remoto no repositorio local.
+- `git push`: envía os cambios locais a un repositorio remoto.
+- `git diff`: amosa as diferencias entre dous arquivos ou entre dous commits, e tamén se pode utilizar para comparar os cambios entre dúas ramas.
+- `git reset`: desfai cambios no repositorio, sexa eliminando os cambios da área de preparación ou eliminando un commit específico.
+- `git rm`: elimina arquivos do repositorio e tamén os elimina da área de preparación.
+- `git mv`: cambia o nome dun arquivo ou move un arquivo dunha localización a outra, e tamén actualiza o estado do repositorio e a área de preparación.
+- `git stash`: garda temporalmente as modificacións nunha pila de cambios e restablece o repositorio ó seu estado anterior, o cal pode ser útil para cambiar rapidamente de rama ou para almacenar cambios inacabados.
+- `git tag`: crea unha etiqueta para un commit específico, o que pode ser útil para marcar versións ou fitos importantes.
+- `git remote`: amosa unha lista dos repositorios remotos asociados co repositorio local, e tamén se pode utilizar para agregar, eliminar e actualizar repositorios remotos.
+- `git fetch`: descarga os cambios máis recentes dun repositorio remoto no repositorio local, pero non fusiona os cambios coa rama actual.
+- `git clone`: crea unha copia completa dun repositorio remoto nunha nova carpeta local.
 
-No olvides consultar la [guía oficial de comandos de git](https://git-scm.com/docs/git) para sacarle el máximo partido a git.
+Non esquezas consultar a [guía oficial de comandos de git](https://git-scm.com/docs/git) para sacarlle o máximo partido a git.
 
 
-## 10 comandos (menos uno) muy útiles
+## 10 comandos (menos un) moi útiles
 
-1. Cuando pones mal un comando en Git te suele sugerir el correcto. Puedes hacer que se ejecute automáticamente configurando el tiempo de autocorreción:
+1. Cando introduces mal un comando en Git, este adoita suxerir o correcto. Podes facer que se execute automaticamente configurando o tempo de auto corrección (onde 1 é unha décima de segundo):
 
     ```bash
     git config --global help.autocorrect 1
     ```
 
-2. Volver a la rama anterior rápidamente usando:
+2. Volver á rama anterior rapidamente usando:
 
     ```bash
     git switch -
     ```
 
-    Si no tienes `git switch`, puedes usar `git checkout`.
+    Se non tes `git switch`, podes usar `git checkout`.
 
-3. El git log por defecto no ofrece una información visual. Con unas pocas opciones puedes conseguir colores, ramificaciones y más información.
+3. O git log, por defecto, non ofrece unha información visual. Cunhas poucas opcións podes conseguir cores, ramificacións e máis información.
 
     ```bash
     git log --pretty=oneline --graph --decorate --all
     ```
 
-    Un ejemplo vistoso de lo que puedes conseguir:
+    Un exemplo vistoso do que podes conseguir é o seguinte:
 
     ```bash
-    git log --pretty=format:"%C(yellow)%h%Cred%d%Creset  -  %C(cyan)%an%Creset:  '%s'    %Cgreen(%cr)%Creset"
+    git log --graph --pretty=format:"%C(yellow)%h%Cred%d%Creset  -  %C(cyan)%an%Creset:  '%s'    %Cgreen(%cr)%Creset"
     ```
 
-    Y para no tener que acordarme del comando lo tengo definido con un alias (gglog) en mi archivo zshrc.
+    Cuxo resultado é similar a este:
 
-4. Si no quieres pasar por la fase de staging de Git, si añades el parámetro `-a` al commit, te saltas la necesidad de ejecutar `git add` sobre esos ficheros.
+    ![](../_media/02_hands_on/git-log-format.png)
 
-    ⚠️ Ojo. No funciona si es un fichero nuevo. Sólo ficheros modificados.
+    E, para non ter que recordar o comando, pódese definir un alias (coma gglog) no arquivo `.zshrc`/`.bashrc`.
 
-5. Se pueden crear alias en el fichero de configuración de Git de los comandos más usados. Por ejemplo, con dos letras para `git commit`:
+4. Se non queres pasar pola fase de staging de Git, se engades o parámetro `-a` ó commit, sáltaste a necesidade de executar `git add` sobre eses ficheiros. 
+
+    ⚠️ Ollo! Non funciona para ficheiros novos. Só para ficheiros modificados.
+
+5. Pódense crear alias no ficheiro de configuración de Git dos comandos máis usados. Por exemplo, con dúas letras para `git commit`:
 
     ```bash
     git config --global alias․co commit
     ```
 
-    Ahora podrás usar:
+    Agora podes usar:
 
     ```bash
     git co
     ```
 
-6. Push a múltiples remotos a la vez.
+6. Podes facer Push a múltiples remotos á vez.
 
-    Primero configura el repositorio remoto como lo tendrías normalmente, con push y fetch
+    Primeiro, configura o repositorio remoto coma o terías normalmente, con push e fetch:
 
     ```bash
     git remote add origin git@github.com:[username]/[repository]
     ```
 
-    Puedes confirmar esta configuración listando los remotos configurados
+    Podes confirmar esta configuración listando os remotos configurados:
 
     ```bash
     git remote -v
     ```
 
-    Ahora configura las multiples URLs remotas incluyendo la que acabas de añadir.
+    Agora, configura as múltiples URLs remotas, incluíndo a que acabas de engadir:
 
     ```bash
     git remote set-url --add --push origin git@github.com:[username]/[repository]
     git remote set-url --add --push origin git@bitbucket.org:[username]/[repository]
     ```
 
-    Y si confirmas de nuevo con git remote -v podrás ver configuradas ambas URLs como push más la primera como fetch.
+    E se confirmas de novo con `git remote -v` poderás ver configuradas ambas URLs coma push e mais a primeira coma fetch. 
 
     ```bash
     origin	git@github.com:[username]/[repository] (fetch)
@@ -100,40 +104,41 @@ No olvides consultar la [guía oficial de comandos de git](https://git-scm.com/d
     origin	git@bitbucket.org:[username]/[repository] (push)
     ```
 
-7. Puedes añadir ficheros al commit anterior con:
+7. Podes engadir ficheiros ó commit anterior con:
 
     ```bash
     git commit --amend
     ```
 
-    Esto es útil cuando has olvidado añadir algo al commit anterior.
-    ⚠️ Ojo. No lo hagas si ya has hecho push del commit.
+    Isto é útil cando esqueciches engadir algo ó commit anterior.
+    ⚠️ Ollo! Non o fagas se xa fixeches push do commit.
 
-8. Imagina que has modificado varios archivos de un repositorio, pero solo quieres hacer commit de uno de ellos. ¿Como puedo hacer commit de un sólo fichero de mi repositorio?
+8. Imaxina que modificaches varios arquivos dun repositorio, pero só queres facer commit dun deles. Como podo facer commit dun só ficheiro do meu repositorio?
 
     ```bash
-    git commit -m "Aquí tu mensaje del commit" archivo.txt
+    git commit -m "A túa mensaxe do commit" arquivo.txt
     ```
 
-9. En caso de que hayamos añadido al staging con `git add` un archivo que aun no esta listo para subir, podemos volver atrás con:
+9. No caso de que teñamos engadido ó staging con `git add` un arquivo que aínda non está listo para subir, podemos volver atrás con:
 
     ```bash
-    git rm --cached nombrefichero.txt
+    git rm --cached nomeficheiro.txt
     ```
     
-    o, si queremos sacar del staging todos los archivos por que nos hemos equivocado haciendo un `git add .`, podemos utilizar 
+    ou, se queremos sacar do staging tódolos arquivos porque fixemos un `git add .` por erro, podemos utilizar:
+
     ```bash
     git reset HEAD. 
     ```
-    ⚠️ Ojo. No lo hagas si ya has hecho push del commit.
+    ⚠️ Ollo! Non o fagas se xa fixeches un push do commit.
 
-    ⚠️ Ojo. No deberías utilizar `git add .` con el punto, la buena práctica es añadir los archivos uno a uno con `git add nombrearchivo.txt`. Recordemos que los pull request deben ser lo más pequeños posible, así que los commits también.
+    ⚠️ Ollo! Non deberías utilizar `git add .` co punto: a boa práctica é engadir os arquivos un por un, con `git add nomearquivo.txt`. Recorda que os pull request deben ser o máis pequenos posible, de xeito que os commits tamén.
 
 ## Cheatsheat comandos
-Un cheatsheet es una hoja de referencia rápida que contiene los comandos más utilizados de un lenguaje o herramienta. En este caso, el cheatsheet de git. Aquí tienes algunos que te pueden ayudar:
+Unha cheatsheet é unha folla de referencia rápida que contén  os comandos máis utilizados dunha linguaxe ou ferramenta, neste caso de Git. Aquí tes algunhas que te poden axudar:
 - Cheatsheat [oficial de git](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/)
 - Cheatsheet de [GitLab](https://about.gitlab.com/images/press/git-cheat-sheet.pdf)
 - Cheatsheet de [GitHub](https://education.github.com/git-cheat-sheet-education.pdf)
 - Cheatsheet de [Atlassian](https://www.atlassian.com/es/git/tutorials/atlassian-git-cheatsheet)
-- Cheatseet de [Git Tower](https://www.git-tower.com/blog/git-cheat-sheet/)
+- Cheatsheet de [Git Tower](https://www.git-tower.com/blog/git-cheat-sheet/)
 - Cheatsheet de [Cheatography](https://cheatography.com/itsellej/cheat-sheets/git-commands/)

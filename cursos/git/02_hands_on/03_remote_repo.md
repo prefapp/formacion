@@ -1,22 +1,22 @@
-# Forjas de código abierto
+# Forxas de código aberto
 
-Una forja, también conocida como plataforma de alojamiento de código, es un servicio web que permite alojar repositorios de código fuente y control de versiones. Esto ofrece a los desarrolladores la posibilidad almacenar y compartir código fuente, así como colaborar en proyectos de código abierto. Además, garantiza un seguimiento de los problemas y errores, controlar las versiones del código y realizar la integración continua y la entrega continua.
+Unha forxa, tamén coñecida como plataforma de aloxamento de código, é un servizo web que permite aloxar repositorios de código fonte e control de versións. Isto ofrece ós desenvolvedores a posibilidade de almacenar e compartir código fonte, así coma de colaborar en proxectos de código aberto. Ademais, garante un seguimento dos problemas e erros, controlar as versións do código e realizar a integración continua e a entrega continua.
 
-Algunas de las forjas de código abierto más populares son:
+Algunhas das forxas de código aberto máis coñecidas son:
 
-- **[GitHub](https://github.com/)**: es una de las forjas de código abierto más populares y utilizadas. Es propiedad de Microsoft y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos, seguimiento de problemas y control de versiones. 
+- **[GitHub](https://github.com/)**: é unha das máis populares e utilizadas. É propiedade de Microsoft e oferta servizos de aloxamento de repositorios Git, xestión de proxectos, seguimento de problemas e control de versións.
 
-- **[GitLab](https://about.gitlab.com/)**: es otra de las forjas de código abierto basadas en Git más populares y ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También cuenta con opciones avanzadas de integración continua y entrega continua.
+- **[GitLab](https://about.gitlab.com/)**: outra das máis populares, oferta servizos de aloxamento de repositorios de Git, xestión de proxectos e control de versións. Tamén conta con opcións avanzadas de integración continua e entrega continua.
 
-- **[Bitbucket](https://bitbucket.org/)**: es una forja de código abierto basada en Git y propiedad de Atlassian que ofrece servicios de alojamiento de repositorios Git y Mercurial, seguimiento de problemas y control de versiones. También cuenta con opciones de integración continua y entrega continua.
+- **[Bitbucket](https://bitbucket.org/)**: é propiedade de Atlassian e oferta servizos de aloxamento de repositorios Git e Mercurial, seguimento de problemas e control de versións. Tamén conta con opcións de integración continua e entrega continua.
 
-- **[GitKraken](https://www.gitkraken.com/)**: es una forja de código abierto basada en Git que ofrece una interfaz gráfica de usuario intuitiva para trabajar con repositorios Git. También cuenta con opciones de integración con otras herramientas de desarrollo.
+- **[GitKraken](https://www.gitkraken.com/)**: esta forxa oferta unha interface gráfica de usuario intuitiva para traballar con repositorios Git. Tamén conta con opcións de integración con outras ferramentas de desenvolvemento.
 
-- **[SourceForge](https://sourceforge.net/)**: aunque no se limita exclusivamente a Git, también ofrece servicios de alojamiento de repositorios Git, seguimiento de problemas y control de versiones.
+- **[SourceForge](https://sourceforge.net/)**: aínda que non se limita exclusivamente a Git, oferta o servizo de aloxamento de repositorios, seguimento de problemas e control de versións.
 
-- **[Gitea](https://gitea.io/en-us/)**: es otra forja de código abierto basada en Git que ofrece servicios de alojamiento de repositorios Git, gestión de proyectos y control de versiones. También es compatible con otros sistemas de control de versiones, como Mercurial y Subversion.
+- **[Gitea](https://gitea.io/en-us/)**: oferta servizos de aloxamento de repositorios Git, xestión de proxectos e control de versións. Tamén é compatible con outros sistemas de control de versións, coma Mercurial ou Subversion.
 
-Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a utilizar en el curso. Haremos un recorrido por la documentación que sí o sí tienes que leer para el buen uso de la plataforma.
+Nós ímonos centrar en Github, xa que é a máis utilizada e a que vamos a usar durante o curso. Faremos un recorrido pola documentación que si ou si tes que ler para o bo uso da plataforma.
 
 ## Github 
 
@@ -28,58 +28,58 @@ Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a util
   </div>
 </div>
 
-GitHub ofrece una amplia gama de características y herramientas para desarrolladores de software, incluyendo alojamiento de repositorios de código, seguimiento de problemas, gestión de proyectos, integración continua y entrega continua, herramientas de revisión de código, entre otros.
+GitHub oferta unha ampla gama de características e ferramentas para desenvolvedores de software, incluíndo aloxamento de repositorios de código, seguimento de problemas, xestión de proxectos, integración continua e entrega continua e ferramentas de revisión de código, entre outros.
 
 Características:
 
-- **[Alojamiento de repositorios Git](https://docs.github.com/es/repositories)**: GitHub ofrece alojamiento gratuito de repositorios Git públicos, así como alojamiento de repositorios privados para equipos que desean mantener el control sobre su código fuente.
+- **[Aloxamento de repositorios Git](https://docs.github.com/es/repositories)**: GitHub oferta aloxamento gratuito de repositorios Git públicos, así coma aloxamento de repositorios privados para equipos que desexan manter o control sobre o ser código fonte.
 
-- **[Seguimiento de problemas](https://docs.github.com/es/issues)** (Issues): la función de seguimiento de problemas de GitHub permite a los equipos de desarrollo notificar y gestionar problemas y errores relacionados con el código fuente. Los usuarios pueden asignar estas issues a miembros del equipo y realizar un seguimiento del estado de resolución del problema.
+- **[Seguemento de problemas](https://docs.github.com/es/issues)** (Issues): a función de seguimento de problemas de GitHub permite ós equipos de desenvolvemento notificar e xestionar problemas e erros relacionados co código fonte. Os usuarios poden asignar estas issues a membros do equipo e realizar un seguimento do estado de resolución do problema.
 
-- **[Gestión de proyectos](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)** (Projects): la función de gestión de proyectos de GitHub permite a los equipos de desarrollo organizar sus tareas y proyectos en tableros Kanban personalizables. Los usuarios pueden crear tareas, asignarlas a miembros del equipo y realizar un seguimiento del progreso del proyecto.
+- **[Xestión de proxectos](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)** (Projects): a función de xestión de proxectos de GitHub permite ós equipos de desenvolvemento organizar as súas tarefas e proxectos en taboleiros Kanban adaptables. Os usuarios poden crear tarefas, asignalas a membros do equipo e realizar un seguimento do progreso do proxecto.
 
-- **[Integración continua y entrega continua](https://docs.github.com/es/actions)**: GitHub Actions es una función de integración continua y entrega continua (CI/CD) integrada en la plataforma GitHub. Los usuarios pueden crear flujos de trabajo automatizados para compilar, probar y desplegar su código de forma automática.
+- **[Integración continua e entrega continua](https://docs.github.com/es/actions)**: GitHub Actions é unha función de integración continua e entrega continua (CI/CD) integrada na plataforma GitHub. Os usuarios poden crear fluxos de traballo automatizados para compilar, probar e despregar o seu código de xeito automático.
 
-- **[Revisión de código](https://docs.github.com/es/pull-requests)**: GitHub ofrece una serie de herramientas de revisión de código que permiten a los equipos de desarrollo revisar el código fuente de manera colaborativa. Los usuarios pueden hacer comentarios en el código, crear solicitudes de extracción para fusionar cambios y realizar revisiones de código de manera colaborativa.
+- **[Revisión de código](https://docs.github.com/es/pull-requests)**: GitHub oferta unha serie de ferramentas de revisión de código que permiten ós equipos de desenvolvemento revisar o código fonte de maneira colaborativa. Os usuarios poden facer comentarios no código, crear pull requests para fusionar cambios e realizar revisións das modificacións.
 
-- **[Opción en línea de comandos](https://docs.github.com/es/github-cli)**: GitHub también ofrece una herramienta en línea de comandos (CLI) que permite a los usuarios interactuar con la plataforma de GitHub directamente desde la línea de comandos. La CLI de GitHub admite una amplia gama de comandos y opciones para interactuar con repositorios, problemas, solicitudes de extracción y más.
+- **[Opción en liña de comandos](https://docs.github.com/es/github-cli)**: GitHub tamén oferta unha ferramenta de liña de comandos (CLI) que permite ós usuarios interactuar coa plataforma de GitHub directamente dende o seu terminal. A CLI de GitHub admite unha ampla gama de comandos e opcións para interactuar con repositorios, issues, pull requests e máis.
 
-Como hemos visto en los anteriores hipervínculos, en la [documentación de Github](https://docs.github.com/es) podrás encontrar multitud de información sobre la plataforma, sus funcionalidades, etc., así como una serie de tutoriales que te pueden ayudar a comenzar con la plataforma y con Git si es tu primera vez. Es interesante revisar la documentación para extraer las buenas prácticas que se recomiendan.
+Como vimos nos anteriores enlaces, na [documentación de GitHub](https://docs.github.com/es) poderás atopar multitude de información sobre a plataforma, as súas funcionalidades, etc., así coma unha serie de tutoriais que te poden axudar a comezar coa plataforma e con Git se é a túa primeira vez. É interesante revisar a documentación para extraer as boas prácticas que se recomendan.
 
 ## Protección de ramas
 
-Las mejores prácticas de seguridad en GitHub recomiendan [proteger las ramas principales](https://docs.github.com/es/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule) de los repositorios, como master o main, para evitar que se realicen cambios no deseados en ellas. 
+As mellores prácticas de seguridade en GitHub recomendan [protexer as ramas principais](https://docs.github.com/es/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule) dos repositorios, coma master ou main, para evitar que se realicen cambios non desexados nelas.
 
-Algunas buenas prácticas para proteger las ramas principales son:
+Algunhas boas prácticas para protexer as ramas principais son:
 
-- **Designar owners**: asigna a propietarios de la rama principal y requerir que sean ellos quienes aprueben cambios en la rama principal.
+- **Designar owners**: asignar un ou varios usuarios coma propietarios da rama principal.
 
-- **Requerir revisiones de código por los propietarios (Owners)**: requiere que los cambios en la rama principal sean aprobados por los propietarios de la rama principal.
+- **Requirir revisións de código polos propietarios (Owners)**: requirir que os cambios na rama principal sexan aprobados polos seus propietarios.
 
-- **Configura las revisiones necesarias**: configura las revisiones necesarias para cada rama, asegurándote de que haya suficientes revisores y de que estén calificados para realizar revisiones de código. También puedes configurar la cantidad mínima de aprobaciones que se necesitan antes de permitir un merge.
+- **Configurar as revisións necesarias para cada rama**: asegurarse, ó crear unha nova rama, de que teña os revisores suficientes e que estean cualificados para realizar as revisións do código. Tamén é posible configurar a cantidade mínima de aprobacións que son precisas antes de permitir un merge.
 
-- **Limita el acceso a las ramas**: solo los miembros del equipo o los colaboradores que necesiten acceder a una rama deberían tener permiso para hacerlo. Esto se puede lograr a través de la configuración de permisos en GitHub.
+- **Limitar o acceso ás ramas**: só deberían ter acceso a unha rama os membros do equipo ou os colaboradores que precisen acceder a esta. Isto pode lograrse mediante a configuración de permisos en GitHub.
 
-- **Usa herramientas de integración continua**: usa herramientas de integración continua, como Travis CI o CircleCI, para realizar pruebas automáticas en cada commit y pull request. Esto te permitirá detectar y solucionar errores rápidamente. Más adelante veremos las Github Actions.
+- **Usar ferramentas de integración continua**: utilizar ferramentas de integración continua, como Travis CI ou CircleCI, para realizar probas automáticas en cada commit e pull request. Isto permitirá detectar e solucionar erros rapidamente. Máis adiante veremos as GitHub actions.
 
-- **Limita el acceso a las credenciales**: limita el acceso a las credenciales, como claves SSH o contraseñas de acceso a la cuenta de GitHub. Solo los miembros del equipo que necesiten acceder a estas credenciales deberían tener permiso para hacerlo.
+- **Limitar o acceso ás credenciais**: só os membros do equipo que o precisen deberían ter acceso a credenciais coma claves SSH ou contrasinais de acceso á conta de GitHub.
 
 ## secrets
-Nunca se deben hardcodear las credenciales de acceso a los servicios externos en el código fuente. Por ejemplo, si se utiliza una API de terceros, como GitHub, para realizar una tarea, nunca se deben incluir las credenciales de acceso a la API en el código fuente. En su lugar, se debe utilizar variables de entorno o secretos para almacenar las credenciales de acceso a la API. 
+Nunca se deben introducir directamente no código fonte as credenciais de acceso ós servizos externos. Por exemplo, se se utiliza unha API de terceiros, coma GitHub, para realizar unha tarefa, nunca se deben incluír as credenciais de acceso á API no código fonte. No seu lugar, usaranse variables de entorno ou segredos para almacenar estes valores.
 
 ## .gitignore y .gitattributes
 
-`.gitignore` es un archivo que le indica a Git qué archivos o directorios deben ser ignorados durante el proceso de seguimiento de cambios. En otras palabras, Git no rastreará los cambios en los archivos y directorios que estén listados en `.gitignore`. Es importante utilizar `.gitignore` para evitar el seguimiento de archivos innecesarios que no deben formar parte de tu repositorio, como archivos temporales, archivos de compilación o archivos generados automáticamente.
+`.gitignore` é un arquivo que lle indica a Git que arquivos ou directorios deben ser ignorados durante o proceso de seguimento de cambios. Noutras palabras, Git non rastreará os cambios dos arquivos e directorios que estean listados no `.gitignore`. É importante utilizar este ficheiro para evitar o seguimento de arquivos innecesarios que non deben formar parte do teu repositorio, como arquivos temporais, arquivos de compilación ou arquivos xerados automaticamente.
 
-El buen uso de `.gitignore` implica incluir en el archivo únicamente los archivos y directorios que no deben ser rastreados. Es importante mantenerlo actualizado, añadiendo nuevos archivos o directorios que deban ser ignorados a medida que se vayan creando. También se puede utilizar el archivo `.gitignore` para excluir archivos que contengan información confidencial, como claves de acceso o contraseñas.
+O bo uso do `.gitignore` implica incluír no arquivo unicamente os ficheiros e directorios que non deban ser rastreados. É importante mantelo actualizado, engadindo novos arquivos e directorios a medida que se vaian creando. Tamén se pode utilizar o arquivo `.gitignore` para excluír arquivos que conteñan información confidencial, coma claves de acceso ou contrasinais.
 
-Repositorio con una colección de plantillas de `.gitignore` para diferentes lenguajes y entornos se puede encontrar en [GitHub](https://github.com/github/gitignore). 👀 
+No seguinte repositorio atópase unha colección de modelos de `.gitignore` para diferentes linguaxes e contornas: [https://github.com/github/gitignore](https://github.com/github/gitignore). 👀
 
-`.gitattributes` es un archivo que le indica a Git cómo manejar archivos específicos. Se puede utilizar para establecer atributos de archivos, como el tipo de final de línea, el modo de ejecución, el conjunto de caracteres y la difusión binaria. También se puede utilizar para establecer reglas para la fusión de archivos.
+`.gitattributes` é un arquivo que lle indica a Git momo manexar arquivos específicos. Pódese utilizar para establecer atributos de arquivos, coma o tipo de final de liña, o modo de execución, o conxunto de caracteres e a difusión binaria. Tamén se pode utilizar para estableces regras para a fusión de arquivos.
 
-El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos correctos para los archivos del proyecto, de tal manera que se puedan manejar adecuadamente en Git. Por ejemplo, si trabajas en un proyecto que utiliza diferentes sistemas operativos, se puede utilizar `.gitattributes` para establecer el tipo de final de línea que debe ser utilizado, asegurando la compatibilidad entre los diferentes sistemas operativos.
+O bo uso de `.gitattributes` implica utilizalo para establecer os atributos correctos para os arquivos do proxecto, de tal xeito que se poidan manexar adecuadamente en Git. Por exemplo, se traballas nun proxecto que utilizar distintos sistemas operativos, pódese utilizar `.gitattributes` para establecer o tipo de final de liña que debe ser utilizado, asegurando a compatibilidade entre os distintos sistemas operativos.
 
-## Lectura de buenas prácticas en Github
+## Lectura de boas prácticas en GitHub
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">
@@ -90,10 +90,10 @@ El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos
 </div>
 
 - Repositorios: https://docs.github.com/es/repositories/creating-and-managing-repositories/best-practices-for-repositories
-- Organizaciones: https://docs.github.com/es/organizations/collaborating-with-groups-in-organizations/best-practices-for-organizations
+- Organizacións: https://docs.github.com/es/organizations/collaborating-with-groups-in-organizations/best-practices-for-organizations
 - Projects: https://docs.github.com/es/issues/planning-and-tracking-with-projects/learning-about-projects/best-practices-for-projects 
 - Asignación de varios propietarios: https://docs.github.com/es/enterprise-cloud@latest/admin/overview/best-practices-for-enterprises
-- Seguridad del usuario: https://docs.github.com/es/enterprise-server@3.8/admin/user-management/managing-users-in-your-enterprise/best-practices-for-user-security
-- Protección de cuentas: https://docs.github.com/es/code-security/supply-chain-security/end-to-end-supply-chain/securing-accounts
+- Seguridade do usuario: https://docs.github.com/es/enterprise-server@3.8/admin/user-management/managing-users-in-your-enterprise/best-practices-for-user-security
+- Protección de contas: https://docs.github.com/es/code-security/supply-chain-security/end-to-end-supply-chain/securing-accounts
 - Para integradores: https://docs.github.com/es/rest/guides/best-practices-for-integrators?apiVersion=2022-11-28
-- Conversaciones con la comunidad: https://docs.github.com/es/discussions/guides/best-practices-for-community-conversations-on-github
+- Conversacións coa comunidade: https://docs.github.com/es/discussions/guides/best-practices-for-community-conversations-on-github
