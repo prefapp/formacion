@@ -1,10 +1,10 @@
 - Capítulo 1 - Git
   - [¿Qué é Git?](./01_git/01_que_e_git.md)
   - [Fundamentos de Git](./01_git/02_fundamentos_de_git.md)
-  - [Práctica guiada](./01_git/03_practica_guiada.md)
+  - [Práctica guiada - Primeiros pasos, configuración e instalación](./01_git/03_practica_guiada.md)
 - Capítulo 2 - Manos a la obra
-  - [Secciones Git - Ramificación - Fusión](./02_hands_on/01_git_sections.md)
+  - [Seccións Git - Ramificación - Fusión](./02_hands_on/01_git_sections.md)
   - [Comandos básicos](./02_hands_on/02_basic_commands.md)
-  - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
+  - [Forxas de código aberto](02_hands_on/03_remote_repo.md)
   - [Pull Request](./02_hands_on/04_pull_request.md)
   - [Práctica guiada - Clonar repo, creación de ramas, primer commit y push request](./02_hands_on/05_Guided_practice-Cloning_repo_branch_creation_first_commit_push_request.md)
