@@ -6,15 +6,27 @@ Hemos pasado por unas largas lecturas teóricas, así que esta práctica será m
 
 Para poder realizar esta práctica, será necesario tener un usuario en una plataforma para repositorios remotos. Si no lo tienes todavía, puedes crearlo en Github, accediendo a [https://github.com/signup](https://github.com/signup).
 
-![](../_media/02_hands_on/github-signup.png)
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/02_hands_on/github-signup.png)
+
+  </div>
+</div>
 
 ## Crear un nuevo repositorio
 
 Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra máquina. En Github, los pasos a seguir son:
 
 - En la esquina superior derecha de cualquier página, seleccionar la opción '+' > New repository.
+- 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/github-create-repo.png)
+![](../../_media/02_hands_on/github-create-repo.png)
+
+  </div>
+</div>
 
 - En la página que se nos abre, cubrimos las siguientes opciones:
 
