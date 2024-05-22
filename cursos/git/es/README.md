@@ -1,6 +1,6 @@
 # Git
 
-Git es el SCV (sistema de control de versiones) de código abierto más utilizado más utilizado en el mundo. Diseñado por Linus Torvalds, su propósito es llevar registro de los cambios en archivos de computadora. A diferencia de Subversion, GIT es distribuido, con lo que permite la coordinación del trabajo entre varias personas sobre archivos compartidos en un repositorio de código. Las empresas y los programadores suelen utilizar GIT para colaborar en el desarrollo de software y aplicaciones.
+Git es el SCV (sistema de control de versiones) de código abierto más utilizado más utilizado en el mundo. Diseñado por Linus Torvalds, su propósito es llevar registro de los cambios en archivos de computadora. A diferencia de Subversion, Git es distribuido, con lo que permite la coordinación del trabajo entre varias personas sobre archivos compartidos en un repositorio de código. Las empresas y los programadores suelen utilizar Git para colaborar en el desarrollo de software y aplicaciones.
 
 Git es un proyecto de código abierto maduro y con un mantenimiento activo, y es la base de grandes plataformas de servicios de alojamiento web para proyectos, también llamados repositorios remotos o forjas, como pueden ser Github, Gitlab, Bitbucket, Gitea, Gogs, etc.
 
@@ -11,8 +11,8 @@ Como se ha mencionado, Git tiene una arquitectura distribuida, es un ejemplo de 
 Además de contar con una arquitectura distribuida, Git se ha diseñado teniendo en cuenta el rendimiento, la seguridad y la flexibilidad.
 
 ## Recursos
-- [Página oficial de GIT](https://git-scm.com/)
-- [Book oficial en español de GIT](https://git-scm.com/book/es/v2)
+- [Página oficial de Git](https://git-scm.com/)
+- [Book oficial en español de Git](https://git-scm.com/book/es/v2)
 - [Por qué utilizar Git en tu organización](https://www.atlassian.com/es/git/tutorials/why-git) 
 - [La catedral y el bazar](_media/README/catedralbazar.pdf)
   

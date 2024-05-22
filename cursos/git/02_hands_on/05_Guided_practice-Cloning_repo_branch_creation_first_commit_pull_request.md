@@ -75,6 +75,6 @@ Xa temos a nosa primeira pull request aberta! Agora, só nos queda fusionala coa
 - Fusiona as ramas seleccionando a opción "Merge pull request".
 - Elimina a rama que acabas de fusionar. Para isto, na propia páxina da pull request aparecerá a opción de borrado:
 
-![](../../_media/02_hands_on/github-delete-branch.png)
+![](../_media/02_hands_on/github-delete-branch.png)
 
 Agora que xa tes os básicos controlados, tamén podes practicar co resto dos comandos de Git que explicamos no [capítulo 2 - Manos a la obra](02_basic_commands.md). A recomendación para este capítulo é que repases unha e outra vez a documentación Git e de GitHub para poder ter unha visión xeral do traballo cos repositorios, tanto en local coma en remoto.
