@@ -8,3 +8,10 @@
   - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
   - [Pull request](./02_hands_on/04_pull_request.md)
   - [Práctica guiada - Clonar repo, creación de ramas, primer commit y pull request](./02_hands_on/05_Guided_practice-Cloning_repo_branch_creation_first_commit_pull_request.md)
+- Capítulo 3 - Metodología Prefapp
+  - [Estrategía de bifurcación - TBD vs. Git Flow](./03_prefapp_methodology/01_forking_strategy.md)
+  - [Estrategía de fusión - Merge vs squash vs rebase vs pull](./03_prefapp_methodology/02_merge_strategy.md)
+  - [Manejo de Projects en Backlog con GitHub](./03_prefapp_methodology/03_project_management_backlog.md)
+  - [Práctica Guiada: Creación de Ramas, Pull Request y Preparación de Trabajo Mediante Issue (Projects)](./03_prefapp_methodology/04_Guided_practice-branch-pr-issue.md)
+- Capítulo 4 - Worflows
+- Capítulo 5 - Posibles conflictos y recapitulación
