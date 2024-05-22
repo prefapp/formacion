@@ -8,7 +8,7 @@
 
 [GitHub](https://github.com/prefapp/formacion/tree/master/cursos/git)
 [Plataforma](https://prefapp.github.io/formacion/)
-[Empezar]()
+[Empezar](#Git)
 
 <!--- GB color --->
 <!--- Commit all, it will effect a random gradient color --->
