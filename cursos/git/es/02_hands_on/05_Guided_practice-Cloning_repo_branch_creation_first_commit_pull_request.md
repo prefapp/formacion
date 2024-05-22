@@ -1,4 +1,4 @@
-# Práctica guiada - Clonar repo, creación de ramas, primer commit y push request
+# Práctica guiada - Clonar repo, creación de ramas, primer commit y pull request
 
 Hemos pasado por unas largas lecturas teóricas, así que esta práctica será muy corta. En esta práctica guiada vamos a clonar un repositorio, crear una rama, realizar un primer commit y crear un pull request.
 
@@ -19,7 +19,7 @@ Para poder realizar esta práctica, será necesario tener un usuario en una plat
 Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra máquina. En Github, los pasos a seguir son:
 
 - En la esquina superior derecha de cualquier página, seleccionar la opción '+' > New repository.
-- 
+
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
@@ -60,9 +60,22 @@ Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra má
 
 - Empuja la rama creada con el comando `git push origin <nombre_de_la_rama>`.
 - En la página web del repositorio, navega hasta la sección "Pull Requests" y haz clic en "New Pull Request".
-- Selecciona la rama que acabas de crear en la lista de ramas de "base" y la rama principal del repositorio en la lista de ramas "compare".
+- Selecciona la rama principal del repositorio en la lista de ramas de "base" y la rama que acabas de crear en la lista de ramas "compare", como en la siguiente imagen:
+![](../../_media/02_hands_on/github-pr.png)
 - Asegúrate de que los cambios que se muestran en la solicitud de extracción sean los que deseas enviar.
-- Si estás satisfecho con los cambios, haz clic en "Create Pull Request" para enviar la solicitud de extracción.
+- Si estás satisfecho con los cambios, haz clic en "Create Pull Request" para ir a la página de creación de la pull request.
+- Añade un título y una descripción de los cambios que se van a realizar. En la columna de la derecha puedes designar a otros usuarios de GitHub como reviewers, pero para esta práctica no será necesario, así que selecciona directamente "Create pull request".
+
+
+## Fusionar en la rama principal
+
+¡Ya hemos abierto nuestra primera pull request! Ahora solo nos queda fusionarla con la rama principal para incluir los cambios.
+
+- Navega por las distintas opciones de la página de la pull request: verás que muestran los commits que hemos añadido y los cambios que hay en cada fichero.
+- Fusiona las ramas con la opción "Merge pull request".
+- Elimina la rama que acabas de fusionar. Para ello, en la propia página de la pull request aparecerá la opción de borrado:
+
+![](../../_media/02_hands_on/github-delete-branch.png)
 
 
 Espero que también hayas practicado el resto de los comandos de git que se explican en el [capítulo 2 - Manos a la obra](02_basic_commands.md). La recomendación para este capítulo es que repases una y otra vez la documentación git y de github para poder tener una visión general del trabajo con los repositorios, tanto en local como en remoto.

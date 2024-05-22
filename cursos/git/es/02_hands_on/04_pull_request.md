@@ -1,7 +1,7 @@
 
 # Pull request
 
-Una pull request (PR) es una solicitud de fusión de una rama en otra rama. En GitHub, las pull requests se utilizan para solicitar la fusión de una rama en otra rama, y para revisar los cambios realizados en la rama antes de fusionarla con la rama principal.
+Una pull request (PR) es una solicitud de fusión de una rama en otra rama. En GitHub, las pull requests se utilizan para solicitar esta fusión y para revisar los cambios realizados en la rama antes de fusionarla con la rama principal.
 
 Para crear una pull request en GitHub, se puede utilizar la interfaz web del repositorio remoto o, en su caso, alguna herramienta de línea de comandos complementaria que se pueda instalar en el equipo local. Por ejemplo, en GitHub, se puede utilizar la herramienta de línea de comandos GitHub CLI para crear una pull request en el repositorio remoto.
 
@@ -11,15 +11,9 @@ Algunas buenas prácticas para crear una pull request son:
 
 - **Proporciona una descripción clara**: describe lo que se cambió, por qué se realizó el cambio y cómo afecta al proyecto.
 
-- **Acompaña con pruebas**: si has realizado cambios en el código, asegúrate de proporcionar pruebas adicionales para demostrar que los cambios funcionan correctamente.
-
-- **Actualiza la rama base**: antes de enviar una pull request, asegúrate de que tu rama se actualiza con la rama base. 
+- **Actualiza con la rama base**: antes de enviar una pull request, para evitar conflictos, asegúrate de que tu rama se ha actualizado con la rama base. 
 
 - **Haz seguimiento a la pull request**: asegúrate de hacer seguimiento y estar disponible para responder cualquier pregunta o comentario que los revisores puedan tener.
-
-- **Antes de mergear revisa una última vez los cambios**: asegúrate de que no se haya colado algún error.
-
-- **Agradece a los revisores**: asegúrate de agradecer a los revisores por su tiempo y esfuerzo. Esto fomentará una cultura de colaboración y agradecimiento en el equipo.
 
 Y la otra parte, algunas buenas prácticas para los revisores de una pull request son:
 
@@ -27,11 +21,7 @@ Y la otra parte, algunas buenas prácticas para los revisores de una pull reques
 
 - **Proporciona comentarios constructivos**: asegúrate de proporcionar comentarios constructivos y sugerencias claras para que el autor pueda mejorar su trabajo.
 
-- **Comunica claramente tus sugerencias**: usa un lenguaje claro y conciso para que el autor pueda entender tus comentarios sin confusiones.
-
 - **Haz preguntas para obtener más información**: si tienes dudas sobre los cambios realizados, asegúrate de hacer preguntas y asegurarte de que comprendes lo que el autor ha realizado.
-
-- **Sé respetuoso y agradecido**: agradece al autor por su trabajo y tiempo dedicado a la pull request. Sé respetuoso en tus comentarios y evita usar un tono negativo o sarcástico.
 
 - **Comunica claramente la decisión de la revisión**: una vez que hayas realizado la revisión, comunica claramente al autor si se aprobó la solicitud de extracción, si se necesitan cambios adicionales o si se rechaza la solicitud. Si es posible, explica por qué se tomó esa decisión.
 
