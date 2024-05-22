@@ -32,7 +32,9 @@ Las GitHub Issues son una forma de realizar un seguimiento de las tareas, mejora
 
 - **Subtask**: Representa una tarea más pequeña y específica que forma parte de una tarea principal. Es conveniente evitar el uso de subtareas en favor de las pull requests, que suelen representar cambios más específicos en el código.
 
-Si ves alguna necesidad en el código, alguna mejora o, simplemente, un error, puedes abrir una issue en GitHub para que el equipo pueda abordarla. Las issues son una forma efectiva de comunicar y gestionar el trabajo en un proyecto de software. Es importante que refleje "La motivación" y los "Criterios de aceptación" para que el equipo pueda entender y trabajar en la issue de manera efectiva. También puedes añadir observaciones, dejar la evolución de la tarea, documentación, etc.
+Si ves alguna necesidad en el código, alguna mejora o, simplemente, un error, puedes abrir una issue en GitHub para que el equipo pueda abordarla. Las issues son una forma efectiva de comunicar y gestionar el trabajo en un proyecto de software. Es importante que refleje **"La motivación"** y los **"Criterios de aceptación"** para que el equipo pueda entender y trabajar en la issue de manera efectiva. También puedes añadir observaciones, dejar la evolución de la tarea, documentación, etc. 
+
+Puedes crear tu propias templates para las issues. Revisa la documentación de girhub: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
 
 
 ## Procedimientos
@@ -94,3 +96,5 @@ por ejemplo, "Build course structure" tiene la PR "structure, readme and 1st mod
 ```
 resolves #108 and resolves #109
 ```
+
+👀 *Revisar la documentación mencionada anteriormente para más información sobre cómo relacionar issues con PRs.*

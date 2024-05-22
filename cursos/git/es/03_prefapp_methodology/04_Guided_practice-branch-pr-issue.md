@@ -3,47 +3,62 @@
 
 En esta práctica guiada, te mostraremos cómo aplicar la metodología de Prefapp para gestionar tu trabajo en GitHub, incluyendo la creación de ramas, la apertura de issues y la preparación del trabajo mediante proyectos.
 
+
 ## Paso 1: Creación de una Issue
 
 1. Abre el proyecto correspondiente en GitHub Projects.
 2. En la columna "New", crea una nueva issue para una tarea específica que necesite ser realizada. Por ejemplo, "Implementar funcionalidad de autenticación de usuarios".
 
-## Paso 2: Asignación y Priorización de la Issue
+También puedes hacerlo directamente desde la pestaña "Issues" en el repositorio:
+1. Haz clic en el botón "New issue".
+2. Escribe un título descriptivo para la issue, como "Actualizar funcionalidad de autenticación de usuarios".
+
+👀 *Recuerda que puedes usar plantillas para los [procedimientos](https://github.com/prefapp/demo-state/blob/main/.github/docs/template_migration_es.md).*
+
+
+## Paso 2: Configuración de la Issue
 
 1. Asigna la issue a ti mismo o al miembro del equipo responsable de completarla.
-2. Prioriza la issue según su importancia y urgencia, moviéndola a la columna correspondiente en el proyecto de GitHub.
+2. Si no la has creado desde el project, añade la issue al proyecto correspondiente y muévela a la columna adecuada. En principio será "Ready to Start (DoD completed)". Cuando empieces el trabajo deberás moverla a "In Progress".
 
-## Paso 3: Creación de una Rama
 
-1. Desde la interfaz de GitHub, ve al repositorio correspondiente.
-2. Haz clic en el botón "Branch: main" y luego en "New branch".
-3. Dale un nombre descriptivo a tu rama, como "feature/authentication".
-4. Asegúrate de que la nueva rama se base en la rama principal del repositorio.
+## Paso 3: Creación de una Rama y Pull Request (PR)
 
-## Paso 4: Trabajo en la Rama
+1. Asegurate que estás en la rama principal del repositorio y baja los cambios con:
+```bash
+git pull origin main
+```
 
-1. Realiza los cambios necesarios en tu rama localmente, siguiendo las pautas y requisitos definidos en la issue.
-2. Asegúrate de hacer commits periódicos y descriptivos a medida que avances en tu trabajo.
+2. Crea una nueva rama para trabajar en la issue que acabas de crear:
+```bash
+git checkout -b feature/branch-test
+```
 
-## Paso 5: Preparación del Trabajo Mediante Issue (Projects)
+3. Realiza los cambios necesarios en tu código para completar la tarea o subtarea de la issue.
+   
+4. Sube la rama a GitHub:
+```bash
+git push origin feature/branch-test
+```
 
-1. Una vez que hayas completado tu trabajo y estés listo para enviarlo para su revisión, vuelve al proyecto de GitHub.
-2. Mueve la issue correspondiente a la columna "Ready to Start (DoD completed)" para indicar que el trabajo está listo para ser revisado.
-3. Si hay algún paso adicional que deba completarse antes de enviar tu trabajo, como la actualización de la documentación o la ejecución de pruebas, asegúrate de hacerlo antes de continuar.
+5. Crea una PR para fusionar tu rama con la rama principal del repositorio. En el output del anterior comando habrá un enlace para crear la PR. Si no lo ves, puedes hacerlo desde la interfaz de GitHub.
 
-## Paso 6: Creación de un Pull Request
+6. Asegurate que sigues las buenas prácticas para configurar la PR. Añade:
+  - Una descripción clara de los cambios realizados.
+  - Un revisor apropiado.
+  - Etiquetas si es necesario.
+  - La issue relacionada con la PR.
 
-1. Desde la interfaz de GitHub, ve al repositorio y selecciona tu rama recién creada.
-2. Haz clic en el botón "Pull Request" y completa los detalles del PR, incluyendo un resumen claro de los cambios realizados.
-3. Asigna a un revisor apropiado y solicita su revisión.
+7. Una vez terminados los cambios descritos en la issue y mientras esperas la revisión, puedes mover la issue a la columna "In review" del project de GitHub.
 
-## Paso 7: Revisión y Fusión del Pull Request
+## Paso 4: Revisión y Fusión del Pull Request
 
-1. El revisor examinará tus cambios, realizará comentarios si es necesario y aprobará el PR una vez que esté satisfecho con el trabajo.
-2. Una vez aprobado, el PR puede fusionarse con la rama principal del repositorio.
-3. La issue asociada se moverá a la columna "In Review" para indicar que está siendo revisada.
+1. El revisor examinará tus cambios, realizará comentarios si es necesario y aprobará el PR una vez que esté satisfecho con el trabajo (looks good to me (LGTM)).
+2. Una vez aprobado, la PR puede fusionarse con la rama principal del repositorio (squash and merge).
+3. Si todos los cambios propuestos en la issue están completados, podremos mover la issue a la columna "Done".
 
-¡Felicidades! Has completado con éxito la práctica guiada de creación de ramas, pull request y preparación de trabajo mediante issue en GitHub. Este proceso refleja la metodología de Prefapp para gestionar eficazmente el desarrollo de software y garantizar la colaboración efectiva en equipo.
+
+¡Felicidades! Has completado con éxito la práctica guiada de creación de ramas, pull request y preparación de trabajo mediante issue en GitHub. Si tienes dudas, observa y pregunta a tus compañeros.
 
 ![](https://media1.tenor.com/images/a5d777014b8cdfee5199c41367ce6994/tenor.gif?itemid=4747406)
 
