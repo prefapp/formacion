@@ -61,7 +61,15 @@ Precisamos ter un repositorio para poder traballar sobre el dende a nosa máquin
 - Empurra a rama creada co comando `git push origin <nome_da_rama>`.
 - Accede ó repositorio dende a web de GitHub, navega ata a sección "Pull Requests" e fai clic en "New Pull Request".
 - Selecciona a rama principal do repositorio na lista de ramas de "base" e a rama que acabas de crear na lista de ramas "compare", como na seguinte imaxe:
+
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
 ![](../_media/02_hands_on/github-pr.png)
+
+  </div>
+</div>
+
 - Asegúrate de que os cambios que se amosan na pull request sexan os que desexas enviar.
 - Se estás satisfeito cos cambios, fai clic en "Create Pull Request" para crear a pull request.
 - Engade un título e unha descrición dos cambios que se van realizar. Na columna da dereita, podes designar a outros usuarios de GitHub coma reviewers, pero para esta práctica non será necesario, así que selecciona directamente "Create pull request".
@@ -75,6 +83,12 @@ Xa temos a nosa primeira pull request aberta! Agora, só nos queda fusionala coa
 - Fusiona as ramas seleccionando a opción "Merge pull request".
 - Elimina a rama que acabas de fusionar. Para isto, na propia páxina da pull request aparecerá a opción de borrado:
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
 ![](../_media/02_hands_on/github-delete-branch.png)
+
+  </div>
+</div>
 
 Agora que xa tes os básicos controlados, tamén podes practicar co resto dos comandos de Git que explicamos no [capítulo 2 - Manos a la obra](02_basic_commands.md). A recomendación para este capítulo é que repases unha e outra vez a documentación Git e de GitHub para poder ter unha visión xeral do traballo cos repositorios, tanto en local coma en remoto.
