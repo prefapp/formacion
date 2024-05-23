@@ -1,0 +1,13 @@
+############
+
+La instalación de la release wp-release se compone en:
+- Despliegue y servicio de BBDD
+- Despliegue y servicio de WP
+- Configmap
+- Secrets
+- Ingress
+
+Es necesaria la instalación de la release wp-volume para darle persistencia a la bbdd mysql y a la configuración de wordpress.
+
+############
+
