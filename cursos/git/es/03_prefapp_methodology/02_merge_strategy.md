@@ -22,7 +22,7 @@ Tenemos este conflicto en el historial de commits:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/03_prefapp_methodology/conflicto_merge.webp)
+![](../../_media/03_prefapp_methodology/conflicto_merge.webp)
 
   </div>
 </div>
@@ -32,7 +32,7 @@ Si lo solucionamos con un `merge`, el historial de commits se vería así:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/03_prefapp_methodology/merge.webp)
+![](../../_media/03_prefapp_methodology/merge.webp)
 
   </div>
 </div>
@@ -42,7 +42,7 @@ Si lo solucionamos con un `squash`, el historial de commits se vería así:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/03_prefapp_methodology/squash.webp)
+![](../../_media/03_prefapp_methodology/squash.webp)
 
   </div>
 </div>
@@ -52,7 +52,7 @@ Si lo solucionamos con un `rebase`, el historial de commits se vería así:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/03_prefapp_methodology/rebase.webp)
+![](../../_media/03_prefapp_methodology/rebase.webp)
 
   </div>
 </div>

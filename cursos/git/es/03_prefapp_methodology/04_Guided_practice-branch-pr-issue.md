@@ -46,7 +46,7 @@ En esta práctica guiada, te mostraremos cómo aplicar la metodología de Prefap
 
 1. Antes de empezar a trabajar, mueve el ítem a la columna "In Progress".
 
-2. Desde tu terminal, accede a la carpeta local del repositorio que clonamos en el capítulo anterior. Asegurate que estás en la rama principal y baja los cambios con:
+2. Desde tu terminal, accede a la carpeta local del repositorio que clonamos en el capítulo anterior. Asegúrate de que estás en la rama principal y baja los cambios con:
 ```bash
 git pull origin main
 ```
@@ -67,7 +67,7 @@ git push origin feature/branch-test
 
 6. Crea una PR para fusionar tu rama con la rama principal del repositorio. En el output del anterior comando habrá un enlace para crear la PR. Si no lo ves, puedes hacerlo desde la interfaz de GitHub.
 
-7. Asegurate que sigues las buenas prácticas para configurar la PR. Añade:
+7. Asegurate de que sigues las buenas prácticas para configurar la PR. Añade:
   - Una descripción clara de los cambios realizados.
   - Un revisor apropiado.
   - Etiquetas si es necesario.

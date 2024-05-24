@@ -6,7 +6,7 @@ Existen varias estrategias populares de ramificación que puedes adoptar, siendo
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/03_prefapp_methodology/git-flow_vs_Trunk-based_Development.png)
+![](../../_media/03_prefapp_methodology/git-flow_vs_Trunk-based_Development.png)
 
   </div>
 </div>
@@ -120,9 +120,9 @@ Tabla con las diferencias entre git-flow y trunk-based development:
 En Prefapp, hemos adoptado Trunk-Based Development como estrategia principal de desarrollo de software. Esta metodología nos permite mantener un flujo de trabajo ágil y eficiente, entregando productos de alta calidad de manera rápida y segura a nuestros clientes.
 
 La metodología de Trunk-Based Development (TBD) es una estrategia ágil de desarrollo de software que se centra en la simplicidad y la integración continua de cambios en una única rama principal. A diferencia de enfoques más complejos como Git-flow, TBD promueve la rapidez y la colaboración al eliminar ramas prolongadas y fomentar la integración frecuente en la rama principal. En la anterior tabla se pueden apreciar las diferencias, como resumen de los principios clave:
-- Integración Continua: En TBD, los desarrolladores integran cambios con frecuencia en la rama principal, lo que permite detectar y resolver conflictos de manera temprana y mantener el código en un estado siempre funcional.
-- Ramas de Características Cortas: Las ramas de características en TBD son de corta duración y se integran rápidamente en la rama principal. Esto simplifica la gestión del código y reduce el riesgo de conflictos de integración.
-- Rama Principal Estable: La rama principal en TBD siempre está lista para ser implementada en producción, lo que garantiza un flujo de trabajo fluido y una alta calidad del código.
+- Integración Continua: en TBD, los desarrolladores integran cambios con frecuencia en la rama principal, lo que permite detectar y resolver conflictos de manera temprana y mantener el código en un estado siempre funcional.
+- Ramas de características cortas: las ramas de características en TBD son de corta duración y se integran rápidamente en la rama principal. Esto simplifica la gestión del código y reduce el riesgo de conflictos de integración.
+- Rama principal estable: la rama principal en TBD siempre está lista para ser implementada en producción, lo que garantiza un flujo de trabajo fluido y una alta calidad del código.
 
 Las ventajas de TBD que se pueden apreciar son:
 - Reducción de conflictos: integrar cambios con frecuencia minimiza los conflictos de integración y mejora la eficiencia del equipo.
