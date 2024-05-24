@@ -1,7 +1,7 @@
 
-# Estrategía de fusión - Merge vs squash vs rebase vs pull
+# Estrategia de fusión - Merge vs squash vs rebase vs pull
 
-En el desarrollo de software con Git, la forma en que se fusionan las ramas es crucial para mantener un historial de commits limpio y manejable. Las estrategias de fusión más comunes son merge, squash, rebase y pull. 
+En el desarrollo de software con Git, la forma en que se fusionan las ramas es crucial para mantener un historial de commits limpio y manejable. Las estrategias de fusión más comunes son merge, squash, rebase y pull.
 
 Cada estrategia de fusión tiene sus ventajas y desventajas, y la elección de la estrategia adecuada puede afectar significativamente la calidad y la claridad del historial del proyecto. A continuación, presentamos una tabla comparativa seguida de una explicación detallada de la estrategia squash.
 
