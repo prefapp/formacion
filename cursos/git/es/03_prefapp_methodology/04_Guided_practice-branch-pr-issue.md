@@ -84,4 +84,10 @@ git push origin feature/branch-test
 
 ¡Felicidades! Has completado con éxito la práctica guiada de creación de ramas, pull request y preparación de trabajo mediante issue en GitHub. Si tienes dudas, observa y pregunta a tus compañeros.
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
 ![](https://media1.tenor.com/images/a5d777014b8cdfee5199c41367ce6994/tenor.gif?itemid=4747406)
+
+  </div>
+</div>

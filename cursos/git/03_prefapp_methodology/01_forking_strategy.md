@@ -121,14 +121,14 @@ En Prefapp adoptamos Trunk-Based Development coma estratexia principal de desenv
 
 A metodoloxía de Trunk-Based Development (TBD) é unha estratexia áxil de desenvolvemento de software que se centra na simplicidade e na integración continua de cambios nunha única rama principal. No canto de enfoques máis complexos coma Git-flow, TBD promove a rapidez e a colaboración ó eliminar ramas prolongadas e fomentar a integración frecuente na rama principal. Na anterior táboa pódense apreciar as diferenzas. Coma resumo dos principios clave:
 
-- Integración Continua: en TBD os programadores integran cambios con frecuencia na rama principal, o que permite detectar e resolver cedo os conflitos e manter o código nun estado sempre funcional.
-- Ramas de características cortas: as ramas de características en TBD son de corta duración e intégranse rapidamente na rama principal. Isto simplifica a xestión do código e reduce o risco de conflitos de integración.
-- Rama principal estable: a rama principal en TBD está sempre lista para ser implantada en produción, o que garante un fluxo de traballo fluído e unha alta calidade do código.
+- **Integración Continua**: en TBD os programadores integran cambios con frecuencia na rama principal, o que permite detectar e resolver cedo os conflitos e manter o código nun estado sempre funcional.
+- **Ramas de características cortas**: as ramas de características en TBD son de corta duración e intégranse rapidamente na rama principal. Isto simplifica a xestión do código e reduce o risco de conflitos de integración.
+- **Rama principal estable**: a rama principal en TBD está sempre lista para ser implantada en produción, o que garante un fluxo de traballo fluído e unha alta calidade do código.
 
 As vantaxes de TBD que se poden apreciar son:
-- Redución de conflitos: integrar cambios con frecuencia minimiza os conflitos de integración e mellora a eficiencia do equipo.
-- Despregamento continuo: TBD facilita o despregamento continuo de novas funcionalidades, permitindo entregas rápidas e seguras ós usuarios finais.
-- Colaboración eficiente: ó traballar nunha única rama principal, os equipos colaboran estreitamente e coordinan eficientemente os seus esforzos de desenvolvemento.
+- **Redución de conflitos**: integrar cambios con frecuencia minimiza os conflitos de integración e mellora a eficiencia do equipo.
+- **Despregamento continuo**: TBD facilita o despregamento continuo de novas funcionalidades, permitindo entregas rápidas e seguras ós usuarios finais.
+- **Colaboración eficiente**: ó traballar nunha única rama principal, os equipos colaboran estreitamente e coordinan eficientemente os seus esforzos de desenvolvemento.
 
 Para implantar TBD en Prefapp, seguimos prácticas de integración continua, revisións de código e probas automatizadas para garantir a estabilidade e calidade do código na rama principal.
 
@@ -139,23 +139,33 @@ Máis info: https://trunkbaseddevelopment.com/
 
 O versionado semántico (SemVer) é unha convención para asignar versións ás bibliotecas de software que seguen un patrón de tres números: `X.Y.Z` onde `X` é a versión maior, `Y` a versión menor e `Z` é a versión de parche. A convención de versionado semántico establece regras claras para incrementar cada número de versión en función dos cambios realizados na biblioteca.
 
-Versión Mayor (X):
+**Versión Mayor** `(X)`:
 - Incrementa cando se realizan cambios incompatibles na API.
 - Indica que hai modificacións significativas que poden romper a compatibilidade con versións anteriores.
 
-Versión Menor (Y):
+**Versión Menor** `(Y)`:
 - Incrementa cando se engaden funcionalidades de xeito retrocompatible.
 - Reflicte melloras e novas características que non afectan ó funcionamento do código existente.
 
-Versión de Parche (Z):
+**Versión de Parche** `(Z)`:
 - Incrementa cando se corrixen erros de xeito retrocompatible.
 - Indica a solución de problemas sen introducir novas funcionalidades nin romper a compatibilidade.
 
-Nunha estratexia de Trunk-Based Development (TBD), o versionado semántico alíñase perfectamente coas prácticas de integración continua e despregamento continuo. Ó manter a rama principal sempre lista para produción e realizar integracións frecuentes, pódese xestionar e comunicar de xeito claro os cambios no software mediante versións semánticas.
+Ademais do Semantic Versioning (SemVer), existen outras convencións e sistemas de numeración de versións que se utilizan no desenvolvemento de software. Vexamos outros tipos nunha táboa comparativa:
+
+| Método de Versionamento   | Exemplo de Versión           | Características                                      |
+| ------------------------- | ---------------------------- | ---------------------------------------------------- |
+| Versionamento Calendárico | 2024.05.24                   | Baseado en datas                                     |
+| Números Secuenciais       | 1, 2, 3, …                   | Incrementa secuencialmente sen significado semántico |
+| Nome de Código            | Trusty Tahr, Bionic Beaver   | Utiliza nomes descritivos ou temáticos               |
+| Baseado en Hitos o Metas  | Alpha, Beta, RC, …           | Identifica o estado de desenvolvemento do software   |
+| Semántica Personalizada   | 1.2.3-alpha.1+build.20240524 | Adaptación do SemVer ou personalización específica   |
+
+Cada enfoque ten as súas propias vantaxes e desvantaxes, e a elección do método de versionamento depende en gran medida das necesidades e preferencias do equipo de desenvolvemento e da comunidade de usuarios do software. 😊
 
 En Prefapp combinamos o Trunk-Based Development co versionado semántico para manter un fluxo de traballo áxil e transparente. Ó integrar frecuentemente os cambios na rama principal e seguir as convencións de versionado semántico, acadamos:
-- Claridade e transparencia: os usuarios e os programadores poden comprender facilmente a natureza dos cambios entre versións.
-- Compatibilidade e mantemento: facilitamos o mantemento do software e a compatibilidade cara a atrás ó seguir unha convención clara para os cambios importantes, as novas funcionalidades e as correccións de erros.
-- Axilidade nos despregamentos: cunha rama principal sempre lista para produción, podemos despregar novas versións rapidamente, asegurando que cada cambio se documente e versione de xeito adecuado.
+- **Claridade e transparencia**: os usuarios e os programadores poden comprender facilmente a natureza dos cambios entre versións.
+- **Compatibilidade e mantemento**: facilitamos o mantemento do software e a compatibilidade cara a atrás ó seguir unha convención clara para os cambios importantes, as novas funcionalidades e as correccións de erros.
+- **Axilidade nos despregamentos**: cunha rama principal sempre lista para produción, podemos despregar novas versións rapidamente, asegurando que cada cambio se documente e versione de xeito adecuado.
 
 Máis info: https://semver.org/ 
