@@ -20,7 +20,7 @@ Además, los volúmenes pueden ser elementos externos al propio clúster de Kube
 
 [Aquí](https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes) podemos ver una lista extensa de sistemas de almacenamiento que Kubernetes puede usar como base para crear volúmenes.
 
-![pod7.png](../_media/03/pod7.png)
+![pod7.png](../../_media/03/pod7.png)
 
 ## B) Uso de volúmenes locales
 
@@ -72,7 +72,7 @@ Luego, en la parte del contenedor [10-12]:
 
 Tenemos lo siguiente:
 
-![pod8.png](../_media/03/pod8.png)
+![pod8.png](../../_media/03/pod8.png)
 
 Ahora:
 

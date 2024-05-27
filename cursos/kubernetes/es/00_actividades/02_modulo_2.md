@@ -29,7 +29,7 @@ kind create cluster
 
 Que debería producir algo como esto:
 
-![actividades2](./../_media/02/actividades11.png)
+![actividades2](../../_media/02/actividades11.png)
 
 Y podemos usar kubectl para ver el nodo que acabamos de crear:
 
@@ -160,7 +160,7 @@ Se creará un archivo llamado "pod.yaml" y lo ejecutaremos con kubectl apply.
 
 Una vez hecho esto, deberíamos tener algo como lo siguiente:
 
-![actividades6](./../_media/02/actividades6.png)
+![actividades6](../../_media/02/actividades6.png)
 
 Ahora necesitamos probar nuestra aplicación para ver si responde. Para hacer esto, exportemos un puerto conectado al pod a través de `kubectl port-forward`.
 
@@ -170,7 +170,7 @@ kubectl port-forward pod/pod-practica-1 --address 0.0.0.0 <porto_de_elección_do
 
 Una vez hecho esto, deberíamos poder ver el resultado de la ejecución en nuestro navegador:
 
-![actividades7](./../_media/02/actividades7.png)
+![actividades7](../../_media/02/actividades7.png)
 
 Vemos la **versión** de la aplicación, el **hostname** (el nombre del pod donde se está ejecutando) y el **hh:mm:ss** que se ha estado ejecutando.
 
@@ -183,7 +183,7 @@ Para configurar nuestro despliegue tenemos que cumplir una serie de requisitos:
 - Comenzará con una réplica.
 - Los pods escucharán en el puerto 8080.
 
-![actividades8](./../_media/02/actividades8.png)
+![actividades8](../../_media/02/actividades8.png)
 
 Una vez creado el artefacto, lo lanzamos.
 
@@ -209,7 +209,7 @@ El [servicio](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kuber
 - Se conectará a los pods en el puerto 8080.
 - Nuestro sistema será el siguiente:
 
-![actividades9](./../_media/02/actividades9.png)
+![actividades9](../../_media/02/actividades9.png)
 
 Creamos el artefacto de servicio y lo lanzamos.
 
@@ -236,7 +236,7 @@ Para ensamblar esta interfaz:
 
 Crearemos los artefactos de implementación y servicio de frontend. Dejando nuestra aplicación de la siguiente manera:
 
-![actividades10](./../_media/02/actividades10.png)
+![actividades10](../../_media/02/actividades10.png)
 
 Desplegamos nuestros artefactos frontend. Comprobamos que están realmente creados.
 

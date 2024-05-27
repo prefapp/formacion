@@ -1,6 +1,6 @@
 # Helm: titiritero de Kubernetes
 
-![helm1](./../_media/03/helm1.jpg)
+![helm1](../../_media/03/helm1.jpg)
 
 [Helm](https://helm.sh/) es uno de los proyectos más interesantes dentro de la comunidad de Kubernetes.
 

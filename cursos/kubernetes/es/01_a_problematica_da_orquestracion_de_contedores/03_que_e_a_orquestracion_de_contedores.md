@@ -42,11 +42,11 @@ Bien, ahora tenemos claro que tenemos que dividir todo en pequeñas unidades que
 
 Comencemos con una aplicación Php simple dentro de un contenedor:
 
-![Container](./../_media/01/container_standalonoe.png)
+![Container](../../_media/01/container_standalonoe.png)
 
 Nuestra aplicación quiere tener **estado**. La solución obvia es agregar una base de datos dentro del contenedor:
 
-![Container](./../_media/01/mega_container.png)
+![Container](../../_media/01/mega_container.png)
 
 Esto, a pesar de lo que sería una solución obvia, es un horror y una ruptura con el paradigma de la contenerización:
 
@@ -58,17 +58,17 @@ El problema sería peor si quisiéramos, por ejemplo, agregar soporte para SSL, 
 
 La solución correcta sería esta:
 
-![Contenedor](./../_media/01/container_bbdd.png)
+![Contenedor](../../_media/01/container_bbdd.png)
 
 Ahora tenemos dos unidades independientes en dos contenedores. Podemos modificar uno sin afectar al otro. Las preocupaciones están debidamente separadas.
 
 En este punto, nuestros contenedores también pueden **escalarse**, solo agregue nuevos contenedores de aplicaciones si es necesario:
 
-![Container](./../_media/01/escalado_container.png)
+![Container](../../_media/01/escalado_container.png)
 
 Y, por supuesto, podemos añadir los servicios auxiliares que creamos necesarias, sin necesidad de modificar los contenedores que ya tenemos (**encapsulación**).
 
-![Container](./../_media/01/escalado_funcional.png)
+![Container](../../_media/01/escalado_funcional.png)
 
 Como vemos, nuestra aplicación **crece añadiendo nuevas unidades funcionales**, **no modificando las existentes**. Esto trae las ventajas de las que ya te hemos hablado en el apartado anterior.
 
@@ -83,7 +83,7 @@ Pero, surgen preguntas:
 
 # Kubernetes: El estándar de facto
 
-![Contenedor](./../_media/01/kubernetes.jpg)
+![Contenedor](../../_media/01/kubernetes.jpg)
 
 Lanzada originalmente por Google, como una nueva [versión abierta](https://github.com/kubernetes/kubernetes) de su proyecto Borg  ([Borg project](https://kubernetes.io/blog/2015/04/borg-predecessor-to-kubernetes/)) pero centrado en la gestión de contenedores Docker, se está convirtiendo en la herramienta de referencia para la orquestación de contenedores. Y el proyecto principal sobre el que se creó la [Cloud Native Computing Foundation](https://www.cncf.io/), que cuenta con el respaldo de los principales actores tecnológicos de la actualidad como Google, Amazon Web Services (AWS), Microsoft, IBM , Intel, Cisco y RedHat.
 
@@ -99,11 +99,11 @@ Aunque actualmente [Docker ha abandonado la carrera](https://blog.newrelic.com/t
 
  Docker Swarm consiste en un conjunto de 2 o más máquinas (¡Físicas, virtuales, contenedores Docker!) donde el único requisito es que se ejecute el demonio Docker (docker engine). Estas máquinas se conectan entre sí formando un clúster, de forma que actúan como un único sistema, agrupando recursos y permitiendo desplegar un mayor número de servicios, escalarlos horizontalmente, ponerlos en alta disponibilidad… Y lo mejor de todo es que este clúster se monta con 2 comandos simples y se administra mediante la docker cli.
 
-![Contenedor](./../_media/01/swarm.png)
+![Contenedor](../../_media/01/swarm.png)
 
 # Apache Mesos y Maratón
 
-![Contenedor](./../_media/01/mesos_marathon.jpg)
+![Contenedor](../../_media/01/mesos_marathon.jpg)
 
 [Apache Mesos](http://mesos.apache.org/), ligeramente anterior a Kubernetes, es un proyecto de software abierto desarrollado originalmente por la Universidad de California en Berkeley.
 

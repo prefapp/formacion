@@ -20,7 +20,7 @@ r.castrelo.csr r.castrelo-key.pem
 
 ```
 **<u>Punto B:</u>**
-(los archivos están en la carpeta donde se encuentra esta solución con los nombres namespace.yaml, role.yaml y role_binding.yaml.
+los archivos están en la carpeta donde se encuentra esta solución con los nombres namespace.yaml, role.yaml y role_binding.yaml.
 
 **<u>Punto C:</u>**
 Esto sería el envío de archivos a la persona que lo está revisando.
@@ -45,5 +45,3 @@ kubectl apply -f config_practica_2.yaml
 kubectl apply -f despregue_practica_2.yaml 
 kubectl apply -f servizo_practica_2.yaml
 ```
-
-

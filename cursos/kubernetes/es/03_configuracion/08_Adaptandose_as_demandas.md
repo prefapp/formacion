@@ -4,7 +4,7 @@ Una de las ventajas importantes que ofrece Kubernetes es que permite adaptar las
 
 Se trata de un mecanismo que incorpora K8s que permitirá que nuestros deployments aumenten su número de réplicas según una serie de parámetros que podemos definir.
 
-![hpa1](./../_media/03/hpa_1.png)
+![hpa1](../../_media/03/hpa_1.png)
 
 Como vemos en el diagrama, un aumento en la carga de trabajo requiere un aumento en la cantidad de pods para absorberlo. En consecuencia, cuando se reduzca esa carga, también lo hará la cantidad de pods. De esta manera **podemos adaptarnos a las variaciones en la carga de trabajo por la cantidad de pods que la procesan**.
 
