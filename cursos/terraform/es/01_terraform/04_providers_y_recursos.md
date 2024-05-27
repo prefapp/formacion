@@ -2,14 +2,8 @@
 ## provider
 Un [provider](https://www.terraform.io/language/providers) en Terraform es un plugin que permite a los usuarios manejar una API externa. Los plugins de proveedores funcionan como una capa de abstracción que permite que nuestro Terraform se comunique con diferentes nubes, proveedores, bases de datos y servicios.
 
-```mermaid
-flowchart LR
-    id1(TERRAFORM CORE)<--RPC-->id2(TERRAFORM PROVIDER)<--GOLANG-->id3(CLIENT LIBRARY)<--"HTTP(S)"-->id4(TARGET API)
-    style id1 fill:#baf,stroke:#333,stroke-width:4,color:#000
-    style id2 fill:#bbf,stroke:#333,stroke-width:4,color:#000
-    style id3 fill:#baa,stroke:#333,stroke-width:4,color:#000
-    style id4 fill:#aaa,stroke:#333,stroke-width:4,color:#000
-```
+![](../../_media/mermaid01.png)
+
 Las configuraciones en Terraform requieren la declaración del proveedor que vamos a utilizar, para instalarlo. Podríamos decir que es la hoja de ruta de nuestro proveedor, que utilizaremos para montar la infraestructura según sus reglas.
 
 Terraform utiliza proveedores para aprovisionar recursos, que describen uno o más objetos de infraestructura. Cada proveedor del [Terraform Registry](https://registry.terraform.io/) tiene su documentación de uso y podemos elegir la versión que queremos usar en cada momento.

@@ -56,7 +56,7 @@ Podemos utilizar cualquier otro editor de texto de nuestra preferencia para real
 
 Para crear nuestra cuenta, vaya a [aws.amazon.com](https://aws.amazon.com) y cree nuestra cuenta de AWS haciendo clic en el botón en la esquina superior derecha.
 
-![Crear conta](./../_media/crear_aws.png)
+![Crear conta](../../_media/crear_aws.png)
 
 Requisitos:
 - Cuenta de correo electrónico
@@ -98,7 +98,7 @@ Para comenzar, crearemos nuestra carpeta de trabajo y nuestro fichero[Terraform]
 
 Como primer paso definiremos nuestro [provider](https://registry.terraform.io/browse/providers), que es el plugin que permite a los usuarios controlar una [API](https://en.wikipedia.org/wiki/API) externa al cual es el responsable de entender las interacciones con la propia API y exponer nuestros recursos.
 
-![Servicios como pizzas](./../_media/aas.png)
+![Servicios como pizzas](../../_media/aas.png)
 
 **Esquema comparativo** *- Servicios como pizzas*
 
@@ -165,7 +165,7 @@ Las [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) son las
 
 En nuestro caso elegimos la AMI de Ubuntu Server 18.04 LTS, en la que vemos el id de la AMI indicado arriba y de tipo **t2.micro** lo que nos permite 750h de uso cada mes durante el primer año cuando nos registramos con AWS.
 
-![AMI Ubuntu 18.04 LTS](./../_media/ami_ubuntu.png)
+![AMI Ubuntu 18.04 LTS](../../_media/ami_ubuntu.png)
 
 #### 3.2. Iniciando terraform
 Para lanzar esta instancia tendremos que acceder a la consola de comandos o a la propia terminal de VSCode, y ubicándonos en la carpeta de nuestro proyecto lanzar un:
@@ -201,7 +201,7 @@ terraform apply
 
 Con la aplicación completa, podemos ir a nuestro panel de control, hacer clic en actualizar en la esquina superior derecha y tendremos nuestra instancia ejecutándose con la configuración realizada.
 
-![Primer lanzamento](./../_media/primer_lanzamento_aws.png)
+![Primer lanzamento](../../_media/primer_lanzamento_aws.png)
 
 Aquí podemos ver todos los datos de nuestra instancia, desde el estado actual, el tipo `t2.micro` que especificamos, hasta la AMI de Ubuntu en ejecución. Con solo esto habremos desplegado nuestra primera instancia en AWS usando Terraform.
 

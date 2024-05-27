@@ -46,11 +46,11 @@ vpc_id = aws_vpc.primeira_vpc.id
 
 Ahora solo nos falta realizar un `terraform apply` y lanzaríamos nuestra nueva configuración. Si todo es correcto, dentro de la consola de AWS, en nuestra sección de VPC, podremos ver como tenemos funcionando nuestra VPC, con el `cidr_block` y el `Name` especificados:
 
-![VPC](./../_media/vpc.png)
+![VPC](../../_media/vpc.png)
 
 De la misma manera si vamos a la sección de subnets en nuestra consola de AWS podríamos ver nuestra subnet:
 
-![VPC](./../_media/subnet.png)
+![VPC](../../_media/subnet.png)
 
 Vemos como nuestra subnet apunta a nuestra VPC que llamamos `production`, y que se le ha asignado correctamente un nombre y un bloque de dirección.
 
@@ -337,7 +337,7 @@ Para la creación de las claves accedemos en `consola de AWS -> EC2 -> Network &
 
 Una vez dentro en la esquina superior derecha pulsamos el botón de "Create key pair":
 
-![Key pair](./../_media/key_pair.png)
+![Key pair](../../_media/key_pair.png)
 
 > En el momento de la creación tenemos dos formatos diferentes:
 >
@@ -389,15 +389,15 @@ Con esto ya tendríamos que hacer un `terraform apply` y si todo está correcto 
 
 Si accedemos a nuestra consola de AWS podemos ver como tenemos una instancia creada con el nombre y características que le hemos dado:
 
-![Instancia creada](./../_media/proba1_aws.png)
+![Instancia creada](../../_media/proba1_aws.png)
 
 Si ahora cogemos la IP pública que nos da y la introducimos en el buscador, tendremos nuestra web funcionando:
 
-![Web funcionando](./../_media/proba2_web.png)
+![Web funcionando](../../_media/proba2_web.png)
 
 Ahora vamos a conectarnos a través de SSH. En la página de la instancia tenemos un botón superior llamado **Connect** con instrucciones para conectarse a través de SSH. En nuestro caso, como user de Linux, abrimos nuestro cliente y usamos la clave previamente descargada para conectarnos:
 
-![SSH](./../_media/proba3_openssh.png)
+![SSH](../../_media/proba3_openssh.png)
 
 Para Windows tendríamos que hacer uso del cliente [Putty](https://www.putty.org/)
 
