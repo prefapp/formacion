@@ -64,20 +64,18 @@ Artículo efectuando un ejemplo práctico de cada uno de los métodos de fusión
 En **Prefapp**, hemos adoptado la estrategia de fusión `squash` debido a los beneficios que ofrece en términos de simplicidad y claridad del historial de commits. Nuestro enfoque se centra en mantener un historial de cambios limpio y fácil de gestionar, lo que es crucial para la revisión de código y la colaboración efectiva entre los miembros del equipo.
 
 Alguna razones son:
-- **Mantenimiento del Historial**: Al consolidar los cambios en un único commit, el historial de commits en la rama principal se mantiene limpio y fácil de entender. Esto es particularmente útil en proyectos con múltiples desarrolladores y ramas de características activas.
-- **Facilidad de Revisión**: La revisión de código se simplifica cuando los cambios relacionados se agrupan en un solo commit. Los revisores pueden comprender mejor el alcance y el propósito de los cambios sin necesidad de revisar múltiples commits.
-- **Reducción de la Complejidad**: La estrategia `squash` reduce la complejidad del historial de commits, evitando la saturación del historial con numerosos commits pequeños. Esto es especialmente importante en proyectos de gran escala donde la claridad del historial es crucial.
-- **Eficiencia en la Integración**: Al integrar características mediante un solo commit, se facilita la gestión de versiones y la implementación continua, alineándose con nuestra metodología ágil y de entrega continua.
+- **Mantenimiento del historial**: al consolidar los cambios en un único commit, el historial de commits en la rama principal se mantiene limpio y fácil de entender. Esto es particularmente útil en proyectos con múltiples desarrolladores y ramas de características activas.
+- **Facilidad de revisión**: la revisión de código se simplifica cuando los cambios relacionados se agrupan en un solo commit. Los revisores pueden comprender mejor el alcance y el propósito de los cambios sin necesidad de revisar múltiples commits.
+- **Reducción de la complejidad**: la estrategia `squash` reduce la complejidad del historial de commits, evitando la saturación del historial con numerosos commits pequeños. Esto es especialmente importante en proyectos de gran escala donde la claridad del historial es crucial.
+- **Eficiencia en la integración**: al integrar características mediante un solo commit, se facilita la gestión de versiones y la implementación continua, alineándose con nuestra metodología ágil y de entrega continua.
 
 ### Ejemplo de Uso
 
 Para realizar un squash en Prefapp, seguimos estos pasos básicos:
 
-1. **Realizar los Cambios**: Los desarrolladores trabajan en una rama de características realizando múltiples commits para registrar sus progresos.
-   
-2. **Preparar para Squash**: Antes de fusionar la rama de características, se utiliza el comando `git rebase -i` para interactivamente combinar los commits en uno solo.
+1. **Realizar los cambios**: los desarrolladores trabajan en una rama de características realizando múltiples commits para registrar sus progresos.
 
-3. **Fusionar la Rama**: Finalmente, se fusiona la rama de características a la rama principal utilizando `git merge --squash`, lo que crea un único commit con todos los cambios.
+2. **Fusionar la rama**: cuando esté todo listo y los cambios confirmados en la rama, se fusiona la rama de características a la rama principal utilizando `git merge --squash`, lo que crea un único commit con todos los cambios.
 
 En github, se puede realizar un squash merge directamente desde la interfaz gráfica de una Pull Request al fusionar una rama de características en la rama principal.
 
