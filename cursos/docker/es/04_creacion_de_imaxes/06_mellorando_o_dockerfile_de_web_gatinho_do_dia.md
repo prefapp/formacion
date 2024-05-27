@@ -38,7 +38,7 @@ Para hacer una imagen web del "gatiño do día", dividiremos el trabajo en dos e
 1. **Builder**: vamos a instalar todo el software necesario para clonar el repositorio e instalar las bibliotecas del proyecto. Todo el software resultante y estrictamente necesario se pondrá en un directorio: el **/venv**. El resto del software del contenedor se desechará.
 2. **Final**: Montamos el directorio resultante de la fase anterior (el /venv) en un nuevo contenedor que tendrá lo mínimo necesario para moverlo python (el [pipenv](https://docs.python-guide.org/dev/virtualenvs/)).
 
-![multistaging](./../_media/01_creacion_de_imaxes/multi-staging.png)
+![multistaging](../../_media/01_creacion_de_imaxes/multi-staging.png)
 
 Si lo vemos en un Dockerfile:
 
@@ -92,11 +92,6 @@ Si ejecutamos este Dockerfile y creamos otra imagen, veremos que la nueva imagen
 > 👀 Donde también se aprovecha esta técnica es en aplicaciones que se pueden compilar con lenguajes como C, C++ o Go.
 
 > 👀 Para una discusión sobre compilaciones de varias etapas o compilaciones de una sola etapa, puede consultar este artículo.
-
-
-
-
-
 
 
 ### B. Aún más.... Jugando con alpine
@@ -185,7 +180,6 @@ docker build --secret id=confidencial.key,src=/tmp/segredo .
 
 ##### SSH
 
-
 También nos permite usar claves SSH, esto podría servirnos para descargar archivos usando `scp` o para clonar un repositorio privado de GitHub como se ve en el siguiente ejemplo:
 
 ```Dockerfile
@@ -204,6 +198,7 @@ Esta vez usamos el parámetro `--ssh`. Recuerda crear una clave SSH y agregarla 
 ```
 docker build --ssh default=${SSH_AUTH_SOCK} .
 ```
+
 
 # 🕮 Actividad
 

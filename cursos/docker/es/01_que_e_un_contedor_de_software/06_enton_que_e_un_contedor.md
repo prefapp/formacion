@@ -4,7 +4,7 @@
 
 El contenedor se basa en espacios de nombres que lo mantienen "separado" del resto del sistema.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_9.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_9.png)
 
 A medio camino entre chroot y las soluciones de virtualización completa (KVM, VirtualBox, VMWare, Xen), el contenedor no incurre en el costo de virtualizar el hardware o el kernel del sistema operativo y aún ofrece un nivel mucho más alto de control y aislamiento para el chroot.
 

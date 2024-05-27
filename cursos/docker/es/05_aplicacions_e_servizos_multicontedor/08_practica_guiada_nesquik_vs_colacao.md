@@ -19,11 +19,11 @@ La aplicación de encuestas está escrita en python con [Flask](https://flask.pa
 
 Esta aplicación expone un puerto al exterior donde acepta solicitudes (puerto 80).
 
-![Servizos python](./../_media/04_aplicacions_e_servizos_multicontedor/servizos-python.png)
+![Servizos python](../../_media/04_aplicacions_e_servizos_multicontedor/servizos-python.png)
 
 Cuando alguien vota, apunta el sentido del voto a una base de datos [Redis](https://redis.io/) (que escucha dentro del contenedor #6379).
 
-![Servizos python redis](./../_media/04_aplicacions_e_servizos_multicontedor/servizos-python-redis.png)
+![Servizos python redis](../../_media/04_aplicacions_e_servizos_multicontedor/servizos-python-redis.png)
 
 ### 2. worker
 
@@ -33,19 +33,19 @@ Los resultados finales están en una base de datos [PostgreSQL](https://www.post
 
 El worker está escrito en [.NET](https://dotnet.microsoft.com/).
 
-![Postgresql](./../_media/04_aplicacions_e_servizos_multicontedor/net_postgresql.png)
+![Postgresql](../../_media/04_aplicacions_e_servizos_multicontedor/net_postgresql.png)
 
 ### 3. Servicio de resultados
 
 El servicio de resultados se realiza en nodejs. Este servicio expone (en el puerto 80) una página en HTML5 y monitorea constantemente la base de datos de PostgreSQL para devolver el estado actual de la encuesta.
 
-![Node](./../_media/04_aplicacions_e_servizos_multicontedor/node.png)
+![Node](../../_media/04_aplicacions_e_servizos_multicontedor/node.png)
 
 ### 4. Esquema final de servicios
 
 El esquema final de servicios sería el siguiente:
 
-![Final](./../_media/04_aplicacions_e_servizos_multicontedor/final.png)
+![Final](../../_media/04_aplicacions_e_servizos_multicontedor/final.png)
 
 ## Redes
 
@@ -54,7 +54,7 @@ Mirando el diagrama de servicio, parece claro que debería haber dos redes:
 - Un **privado** donde todos los contenedores están conectados para comunicarse entre sí.
 - Un **público** donde EXCLUSIVAMENTE los contenedores frontend (votación y resultados) tienen conectividad.
 
-![Redes](./../_media/04_aplicacions_e_servizos_multicontedor/redes_redes.png)
+![Redes](../../_media/04_aplicacions_e_servizos_multicontedor/redes_redes.png)
 
 De esta forma, los contenedores BBDD y el worker quedan aislados del mundo exterior, es decir, solo los contenedores que están en su red (privada) pueden hablar con ellos.
 

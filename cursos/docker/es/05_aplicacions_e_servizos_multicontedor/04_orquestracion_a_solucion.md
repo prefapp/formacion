@@ -10,4 +10,3 @@ La orquestación de contenedores es un conjunto de técnicas y herramientas que 
 - El escalado y dimensionado del conjunto de contenedores de forma que se creen y destruyan contenedores según las necesidades específicas del sistema en cada momento.
 
 > ⚠️ Tenga en cuenta que el tema de la orquestación es algo muy nuevo y está lejos de ser pacífico. Hay un constante desarrollo y trabajo en esta materia que supera con creces los contenidos de este curso. Por ello, nos limitaremos a exponer las bases de la misma y algunas soluciones; sin embargo, el tratamiento completo y detallado de la orquestación de contenedores debe ser tema de otro curso.
-> 

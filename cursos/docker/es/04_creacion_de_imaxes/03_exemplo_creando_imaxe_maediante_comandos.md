@@ -32,7 +32,7 @@ Para seguir nuestro ciclo de evolución, vamos a utilizar el contenedor **saudo-
 
 Compre que instalamos apache2 en nuestro contenedor y luego hacemos una confirmación de los cambios en nuestra imagen. En un esquema:
 
-![Pasos](./../_media/01_creacion_de_imaxes/imaxe_paso_1.png)
+![Pasos](../../_media/01_creacion_de_imaxes/imaxe_paso_1.png)
 
 Iniciamos un contenedor para hacer el trabajo de instalar **apache2**:
 
@@ -90,7 +90,7 @@ Con la base que tenemos del paso anterior, comencemos de nuevo un contenedor (ya
 
 En un esquema seria:
 
-![Pasos](./../_media/01_creacion_de_imaxes/imaxe_paso_2.png)
+![Pasos](../../_media/01_creacion_de_imaxes/imaxe_paso_2.png)
 
 Para empezar, arrancamos un nuevo contenedor basado en la imagen de saludos gallegos que ya elaboramos en el paso anterior:
 
@@ -140,7 +140,7 @@ Como siempre, eliminamos el contenedor de trabajo porque ya no lo necesitamos. �
 
 El proceso completo sería el siguiente:
 
-![Pasos](./../_media/01_creacion_de_imaxes/imaxe_pasos.png)
+![Pasos](../../_media/01_creacion_de_imaxes/imaxe_pasos.png)
 
 ## IV. Usando la imagen de saud-galego
 

@@ -35,7 +35,7 @@ Obviamente, queremos hacerlo dentro de un contenedor y montar **una distribució
 Como vimos en la práctica del módulo 1 (construyendo nuestro contenedor) podríamos seguir estos pasos para que funcione:
 
 - Descarga un sistema de archivos CentOS.
-- Montar un contenedor con unshare, limitando los [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade), hacer un chroot a donde está el sistema de archivos descargado. . .
+- Montar un contenedor con unshare, limitando los [namespaces](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade), hacer un chroot a donde está el sistema de archivos descargado. . .
 - ...
 
 Pero ahora podemos usar Docker para hacerlo. Con Docker, básicamente tenemos que seguir la misma receta, pero afortunadamente, todo eso está automatizado dentro de sus [utilidades](https://docs.docker.com/engine/reference/commandline/run/).
@@ -130,11 +130,11 @@ docker restart <nome_container_php>
 3.2: ¿Cómo podríamos comprobar el funcionamiento del código con la versión 5.6 de php? ¿Qué pasa con la última versión 7.3? ¿Podemos tener las 3 versiones de la aplicación ejecutándose a la vez, cada una en su propio puerto (8080,8081,8082)?
 ¿Cómo limitaríamos el consumo de recursos en el host (50 MB de memoria, 50 % de una CPU) para los 3 contenedores con diferentes versiones de la aplicación?
 
-4. Ahora vamos a **probar la aplicación** de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) y ver los contenedores corriendo en la máquina virtual, gráficamente desde un navegador.
+4. Ahora vamos a **probar la aplicación** de [portainer](../02_docker/10_portainer) y ver los contenedores corriendo en la máquina virtual, gráficamente desde un navegador.
 
-4.1 Para ello, siga los pasos indicados en los [contenidos](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) del curso.
+4.1 Para ello, siga los pasos indicados en los [contenidos](../02_docker/10_portainer) del curso.
 
-4.2 Cerrar todos los contenedores de [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer). Antes de esto, descargue una copia sql de la base de datos, desde phpmyadmin.
+4.2 Cerrar todos los contenedores de [portainer](../02_docker/10_portainer). Antes de esto, descargue una copia sql de la base de datos, desde phpmyadmin.
 
 **Evidencia de adquisición de desempeño**: Pasos 1 a 4 completados correctamente de acuerdo con estos...
 
@@ -150,7 +150,7 @@ Si te resulta más fácil, puedes enviarnos el repositorio de códigos github/bi
  - Inicie la aplicación php desarrollada, conectada al contenedor mysql del ejercicio anterior.
  - Liberar nuevas versiones de la aplicación de desarrollo php, cas versión 5.6 y 7.3 de php.
    * Limitado a consumir 50 MB de RAM y 50 % de 1 CPU
- - Inicie el contenedor [portainer](https://prefapp.github.io/formacion/cursos/docker/#/./02_docker/10_portainer) y enumere todos los contenedores que se ejecutan en la máquina docker
+ - Inicie el contenedor [portainer](../02_docker/10_portainer) y enumere todos los contenedores que se ejecutan en la máquina docker
 
 Si te resulta más fácil, puedes enviarnos el [asciinema](https://asciinema.org/) json con estos comandos.
 

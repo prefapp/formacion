@@ -28,7 +28,7 @@ La idea del swarm es ser un orquestador y planificador de propósito general, po
 
 A partir de ahí, los servicios definen el estado deseado de los diferentes elementos que componen nuestra aplicación, y las tareas acaban plasmadas en contenedores que realizan la tarea de conformar ese estado deseado. Para comprender esto con más detalle, puede consultar [esta página del manual] (https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/).
 
-![imagen](../_media/05_docker_swarm/swarm02.png)
+![imagen](../../_media/05_docker_swarm/swarm02.png)
 
 Un servicio se describe usando el lenguaje que conocemos de docker-compose, pero con algunas características adicionales. Consulte [docker-compose v3](https://docs.docker.com/compose/compose-file/compose-versioning/#version-3).
 
@@ -57,7 +57,7 @@ Además de estos conceptos, tenemos una serie de características de Docker Swar
  
 * **Malla de enrutamiento de ingreso**: en relación con lo anterior, cuando un servicio publica un puerto en el exterior (declarando el atributo del puerto), el clúster de swarm publica ese puerto en todos los nodos para que se pueda acceder al servicio conectándose a IP pública de cualquiera de ellos (con el puerto correspondiente). También equilibra automáticamente las solicitudes entre todas las réplicas disponibles. Para obtener más información, consulte esta página del manual.
 
-![img](../_media/05_docker_swarm/swarm03.png)
+  ![img](../../_media/05_docker_swarm/swarm03.png)
 
 * **Detección de servicios**: Los nodos Swarm Manager asignan un nombre DNS único a cada servicio del swarm, y al mismo tiempo también equilibran las solicitudes recibidas a ese nombre DNS, entre todas las réplicas disponibles para ese servicio. Cualquier otro servicio puede llegar al servicio inicial simplemente usando su nombre (por ejemplo: bbdd, app), gracias al DNS interno incrustado en el clúster.
 
