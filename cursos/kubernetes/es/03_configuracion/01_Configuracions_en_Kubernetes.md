@@ -128,7 +128,7 @@ spec:
 ```
 Tendríamos la siguiente estructura:
 
-![pod.png](../_media/03/pod.png)
+![pod.png](../../_media/03/pod.png)
 
 
 Nuestra aplicación recopila su configuración (puerto, curso y nombre) de su entorno a través de env.
@@ -243,7 +243,7 @@ spec:
 
 Si aplicamos este artefacto, obtendríamos lo siguiente:
 
-![pod2.png](../_media/03/pod2.png)
+![pod2.png](../../_media/03/pod2.png)
 
 A primera vista, el uso de ConfigMaps puede hacer pensar que es mucho más detallado y complica nuestros pods, sin embargo:
 

@@ -32,7 +32,7 @@ Hace falta de todos modos.
 
 Una vez hecho esto tendríamos lo siguiente:
 
-![tpod1.png](../_media/03/tpod1.png)
+![tpod1.png](../../_media/03/tpod1.png)
 
 ### b) Agregar persistencia
 
@@ -59,7 +59,7 @@ Cuando lo tengas listo:
 
 El sistema ahora se vería así:
 
-![tpod2.png](../_media/03/tpod2.png)
+![tpod2.png](../../_media/03/tpod2.png)
 
 ### c) Agregar un deploy, un configmap y un servicio
 
@@ -94,7 +94,7 @@ Así que necesitamos tres artefactos:
 
 El diagrama que tenemos se vería así (las sondas y los límites no se muestran por falta de espacio):
 
-![tpod3.png](../_media/03/tpod3.png)
+![tpod3.png](../../_media/03/tpod3.png)
 
 Una vez que tengas todo listo:
 
@@ -300,7 +300,8 @@ Partiremos de la estructura básica del módulo 2:
   - Estará en un fichero *service_practica4_v2.yaml*
 
 Quedaría una estructura como la siguiente:
-![actividades32](./../_media/03/actividades32.png)
+
+![actividades32](../../_media/03/actividades32.png)
 
 Ahora desplegamos esta estructura.
 
@@ -319,11 +320,11 @@ Ahora, y desde un puerto redirigido de la vm a nuestro host (que apunta al puert
 
 `localhost:<puerto redirigido>/v1`
 
-![actividades33](./../_media/03/actividades33.png)
+![actividades33](../../_media/03/actividades33.png)
 
 `localhost:<porto redirixido>/v2`
 
-![actividades34](./../_media/03/actividades34.png)
+![actividades34](../../_media/03/actividades34.png)
 
 ---
 

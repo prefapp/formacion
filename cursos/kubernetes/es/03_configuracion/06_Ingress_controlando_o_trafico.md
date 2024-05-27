@@ -11,7 +11,7 @@ Sin embargo, esto presenta varios problemas:
 - Implica por tanto que, a N servicios de acceso público, tendremos que asignarles N IPs públicas.
 - Para cada servicio, si desea asegurarlo, deberá controlar los certificados SSL.
 
-![ingress1](./../_media/03/ingress1.png)
+![ingress1](../../_media/03/ingress1.png)
 
 Tenemos que solicitar las IP públicas al proveedor, suelen ser caras y tardan en aprovisionarse.
 
@@ -21,7 +21,7 @@ Ante este problema, la comunidad de Kubernetes brinda una solución: **ingress**
 
 Ingress es un sistema que actúa como un proxy inverso al exponer **un solo servicio al exterior** y reenviar las solicitudes que recibe a varios servicios según su configuración.
 
-![ingress2](./../_media/03/ingress2.png)
+![ingress2](../../_media/03/ingress2.png)
 
 ### a) Estructura y control de entrada
 

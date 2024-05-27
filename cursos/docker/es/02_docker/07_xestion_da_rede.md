@@ -18,11 +18,11 @@ De esta forma, y ​​siempre desde el punto de vista del contenedor, podemos e
 
 Entonces podríamos tener un contenedor con apache conectado al puerto 80:
 
-![Container porto](./../_media/02_docker/contedor_porto.png)
+![Container porto](../../_media/02_docker/contedor_porto.png)
 
 O podríamos tener varios contenedores con servicios apache conectados al puerto 80:
 
-![Containers porto](./../_media/02_docker/contedores_porto.png)
+![Containers porto](../../_media/02_docker/contedores_porto.png)
 
 Dado que cada uno de ellos tiene su propio espacio de nombres de red, no habría problemas de colisión entre los servicios conectados al mismo puerto en diferentes contenedores.
 
@@ -36,7 +36,7 @@ Como vimos en la sección anterior, dentro de un contenedor tenemos toda la pila
 
 Sin embargo, eso no es suficiente para llegar a nuestro contenedor desde el mundo exterior. Como esto:
 
-![Container conexión](./../_media/02_docker/contedor_conexion_0.png)
+![Container conexión](../../_media/02_docker/contedor_conexion_0.png)
 
 Como podemos ver, nuestro contenedor está aislado del mundo exterior, aunque apache está presente y conectado al puerto 80 dentro del contenedor.
 
@@ -87,7 +87,7 @@ Como podemos ver, la novedad aquí es el *(-p 9090:80)*:
 - El puerto 80 es el que está dentro del contenedor (donde escucha nuestro apache)
 En un diagrama:
 
-![Container conexión](./../_media/02_docker/contedor_conexion_1.png)
+![Container conexión](../../_media/02_docker/contedor_conexion_1.png)
 
 Ahora el puerto 80 de nuestro contenedor está conectado al puerto 9090 de la máquina host. Podemos, por tanto, llegar al apache corriendo por dentro sin problema desde fuera:
 

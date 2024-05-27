@@ -29,6 +29,6 @@ En este ejemplo:
 - Lo mismo (_**-e**_) para la variable **ROOT_PASSWORD** (valor secreto)
 Docker inyectará estas variables en el contenedor antes de iniciarlo para que, si el programa está listo para hacerlo, pueda recoger su configuración del ENV.
 
-![Contorno del contenedor](./../_media/02_docker/contedor_contorno.png)
+![Contorno del contenedor](../../_media/02_docker/contedor_contorno.png)
 
 > ⚠️ Obviamente, si queremos cambiar el valor de las variables de entorno de un contenedor en ejecución, debemos reiniciarlo o recrearlo.

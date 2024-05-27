@@ -8,7 +8,7 @@ Para ello iremos de servicio en servicio añadiendo configuración extra.
 
 Lo primero que debemos hacer es cambiar la versión de la especificación docker-compose, para usar al menos 3. (Actualmente están en 3.6)
 
-![img](../_media/05_docker_swarm/swarm06.png)
+![img](../../_media/05_docker_swarm/swarm06.png)
 
 Básicamente todas las configuraciones relacionadas con el modo swarm se concentran, dentro de cada servicio, en la sección **deploy**, por lo que el único comando que interpreta estas opciones es
 **docker stack deployment**, y tanto docker-compose up como docker-compose run simplemente pasan por alto esta sección.
@@ -19,7 +19,7 @@ En el caso del servicio redis, solo queremos que tenga una sola réplica y una p
 
 * en caso de falla del contenedor, el clúster responsable de traerlo de nuevo, que intenta al menos 3 veces, con 10s entre cada intento, en una ventana de tiempo de 120s
 
-![img](../_media/05_docker_swarm/swarm07.png)
+![img](../../_media/05_docker_swarm/swarm07.png)
 
 ### PostgreSQL
 
@@ -28,7 +28,7 @@ Para esto vamos a agregar una restricción para que este servicio solo se ejecut
 
 _\*Docker se caracteriza por traer baterías incluidas, pero intercambiables. Esto quiere decir que hay partes del Docker Engine que, aunque vienen con una funcionalidad ya definida, se pueden cambiar por otras de otro proveedor para mejorarlo. Existen principalmente 2 tipos de proveedores de complementos, los que brindan complementos de red y los que brindan complementos de administración de volumen. Precisamente estos últimos están muy centrados en intentar buscar soluciones para poder abstraer el volumen de datos, del host, de forma que los contenedores de servicios puedan moverse entre nodos del clúster y seguir teniendo sus datos disponibles. Puede ver algunos de ellos [aquí](https://store.docker.com/search?type=plugin)_.
 
-![img](../_media/05_docker_swarm/swarm08.png)
+![img](../../_media/05_docker_swarm/swarm08.png)
 
 Sin embargo, es necesario agregar las variables para la configuración de usuario y contraseña de postgres:
 
@@ -46,7 +46,7 @@ Para el servicio de votaciones, como es una aplicación que no guarda estado en 
 
 Además, cuando sea necesario actualizar el servicio, queremos que la actualización de las 2 réplicas se ejecute al mismo tiempo y, por supuesto, si falla, se reiniciará automáticamente por sí solo.
 
-![img](../_media/05_docker_swarm/swarm09.png)
+![img](../../_media/05_docker_swarm/swarm09.png)
 
 Para el nodo de trabajo vamos a agregar 1 sola réplica ya que la aplicación que lo ejecuta ya no lo admite, y una política de reinicio en caso de falla.
 
@@ -97,4 +97,4 @@ Para configurar el portainer contra el nodo Manager del clúster Swarm, hay que 
 
 Los certificados TLS para la conexión al Administrador están dentro de la carpeta **.docker** en su $HOME, en la subcarpeta **máquinas**.
 
-![img](../_media/05_docker_swarm/swarm14.png)
+![img](../../_media/05_docker_swarm/swarm14.png)

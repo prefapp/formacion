@@ -8,7 +8,7 @@ El estado se almacena de forma predeterminada en un archivo local llamado "terra
 
 Terraform utiliza este estado local para crear planes y realizar cambios en la infraestructura. Antes de cualquier operación, Terraform realiza una verificación para actualizar este estado con la infraestructura real.
 
-![Estado en terraform](./../_media/terraform.drawio.png)
+![Estado en terraform](../../_media/terraform.drawio.png)
 
 Como podemos ver en este ejemplo, hemos declarado una serie de artefactos que pertenecen a la infraestructura provista por AWS (Amazon Web Services). En este caso tenemos un Amazon S3 (Amazon Simple Storage Service) que es un servicio de almacenamiento de objetos de este proveedor. Con Terraform podemos declarar que queremos esto en nuestra infraestructura. Lo mismo sucede con EKS (Elastic Kubernetes Service), que es otro servicio de Amazon, en este caso es un servicio para ejecutar y escalar Kubernetes en la nube.
 
@@ -29,7 +29,7 @@ Terraform al momento de aplicar nuestro estado deseado seguirá los siguientes p
 5. Ahora se toman las acciones necesarias para lograr nuestro **estado deseado**. Como resultado, nuestros recursos comenzarán a crearse y tendremos nuestro **estado deseado** como nuestro **estado actual**.
 6. Terraform actualiza nuestro estado para reflejar los cambios realizados.
 
-![Creando un recurso](./../_media/diagrama_update_state.png)
+![Creando un recurso](../../_media/diagrama_update_state.png)
 
 En este diagrama vemos que al crear un recurso Terraform primero debe verificar si el recurso existe en el estado, y posteriormente verificar con nuestro proveedor Cloud para asegurarse de que el estado actual coincida con lo que se espera encontrar.
 
@@ -50,7 +50,7 @@ Veamos los pasos que realizaría Terraform:
 7. Terraform toma las acciones necesarias para crear nuestro grupo de recursos.
 8. Terraform actualiza nuestro estado para reflejar los cambios realizados.
 
-![Reconciliacón do estado](./../_media/diagrama_update_state_2.png)
+![Reconciliacón do estado](../../_media/diagrama_update_state_2.png)
 
 En este diagrama vemos cómo el estado cambia la forma en que funciona Terraform. Cuando verificamos nuestro estado con el proveedor, vemos que nuestro grupo de recursos está eliminado, por lo que debemos volver a crearlo.
 

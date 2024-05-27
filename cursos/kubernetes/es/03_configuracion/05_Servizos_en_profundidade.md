@@ -2,7 +2,7 @@
 
 En el anterior tema sobre la [Arquitectura de K8s](https://prefapp.github.io/formacion/cursos/kubernetes/#/./02_kubernetes/05_arquitectura_kubernetes_service) vimos la importancia de los *services* como una abstracción de pods backend para una aplicación cliente. Mediante los services cualquier aplicación cliente puede "despreocuparse" de dónde se están realizando las llamadas a los programas o aplicaciones que sirven como backend.
 
-![Servizo2](./../_media/02/servizo2.png)
+![Servizo2](../../_media/02/servizo2.png)
 
 En este capítulo veremos los siguientes tipos de *Service*, con sus casos de uso y sus debilidades:
 - [Servicios en profundidad](#servicios-en-profundidad)
@@ -64,11 +64,11 @@ spec:
 
 Si hacemos varios curl desde dentro de un contenedor veremos que van cambiando los pods que devuelve la petición:
 
-![Servizo1](./../_media/03/servizo1.png)
+![Servizo1](../../_media/03/servizo1.png)
 
 Sin embargo, si hacemos un `port-forward` de nuestro servicio para acceder desde el exterior, podemos comprobar que siempre nos devuelve el mismo pod.
 
-![Servizo2](./../_media/03/servizo2.png)
+![Servizo2](../../_media/03/servizo2.png)
 
 ## NodePort
 
@@ -92,7 +92,7 @@ spec:
 
 NodePort, como sugiere el nombre, abre un puerto específico en todos los nodos del clúster y todo el tráfico enviado a este puerto (`nodePort: 31415`) se reenvía al servicio.
  
-![Servizo3](./../_media/03/servizo3.png)
+![Servizo3](../../_media/03/servizo3.png)
 
 Esta opción tiene varios problemas:
 - Solo se puede tener un servicio por puerto.
@@ -118,7 +118,7 @@ spec:
     targetPort: 80
 ```
 
-![Servizo4](./../_media/03/servizo4.png)
+![Servizo4](../../_media/03/servizo4.png)
 
 Si desea exponer un servicio directamente, este es el método predeterminado. Todo el tráfico en el puerto especificado se reenviará al servicio. Sin filtrado, sin enrutamiento, etc. Esto significa que pueden enviarle casi cualquier tipo de tráfico, como HTTP, TCP, UDP, Websockets, gRPC o cualquier otro.
 

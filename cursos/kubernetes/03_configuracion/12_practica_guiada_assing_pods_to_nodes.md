@@ -2,7 +2,7 @@
 
 Nesta práctica repasaremos as distintas formas para asignar Pods a nodos específicos dentro de noso clúster. A práctica desenvolverémola nun clúster local creado coa ferramenta Kind, pero o podemos facer da mesma maneira con calquera outra ferramenta de creación de clústers locais ou con calquera proveedor de cloud:
  -  [AWS](https://www.eksworkshop.com/beginner/140_assigning_pods/)
-  -  [Azure](https://learn.microsoft.com/en-us/azure/aks/operator-best-practices-advanced-scheduler#control-pod-scheduling-using-node-selectors-and-affinity)
+ -  [Azure](https://learn.microsoft.com/en-us/azure/aks/operator-best-practices-advanced-scheduler#control-pod-scheduling-using-node-selectors-and-affinity)
  - [RedHat](https://docs.openshift.com/container-platform/4.1/nodes/scheduling/nodes-scheduler-node-selectors.html)
 
 Veremos como asociar un Pod a un nodo en concreto de distintas formas:

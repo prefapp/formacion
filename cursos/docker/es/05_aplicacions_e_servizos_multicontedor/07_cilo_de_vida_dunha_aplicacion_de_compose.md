@@ -11,7 +11,7 @@ Una vez que tenemos ese archivo creado, podemos:
 - Inspecciónelo  ([_**ps**_](https://docs.docker.com/compose/reference/ps/)  y  [_**top**_](https://docs.docker.com/compose/reference/top/)).
 - Cree sus imágenes ([_**build**_](https://docs.docker.com/compose/reference/build/)).
 
-![Ciclo vida compose](./../_media/04_aplicacions_e_servizos_multicontedor/ciclo_vida_compose.png)
+![Ciclo vida compose](../../_media/04_aplicacions_e_servizos_multicontedor/ciclo_vida_compose.png)
 
 ## La estrategia de nomenclatura de artefactos en Docker Compose
 
@@ -25,7 +25,7 @@ El problema parece obvio: ¿cómo se nombran todos esos artefactos en Docker?
 
 La solución que toma docker-compose y crea un nombre compuesto:
 
-![Dominio](./../_media/04_aplicacions_e_servizos_multicontedor/dominio.png)
+![Dominio](../../_media/04_aplicacions_e_servizos_multicontedor/dominio.png)
 
 Dado que cada contenedor, volumen y red tiene un nombre (ya sea el nombre del servicio o el nombre del artefacto) para evitar una colisión de nombres, lo que hace docker-compose es determinar un dominio por aplicación y agregarle el nombre del artefacto específico.
 

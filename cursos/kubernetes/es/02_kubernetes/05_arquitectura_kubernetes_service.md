@@ -8,7 +8,7 @@ Que los pods puedan comunicarse entre sí implica un problema importante:
 - ¿Qué sucede si se está ejecutando en otro nodo?
 - ¿Qué pasa si hay múltiples réplicas de la cápsula? ¿A cuál nos conectamos?
 
-![Servicio0](./../_media/02/servizo0.png)
+![Servicio0](../../_media/02/servizo0.png)
 
 Kubernetes resuelve este problema utilizando un nuevo artefacto: **el servicio**.
 
@@ -16,14 +16,14 @@ Un servicio ([service](https://kubernetes.io/es/docs/concepts/services-networkin
 
 Esta es una construcción que le permite abstraer los pods que realmente funcionan como backend de una aplicación cliente o frontend. A través de los servicios, cualquier aplicación cliente puede "despreocuparse" de dónde se están realizando las llamadas a los programas o aplicaciones que sirven como backend.
 
-![Servizo1](./../_media/02/servizo1.png)
+![Servizo1](../../_media/02/servizo1.png)
 
 El servicio define principalmente:
 
 - Un punto final de acceso: en realidad una entrada en Kubernetes DNS asociada a una ip. Los pods pueden hacer una búsqueda de DNS de kubernetes para encontrar esa IP.
 - Reglas para el manejo de solicitudes: si hay varios pods, se establecen políticas de respuesta como: rr (round robin), lc (menos conectados)...
 
-![Servicio2](./../_media/02/servizo2.png)
+![Servicio2](../../_media/02/servizo2.png)
 
 ## Creación de un servicio
 
@@ -98,7 +98,7 @@ kubectl scale deploy despregue-nginx-2 --replicas=3
 
 Y tendríamos el siguiente esquema montado en nuestro clúster:
 
-![Servicio3](./../_media/02/servizo3.png)
+![Servicio3](../../_media/02/servizo3.png)
 
 Ahora bien, si queremos otorgar conectividad a nuestro deployment, tendremos que crear un servicio. Para ello, utilizaremos el siguiente artefacto:
 
@@ -144,7 +144,7 @@ Lo que acabamos de hacer es lo siguiente:
 
 En un diagrama:
 
-![Servizo4](./../_media/02/servizo4.png)
+![Servizo4](../../_media/02/servizo4.png)
 
 Para probar nuestro servicio usaremos kubectl-run, que nos permite crear una implementación "ad hoc" y ejecutar un comando "dentro" del contenedor.
 

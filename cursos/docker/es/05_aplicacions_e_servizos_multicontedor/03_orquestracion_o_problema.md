@@ -30,11 +30,11 @@ Bien, ahora tenemos claro que tenemos que dividir todo en pequeñas unidades que
 
 Comencemos con una aplicación Php simple dentro de un contenedor:
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/container_standalonoe.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/container_standalonoe.png)
 
 Nuestra aplicación quiere tener **estado**. La solución obvia es agregar una base de datos dentro del contenedor:
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/mega_container.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/mega_container.png)
 
 Esto, a pesar de lo que sería una solución obvia, es un horror y una ruptura con el paradigma de la contenerización:
 
@@ -46,17 +46,17 @@ El problema sería peor si quisiéramos, por ejemplo, agregar soporte para SSL, 
 
 La solución correcta sería esta:
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/container_bbdd.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/container_bbdd.png)
 
 Ahora tenemos dos unidades independientes en dos contenedores. Podemos modificar uno sin afectar al otro. Las preocupaciones están debidamente separadas.
 
 En este punto, nuestros contenedores también pueden **escalarse**, solo agregue nuevos contenedores de aplicaciones si es necesario:
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/escalado_container.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/escalado_container.png)
 
 Y, por supuesto, podemos añadir los servicios auxiliares que creemos de forma convenientes, sin necesidad de modificar los contenedores que ya tenemos (**encapsulación**).
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/escalado_funcional.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/escalado_funcional.png)
 
 Como vemos, nuestra aplicación **crece añadiendo nuevas unidades funcionales**, **no modificando las existentes**. Esto trae las ventajas de las que ya te hemos hablado en el apartado anterior.
 

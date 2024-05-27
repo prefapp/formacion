@@ -15,7 +15,7 @@ Ambos problemas se resuelven en Kubernetes mediante limits y probes.
 
 ## a) Limits y requests en pods
 
-![pod3](../_media/03/pod3.png)
+![pod3](../../_media/03/pod3.png)
 
 Scheduler es el componente encargado de alojar los pods en los diferentes nodos de un clúster de Kubernetes. Podemos pensar en ello como jugar al Tetris con nuestros pods. Así que necesita conocer el "tamaño de la pieza" con el que juega.
 
@@ -26,7 +26,7 @@ En un pod hay que establecer dos medidas muy claras:
  
 Por lo tanto, un pod se puede expresar en términos de los recursos que solicita de la siguiente manera:
 
-![pod4](../_media/03/pod4.png)
+![pod4](../../_media/03/pod4.png)
 
 Obviamente, cuando hablamos de "recursos", nos referimos a:
 
@@ -44,7 +44,7 @@ Por lo tanto, podemos pensar que el scheduler crea una especie de "bolsa de recu
 
 Es en esa parte "verde" del diagrama donde juega el scheduler, debiendo siempre respetar la Request (la parte amarilla) y nunca sobrepasar los Limits que está representado por el color rojo.
 
-![pod5.png](../_media/03/pod5.png)
+![pod5.png](../../_media/03/pod5.png)
 
 ### i) Uso de limits y requests en pods
 
@@ -90,7 +90,7 @@ Como dijimos al comienzo de esta unidad, los K8s debe saber acerca de un pod:
 
 Las probes son peticiones http o comandos que se ejecutarán dentro del pod (desde los contenedores del pod) para determinar si su ejecución es exitosa o no. De lo contrario, K8s puede concluir que el pods está inservible (el programa principal no está funcionando) o que aún no está ready para funcionar (el programa principal del pod aún se está iniciando).
 
-![pod6.png](../_media/03/pod6.png)
+![pod6.png](../../_media/03/pod6.png)
 
 Hay dos tipos esenciales de probes:
 
