@@ -12,17 +12,17 @@ Surge el problema de que, si el contenedor es volátil, la capa asociada a ese c
 
 Imaginemos que nuestro contenedor escribe datos clave en un archivo ubicado en el sistema de archivos:
 
-![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos.png)
+![Container](../../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos.png)
 
 Ahora sabemos que todos esos cambios realmente se están haciendo en la capa donde el contenedor puede escribir, es decir, **en la capa contenedora**.
 
 Si por alguna razón, el contenedor se cae o desaparece, también lo hace la capa de datos asociada a él.
 
-![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos_desaparece.png)
+![Container](../../_media/03_xestion_de_imaxes_e_contedores/container_escribe_datos_desaparece.png)
 
 Esto significa que, si relanzamos un contenedor, tendrá una nueva capa de datos (asociada al contenedor) y, por lo tanto, **no tiene ese archivo de datos, ni sus cambios**.
 
-![Container](./../_media/03_xestion_de_imaxes_e_contedores/container_escritura_datos_error.png)
+![Container](../../_media/03_xestion_de_imaxes_e_contedores/container_escritura_datos_error.png)
 
 ## Soluciones al problema de la persistencia
 

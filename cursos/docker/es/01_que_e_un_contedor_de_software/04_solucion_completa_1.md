@@ -4,7 +4,7 @@ Los contenedores de software consisten en una técnica de virtualización a nive
 
 La idea es simple, ya que el SO es, desde el punto de vista del proceso, un conjunto de recursos, podemos darle una vista "privada" o virtual de esos recursos.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_7.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_7.png)
 
 Virtualizar esos recursos globales de tal manera que, desde el punto de vista del proceso, le sean privados, **de eso se trata un contenedor**.
 
@@ -21,7 +21,7 @@ A expensas de:
 
 Además, no es una alternativa a la técnica de virtualización de plataformas: por el contrario, es **totalmente compatible**. Precisamente, así se está utilizando en muchos sitios:
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_8.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_8.png)
 
 Kerrisk Michael, "Espacios de nombres en funcionamiento, parte 1: descripción general de los espacios de nombres" [en línea](https://lwn.net/Articles/531114/) [Acceso: 6 de enero de 2019]
 * El primero de 9 artículos para consultar una exploración en profundidad de los espacios de nombres en Linux y su estado como elemento fundamental para los contenedores.

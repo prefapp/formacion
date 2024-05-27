@@ -34,7 +34,7 @@ Para poder subir una imagen a nuestro registro privado, primero debemos indicarl
 
 Para ello, utilizaremos [docker-tag](https://docs.docker.com/engine/reference/commandline/tag/). Es una herramienta que nos permite producir una nueva imagen creando una referencia a la otra que se convierte en su origen.
 
-![dockertag](./../_media/03_xestion_de_imaxes_e_contedores/docker_tag.png)
+![dockertag](../../_media/03_xestion_de_imaxes_e_contedores/docker_tag.png)
 
 Desde el momento de la creación de la nueva imagen, mediante una etiqueta, ya se puede referenciar sin afectar la imagen original.
 

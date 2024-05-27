@@ -12,11 +12,11 @@ Y ya tendríamos el portainer funcionando en un contenedor, bastaría con abrir 
 
 Proporcionamos un nombre de usuario y contraseña, y aparecerá esta pantalla:
 
-![Portainer](./../_media/02_docker/portainer1.png)
+![Portainer](../../_media/02_docker/portainer1.png)
 
 Por ahora, elijamos el entorno local:
 
-![Portainer](./../_media/02_docker/portainer2.png)
+![Portainer](../../_media/02_docker/portainer2.png)
 
 Le damos a connect y ya tendríamos un sistema para administrar visualmente nuestro Docker.
 
@@ -24,7 +24,6 @@ Le damos a connect y ya tendríamos un sistema para administrar visualmente nues
 
 Intentemos instalar portainer.
 
-A partir de ahora, durante el resto del curso, este ícono ![Portainer](./../_media/02_docker/portainer3.png) aparecerá en varios lugares. Cuando este sea el caso, le recomendamos que vea los resultados en Portainer.
+A partir de ahora, durante el resto del curso, este ícono ![Portainer](../../_media/02_docker/portainer3.png) aparecerá en varios lugares. Cuando este sea el caso, le recomendamos que vea los resultados en Portainer.
 
 Creemos que la información que proporciona facilita el proceso de aprendizaje.
-

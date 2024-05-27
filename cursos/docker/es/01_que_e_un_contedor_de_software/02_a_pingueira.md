@@ -8,7 +8,7 @@ Pero, ¿los sistemas operativos logran aislar todos los recursos de una máquina
 
 La respuesta es que no. Al menos en entornos UNIX, hay una serie de recursos que son comunes y, por lo tanto, globales para todos los procesos.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_4.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_4.png)
 
 Estos recursos son:
 

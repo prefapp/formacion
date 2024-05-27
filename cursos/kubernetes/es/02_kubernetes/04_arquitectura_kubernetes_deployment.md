@@ -13,13 +13,13 @@ Los deployments añaden "inteligencia" a nuestros pods, es decir, son elementos 
 - Actualizarlos: permitir un cambio de configuración o imagen de los pods de forma controlada.
 - Pausar / reanudarlos
 
-![Deploy1](./../_media/02/deployment.png)
+![Deploy1](../../_media/02/deployment.png)
 
 ## b) Definir una Deployment
 
 Para definir un deployment, tenemos que pensar en ella como una estructura que está por encima del pod:
 
-![Deploy2](./../_media/02/deployment2.png)
+![Deploy2](../../_media/02/deployment2.png)
 
 En el siguiente ejemplo:
 
@@ -154,7 +154,7 @@ kubectl scale deploy despregue-nginx --replicas=1
 
 Y veríamos como se eliminarían dos Pods restando sólo una de ellas.
 
-![Deploy3](./../_media/02/deployment3.png)
+![Deploy3](../../_media/02/deployment3.png)
 
 ### iii) La tarea de actualizar los módulos de implementación
 

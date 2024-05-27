@@ -38,7 +38,7 @@ chrootrootfs/bin/bash
 
 Entraremos en una nueva shell, un nuevo proceso, que se monta desde 6. ```~/rootfs```.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_10.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_10.png)
 
 ¿Tenemos un contenedor real?
 
@@ -56,7 +56,7 @@ Por lo tanto, nuestro proceso, aunque esté rooteado en rootfs, no está realmen
 
 Es decir, nuestro proceso **todavía está en el espacio de nombres global compartido por el resto de los procesos del sistema**.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_11.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_11.png)
 
 Como podemos ver, este proceso no está realmente "contenido":
 
@@ -74,7 +74,7 @@ Como vimos en el paso 2, en realidad estamos lanzando un proceso que tiene una n
 
 En un diagrama:
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/container_12.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/container_12.png)
 
 El comando [unshare](https://man7.org/linux/man-pages/man1/unshare.1.html) nos permite iniciar un comando o proceso especificando los espacios de nombres que queremos que sean privados.
 

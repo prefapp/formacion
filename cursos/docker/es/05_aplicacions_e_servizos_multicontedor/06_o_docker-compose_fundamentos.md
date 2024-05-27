@@ -55,7 +55,7 @@ Imaginemos que tenemos un servicio en PHP que se conecta a otro que ejecuta una 
 
 Si lo ponemos en una red común, el servicio PHP tendrá un host (bbdd) definido **que coincide con el nombre del servicio de bbdd** sin tener que preocuparse por la IP del contenedor.
 
-![Container](./../_media/04_aplicacions_e_servizos_multicontedor/redes.png)
+![Container](../../_media/04_aplicacions_e_servizos_multicontedor/redes.png)
 
 Si lo definimos en un compose:
 
@@ -89,4 +89,4 @@ Ahora bien, y dado que los dos servicios están en esta red, en un contenedor de
 
 Ya hablamos de volúmenes en una lección anterior.
 
-Baste decir aquí que los volúmenes se pueden definir directamente en docker-compose a través del propio DSL de la herramienta.
+Basta decir aquí que los volúmenes se pueden definir directamente en docker-compose a través del propio DSL de la herramienta.

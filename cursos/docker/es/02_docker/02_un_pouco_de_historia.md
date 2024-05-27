@@ -6,7 +6,7 @@
 
 ## **Jaulas Chroot (1979)**
 
-![chroot](./../_media/02_docker/chroot.png)
+![chroot](../../_media/02_docker/chroot.png)
 
 En el desarrollo del sistema Unix V7, se agregó una nueva llamada al sistema (chroot) que permitía cambiar el directorio raíz de un proceso y sus descendientes a una nueva ubicación en el sistema de archivos.
 
@@ -48,8 +48,8 @@ for i in {lib,lib64}; do sudo umount chroot/$i ; done
 
 ## **FreeBSD Jails (2000), Solaris Zones (2004)**
 
-![Cárcel del mal](./../_media/02_docker/evil_jail.png)
-![Solaris](./../_media/02_docker/solaris.png)
+![Cárcel del mal](../../_media/02_docker/evil_jail.png)
+![Solaris](../../_media/02_docker/solaris.png)
 
 Dos décadas después, un proveedor de hosting lanzó un servicio sobre jaulas BSD para lograr una clara separación de recursos entre sus servicios y los de sus clientes, y de esta forma mejorar la seguridad y facilitar la administración de los mismos.
 
@@ -61,7 +61,7 @@ Oracle ha agregado una función similar a Solaris, que combina el control de los
 
 ## **OpenVZ (2005)**
 
-![OpenVZ](./../_media/02_docker/opevz.png)
+![OpenVZ](../../_media/02_docker/opevz.png)
 
 Un año después, la empresa Virtuozzo creó un nuevo sistema de virtualización basado en contenedores, sobre el kernel de Linux, que permitía crear múltiples contenedores aislados y seguros en una misma máquina, como si de un servidor privado virtual se tratase.
 
@@ -71,8 +71,8 @@ El código OpenVZ, aunque de código abierto, nunca ha sido parte de la distribu
 
 ## **linuxcontainers (2008) y Docker (2013)**
 
-![LinuxContainers](./../_media/02_docker/linuxcontainers.png)
-![Docker](./../_media/02_docker/docker_logo.png)
+![LinuxContainers](../../_media/02_docker/linuxcontainers.png)
+![Docker](../../_media/02_docker/docker_logo.png)
 
 La primera herramienta de contenedor de software que encontró una amplia aceptación dentro de la comunidad de Linux fue [LXC](https://linuxcontainers.org/), principalmente debido a las tecnologías que reunió y que se introdujeron en el kernel de Linux (**Namespaces y cgroups**).
 

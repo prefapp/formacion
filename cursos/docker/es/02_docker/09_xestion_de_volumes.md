@@ -30,7 +30,7 @@ Una de las principales soluciones al problema de la no persistencia de los conte
 
 Podemos pensar en un volumen como un directorio en nuestro anfitrión que está "montado" como parte del sistema de archivos del contenedor. El contenedor puede acceder a este directorio y los datos almacenados en él persistirán independientemente del ciclo de vida del contenedor.
 
-![Volumen contenedor](./../_media/02_docker/contedor_volume.png)
+![Volumen contenedor](../../_media/02_docker/contedor_volume.png)
 
 Para lograr esto, basta con decirle a Docker qué directorio de nuestro host queremos montar como volumen y en qué ruta queremos montarlo en nuestro contenedor.
 

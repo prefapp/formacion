@@ -25,11 +25,11 @@ La aplicación de votación está escrita en python con [Flask](http://flask.poc
 
 Esta aplicación expone un puerto al exterior donde acepta solicitudes (puerto 80).
 
-![actividades1](./../_media/01/actividades1.png)
+![actividades1](../../_media/01/actividades1.png)
 
 Cuando alguien vota, apunta el sentido del voto a una base de datos [Redis](https://redis.io/) (que escucha dentro del contenedor #6379).
 
-![actividades2](./../_media/01/actividades2.png)
+![actividades2](../../_media/01/actividades2.png)
 
 #### 2. Worker
 
@@ -39,18 +39,19 @@ Los resultados finales están en una base de datos [PostgreSQL](https://www.post
 
 El Worker está escrito en [.NET](https://www.microsoft.com/net/).
 
-![actividades3](./../_media/01/actividades3.png)
+![actividades3](../../_media/01/actividades3.png)
 
 #### 3. Servicio de resultados
 
 El servicio de resultados se realiza en [nodejs](https://nodejs.org/es/). Este servicio expone (en el puerto 80) una página en HTML5 y monitorea constantemente la base de datos de PostgreSQL para devolver el estado actual de la encuesta.
 
-![actividades4](./../_media/01/actividades4.png)
+![actividades4](../../_media/01/actividades4.png)
 
 #### 4. Esquema final de servicios
 
 El esquema final de servicios sería el siguiente:
-![actividades5](./../_media/01/actividades5.png)
+
+![actividades5](../../_media/01/actividades5.png)
 
 ### Las redes
 
@@ -59,7 +60,7 @@ Mirando el diagrama de servicio, parece claro que debería haber dos redes:
 - Un **privado** donde todos los contenedores están conectados para comunicarse entre sí
 - Un **público** donde EXCLUSIVAMENTE los contenedores frontend (votación y resultados) tienen conectividad
 
-![actividades6](./../_media/01/actividades6.png)
+![actividades6](../../_media/01/actividades6.png)
 
 De esta forma, los contenedores BBDD y el Worker quedan aislados del mundo exterior, es decir, solo los contenedores que están en su red (privada) pueden hablar con ellos.
 
@@ -82,27 +83,32 @@ Las imágenes a utilizar serán:
 - Bdd: (Redis) [redis:alpine](https://hub.docker.com/_/redis/)
 
 Para definir la parte de **redes**, se vería así:
-![actividades7](./../_media/01/actividades7.png)
+
+![actividades7](../../_media/01/actividades7.png)
 
 Vemos que hemos creado dos redes, una pública y otra privada. En la parte de **volúmenes**, vamos a crear un volumen que luego asociaremos con el servicio de PostgreSQL:
-![actividades8](./../_media/01/actividades8.png)
+
+![actividades8](../../_media/01/actividades8.png)
 
 Pasemos a la definición de **servicios**, comenzando con bbdd:
-![actividades9](./../_media/01/actividades9.png)
+
+![actividades9](../../_media/01/actividades9.png)
 
 Vemos como ambos servicios se conectan a la red privada. Además, el servicio bbdd (postgresql) vincula el directorio de datos al volumen creado. Esto proporciona persistencia en los sucesivos reinicios del sistema.
 
 También se agradece exponer el puerto redis [6379] para conexiones (siempre desde la red privada).
 
 Ahora veamos el servicio del **Worker**:
-![actividades10](./../_media/01/actividades10.png)
+
+![actividades10](../../_media/01/actividades10.png)
 
 El Worker también está en la red privada. Vemos la etiqueta [depends_on](https://docs.docker.com/compose/compose-file/#depends_on) que establece el orden de inicio de los servicios (contenedores).
 
 Como se indica en esta línea, el contenedor de Workers **no se puede iniciar** antes de que se ejecute el contenedor de Redis.
 
 Pasamos ahora a la definición del **servicio de votación**:
-![actividades11](./../_media/01/actividades11.png)
+
+![actividades11](../../_media/01/actividades11.png)
 
 El servicio de votación no tiene sorpresas. Se asocia tanto a redes públicas como privadas.
 
@@ -121,12 +127,12 @@ bbdd:
 ```
 
 Finalmente, veamos el **servicio de resultados**:
-![actividades12](./../_media/01/actividades12.png)
+![actividades12](../../_media/01/actividades12.png)
 
 El servicio de resultados tampoco tiene mucho que comentar. El puerto 8001 es el puerto de escucha del servidor y donde tendrás que conectarte para ver la página web con la información.
 
 Escribimos un docker-compose.yaml con toda esa información y hacemos:
-![actividades13](./../_media/01/actividades13.png)
+![actividades13](../../_media/01/actividades13.png)
 
 ¡¡Y ahí lo tenemos!! Si accedemos desde nuestro navegador a http://localhost:8000 tendremos el panel de votaciones y si entramos en http://localhost:8001 tendremos el panel de resultados.
 
@@ -177,7 +183,8 @@ Para lanzar este clúster de nodos tenemos varias opciones:
 Una vez que comience el laboratorio, tendrá 4 horas para realizar la práctica, pero si se acaba el tiempo o tiene que abandonar el laboratorio, puede volver en cualquier momento y lanzar nuevas máquinas docker.
 
 Desde aquí podemos construir un clúster lanzando 2 nuevas instancias:
-![actividades14](./../_media/01/actividades14.png)
+
+![actividades14](../../_media/01/actividades14.png)
 
 Una vez que tenga las 2 instancias operativas, debe conectarlas haciendo el clúster Swarm. Para esto, puede elegir **nodo1** como el nodo maestro y ejecutar el siguiente comando en su terminal:
 
@@ -201,7 +208,8 @@ docker swarm join --token SWMTKN-1-1ma2gywbmnr8nwf8dr9hg7etrsc5sx0q1wrgwhde5d5v7
 ```
 
 **Y listo, ya tienes el clúster Docker Swarm listo para desplegar aplicaciones.** Incluso puedes conectarte vía ssh, usando el comando indicado en la sección SSH
-![actividades15](./../_media/01/actividades15.png)
+
+![actividades15](../../_media/01/actividades15.png)
 
 
 ### Opción 2: Docker-machine y Virtualbox

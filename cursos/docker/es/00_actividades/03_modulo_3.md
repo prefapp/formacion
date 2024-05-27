@@ -6,7 +6,7 @@
 
 \**Nota - Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que se detallan a continuación.
 
-1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_images_e_contedores/01_objectivos).
+1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](../03_xestion_de_images_e_contedores/01_objectivos).
 2. **Cree** una cuenta en [Dockerhub](https://hub.docker.com/). Aunque no es necesario estar registrado en Dockerhub para poder descargar imágenes, sí que necesitaremos tener una cuenta para poder subir nuestras imágenes.
 
 Crea una cuenta en dockerhub. Es gratis y lo vamos a utilizar para subir nuestro trabajo y distribuirlo.
@@ -45,7 +45,7 @@ Para llevar a cabo esta tarea, crea un documento donde registraremos los comando
 
 Pasos:
 
-1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](https://prefapp.github.io/formacion/cursos/docker/#/./03_xestion_de_images_e_contedores/01_objectivos).
+1. **Consulta** y **analiza** la documentación sobre [imágenes y contenedores](../03_xestion_de_images_e_contedores/01_objectivos).
 2. **Investigue** y **compile** las opciones del comando de docker
    1. El comando muestra ayuda (docker images --help) o se puede consultar en la [documentación oficial](https://docs.docker.com/engine/reference/commandline/images/).
    2. En el pdf, crea una sección "1" donde se expondrán las opciones del comando docker images y un resumen sobre su funcionamiento.

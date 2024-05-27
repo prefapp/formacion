@@ -2,7 +2,7 @@
 
 ## Comprender y utilizar la tecnología de namespace
 
-> Los [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade) son uno de los pilares básicos para construir contenedores, la posibilidad de crear "vistas" privadas en SO para un proceso o conjunto de procesos proporciona una gran flexibilidad para la ejecución del proceso.
+> Los [namespaces](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade.md) son uno de los pilares básicos para construir contenedores, la posibilidad de crear "vistas" privadas en SO para un proceso o conjunto de procesos proporciona una gran flexibilidad para la ejecución del proceso.
 
 Antes de realizar la tarea, lea atentamente las **instrucciones**, los **indicadores de logro** y los **criterios de corrección** que siguen.
 
@@ -160,7 +160,7 @@ O, si este archivo no existe:
 
 ## Crear los primeros contenedores de software
 
-> Montando un contenedor - Usando [las tecnologías que vimos en este tema (unshare, mount...)](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidaded) van a crear un contenedor de software "artesanal"
+> Montando un contenedor - Usando [las tecnologías que vimos en este tema (unshare, mount...)](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade.md) van a crear un contenedor de software "artesanal"
 
 El contenedor debe reunir las siguientes características:
 
@@ -168,7 +168,7 @@ El contenedor debe reunir las siguientes características:
 
 - El contenedor debe montar este [sistema de archivos](https://github.com/ericchiang/containers-from-scratch/releases/download/v0.1.0/rootfs.tar.gz).
 
-- Asegúrate de estar en los siguientes [namespaces](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/08_namespaces_en_profundidade): (pids, mounts, UTS, network, ipc)
+- Asegúrate de estar en los siguientes [namespaces](../01_que_e_un_contedor_de_software/08_namespaces_en_profundidade): (pids, mounts, UTS, network, ipc)
 
 - Debe haber montado un /proc propio
 
@@ -181,7 +181,7 @@ El contenedor debe reunir las siguientes características:
  - ¿Cómo probar que la UTS está realmente aislada?
  - ¿Cómo podemos saber cuál es el proceso de inicio del contenedor?
  - ¿Cómo daríamos conectividad al exterior o al contenedor? Pista ([veth](http://man7.org/linux/man-pages/man4/veth.4.html)).
- - Sabiendo que son los [cgroups](https://prefapp.github.io/formacion/cursos/docker/#/./01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita la memoria del contenedor a ```512 MB```.
+ - Sabiendo que son los [cgroups](../01_que_e_un_contedor_de_software/09_cgroups_xestion_e_utilidades), limita la memoria del contenedor a ```512 MB```.
 
 ---
 

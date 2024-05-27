@@ -21,7 +21,7 @@ cgroups puede verse como un árbol en el que los procesos se cuelgan de un poste
 
 La flexibilidad que permiten es muy grande. Se pueden crear diferentes grupos de restricciones y controles y se puede asignar un proceso y sus hijos a diferentes grupos, haciendo combinaciones que permiten un alto grado de personalización.
 
-![CGroups](./../_media/01_que_e_un_contedor_de_software/cgroups_1.png)
+![CGroups](../../_media/01_que_e_un_contedor_de_software/cgroups_1.png)
 
 A partir de la versión 4.5 del kernel de Linux, aparece una nueva versión de cgroups. La principal diferencia que implementa cgroups v2 es la forma en que se establece la jerarquía.
 

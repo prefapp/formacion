@@ -62,7 +62,7 @@ A pesar de la competencia que existía entre los diferentes proveedores de PaaS 
 
 > Docker Engine, el core de docker, es el componente fundamental de la plataforma y consta de una serie de elementos:
 
-![Docker](./../_media/01/engine.png)
+![Docker](../../_media/01/engine.png)
 
 Como podemos ver, hay tres componentes básicos:
 
@@ -90,7 +90,7 @@ Esto implica que, actualmente, a bajo nivel, el demonio docker utiliza varios pr
 
 Estos proyectos constituyentes están disponibles para la comunidad, como software libre, y muchos de ellos incluso ya no pertenecen directamente a la organización Docker Inc, sino que han sido donados a fundaciones y grupos alternativos (CNCF, OCI da Linux Fundation ...), por lo que que garantizan su independencia, y así las grandes empresas, y los grandes actores de la nube hoy en día, como Microsoft o Google, les dan confianza para seguir apostando por estas herramientas para la construcción de sus propios servicios, y de esta forma dedicar sus propios recursos para mantener la comunidad.
 
-![Docker](./../_media/01/engine1.png)
+![Docker](../../_media/01/engine1.png)
 
 *Imagen cortesía del blog [docker](https://i0.wp.com/blog.docker.com/wp-content/uploads/974cd631-b57e-470e-a944-78530aaa1a23-1.jpg?resize=906%2C470&ssl=1).*
 
@@ -119,7 +119,7 @@ Para este ejemplo, elijamos un [Debian Jessie](https://www.debian.org/releases/j
 
 Nuestra imagen tendría esta estructura:
 
-![Capa](./../_media/01/capa_1.png)
+![Capa](../../_media/01/capa_1.png)
 
 ## 2ª Capa: Las dependencias de Apache2
 
@@ -127,7 +127,7 @@ En este ejemplo, la versión de Apache que se montará es [2.2](https://httpd.ap
 
 Estas dependencias constituirían una segunda capa en nuestra imagen:
 
-![Capa](./../_media/01/capa_2.png)
+![Capa](../../_media/01/capa_2.png)
 
 ## 3ª Capa: El servidor Apache
 
@@ -135,11 +135,11 @@ Finalmente, agreguemos la capa con nuestro servidor web.
 
 La imagen, finalmente, quedaría así:
 
-![Capa](./../_media/01/capa_3.png)
+![Capa](../../_media/01/capa_3.png)
 
 ¡Y hecho! Ahora podemos usar la imagen para lanzar contenedores con **versiones específicas** de software y una base de **Debian** sin preocuparnos por el resto del software que pueda estar ejecutándose en el host.
 
-![Capas](./../_media/01/capa_total.png)
+![Capas](../../_media/01/capa_total.png)
 
 # Imagen y contenedor
 
@@ -158,19 +158,19 @@ El "truco" es conceptualmente sencillo: Docker no ejecuta nuestro contenedor dir
 
 Partimos de un contenedor en ejecución y en base a una imagen:
 
-![Imagen contenedor](./../_media/01/imaxe_e_contedor_1.png)
+![Imagen contenedor](../../_media/01/imaxe_e_contedor_1.png)
 
 En realidad, la imagen se compone de capas propias de la imagen y una capa del container. Solo la capa del container es de **ESCRITURA/LECTURA**.
 
-![Imagen contenedor](./../_media/01/imaxe_e_contedor_2.png)
+![Imagen contenedor](../../_media/01/imaxe_e_contedor_2.png)
 
 De esta forma, los programas que se ejecutan en el contenedor pueden escribir en el sistema de archivos de forma natural sin darse cuenta de que en realidad están escribiendo en una capa asociada con el contenedor y no en la imagen inmutable.
 
-![Imagen contenedor](./../_media/01/imaxe_e_contedor_3.png)
+![Imagen contenedor](../../_media/01/imaxe_e_contedor_3.png)
 
 Esto hace posible que cada contenedor realice cambios en el sistema de archivos sin afectar a otros contenedores que se basan en la misma imagen, ya que **cada contenedor tiene una capa de contenedor específica asociada**.
 
-![Imagen contenedor](./../_media/01/imaxe_e_contedor_4.png)
+![Imagen contenedor](../../_media/01/imaxe_e_contedor_4.png)
 
 Como podemos ver, este mecanismo es muy útil. Sin embargo, esto produce un problema: la **volatilidad de los datos**.
 
@@ -184,22 +184,22 @@ Sin embargo, las imágenes pueden evolucionar. Para ello, la clave está precisa
 
 Comenzamos con un contenedor que realiza cambios en su sistema de archivos.
 
-![Container](./../_media/01/crear_container_de_imaxe.png)
+![Container](../../_media/01/crear_container_de_imaxe.png)
 
 Como sabemos, esos cambios se reflejan en la capa de su contenedor.
 
 Si detenemos el contenedor ahora, para que no pueda hacer más cambios:
 
-![Container](./../_media/01/crear_container_de_imaxe_detido.png)
+![Container](../../_media/01/crear_container_de_imaxe_detido.png)
 
 Tenga en cuenta que el contenedor está **detenido**, no **destruido**, por lo que el contenedor no se está ejecutando pero está presente en el motor de Docker y, por lo tanto, también en su capa de datos.
 
 Si ahora tomamos esa capa de datos que pertenecen al contenedor y hacemos un **commit**, lo que estamos haciendo es producir una nueva imagen que incorpora los cambios de la capa del contenedor en su propia estructura interna.
 
-![Container](./../_media/01/crear_container_de_imaxe_detido_commit.png)
+![Container](../../_media/01/crear_container_de_imaxe_detido_commit.png)
 
 En resumen, **acabamos de evolucionar la imagen**. Y los nuevos contenedores basados ​​en esa nueva imagen verán los cambios que hicimos en el contenedor original.
 
 Este es precisamente el ciclo de evolución de las imágenes en Docker.
 
-![Container](./../_media/01/evolucion_da_imaxe.png)
+![Container](../../_media/01/evolucion_da_imaxe.png)

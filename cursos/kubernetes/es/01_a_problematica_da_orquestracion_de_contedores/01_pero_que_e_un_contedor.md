@@ -4,7 +4,7 @@
 
 Dentro del mundo Linux, que es el tipo de contenedores con los que vamos a trabajar, un contenedor se basa en las tecnologías de namespaces y cgroups, los docks permiten "separar" los procesos que corren dentro del contenedor, del resto de el sistema.
 
-![Contenedor](./../_media/01/contedor.png)
+![Contenedor](../../_media/01/contedor.png)
 
 A medio camino entre chroot y las soluciones de virtualización completa (KVM, VirtualBox, VMWare, Xen), el contenedor no incurre en el costo de virtualizar el hardware o el kernel del sistema operativo y aún ofrece un nivel mucho más alto de control y aislamiento para el chroot.
 
@@ -15,7 +15,7 @@ Los contenedores de software consisten en una técnica de virtualización a nive
 
 La idea es simple, ya que el SO es, desde el punto de vista del proceso, un conjunto de recursos, podemos darle una vista "privada" o virtual de esos recursos.
 
-![Contenedor](./../_media/01/contedor1.png)
+![Contenedor](../../_media/01/contedor1.png)
 
 Virtualizar esos recursos globales de tal manera que, desde el punto de vista del proceso, le sean privados, **de eso se trata un contenedor**.
 
@@ -32,7 +32,7 @@ A expensas de:
 
 Además, no es una alternativa a la técnica de virtualización de plataformas: por el contrario, es **totalmente compatible**. Precisamente, así se está utilizando en muchos sitios:
 
-![Contenedor](./../_media/01/contedor2.png)
+![Contenedor](../../_media/01/contedor2.png)
 
 **Σ Webografía**
 - Kerrisk Michael, "**Espacios de nombres en funcionamiento, parte 1: descripción general de los espacios de nombres**" [en línea]. Disponible: [enlace](https://lwn.net/Articles/531114/) [Consulta: 06-Enero-2019]
@@ -60,7 +60,7 @@ cgroups puede verse como un árbol en el que los procesos se cuelgan de un poste
 
 La flexibilidad que permiten es muy grande. Se pueden crear diferentes grupos de restricciones y controles y se puede asignar un proceso y sus hijos a diferentes grupos, haciendo combinaciones que permiten un alto grado de personalización.
 
-![Contenedor](./../_media/01/contedor3.png)
+![Contenedor](../../_media/01/contedor3.png)
 ## Evolución de las tecnologías de contenedores
 
 > Vamos a repasar una serie de herramientas y tecnologías que han ido surgiendo a lo largo de los años en diferentes sistemas operativos, para dar respuesta al problema planteado en el módulo 1 de Docker sobre la gestión de recursos dentro de un SO.
@@ -68,7 +68,7 @@ La flexibilidad que permiten es muy grande. Se pueden crear diferentes grupos de
 ---
 ### **Jaulas Chroot (1979)**
 
-![chroot](./../_media/01/chroot.png)
+![chroot](../../_media/01/chroot.png)
 
 En el desarrollo del sistema Unix V7, se agregó una nueva llamada al sistema (chroot) que permitía cambiar el directorio raíz de un proceso y sus descendientes a una nueva ubicación en el sistema de archivos.
 
@@ -110,8 +110,8 @@ for i in {lib,lib64}; do sudo umount chroot/$i ; done
 
 ### **FreeBSD Jails (2000), Solaris Zones (2004)**
 
-![Evil Jail](./../_media/01/evil_jail.png)
-![Solaris](./../_media/01/solaris.png)
+![Evil Jail](../../_media/01/evil_jail.png)
+![Solaris](../../_media/01/solaris.png)
 
 Dos décadas después, un proveedor de hosting lanzó un servicio sobre jaulas BSD para lograr una clara separación de recursos entre sus servicios y los de sus clientes, y de esta forma mejorar la seguridad y facilitar la administración de los mismos.
 
@@ -123,7 +123,7 @@ Oracle ha agregado una función similar a Solaris, que combina el control de los
 
 ### **OpenVZ (2005)**
 
-![OpenVZ](./../_media/01/opevz.png)
+![OpenVZ](../../_media/01/opevz.png)
 
 Un año después, la empresa Virtuozzo creó un nuevo sistema de virtualización basado en contenedores, sobre el kernel de Linux, que permitía crear múltiples contenedores aislados y seguros en una misma máquina, como si de un servidor privado virtual se tratase.
 
@@ -133,8 +133,8 @@ El código OpenVZ, aunque de código abierto, nunca ha sido parte de la distribu
 
 ### **linuxcontainers (2008) y Docker (2013)**
 
-![LinuxContainers](./../_media/01/linuxcontainers.png)
-![Docker](./../_media/01/docker_logo.png)
+![LinuxContainers](../../_media/01/linuxcontainers.png)
+![Docker](../../_media/01/docker_logo.png)
 
 La primera herramienta de contenedores de software que encontró una amplia aceptación dentro de la comunidad de Linux fue [LXC](https://linuxcontainers.org/), principalmente debido a las tecnologías que reunió y que se introdujeron en el kernel de Linux (**Namespaces y cgroups**).
 

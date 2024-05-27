@@ -48,7 +48,7 @@ Veamos las principales opciones que se pueden declarar dentro de este apartado:
 Puede ser **replicated** o **global**. Por defecto, el modo de implementación es *replicated*, esto significa que queremos que el contenedor asociado a un servicio se replique con un número determinado de réplicas, repartidas por todo el clúster de swarm. Esta es la forma de equilibrar la carga.
 Si especificamos *global*, el swarm se encargará de la existencia, EN CADA NODO DEL CLUSTER, de un contenedor con nuestro servicio.
 
-![img](../_media/05_docker_swarm/swarm04.png)
+![img](../../_media/05_docker_swarm/swarm04.png)
 
 para obtener más información, consulte [docker](https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/#replicated-and-global-services)
 

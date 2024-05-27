@@ -22,7 +22,7 @@ Por lo tanto, los contenedores desplegados dentro de un pod:
 - Comparten configuraciones de red.
 - Comparten volúmenes y almacenamiento.
 
-![Pod](./../_media/02/pod1.png)
+![Pod](../../_media/02/pod1.png)
 
 En un pod agruparemos todos aquellos procesos (aislados en contenedores) que tienen que funcionar "uno al lado del otro":
 

@@ -2,7 +2,7 @@
 
 > Docker Engine, el core de docker, es el componente fundamental de la plataforma y consta de una serie de elementos:
 
-![Docker](./../_media/02_docker/plataforma_docker.png)
+![Docker](../../_media/02_docker/plataforma_docker.png)
 
 Como podemos ver, hay tres componentes básicos:
 
@@ -29,7 +29,7 @@ Esto implica que, actualmente, a bajo nivel, el demonio docker utiliza varios pr
 
 Estos proyectos constituyentes están disponibles para la comunidad, como software libre, y muchos de ellos incluso ya no pertenecen directamente a la organización Docker Inc, sino que han sido donados a fundaciones y grupos alternativos (CNCF, OCI da Linux Fundation ...), por lo que que garantizan su independencia, y así las grandes empresas y los grandes actores de la nube hoy en día, como Microsoft o Google, les dan confianza para seguir apostando por estas herramientas para la construcción de sus propios servicios, y de esta forma dedicar sus propios recursos para mantener la comunidad.
 
-![Docker](./../_media/02_docker/ejemplo_plataforma_docker.png)
+![Docker](../../_media/02_docker/ejemplo_plataforma_docker.png)
 
 *Imagen cortesía del blog [docker](https://i0.wp.com/blog.docker.com/wp-content/uploads/974cd631-b57e-470e-a944-78530aaa1a23-1.jpg?resize=906%2C470&ssl=1).*
 

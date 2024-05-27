@@ -42,7 +42,7 @@ Si ejecutamos esa declaración en nuestra terminal, no notaremos ningún cambio.
 
 Sin embargo, el bash que ejecutamos **ya no está en el namespace global de pids**.
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/namespaces_1.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/namespaces_1.png)
 
 Para probar esto, salgamos del bash creado:
 
@@ -97,7 +97,7 @@ Si ahora creamos un ```top``` o un `ps` desde el nuevo `shell`, veremos los proc
 
 En un diagrama:
 
-![Contenedor](./../_media/01_que_e_un_contedor_de_software/namespaces_2.png)
+![Contenedor](../../_media/01_que_e_un_contedor_de_software/namespaces_2.png)
 
 **Σ Webografía**
 - Abrams, Vish. "El curioso caso de los pid namespaces" [en línea](https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900) [Consultado: 06-ene-2018].
