@@ -14,4 +14,8 @@
   - [Manejo de Projects en Backlog con GitHub](./03_prefapp_methodology/03_project_management_backlog.md)
   - [Práctica guiada: creación de ramas, pull request y preparación de trabajo mediante issues (Projects)](./03_prefapp_methodology/04_Guided_practice-branch-pr-issue.md)
 - Capítulo 4 - Worflows
+  - [¿Qué es un workflow?](./04_workflow/01_what_is_workflow.md)
+  - [Github Actions avanzado](./04_workflow/02_advanced_github_actions.md)
+  - [Workflows utilizados en Prefapp](./04_workflow/03_used_in_prefapp.md)
+  - [Práctica guiada - Crear un workflow](./04_workflow/04_guided_practice-creating_workflow.md)
 - Capítulo 5 - Posibles conflictos y recapitulación
