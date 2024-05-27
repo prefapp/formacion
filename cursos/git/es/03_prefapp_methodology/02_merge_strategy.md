@@ -17,42 +17,42 @@ Tabla comparativa de estrategias de fusión:
 
 ## Ejemplo gráfico
 
-Tenemos este conflicto en el historial de commits:
+Queremos fusionar una rama feature con la rama principal, pero esta ha recibido nuevos commits desde la creación de feature:
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../../_media/03_prefapp_methodology/conflicto_merge.webp)
+![](../../_media/03_prefapp_methodology/git-branch.png)
 
   </div>
 </div>
 
-Si lo solucionamos con un `merge`, el historial de commits se vería así:
+Si lo solucionamos con un `merge`, se creará un nuevo commit para la fusión, pero se mantendrán los commits de la rama feature en el historial:
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../../_media/03_prefapp_methodology/merge.webp)
+![](../../_media/03_prefapp_methodology/git-merge.png)
 
   </div>
 </div>
 
-Si lo solucionamos con un `squash`, el historial de commits se vería así:
+Si lo solucionamos con un `squash`, se añadirán los cambios mediante un nuevo commit, que será el único que se mostrará en el historial:
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../../_media/03_prefapp_methodology/squash.webp)
+![](../../_media/03_prefapp_methodology/git-squash.png)
 
   </div>
 </div>
 
-Si lo solucionamos con un `rebase`, el historial de commits se vería así:
+Si lo solucionamos con un `rebase`, se reescribirá el historial, añadiendo los commits de la rama tras los commits más recientes de main:
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../../_media/03_prefapp_methodology/rebase.webp)
+![](../../_media/03_prefapp_methodology/git-rebase.png)
 
   </div>
 </div>
