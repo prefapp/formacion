@@ -9,6 +9,8 @@ Veamos los workflows más usados por partes para poder entenderlos mejor.
 
 ## PR-verify
 
+El workflow PR-verify se encarga de verificar los cambios introducidos en un Pull Request (PR) en un repositorio de GitHub. Este workflow automatiza una serie de tareas esenciales para asegurar la calidad y la coherencia de los cambios antes de integrarlos en la base de código principal. 
+
 Vamos a ver cada sección y cada paso del workflow de GitHub Actions [PR-verify]():
 
 
@@ -292,8 +294,85 @@ jobs:
 
 Este workflow es complejo y está diseñado para verificar cambios en archivos YAML, determinar el objetivo del despliegue, ejecutar linting, validar coherencia del release y ejecutar escaneos de seguridad, todo en un contexto de pull request.
 
+
 ## release-please
 
+El workflow release-please está diseñado para automatizar la gestión de versiones y lanzamientos en un repositorio de GitHub. Este workflow utiliza la acción [release-please](https://github.com/googleapis/release-please) de Google para gestionar las versiones y lanzamientos del proyecto basado en [semver](https://prefapp.github.io/formacion/cursos/git/es/#/./03_prefapp_methodology/01_forking_strategy?id=versionado-sem%c3%a1ntico).
+
+Vamos a ver cada sección y cada paso del workflow de GitHub Actions [release-please]():
+
+### Evento que activa el workflow
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+```
+- **on**: Especifica el evento que activa el workflow.
+- **push**: El workflow se activará cuando haya un push.
+- **branches**: Lista de ramas en las que debe ocurrir el push para activar el workflow, aquí `main`.
+
+### Nombre del workflow
+
+```yaml
+name: Run Release Please
+```
+- **name**: Este es el nombre del workflow, en este caso `Run Release Please`.
+
+### Definición de jobs
+
+#### Job: release-please
+
+```yaml
+jobs:
+  release-please:
+    name: Release Please Manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          command: manifest
+          token: ${{secrets.GITHUB_TOKEN}}
+          default-branch: main
+```
+- **release-please**: Nombre del job.
+- **name**: Nombre descriptivo del job, `Release Please Manifest`.
+- **runs-on**: Especifica el sistema operativo en el que se ejecutará el job, aquí `ubuntu-latest`.
+
+#### Pasos del job
+
+```yaml
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          command: manifest
+          token: ${{secrets.GITHUB_TOKEN}}
+          default-branch: main
+```
+- **steps**: Lista de pasos a ejecutar en el job.
+  - **uses**: Utiliza una acción externa, en este caso `google-github-actions/release-please-action@v3`.
+  - **id**: Identificador del paso, `release`.
+  - **with**: Parámetros para la acción.
+    - **command**: Comando a ejecutar, aquí `manifest`.
+    - **token**: Token de autenticación de GitHub, obtenido de los secretos del repositorio (`secrets.GITHUB_TOKEN`).
+    - **default-branch**: Rama principal del repositorio, aquí `main`.
+
+### Descripción del workflow
+
+1. **Activación por push**: El workflow se activa cada vez que hay un push en la rama `main`.
+2. **Nombre del workflow**: `Run Release Please`.
+3. **Job: release-please**: Este job tiene el nombre descriptivo `Release Please Manifest`.
+4. **Sistema operativo**: El job se ejecuta en `ubuntu-latest`.
+5. **Paso del job**:
+   - Utiliza la acción `google-github-actions/release-please-action@v3`.
+   - El comando ejecutado es `manifest`.
+   - Utiliza el token de GitHub almacenado en los secretos del repositorio (`GITHUB_TOKEN`).
+   - La rama principal del repositorio es `main`.
+
+Este workflow está diseñado para ejecutarse cuando se hace un push en la rama `main`, y utiliza la acción `release-please` de Google para gestionar las versiones y lanzamientos del proyecto basado en un archivo de manifiesto.
 
 
 ## build_and_dispatch
