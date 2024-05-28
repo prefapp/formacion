@@ -7,6 +7,11 @@ Antes de comenzar, es importante tener en cuenta las buenas prácticas para crea
 
 Veamos los workflows más usados por partes para poder entenderlos mejor.
 
+- [PR-verify](#pr-verify)
+- [release-please](#release-please)
+- [build_and_dispatch](#build_and_dispatch)
+- [publish-chart](#publish-chart)
+
 
 ## PR-verify
 
@@ -597,4 +602,6 @@ Este único job se encarga de todo el proceso de publicación.
    - Usa un contenedor Docker para ejecutar un script que crea un Pull Request automáticamente.
    - Configura el título del PR, la rama de origen, el repositorio, el proyecto, y asigna el revisor basado en el actor de GitHub que inició el workflow.
 
+---
 
+Repositorio demo para utilizar "[Build and dispatch](https://github.com/prefapp/hello-k8s/blob/main/.github/workflows/build_and_dispatch.yaml)" y "[PR verify](https://github.com/prefapp/hello-k8s/blob/main/.github/workflows/pr_verify.yaml)": [hello-k8s](https://github.com/prefapp/hello-k8s/tree/main/.github).
