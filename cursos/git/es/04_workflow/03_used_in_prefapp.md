@@ -7,6 +7,7 @@ Antes de comenzar, es importante tener en cuenta las buenas prácticas para crea
 
 Veamos los workflows más usados por partes para poder entenderlos mejor.
 
+
 ## PR-verify
 
 El workflow PR-verify se encarga de verificar los cambios introducidos en un Pull Request (PR) en un repositorio de GitHub. Este workflow automatiza una serie de tareas esenciales para asegurar la calidad y la coherencia de los cambios antes de integrarlos en la base de código principal. 
@@ -40,9 +41,7 @@ env:
 - **env**: Define variables de entorno globales para el workflow. La `VERSION` está establecida en `2.0.0`.
 
 
-### Definición de jobs
-
-#### Job 1: check-changes
+### Job 1: check-changes
 
 ```yaml
 jobs:
@@ -72,7 +71,7 @@ jobs:
     - **with**: Parámetros para la acción, listando los tipos de archivos a verificar (`**.yaml`, `**.yml`, excluyendo `.github/**`).
 
 
-#### Job 2: determine-target
+### Job 2: determine-target
 
 ```yaml
   determine-target:
@@ -109,7 +108,8 @@ jobs:
   - **Check target (tenant, app and env) exist**:
     - **run**: Verifica si la ruta del objetivo existe.
 
-#### Job 3: linter
+
+### Job 3: linter
 
 ```yaml
   linter:
@@ -146,7 +146,8 @@ jobs:
     - **uses**: Utiliza la acción `ibiqlik/action-yamllint` para realizar linting en archivos YAML. Es buena práctica utilizar un SHA específicando el commit cuando la action es de terceros.
     - **with**: Parámetros para la acción, especificando el archivo o directorio a revisar y la configuración del linter.
 
-#### Job 4: validate-release
+
+### Job 4: validate-release
 
 ```yaml
   validate-release:
@@ -277,6 +278,7 @@ jobs:
           exit-code: '0'
           ignore-unfixed: true
 ```
+
 - **needs**: Este job depende de la finalización del job `determine-target`.
 - **if**: Condicional que determina si el job se ejecuta basado en la salida del job `determine-target`.
 - **env**: Define variables de entorno para el job.
@@ -292,14 +294,13 @@ jobs:
   - **Set up python**: Configura Python.
   - **Run Trivy vulnerability scanner in IaC mode**: Ejecuta Trivy para escanear vulnerabilidades en la infraestructura como código.
 
-Este workflow es complejo y está diseñado para verificar cambios en archivos YAML, determinar el objetivo del despliegue, ejecutar linting, validar coherencia del release y ejecutar escaneos de seguridad, todo en un contexto de pull request.
-
 
 ## release-please
 
 El workflow release-please está diseñado para automatizar la gestión de versiones y lanzamientos en un repositorio de GitHub. Este workflow utiliza la acción [release-please](https://github.com/googleapis/release-please) de Google para gestionar las versiones y lanzamientos del proyecto basado en [semver](https://prefapp.github.io/formacion/cursos/git/es/#/./03_prefapp_methodology/01_forking_strategy?id=versionado-sem%c3%a1ntico).
 
 Vamos a ver cada sección y cada paso del workflow de GitHub Actions [release-please]():
+
 
 ### Evento que activa el workflow
 
@@ -313,6 +314,7 @@ on:
 - **push**: El workflow se activará cuando haya un push.
 - **branches**: Lista de ramas en las que debe ocurrir el push para activar el workflow, aquí `main`.
 
+
 ### Nombre del workflow
 
 ```yaml
@@ -320,9 +322,8 @@ name: Run Release Please
 ```
 - **name**: Este es el nombre del workflow, en este caso `Run Release Please`.
 
-### Definición de jobs
 
-#### Job: release-please
+### Job: release-please
 
 ```yaml
 jobs:
@@ -340,6 +341,7 @@ jobs:
 - **release-please**: Nombre del job.
 - **name**: Nombre descriptivo del job, `Release Please Manifest`.
 - **runs-on**: Especifica el sistema operativo en el que se ejecutará el job, aquí `ubuntu-latest`.
+
 
 #### Pasos del job
 
@@ -360,28 +362,239 @@ jobs:
     - **token**: Token de autenticación de GitHub, obtenido de los secretos del repositorio (`secrets.GITHUB_TOKEN`).
     - **default-branch**: Rama principal del repositorio, aquí `main`.
 
-### Descripción del workflow
-
-1. **Activación por push**: El workflow se activa cada vez que hay un push en la rama `main`.
-2. **Nombre del workflow**: `Run Release Please`.
-3. **Job: release-please**: Este job tiene el nombre descriptivo `Release Please Manifest`.
-4. **Sistema operativo**: El job se ejecuta en `ubuntu-latest`.
-5. **Paso del job**:
-   - Utiliza la acción `google-github-actions/release-please-action@v3`.
-   - El comando ejecutado es `manifest`.
-   - Utiliza el token de GitHub almacenado en los secretos del repositorio (`GITHUB_TOKEN`).
-   - La rama principal del repositorio es `main`.
-
-Este workflow está diseñado para ejecutarse cuando se hace un push en la rama `main`, y utiliza la acción `release-please` de Google para gestionar las versiones y lanzamientos del proyecto basado en un archivo de manifiesto.
-
 
 ## build_and_dispatch
 
+El workflow **Build and Dispatch** está diseñado para construir y publicar imágenes de contenedor automáticamente cuando se realiza un push a la rama principal o cuando se crea un release (prereleased o released) en el repositorio. Además, se encarga de despachar cambios para su despliegue en otros sistemas. 
+
+
+### Evento Trigger: `release` y `push`
+
+Este workflow se activa mediante dos eventos:
+- `release`: Cuando se crea o actualiza un prerelease o release.
+- `push`: Cuando se realiza un push a la rama `main`.
+
+
+### Variables de Entorno Globales
+
+- `REGISTRY`: Registro de contenedores (ghcr.io).
+- `IMAGE_NAME`: Nombre de la imagen, basado en el repositorio de GitHub.
+- `repo_state_name`: Nombre del repositorio de estado.
+
+
+### Job 1: `calculate_matrix`
+
+Este job calcula la matriz de imágenes que se construirán.
+
+1. **Checkout del Código**
+   ```yaml
+   - uses: actions/checkout@v4
+   ```
+   Clona el repositorio en el runner.
+
+2. **Calcular la Matriz**
+   ```yaml
+   - name: calculate_matrix
+     id: calculate_matrix
+     uses: prefapp/action-flavour-images-matrix-generator@v3
+     with:
+       repository: ${{ env.REGISTRY }}/${{ github.repository }}
+   ```
+   Usa la acción `action-flavour-images-matrix-generator` para calcular y generar la matriz de imágenes.
+
+
+### Job 2: `build-image`
+
+Este job construye y publica las imágenes de contenedor.
+
+1. **Configuración de Permisos**
+   ```yaml
+   permissions:
+     contents: read
+     packages: write
+   ```
+   Configura los permisos necesarios para leer contenidos y escribir paquetes.
+
+2. **Estrategia de Matriz**
+   ```yaml
+   strategy:
+     matrix: ${{fromJson(needs.calculate_matrix.outputs.matrix)}}
+   ```
+   Define la estrategia para ejecutar las tareas basadas en la matriz calculada.
+
+3. **Pasos del Job**
+
+   - **Datos de la Matriz**
+     ```yaml
+     - name: Matrix data
+       run: |
+           echo ${{ matrix.tags }}
+           echo ${{ matrix.build_args }}
+           echo ${{ matrix.dockerfile }}
+     ```
+     Imprime los datos de la matriz.
+
+   - **Clonar el Repositorio**
+     ```yaml
+     - name: Clone repository
+       uses: actions/checkout@v3
+     ```
+     Clona el repositorio en el runner.
+
+   - **Iniciar Sesión en el Registro de Contenedores**
+     ```yaml
+     - name: Log in to the Container registry
+       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+       with:
+         registry: ${{ env.REGISTRY }}
+         username: ${{ github.actor }}
+         password: ${{ secrets.GITHUB_TOKEN }}
+     ```
+     Inicia sesión en el registro de contenedores con las credenciales proporcionadas.
+
+   - **Construir y Publicar la Imagen Completa**
+     ```yaml
+     - name: Build and push full
+       uses: docker/build-push-action@v5
+       if: ${{ matrix.dockerfile == 'Dockerfile.full' }} 
+       with:
+         context: .
+         push: true
+         file: ${{ matrix.dockerfile }}
+         build-args: |
+           ${{ matrix.build_args }}
+         tags: |
+           ${{ matrix.tags }}
+           ghcr.io/prefapp/gitops-k8s:latest
+     ```
+     Construye y publica la imagen completa (Dockerfile.full) si corresponde.
+
+   - **Construir y Publicar la Imagen Slim**
+     ```yaml
+     - name: Build and push slim
+       uses: docker/build-push-action@v5
+       if: ${{ matrix.dockerfile == 'Dockerfile.slim' }} 
+       with:
+         context: .
+         push: true
+         file: ${{ matrix.dockerfile }}
+         build-args: |
+           ${{ matrix.build_args }}
+         tags: |
+           ${{ matrix.tags }}
+           ghcr.io/prefapp/gitops-k8s:latest-slim
+     ```
+     Construye y publica la imagen slim (Dockerfile.slim) si corresponde.
+
+
+### Job 3: `make-dispatches`
+
+Este job despacha los cambios para su despliegue.
+
+1. **Configurar Variables de Entorno**
+   ```yaml
+   - name: Set env
+     run: echo "state_repo=$GITHUB_REPOSITORY_OWNER/$repo_state_name" >> $GITHUB_ENV
+   ```
+   Configura las variables de entorno necesarias para el despacho.
+
+2. **Clonar el Repositorio**
+   ```yaml
+   - name: Clone Repository
+     uses: actions/checkout@v2
+   ```
+   Clona el repositorio en el runner.
+
+3. **Despachar Cambios**
+   ```yaml
+   - name: Dispatch changes
+     uses: prefapp/action-deployment-dispatch@v2
+     with:
+       state_repo: ${{ env.repo_state_name }}
+       image_repository: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+       token: ${{ secrets.PAT_DEPLOY }}
+   ```
+   Utiliza la acción `action-deployment-dispatch` para despachar los cambios utilizando el repositorio de estado y el token de despliegue.
 
 
 ## publish-chart
 
+El workflow **release-pipeline** está diseñado para facilitar la publicación de nuevos paquetes mediante la automatización de la creación de ramas, la actualización de índices de repositorios Helm, y la generación de Pull Requests (PR) en GitHub. 
 
 
-## test-debug-action
+### Evento Trigger: `workflow_dispatch`
+
+Este workflow se activa manualmente mediante el evento `workflow_dispatch`, lo cual permite a los usuarios iniciar el proceso proporcionando los siguientes inputs:
+
+- `package`: Nombre del paquete que se va a publicar.
+- `version`: Versión del paquete que se va a publicar.
+
+### Variables de Entorno Globales
+
+- `proyecto`: Nombre del proyecto, en este caso, `prefapp`.
+- `git_user`: Usuario de Git configurado para las acciones de GitHub (`github-actions`).
+- `git_email`: Correo electrónico configurado para las acciones de GitHub (`github-actions@github.com`).
+
+### Definición del Job: `pipeline`
+
+Este único job se encarga de todo el proceso de publicación.
+
+#### Pasos del Job
+
+1. **Checkout del Código**
+   ```yaml
+   - uses: actions/checkout@v3
+   ```
+   Este paso clona el repositorio en el runner de GitHub Actions.
+
+2. **Calcular el Nombre de la Rama**
+   ```yaml
+   - name: Calculating branch name
+     id: step-branch
+     run: echo "::set-output name=branch::$(echo new-release/${{ inputs.package }}-${{ inputs.version }})"
+   ```
+   Calcula el nombre de la nueva rama basada en el nombre y la versión del paquete proporcionados.
+
+3. **Mensaje del Commit**
+   ```yaml
+   - name: Commit Message
+     id: step-commit_message
+     run: echo "::set-output name=commit_message::$(echo New Chart Release '${{ inputs.package }}-${{ inputs.version }}')"
+   ```
+   Genera el mensaje del commit utilizando los inputs proporcionados.
+
+4. **Crear Rama con Cambios**
+   ```yaml
+   - name: Create branch with changes
+     run: |
+       git config --global user.name ${{ env.git_user }}
+       git config --global user.email ${{ env.git_email }}
+       git checkout -b ${{ steps.step-branch.outputs.branch }}
+       cd charts/${{ inputs.package }} && helm package . -d ../../docs/${{ inputs.package }}
+       cd ../../docs/${{ inputs.package }} && helm repo index .
+       git add .
+       git commit -m "${{steps.step-commit_message.outputs.commit_message}}"
+       git push origin ${{ steps.step-branch.outputs.branch }}
+   ```
+   - Configura el usuario y correo electrónico de Git.
+   - Crea una nueva rama basada en el nombre calculado.
+   - Genera el paquete Helm y actualiza el índice del repositorio.
+   - Añade y commitea los cambios, luego empuja la nueva rama al repositorio remoto.
+
+5. **Crear Pull Request**
+   ```yaml
+   - name: Create Pull Request
+     run: |
+       prName="Bump release ${{ inputs.package }}-${{ inputs.version }}"
+       docker run -v $(pwd):/repo prefapp/prefapp-cicdpy:sleep-test github.pr_auto_merge \
+          token=${{ secrets.GITHUB_TOKEN }} \
+          titulo="${prName}" \
+          rama_origen=${{ steps.step-branch.outputs.branch }} \
+          repo=charts \
+          proyecto=${{ env.proyecto }} \
+          reviewers='${{ github.actor }}'
+   ```
+   - Usa un contenedor Docker para ejecutar un script que crea un Pull Request automáticamente.
+   - Configura el título del PR, la rama de origen, el repositorio, el proyecto, y asigna el revisor basado en el actor de GitHub que inició el workflow.
+
 
