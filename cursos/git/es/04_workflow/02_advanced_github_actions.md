@@ -1,6 +1,14 @@
 
 # Github Actions avanzado
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/04_workflow/github_actions.webp)
+
+  </div>
+</div>
+
 Ya hemos visto brevemente qué son las Github Actions, pero ahora vamos a profundizar un poco más en ellas. En este capítulo, exploraremos cómo se configuran, cómo se ejecutan y cómo se pueden personalizar para satisfacer necesidades específicas. 
 
 GitHub Actions es una plataforma de integración continua y entrega continua (CI/CD) que automatiza los pipelines de construcción, prueba y despliegue. Te permite crear flujos de trabajo que construyen y prueban todas las pull requests a un repositorio, o puedes desplegar pull requests fusionadas en tu entorno de producción.
@@ -23,7 +31,13 @@ Un trigger de workflow es un evento que hace que se ejecute un workflow. Hay cua
 
 Después de que se activa un workflow, el motor del workflow ejecuta uno o más jobs. Cada job contiene una lista predefinida de pasos; un paso puede ejecutar un script definido o realizar una acción específica (de una biblioteca de acciones disponibles en GitHub Actions). Esto se ilustra en el diagrama a continuación.
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
 ![](../../_media/04_workflow/GitHub-Actions-workflow-structure.webp)
+
+  </div>
+</div>
 
 El proceso que ocurre cuando se activa un evento es el siguiente:
 
@@ -285,10 +299,12 @@ Para crear un nuevo workflow de inicio:
 Aquí, los metadatos especifican la categoría del lenguaje del workflow de inicio para que un usuario pueda encontrar este workflow de inicio más fácilmente.
 
 
-
 ## GitOps
 
-///////// Puede ser esto: https://codefresh.io/docs/docs/gitops-integrations/ci-integrations/github-actions/ /////////
+GitOps es una metodología para la gestión de la infraestructura y las aplicaciones basada en Git. En lugar de depender de herramientas y procesos manuales, GitOps utiliza repositorios Git como fuente única para todo lo relacionado con la infraestructura y las aplicaciones. Esto incluye la configuración de la infraestructura, las definiciones de las aplicaciones, los scripts de despliegue y cualquier otro artefacto necesario para el ciclo de vida de desarrollo y operaciones.
 
-///////// O esto: https://jacobtomlinson.dev/posts/2019/creating-github-actions-in-python/ /////////
+![](../../_media/04_workflow/gitops-workflow.webp)
 
+Lectura recomendada: https://www.redhat.com/es/topics/devops/what-is-gitops
+
+En el siguiente módulo veremos ejemplos prácticos GitOps que se utilizan en Prefapp. 

@@ -1,6 +1,14 @@
 
 # Workflows utilizados en Prefapp
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/04_workflow/prefapp_wf.webp)
+
+  </div>
+</div>
+
 Antes de comenzar, es importante tener en cuenta las buenas prácticas para crear workflows en GitHub Actions:
 
 - Fortalecer la seguridad en Github Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions

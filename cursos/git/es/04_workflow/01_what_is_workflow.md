@@ -3,6 +3,14 @@
 
 Un workflow es una secuencia automatizada de tareas o procesos que se ejecutan de manera sistemática para completar una operación específica. Los workflows son esenciales en DevOps y CI/CD (Integración Continua/Entrega Continua), ya que permiten la automatización de procesos repetitivos y aseguran la consistencia y eficiencia en el desarrollo y despliegue de software.
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/04_workflow/Workflow.webp)
+
+  </div>
+</div>
+
 El concepto de workflow no es nuevo y ha evolucionado significativamente a lo largo del tiempo. Originalmente, los workflows se utilizaban en contextos empresariales y administrativos para describir el flujo de trabajo entre diferentes departamentos o etapas de un proceso de negocio. Con la revolución digital y la evolución del software, los workflows comenzaron a ser utilizados en el ámbito de la tecnología de la información para describir la secuencia de tareas en sistemas informáticos.
 
 En la década de 1990, con el auge de la metodología de desarrollo ágil y la necesidad de entregar software de manera más rápida y eficiente, los workflows comenzaron a ser adoptados en el desarrollo de software. Esta adopción se incrementó con la llegada de DevOps y CI/CD, donde la automatización de procesos es crucial para la entrega continua de software de alta calidad.
