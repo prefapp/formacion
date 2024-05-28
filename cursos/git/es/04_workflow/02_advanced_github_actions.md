@@ -143,7 +143,7 @@ on:
 El workflow se activará cada vez que se suba un archivo Python al repositorio.
 
 
-#### defauls
+#### defaults
 
 Se utiliza para especificar la configuración predeterminada del workflow. Si se especifica bajo un job determinado, solo se aplica al job. De lo contrario, especifica configuraciones para todos los jobs.
 
