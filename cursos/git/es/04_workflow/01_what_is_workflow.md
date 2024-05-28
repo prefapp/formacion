@@ -3,7 +3,7 @@
 
 Un workflow es una secuencia automatizada de tareas o procesos que se ejecutan de manera sistemática para completar una operación específica. Los workflows son esenciales en DevOps y CI/CD (Integración Continua/Entrega Continua), ya que permiten la automatización de procesos repetitivos y aseguran la consistencia y eficiencia en el desarrollo y despliegue de software.
 
-El concepto de workflows no es nuevo y ha evolucionado significativamente a lo largo del tiempo. Originalmente, los workflows se utilizaban en contextos empresariales y administrativos para describir el flujo de trabajo entre diferentes departamentos o etapas de un proceso de negocio. Con la revolución digital y la evolución del software, los workflows comenzaron a ser utilizados en el ámbito de la tecnología de la información para describir la secuencia de tareas en sistemas informáticos.
+El concepto de workflow no es nuevo y ha evolucionado significativamente a lo largo del tiempo. Originalmente, los workflows se utilizaban en contextos empresariales y administrativos para describir el flujo de trabajo entre diferentes departamentos o etapas de un proceso de negocio. Con la revolución digital y la evolución del software, los workflows comenzaron a ser utilizados en el ámbito de la tecnología de la información para describir la secuencia de tareas en sistemas informáticos.
 
 En la década de 1990, con el auge de la metodología de desarrollo ágil y la necesidad de entregar software de manera más rápida y eficiente, los workflows comenzaron a ser adoptados en el desarrollo de software. Esta adopción se incrementó con la llegada de DevOps y CI/CD, donde la automatización de procesos es crucial para la entrega continua de software de alta calidad.
 
@@ -15,47 +15,47 @@ Para comprender mejor los workflows en el contexto de DevOps y CI/CD, es importa
 
 ### Elementos de un Workflow
 
-1. **Tareas (Tasks)**: Son las unidades básicas de trabajo en un workflow. Cada tarea representa una acción específica que debe ser completada. Por ejemplo, compilar código, ejecutar pruebas, o desplegar una aplicación.
+1. **Tareas (Tasks)**: son las unidades básicas de trabajo en un workflow. Cada tarea representa una acción específica que debe ser completada. Por ejemplo, compilar código, ejecutar pruebas, o desplegar una aplicación.
 
-2. **Acciones (Actions)**: Son operaciones específicas realizadas dentro de una tarea. Por ejemplo, en una tarea de compilación, una acción podría ser ejecutar un comando de compilación.
+2. **Acciones (Actions)**: son operaciones específicas realizadas dentro de una tarea. Por ejemplo, en una tarea de compilación, una acción podría ser ejecutar un comando de compilación.
 
-3. **Eventos (Events)**: Son desencadenantes que inician un workflow. Los eventos pueden ser internos (por ejemplo, un commit de código) o externos (por ejemplo, una solicitud de pull).
+3. **Eventos (Events)**: son desencadenantes que inician un workflow. Los eventos pueden ser internos (por ejemplo, un commit de código) o externos (por ejemplo, una solicitud de pull en otro repositorio).
 
-4. **Condiciones (Conditions)**: Son reglas que determinan si una tarea o acción debe ser ejecutada. Pueden basarse en el estado de tareas anteriores o en parámetros específicos.
+4. **Condiciones (Conditions)**: son reglas que determinan si una tarea o acción debe ser ejecutada. Pueden basarse en el estado de tareas anteriores o en parámetros específicos.
 
-5. **Parámetros (Parameters)**: Son valores que se pasan a tareas o acciones para personalizar su comportamiento. Por ejemplo, el nombre de una rama de código o una configuración específica.
+5. **Parámetros (Parameters)**: son valores que se pasan a tareas o acciones para personalizar su comportamiento. Por ejemplo, el nombre de una rama de código o una configuración específica.
 
-6. **Artefactos (Artifacts)**: Son los resultados generados por una tarea que pueden ser utilizados en tareas posteriores. Por ejemplo, archivos binarios generados por una tarea de compilación.
+6. **Artefactos (Artifacts)**: son los resultados generados por una tarea que pueden ser utilizados en tareas posteriores. Por ejemplo, archivos binarios generados por una tarea de compilación.
 
 
 ### Características de un Workflow
 
-1. **Automatización**: Los workflows automatizan tareas repetitivas, reduciendo el esfuerzo manual y minimizando errores.
+1. **Automatización**: los workflows automatizan tareas repetitivas, reduciendo el esfuerzo manual y minimizando errores.
 
-2. **Secuencialidad**: Los workflows siguen una secuencia definida de tareas, asegurando que los procesos se ejecuten en el orden correcto.
+2. **Secuencialidad**: los workflows siguen una secuencia definida de tareas, asegurando que los procesos se ejecuten en el orden correcto.
 
-3. **Paralelismo**: En algunos casos, los workflows permiten la ejecución de tareas en paralelo para mejorar la eficiencia y reducir el tiempo total de ejecución.
+3. **Paralelismo**: en algunos casos, los workflows permiten la ejecución de tareas en paralelo para mejorar la eficiencia y reducir el tiempo total de ejecución.
 
-4. **Modularidad**: Los workflows pueden ser diseñados de manera modular, permitiendo la reutilización de tareas o secciones de un workflow en diferentes contextos.
+4. **Modularidad**: los workflows pueden ser diseñados de manera modular, permitiendo la reutilización de tareas o secciones de un workflow en diferentes contextos.
 
-5. **Monitorización**: Los workflows suelen incluir mecanismos de monitorización y registro (logging) para rastrear el progreso y detectar problemas.
+5. **Monitorización**: los workflows suelen incluir mecanismos de monitorización y registro (logging) para rastrear el progreso y detectar problemas.
 
-6. **Escalabilidad**: Los workflows deben ser capaces de escalar para manejar un mayor volumen de tareas a medida que crecen las necesidades del proyecto.
+6. **Escalabilidad**: los workflows deben ser capaces de escalar para manejar un mayor volumen de tareas a medida que crecen las necesidades del proyecto.
 
-7. **Integración**: Los workflows se integran con otras herramientas y servicios en el ecosistema DevOps, como sistemas de control de versiones, servidores de integración continua, y plataformas de despliegue.
+7. **Integración**: los workflows se integran con otras herramientas y servicios en el ecosistema DevOps, como sistemas de control de versiones, servidores de integración continua, y plataformas de despliegue.
 
 
-### Parámetros Clave en Workflows de CI/CD
+### Elementos clave en Workflows de CI/CD
 
-1. **Branches**: Las ramas de código en las que se ejecutan los workflows, permitiendo la integración y prueba de características nuevas sin afectar el código principal.
+1. **Branches**: las ramas de código en las que se ejecutan los workflows, permitiendo la integración y prueba de características nuevas sin afectar el código principal.
 
-2. **Triggers**: Los eventos que inician el workflow, como commits, pull requests, o despliegues programados.
+2. **Triggers**: los eventos que inician el workflow, como commits, pull requests, o despliegues programados.
 
-3. **Environment Variables**: Variables de entorno que proporcionan configuraciones específicas a los workflows, como credenciales de acceso o rutas de archivos.
+3. **Environment Variables**: variables de entorno que proporcionan configuraciones específicas a los workflows, como credenciales de acceso o rutas de archivos.
 
-4. **Stages**: Fases del workflow que agrupan tareas relacionadas, como 'build', 'test', y 'deploy'.
+4. **Stages**: fases del workflow que agrupan tareas relacionadas, como 'build', 'test', y 'deploy'.
 
-5. **Dependencies**: Las dependencias entre tareas, asegurando que ciertas tareas se completen antes de que otras comiencen.
+5. **Dependencies**: las dependencias entre tareas, asegurando que ciertas tareas se completen antes de que otras comiencen.
 
 Comprender estos conceptos es crucial para diseñar y gestionar workflows eficaces que mejoren la eficiencia y calidad en el desarrollo de software. La correcta implementación de workflows puede significar la diferencia entre un proceso de desarrollo ágil y eficiente y uno lento y propenso a errores.
 
@@ -147,7 +147,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>No requiere instalación</td>
         </tr>
         <tr>
-            <td><strong>Prerequisitos</strong></td>
+            <td><strong>Prerrequisitos</strong></td>
             <td>Cuenta de GitHub</td>
             <td>Cuenta de Gitlab</td>
             <td>Servidor propio (1 CPU, 1GB RAM)</td>
@@ -277,13 +277,12 @@ Github Actions se integra con Github, lo que permite ejecutar workflows en respu
 
 Proporciona un conjunto de acciones predefinidas que se pueden utilizar en los workflows, así como la posibilidad de crear acciones personalizadas.
 
-También existe la posibilidad crear runners en un servidor propio. Los runners de Github son máquinas virtuales alojadas por Github que ejecutan los workflows, pero la posibilidad de configurarlos en servidores propios o en la nube puede aportar ventajas.
+También existe la posibilidad de crear runners en un servidor propio. Los runners de Github son máquinas virtuales alojadas por Github que ejecutan los workflows, pero la posibilidad de configurarlos en servidores propios o en la nube puede aportar ventajas.
 
 En el siguiente capítulo, vamos a ver más en detalle cómo funcionan los workflows de Github Actions y cómo nos puede facilitar la vida el CI/CD para el desarrollo de software propio o de nuestros clientes.
 
-Enlaces de intéres:
+Enlaces de interés:
 - [Github Pricing](https://github.com/pricing)
 - [Github Actions Docs](https://docs.github.com/en/actions)
 - [Github Marketplace](https://github.com/marketplace?type=actions)
 - [Github Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)
-
