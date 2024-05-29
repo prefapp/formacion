@@ -1,13 +1,8 @@
 
 # Github Actions avanzado
 
-<div style="text-align: center;">
-  <div style="margin: 0 auto;">
-
 ![](../../_media/04_workflow/github_actions.webp)
 
-  </div>
-</div>
 
 Ya hemos visto brevemente qué son las Github Actions, pero ahora vamos a profundizar un poco más en ellas. En este capítulo, exploraremos cómo se configuran, cómo se ejecutan y cómo se pueden personalizar para satisfacer necesidades específicas. 
 

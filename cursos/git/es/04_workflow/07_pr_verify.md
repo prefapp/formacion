@@ -1,9 +1,9 @@
 
 # Workflows utilizados en Prefapp: PR-verify
 
-El workflow PR-verify se encarga de verificar los cambios introducidos en un Pull Request (PR) en un repositorio de GitHub. Este workflow automatiza una serie de tareas esenciales para asegurar la calidad y la coherencia de los cambios antes de integrarlos en la base de código principal. 
+El workflow "[PR verify](https://github.com/prefapp/hello-k8s/blob/main/.github/workflows/pr_verify.yaml) se encarga de verificar los cambios introducidos en un Pull Request (PR) en un repositorio de GitHub. Este workflow automatiza una serie de tareas esenciales para asegurar la calidad y la coherencia de los cambios antes de integrarlos en la base de código principal. 
 
-Vamos a ver cada sección y cada paso del workflow de GitHub Actions [PR-verify]():
+![](../../_media/04_workflow/pr-verify.webp)
 
 
 ## Workflow

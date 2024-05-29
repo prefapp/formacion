@@ -1,15 +1,9 @@
 
 # ¿Qué es un workflow?
 
-Un workflow es una secuencia automatizada de tareas o procesos que se ejecutan de manera sistemática para completar una operación específica. Los workflows son esenciales en DevOps y CI/CD (Integración Continua/Entrega Continua), ya que permiten la automatización de procesos repetitivos y aseguran la consistencia y eficiencia en el desarrollo y despliegue de software.
-
-<div style="text-align: center;">
-  <div style="margin: 0 auto;">
-
 ![](../../_media/04_workflow/Workflow.webp)
 
-  </div>
-</div>
+Un workflow es una secuencia automatizada de tareas o procesos que se ejecutan de manera sistemática para completar una operación específica. Los workflows son esenciales en DevOps y CI/CD (Integración Continua/Entrega Continua), ya que permiten la automatización de procesos repetitivos y aseguran la consistencia y eficiencia en el desarrollo y despliegue de software.
 
 El concepto de workflow no es nuevo y ha evolucionado significativamente a lo largo del tiempo. Originalmente, los workflows se utilizaban en contextos empresariales y administrativos para describir el flujo de trabajo entre diferentes departamentos o etapas de un proceso de negocio. Con la revolución digital y la evolución del software, los workflows comenzaron a ser utilizados en el ámbito de la tecnología de la información para describir la secuencia de tareas en sistemas informáticos.
 
@@ -73,7 +67,26 @@ Comprender estos conceptos es crucial para diseñar y gestionar workflows eficac
 Existen diferentes servidores que permiten la automatización de tareas. Este curso se centrará en Github Actions, ya que es el más usado en Prefapp, pero veamos en una tabla comparativo con otros servidores que también utilizamos.
 
 
-<table style="width:100%; max-width:1200px; margin:0 auto; border-collapse:collapse; overflow-x:auto; display:block;">
+<table>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 5px;
+            text-align: center;
+        }
+        tr td:first-child {
+            text-align: right;
+             font-weight: bold;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
     <thead>
         <tr>
             <th></th>
@@ -89,7 +102,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
     </thead>
     <tbody>
         <tr>
-            <td><strong>Logo</strong></td>
+            <td>Logo</td>
             <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/githubactions/githubactions-original.svg" alt="GitHub Logo" width="50"></td>
             <td><img src="https://about.gitlab.com/images/ci/gitlab-ci-cd-logo_2x.png" alt="GitLab Logo" width="50"></td>
             <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/jenkins/jenkins-original.svg" alt="Jenkins Logo" width="50"></td>
@@ -100,7 +113,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td><img src="https://wac-cdn.atlassian.com/dam/jcr:a17e66da-d0a1-4912-878c-6e103111b9df/Bitbucket-icon-blue-rgb.svg?cdnVersion=1755" alt="Bitbucket Pipelines Logo" width="50"></td>
         </tr>
         <tr>
-            <td><strong>Empresa propietaria</strong></td>
+            <td>Empresa propietaria</td>
             <td>GitHub (Microsoft)</td>
             <td>Gitlab Inc.</td>
             <td>Comunidad Open Source</td>
@@ -111,7 +124,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Atlassian</td>
         </tr>
         <tr>
-            <td><strong>Primera release</strong></td>
+            <td>Primera release</td>
             <td>2018</td>
             <td>2015</td>
             <td>2011</td>
@@ -122,7 +135,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>2016</td>
         </tr>
         <tr>
-            <td><strong>Tipo de software</strong></td>
+            <td>Tipo de software</td>
             <td>Freemium</td>
             <td>Freemium</td>
             <td>Open Source</td>
@@ -133,7 +146,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Freemium</td>
         </tr>
         <tr>
-            <td><strong>Licencia</strong></td>
+            <td>Licencia</td>
             <td>Copyright</td>
             <td>Licencia MIT</td>
             <td>Licencia MIT</td>
@@ -144,7 +157,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Proprietary</td>
         </tr>
         <tr>
-            <td><strong>Hosting</strong></td>
+            <td>Hosting</td>
             <td>Cloud</td>
             <td>Cloud o self-hosted</td>
             <td>Self-hosted</td>
@@ -155,7 +168,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Cloud</td>
         </tr>
         <tr>
-            <td><strong>Instalación</strong></td>
+            <td>Instalación</td>
             <td>No requiere instalación</td>
             <td>Opción de instalación self-hosted</td>
             <td>Requiere instalación</td>
@@ -166,7 +179,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>No requiere instalación</td>
         </tr>
         <tr>
-            <td><strong>Prerrequisitos</strong></td>
+            <td>Prerrequisitos</td>
             <td>Cuenta de GitHub</td>
             <td>Cuenta de Gitlab</td>
             <td>Servidor propio (1 CPU, 1GB RAM)</td>
@@ -177,7 +190,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Cuenta de Bitbucket</td>
         </tr>
         <tr>
-            <td><strong>Bases de datos</strong></td>
+            <td>Bases de datos</td>
             <td>No requiere</td>
             <td>No requiere</td>
             <td>Opcional</td>
@@ -188,7 +201,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>No requiere</td>
         </tr>
         <tr>
-            <td><strong>Escalabilidad</strong></td>
+            <td>Escalabilidad</td>
             <td>Alta</td>
             <td>Alta</td>
             <td>Alta</td>
@@ -199,7 +212,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Alta</td>
         </tr>
         <tr>
-            <td><strong>Control</strong></td>
+            <td>Control</td>
             <td>Medio</td>
             <td>Alto</td>
             <td>Alto</td>
@@ -210,7 +223,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Medio</td>
         </tr>
         <tr>
-            <td><strong>Dificultad de uso</strong></td>
+            <td>Dificultad de uso</td>
             <td>Media</td>
             <td>Media</td>
             <td>Alta</td>
@@ -221,7 +234,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Media</td>
         </tr>
         <tr>
-            <td><strong>Comunidad</strong></td>
+            <td>Comunidad</td>
             <td>Amplia</td>
             <td>Amplia</td>
             <td>Muy amplia</td>
@@ -232,7 +245,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Amplia</td>
         </tr>
         <tr>
-            <td><strong>Integraciones</strong></td>
+            <td>Integraciones</td>
             <td>Nativo con GitHub</td>
             <td>Nativo con Gitlab, múltiples integraciones</td>
             <td>Amplia gama de integraciones a través de plugins</td>
@@ -243,7 +256,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td>Nativo con Bitbucket, múltiples integraciones</td>
         </tr>
         <tr>
-            <td><strong>Precio y planes</strong></td>
+            <td>Precio y planes</td>
             <td><a href="https://github.com/pricing" target="_blank">GitHub Pricing</a></td>
             <td><a href="https://about.gitlab.com/pricing/" target="_blank">GitLab Pricing</a></td>
             <td><a href="https://jenkins.io/download/" target="_blank">Jenkins Pricing</a></td>
@@ -254,7 +267,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
             <td><a href="https://bitbucket.org/product/pricing" target="_blank">Bitbucket Pipelines Pricing</a></td>
         </tr>
         <tr>
-            <td><strong>Doc oficial</strong></td>
+            <td>Doc oficial</td>
             <td><a href="https://docs.github.com/en/actions" target="_blank">GitHub Actions Docs</a></td>
             <td><a href="https://docs.gitlab.com/ee/ci/" target="_blank">GitLab CI/CD Docs</a></td>
             <td><a href="https://www.jenkins.io/doc/" target="_blank">Jenkins Docs</a></td>

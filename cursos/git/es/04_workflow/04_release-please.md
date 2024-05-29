@@ -5,8 +5,6 @@ El workflow release-please está diseñado para automatizar la gestión de versi
 
 ![](https://raw.githubusercontent.com/googleapis/release-please/main/screen.png)
 
-Vamos a ver cada sección y cada paso del workflow de GitHub Actions [release-please]():
-
 
 ## Evento que activa el workflow
 

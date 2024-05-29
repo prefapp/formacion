@@ -5,6 +5,7 @@ El workflow **release-pipeline** está diseñado para facilitar la publicación 
 
 ![](../../_media/04_workflow/release-pipeline.webp)
 
+
 ## Evento Trigger: `workflow_dispatch`
 
 Este workflow se activa manualmente mediante el evento `workflow_dispatch`, lo cual permite a los usuarios iniciar el proceso proporcionando los siguientes inputs:
