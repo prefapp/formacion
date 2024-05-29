@@ -30,18 +30,13 @@ Disponemos de diferentes tipos de sistemas de control de versiones:
 
 El VCS local contiene una base de datos simple en la que se guarda el registro de todos los cambios realizados en los archivos. Esto se almacena localmente en la computadora del trabajo y para uno mismo.
 
-```mermaid
-  flowchart
-    subgraph Equipo local
-      subgraph Orixe
-        Arquivo
-      end
-        subgraph Version
-      v3 --> v2 --> v1
-      end
-    end
-  Orixe --> Version
-```
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/01_git/git-example01.webp)
+
+  </div>
+</div>
 
 - Ventajas:
    - Herramienta sencilla.
@@ -56,23 +51,13 @@ El principal problema lo encontramos en los sistemas de control de versiones VCS
 
 Estos sistemas cuentan con un único servidor que contiene todos los archivos versionados y varios clientes que descargan los archivos desde esa ubicación centralizada.
 
-```mermaid
-  flowchart
-    subgraph Servidor[Servidor CVCS]
-      subgraph Version
-      direction LR
-        v3 --> v2 --> v1
-      end
-    end
-    subgraph EquipoA[Equipo A]
-      ArquivoA[Arquivo]
-    end
-    subgraph EquipoB[Equipo B]
-      ArquivoB[Arquivo]
-    end
-  Version --> EquipoA
-  Version --> EquipoB
-```
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/01_git/git-example02.webp)
+
+  </div>
+</div>
 
 - Ventajas:
    - Todos los colaboradores conocen en cierta medida en qué están trabajando el resto de socios del proyecto.
@@ -88,29 +73,13 @@ Los sistemas de control de versiones distribuidos DVCS ofrecen soluciones a todo
 
 Los clientes más antiguos descargan la última copia instantánea de los archivos y replican completamente el repositorio. Con esto eliminamos el SPOF y en caso de falla del sistema se puede restaurar el proyecto usando cualquiera de los repositorios disponibles en los clientes.
 
-```mermaid
-  flowchart
-    subgraph Servidor[Servidor DVCS]
-      subgraph Version
-      direction TB
-        server_v3[v3] --> server_v2[v2] --> server_v1[v1]
-      end
-    end
-    subgraph EquipoA[Equipo A]
-      Arquivo_A[Arquivo]
-      subgraph Version_A[Version]
-        equipoA_v3[v3] --> equipoA_v2[v2] --> equipoA_v1[v1]
-      end
-    end
-    subgraph EquipoB[Equipo B]
-      Arquivo_B[Arquivo]
-      subgraph Version_B[Version]
-        equipoB_v3[v3] --> equipoB_v2[v2] --> equipoB_v1[v1]
-      end
-    end
-  Servidor <--> EquipoA & EquipoB <--> Repo[Repositorios compartidos]
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
 
-```
+![](../../_media/01_git/git-example03.webp)
+
+  </div>
+</div>
 
 - Ventajas:
    - Todos los colaboradores conocen en cierta medida en qué están trabajando el resto de socios del proyecto.

@@ -23,7 +23,7 @@ Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a util
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">
 
-![](../_media/02_hands_on/github-logo.png)
+![](../../_media/02_hands_on/github-logo.png)
 
   </div>
 </div>
@@ -84,7 +84,7 @@ El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">
 
-![](../_media/02_hands_on/lecturas.jpg)
+![](../../_media/02_hands_on/lecturas.jpg)
 
   </div>
 </div>
