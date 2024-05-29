@@ -1,5 +1,5 @@
 
-# publish-chart
+# Workflows utilizados en Prefapp: release-pipeline
 
 El workflow **release-pipeline** está diseñado para facilitar la publicación de nuevos paquetes mediante la automatización de la creación de ramas, la actualización de índices de repositorios Helm, y la generación de Pull Requests (PR) en GitHub. 
 

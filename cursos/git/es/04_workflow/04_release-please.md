@@ -1,5 +1,5 @@
 
-# release-please
+# Workflows utilizados en Prefapp: release-please
 
 El workflow release-please está diseñado para automatizar la gestión de versiones y lanzamientos en un repositorio de GitHub. Este workflow utiliza la acción [release-please](https://github.com/googleapis/release-please) de Google para gestionar las versiones y lanzamientos del proyecto basado en [semver](https://prefapp.github.io/formacion/cursos/git/es/#/./03_prefapp_methodology/01_forking_strategy?id=versionado-sem%c3%a1ntico).
 

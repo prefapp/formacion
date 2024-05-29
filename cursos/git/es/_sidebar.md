@@ -2,20 +2,28 @@
   - [¿Qué es Git?](./01_git/01_que_e_git.md)
   - [Fundamentos de Git](./01_git/02_fundamentos_de_git.md)
   - [Práctica guiada - Primeros pasos, configuración e instalación](./01_git/03_practica_guiada.md)
+
 - Capítulo 2 - Manos a la obra
   - [Secciones git - Ramificación - Fusión](./02_hands_on/01_git_sections.md)
   - [Comandos básicos](./02_hands_on/02_basic_commands.md)
   - [Forjas de código abierto](02_hands_on/03_remote_repo.md)
   - [Pull request](./02_hands_on/04_pull_request.md)
   - [Práctica guiada - Clonar repo, creación de ramas, primer commit y pull request](./02_hands_on/05_Guided_practice-Cloning_repo_branch_creation_first_commit_pull_request.md)
+
 - Capítulo 3 - Metodología Prefapp
   - [Estrategia de bifurcación - TBD vs. Git Flow](./03_prefapp_methodology/01_forking_strategy.md)
   - [Estrategia de fusión - Merge vs squash vs rebase vs pull](./03_prefapp_methodology/02_merge_strategy.md)
   - [Manejo de Projects en Backlog con GitHub](./03_prefapp_methodology/03_project_management_backlog.md)
   - [Práctica guiada: creación de ramas, pull request y preparación de trabajo mediante issues (Projects)](./03_prefapp_methodology/04_Guided_practice-branch-pr-issue.md)
+
 - Capítulo 4 - Worflows
   - [¿Qué es un workflow?](./04_workflow/01_what_is_workflow.md)
   - [Github Actions avanzado](./04_workflow/02_advanced_github_actions.md)
   - [Workflows utilizados en Prefapp](./04_workflow/03_used_in_prefapp.md)
-  - [Práctica guiada - Crear un workflow](./04_workflow/04_guided_practice-creating_workflow.md)
+  - [Workflows utilizados en Prefapp: release-please](./04_workflow/04_release-please.md)
+  - [Workflows utilizados en Prefapp: release-pipeline](./04_workflow/05_release-pipeline.md)
+  - [Workflows utilizados en Prefapp: build_and_dispatch](./04_workflow/06_build_and_dispatch.md)
+  - [Workflows utilizados en Prefapp: PR-verify](./04_workflow/07_pr_verify.md)
+  - [Práctica guiada - Crear un workflow](./04_workflow/08_guided_practice-creating_workflow.md)
+
 - Capítulo 5 - Posibles conflictos y recapitulación

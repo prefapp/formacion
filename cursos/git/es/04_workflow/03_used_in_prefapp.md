@@ -11,7 +11,13 @@
 
 Ya hemos visto una pequeña explicación de GitOps, pero veamos gráficamente los workflows para tener una automatización completa en el ciclo de vida del software:
 
-![](../../_media/04_workflow/gitops_prefapp.png)
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/04_workflow/gitops_prefapp.webp)
+
+  </div>
+</div>
 
 1. Se crea el código fuente y se sube a un repositorio de código fuente mediante una Pull Request.
 2. La Pull Request activa un workflow que testea el código fuente.
@@ -22,18 +28,24 @@ Ya hemos visto una pequeña explicación de GitOps, pero veamos gráficamente lo
 
 ¡Genial! Con esto se ha automatizado casi todo el ciclo de vida del software, desde la creación del código fuente hasta el despliegue de la aplicación.
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
 ![](../../_media/04_workflow/cicd.webp)
+
+  </div>
+</div>
 
 Antes de seguir, es recomendable una lectura de las buenas prácticas para crear workflows en GitHub Actions:
 
 - Fortalecer la seguridad en Github Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
 
-Vamos a ver paso a paso algunos de los workflows más usados en Prefapp para poder introducirnos en el mundo de la automatización de GitHub Actions:
+Vamos a ver a examinar algunos de los workflows más usados en Prefapp para poder introducirnos en el mundo de la automatización de GitHub Actions:
 
-- [PR-verify](./04_pr_verify.md)
-- [release-please](./05_release-please.md)
-- [build_and_dispatch](./06_build_and_dispatch.md)
-- [publish-chart](./07_publish-chart.md)
+- [release-please](./05_release-please.md) (paso 4)
+- [release-pipeline](./07_release-pipeline.md) (paso 4)
+- [build_and_dispatch](./06_build_and_dispatch.md) (paso 3)
+- [PR-verify](./04_pr_verify.md) (paso 2)
 
 ---
 
