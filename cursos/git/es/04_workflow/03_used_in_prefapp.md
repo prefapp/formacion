@@ -40,7 +40,7 @@ Antes de seguir, es recomendable una lectura de las buenas prácticas para crear
 
 - Fortalecer la seguridad en Github Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
 
-Vamos a ver a examinar algunos de los workflows más usados en Prefapp para poder introducirnos en el mundo de la automatización de GitHub Actions:
+Vamos a examinar algunos de los workflows más usados en Prefapp para poder introducirnos en el mundo de la automatización de GitHub Actions:
 
 - [release-please](./05_release-please.md) (paso 4)
 - [release-pipeline](./07_release-pipeline.md) (paso 4)

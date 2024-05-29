@@ -4,6 +4,8 @@
 El workflow **Build and Dispatch** está diseñado para construir y publicar imágenes de contenedor automáticamente cuando se realiza un push a la rama principal o cuando se crea un release (prereleased o released) en el repositorio. Además, se encarga de despachar cambios para su despliegue en otros sistemas. 
 
 
+![](../../_media/04_workflow/build_dispatch.webp)
+
 ## Evento Trigger: `release` y `push`
 
 Este workflow se activa mediante dos eventos:

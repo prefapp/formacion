@@ -3,6 +3,7 @@
 
 El workflow **release-pipeline** está diseñado para facilitar la publicación de nuevos paquetes mediante la automatización de la creación de ramas, la actualización de índices de repositorios Helm, y la generación de Pull Requests (PR) en GitHub. 
 
+![](../../_media/04_workflow/release-pipeline.webp)
 
 ## Evento Trigger: `workflow_dispatch`
 

@@ -76,7 +76,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
 <table style="width:100%; max-width:1200px; margin:0 auto; border-collapse:collapse; overflow-x:auto; display:block;">
     <thead>
         <tr>
-            <th>Característica</th>
+            <th></th>
             <th>Github Actions</th>
             <th>Gitlab CI/CD</th>
             <th>Jenkins</th>
@@ -88,6 +88,17 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td><strong>Logo</strong></td>
+            <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/githubactions/githubactions-original.svg" alt="GitHub Logo" width="50"></td>
+            <td><img src="https://about.gitlab.com/images/ci/gitlab-ci-cd-logo_2x.png" alt="GitLab Logo" width="50"></td>
+            <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/jenkins/jenkins-original.svg" alt="Jenkins Logo" width="50"></td>
+            <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/apacheairflow/apacheairflow-original.svg" alt="Apache Airflow Logo" width="50"></td>
+            <td><img src="https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/azuredevops/azuredevops-original.svg" alt="Azure DevOps Logo" width="50"></td>
+            <td><img src="https://symbols.getvecta.com/stencil_12/3_aws-codepipeline.670ed60e36.svg" alt="AWS CodePipeline Logo" width="50"></td>
+            <td><img src="https://avatars.githubusercontent.com/u/38220399?s=200&v=4" alt="Google Cloud Build Logo" width="50"></td>
+            <td><img src="https://wac-cdn.atlassian.com/dam/jcr:a17e66da-d0a1-4912-878c-6e103111b9df/Bitbucket-icon-blue-rgb.svg?cdnVersion=1755" alt="Bitbucket Pipelines Logo" width="50"></td>
+        </tr>
         <tr>
             <td><strong>Empresa propietaria</strong></td>
             <td>GitHub (Microsoft)</td>
