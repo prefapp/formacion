@@ -1,4 +1,4 @@
-![logo](_media/icon.png)
+![logo](../_media/icon.png)
 
 # Git &nbsp;<small>:shipit:</small>
 
