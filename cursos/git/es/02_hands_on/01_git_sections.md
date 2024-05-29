@@ -11,7 +11,7 @@ Desde el directorio GIT en local se subirá al repositorio remoto (Remote repo) 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/ciclos-de-trabajo-Git.png)
+![](../../_media/02_hands_on/ciclos-de-trabajo-Git.png)
 
   </div>
 </div>
@@ -31,7 +31,7 @@ Cuando quieres añadir una nueva función o solucionar un error, independienteme
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/branch.png)
+![](../../_media/02_hands_on/branch.png)
 
   </div>
 </div>
@@ -54,7 +54,7 @@ La siguiente imagen ilustra un ejemplo de ramificación:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/branch-git.png)
+![](../../_media/02_hands_on/branch-git.png)
 
   </div>
 </div>

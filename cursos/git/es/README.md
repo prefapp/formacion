@@ -21,7 +21,7 @@ Seas desarrollador, diseñador... de marketing, de recursos humanos... para gest
 <div style="text-align: center;">
   <div style="margin: 0 auto">
 
-![](_media/README/development_git.png)
+![](../_media/README/development_git.png)
 
   </div>
 </div>

@@ -31,7 +31,7 @@ _Extraído del artículo de Rouan Wilsenach ["Ship / Show / Ask"](https://martin
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/ship_show_ask.png)
+![](../../_media/02_hands_on/ship_show_ask.png)
 
   </div>
 </div>
@@ -54,7 +54,7 @@ Funciona muy bien cuando:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/ship.png)
+![](../../_media/02_hands_on/ship.png)
 
   </div>
 </div>
@@ -78,7 +78,7 @@ Funciona muy bien cuando:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/show.png)
+![](../../_media/02_hands_on/show.png)
 
   </div>
 </div>
@@ -101,7 +101,7 @@ Funciona muy bien cuando:
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
 
-![](../_media/02_hands_on/ask.png)
+![](../../_media/02_hands_on/ask.png)
 
   </div>
 </div>
