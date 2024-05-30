@@ -303,7 +303,7 @@ Aquí, los metadatos especifican la categoría del lenguaje del workflow de inic
 
 ## GitOps
 
-GitOps es una metodología para la gestión de la infraestructura y las aplicaciones basada en Git. En lugar de depender de herramientas y procesos manuales, GitOps utiliza repositorios Git como fuente única para todo lo relacionado con la infraestructura y las aplicaciones. Esto incluye la configuración de la infraestructura, las definiciones de las aplicaciones, los scripts de despliegue y cualquier otro artefacto necesario para el ciclo de vida de desarrollo y operaciones.
+GitOps es una metodología para la gestión de la infraestructura y las aplicaciones basada en Git. En lugar de depender de herramientas y procesos manuales, GitOps utiliza repositorios Git como fuente única para todo lo relacionado con la infraestructura y las aplicaciones. Esto incluye la configuración de la infraestructura, las definiciones de las aplicaciones, los scripts de despliegue y cualquier otro artefacto o recurso necesario para el ciclo de vida de desarrollo y operaciones.
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
@@ -313,6 +313,7 @@ GitOps es una metodología para la gestión de la infraestructura y las aplicaci
   </div>
 </div>
 
-Lectura recomendada: https://www.redhat.com/es/topics/devops/what-is-gitops
+- Lectura recomendada "GitOps: ¿qué es y cuáles son sus ventajas?" https://www.redhat.com/es/topics/devops/what-is-gitops 👀
+- Lista de actions y recursos relacionados https://github.com/sdras/awesome-actions?tab=readme-ov-file 👀
 
 En el siguiente módulo veremos ejemplos prácticos GitOps que se utilizan en Prefapp. 
