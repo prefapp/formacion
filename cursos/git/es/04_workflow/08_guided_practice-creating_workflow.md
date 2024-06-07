@@ -1,7 +1,9 @@
 
 # Práctica guiada - Crear un workflow
 
-Vamos a hacer un práctica sencilla para ver cómo se crea un workflow en GitHub Actions desde 0. Lo que haremos es simplemente enviar un saludo en la consola, que este coloreado y que se ejecute en respuesta a un evento "pull request". También se podrá ejecutar manualmente personalizando el mensaje de saludo.
+Vamos a hacer un práctica sencilla para ver cómo se crea un workflow en GitHub Actions desde 0. Después de lo visto hasta ahora esta práctica nos servirá para repasar conceptos. 
+
+Simplemente enviaremos un saludo a la consola que podremos ver en el panel de Github Action. Estará coloreado y se ejecutará en respuesta a un evento "pull request". Con esta base, iremos añadiendo complejidad al workflow.
 
 Recordad que el workflow se debe guardar en la carpeta `.github/workflows` de vuestro repositorio.
 
@@ -11,7 +13,7 @@ Empezamos con el nombre, debe ser descriptivo y fácil de identificar:
 name: saludo-color 🌈
 ```
 
-Y el trigger, hemos dicho que debe ser pull request y manual:
+El trigger hemos dicho que debe ser pull request, pero añadimos también la opción manual:
 
 ```yaml
 on:
@@ -19,7 +21,7 @@ on:
   workflow_dispatch:
 ```
 
-Necesitaremos unas variables de entorno para definir colores y mensajes:
+Necesitamos unas variables de entorno para definir colores y un mensaje standard. Estas variables serán globales para todo el workflow:
 
 ```yaml
   SALUDO: "Hola "
@@ -33,7 +35,7 @@ Necesitaremos unas variables de entorno para definir colores y mensajes:
   NORMAL: \033[0;39m
 ```
 
-Ahora, vamos a definir algunos aspectos del job:
+Ahora, vamos a definir algunos aspectos del job que afectarán dentro de este ámbito a los steps que anidemos en él:
 - Nombre. [Más info](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#name)
 - Sistema operativo. Le asignamos una Ubuntu latest. [Más info](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on)
 - Variables de entorno. Vamos a especificar una variable específica para el job. [Más info](https://docs.github.com/en/actions/learn-github-actions/variables)
@@ -41,7 +43,7 @@ Ahora, vamos a definir algunos aspectos del job:
 ```yaml
 jobs:
   pruebas:
-    name: Prueba saludo 🏗️
+    name: Pruebas 🏗️
     runs-on: ubuntu-latest
     env:
       NOMBRE: "Mundo"
@@ -69,17 +71,46 @@ Y el segundo step será el encargado de enviar el saludo. Además añadimos la f
           echo -e "$CYAN $SALUDO$NOMBRE. Hoy es $DIA! cyan"
           echo -e "$WHITE $SALUDO$NOMBRE. Hoy es $DIA! white"
           echo -e "$NORMAL $SALUDO$NOMBRE. Hoy es $DIA! normal"
-          echo -e ""$NORMAL $SALUDO$RED$NOMBRE. $GREEN Hoy es $YELLOW$DIA! varios""
+          echo -e "$NORMAL $SALUDO$RED$NOMBRE. $GREEN Hoy es $YELLOW$DIA! varios $NORMAL"
 
         env:
-          DIA: Lunes
+          DIA: "Lunes"
 ```
 
-Con este workflow hemos visto cada parte de un workflow básico. Ahora, vamos a ver cómo se vería en la interfaz de GitHub Actions:
+Con este workflow hemos visto cada parte de un workflow básico. 
+
+Si añadimos estos cambios y los subimos a una pull request, podremos ver que se dispará el workflow. En la interfaz de GitHub Actions se ve así:
 
 ![](../../_media/04_workflow/workflow-example.webp)
+
+¡Genial! Vamos a modificar el workflow para ver algo más complejo. Vamos a añadir un step que se ejecute en un contenedor ubuntu 20.04 ([Más info de standard hosted](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)). Con esto conseguiremos que el step sea paralelo. Envía un saludo en color. 
+
+```yaml
+      - name: Ejecutar en paralelo 🐳
+        uses: ubuntu-20.04
+        with:
+          entrypoint: /bin/sh
+        run: echo -e "$GREEN Hola desde un contenedor! $NORMAL"
+```
+
+Además, vamos a recoger información del contenedor para escribirlo en un documento del repositorio. Podemos recoger información del contenedor con los comandos `whoami`, `free -h` y `ps aux`. Vamos a añadir un step para recoger esta información y escribirla en un archivo `info.txt`.
+
+```yaml
+      - name: Recoger información del contenedor 📝
+        with:
+          entrypoint: /bin/sh
+        run: |
+          whoami > info.txt
+          free -h >> info.txt
+          ps aux >> info.txt
+```
+
 
 
 !Enhorabuena! 🎉 Has llegado al final de este capítulo. Ahora puedes seguir prácticando con otros workflows que te interesen. Algunas ideas: https://github.com/sdras/awesome-actions/blob/main/ideas.md 
 
-Además, te animo a que le eches un vistazo al curso de [Dagger](https://dagger.io/) con el que podrás personalizar mucho más cada workflow: https://prefapp.github.io/formacion/cursos/dagger/#/
+Otros recursos interesantes:
+- [Actions Runners Controller (ARC)](https://github.com/actions/actions-runner-controller) - es un operador de Kubernetes que orquesta y escala ejecutores autoalojados para GitHub Actions. 
+- [Dagger](https://dagger.io/) - es un lenguaje de programación de flujo de trabajo de código abierto que permite a los desarrolladores definir flujos de trabajo de CI/CD como código. Tenemos un [curso de Dagger](https://prefapp.github.io/formacion/cursos/dagger/#/) en Prefapp.
+- [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - Github Actions tiene soporte nativo en Docker, con lo cuál puedes probarlo en local o integrarlo con otras herramientas como Kubernetes o Jenkins.
+- [Caracterísiticas avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora la documentación de Github que merece mucho la pena: Almacenamiento de secretos, jobs dependientes, matrices de variables, caché, etc
