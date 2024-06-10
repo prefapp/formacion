@@ -15,7 +15,7 @@ Precisamos:
 Creamos un ficheiro baleiro co nome Dockerfile e imos paso a paso:
 
 ```dockerfile
-FROM ubuntu
+FROM ubuntu:22.04
 ```
 
 O primeiro que declaramos é que a nosa imaxe vaise basear nunha ubuntu. A sentencia [FROM](https://docs.docker.com/engine/reference/builder/#from) establece unha imaxe de base, por suposto poderíamos incluir imaxes dun registry privado.
@@ -69,7 +69,7 @@ Este comando de arranque implica que, se no docker-run ou no docker-create non e
 Con isto, temos xa o noso Dockerfile:
 
 ```dockerfile
-FROM ubuntu
+FROM ubuntu:22.04
 
 WORKDIR /home
 
