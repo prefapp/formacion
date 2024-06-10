@@ -1,0 +1,20 @@
+services:
+  app:
+    build: 
+      dockerfile: Dockerfile_v2
+    environment:
+      CURSO: kanjis
+      DOCENTE: kanji-sensei
+      MYSQL_HOST: mysql
+      MYSQL_USER: meiga
+      MYSQL_PASSWORD: meiga-pass
+      MYSQL_DATABASE: meiga
+    ports:
+      - 8087:80
+  mysql:
+    image: mysql:5.7.44
+    environment:
+      MYSQL_DATABASE: meiga
+      MYSQL_USER: meiga
+      MYSQL_PASSWORD: meiga-pass
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
