@@ -81,7 +81,7 @@ Con este workflow hemos visto cada parte de un workflow básico.
 
 Si añadimos estos cambios y los subimos a una pull request, podremos ver que se dispará el workflow. En la interfaz de GitHub Actions se ve así:
 
-![](../../_media/04_workflow/workflow-example.webp)
+![](../../_media/04_workflow/workflow-example01.webp)
 
 ¡Genial! Vamos a modificar el workflow para ver algo más complejo. Vamos a añadir un step que se ejecute en un contenedor ubuntu 20.04 ([Más info de standard hosted](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)). Con esto conseguiremos que el step sea paralelo. Envía un saludo en color. 
 
@@ -103,8 +103,79 @@ Además, vamos a recoger información del contenedor para escribirlo en un docum
           whoami > info.txt
           free -h >> info.txt
           ps aux >> info.txt
+          cat info.txt
 ```
 
+![](../../_media/04_workflow/workflow-example02.webp)
+
+Por último vamos a añadir un nuevo job que dependa del job `paralelo`. En este caso, vamos a instalar Bats, un framework de testing para Bash. 
+
+```yaml
+  check-bats-version:
+    runs-on: ubuntu-latest
+    needs: paralelo
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
+      - name: Setup Node.js 🚀
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Bats 🦇
+        run: npm install -g bats
+      - name: Check Bats version 🦇
+        run: bats -v
+```
+
+E incluimos otro step para ejecutar un test de Bats. 
+
+```yaml
+      - name: Ejecutar test de Bats 🦇
+        run: bats test.bats
+```
+
+Para tener el documento info.txt creado en otro runner, en el job `paralelo`, debemos añadir un step que lo suba a un artefacto.
+
+```yaml
+      - name: Upload info.txt 📤
+        uses: actions/upload-artifact@v4
+        with:
+          name: info
+          path: ./info.txt
+```
+
+Y luego, añadimos un step en este job para descargar el artefacto.
+
+```yaml
+      - name: Download info.txt 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: info
+          path: ./info.txt
+```
+
+Ahora ya podemos probar un test ejecutando ls info.txt para comprobar si todo ha ido bien. Creamos el siguiente fichero `test.bats` en la raíz:
+
+```bash
+@test "Check if the file exists" {
+  run ls info.txt
+  [ "$status" -eq 0 ]
+}
+```
+
+![](../../_media/04_workflow/workflow-example03.webp)
+
+La visión general del workflow:
+
+![](../../_media/04_workflow/workflow-example04.webp)
+
+1. Se puede ver como los jobs `Pruebas` y `Paralelo` se ejecutan en paralelo.
+2. Se puede ver la dependencia del job `Check Bats version` del job `Paralelo`.
+3. El artifact que hemos subido en el job `Paralelo` queda en el workflow con un fichero .zip descargable.
+
+Ficheros: 
+- [color-test.yaml](../../_media/04_workflow/color-test.yaml)
+- [test.bats](../../_media/04_workflow/test.bats)
 
 
 !Enhorabuena! 🎉 Has llegado al final de este capítulo. Ahora puedes seguir prácticando con otros workflows que te interesen. Algunas ideas: https://github.com/sdras/awesome-actions/blob/main/ideas.md 
