@@ -81,7 +81,7 @@ Y el segundo step será el encargado de enviar el saludo. Además añadimos la f
 
 Con este workflow hemos visto cada parte de un workflow básico. Además, hemos definido variables en distintos `scopes` para ver cómo se comportan.
 
-Si añadimos estos cambios a una rama y los subimos, podremos ver que al crear la pull request se dispará el workflow. A cada cambio que efectuemos en la rama, se reflejará en la pull request y provocará que se disparé el trigger de nuevo. En la interfaz de GitHub Actions se ve así:
+Si añadimos estos cambios a una rama y los subimos, podremos ver que al crear la pull request se dispará el workflow. A cada cambio que efectuemos en la rama, se reflejará en la pull request y provocará que se dispare el trigger de nuevo. En la interfaz de GitHub Actions se ve así:
 
 ![](../../_media/04_workflow/workflow-example01.webp)
 
@@ -99,7 +99,7 @@ Vamos a añadir un step que se ejecute en un nuevo runner, en concreto, en un co
         run: echo -e "$GREEN Hola desde un contenedor! $NORMAL"
 ```
 
-Además, vamos a recoger información del contenedor con los comandos `whoami`, `free -h` y `ps aux` para escribirlo guardarlo en el fichero `info.txt` (Se guarda dentro del runner) y lo mostraremos. 
+Además, vamos a recoger información del contenedor con los comandos `whoami`, `free -h` y `ps aux` para guardarlo en el fichero `info.txt` (Se guarda dentro del runner) y lo mostraremos. 
 
 ```yaml
       - name: Recoger información del contenedor 📝
@@ -193,4 +193,4 @@ Ficheros:
 - [Actions Runners Controller (ARC)](https://github.com/actions/actions-runner-controller) - es un operador de Kubernetes que orquesta y escala ejecutores autoalojados para GitHub Actions. 
 - [Dagger](https://dagger.io/) - es un lenguaje de programación de flujo de trabajo de código abierto que permite a los desarrolladores definir flujos de trabajo de CI/CD como código. Tenemos un [curso de Dagger](https://prefapp.github.io/formacion/cursos/dagger/#/) en Prefapp.
 - [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - Github Actions tiene soporte nativo en Docker, con lo cuál puedes probarlo en local o integrarlo con otras herramientas como Kubernetes o Jenkins.
-- [Caracterísiticas avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora la documentación de Github que merece mucho la pena: Almacenamiento de secretos, jobs dependientes, matrices de variables, caché, etc
+- [Características avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora la documentación de Github que merece mucho la pena: Almacenamiento de secretos, jobs dependientes, matrices de variables, caché, etc
