@@ -66,6 +66,14 @@ Los workflows en GitHub Actions se escriben en sintaxis YAML. Por lo tanto, los 
 
 Recuerda: Los archivos de workflow deben almacenarse en un directorio dedicado en el repositorio llamado `.github/workflows.`
 
+<div style="text-align: center;">
+  <div style="margin: 0 auto;">
+
+![](../../_media/04_workflow/github-actions-workflow-components.webp)
+
+  </div>
+</div>
+
 #### name
 
 Se utiliza para establecer el nombre del workflow, del jobs o del step. GitHub Actions muestra este nombre en la pestaña de acciones del repositorio. Si falta name, Actions mostrará la ruta relativa del archivo de workflow desde el directorio raíz del repositorio. Los emojis pueden agregar un toque identificativo y colorido para hacerlos más visuales
