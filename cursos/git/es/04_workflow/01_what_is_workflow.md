@@ -301,20 +301,19 @@ Más info: https://en.wikipedia.org/wiki/Comparison_of_source-code-hosting_facil
 
 ### GitHub Actions
 
-Ahora, centrándonos en Github Actions, vamos a ver una descripción básica. Como hemos comentado, es un servicio de integración continua y entrega continua (CI/CD) que permite automatizar tareas en un repositorio de GitHub. Se basa en la ejecución de workflows, que son conjuntos de tareas que se ejecutan en un servidor de GitHub. Los workflows se definen en un archivo YAML que se almacena en el directorio `.github/workflows` del repositorio.
+GitHub Actions es un servicio de integración continua y entrega continua (CI/CD) que automatiza tareas en repositorios de GitHub mediante la ejecución de **workflows**, definidos en archivos YAML en el directorio `.github/workflows`. 
 
-Es un servicio gratuito para repositorios públicos y privados, con un límite de 2000 minutos de ejecución al mes para los repositorios privados. Para los repositorios públicos, no hay límite de tiempo de ejecución.
+Un **workflow** es un **DAG (Directed Acyclic Graph)**, donde los pasos se ejecutan en un orden específico, garantizando que las tareas se completen sin ciclos de dependencia. Para más detalles sobre DAGs, consulta [este artículo](https://www.linkedin.com/pulse/directed-acyclic-graphs-its-application-workflow-management-wrba?utm_source=share&utm_medium=member_ios&utm_campaign=share_via).
 
-GitHub Actions se integra con GitHub, lo que permite ejecutar workflows en respuesta a eventos de GitHub, como la creación de un pull request, el push de un commit, la creación de un tag, etc. También se pueden ejecutar workflows de forma manual o programada.
+GitHub Actions es gratuito para repositorios públicos y tiene un límite de 2000 minutos de ejecución al mes para repositorios privados. Los workflows pueden ejecutarse en respuesta a eventos en GitHub (como pull requests o commits), de forma manual o programada.
 
-Proporciona un conjunto de acciones predefinidas que se pueden utilizar en los workflows, así como la posibilidad de crear acciones personalizadas.
+Ofrece acciones predefinidas y la opción de crear acciones personalizadas. Además, puedes configurar **runners** en servidores propios o en la nube, además de los runners alojados por GitHub.
 
-También existe la posibilidad de crear runners en un servidor propio. Los runners de GitHub son máquinas virtuales alojadas por GitHub que ejecutan los workflows, pero la posibilidad de configurarlos en servidores propios o en la nube puede aportar ventajas.
-
-En el siguiente capítulo, vamos a ver más en detalle cómo funcionan los workflows de GitHub Actions y cómo nos puede facilitar la vida el CI/CD para el desarrollo de software propio o de nuestros clientes.
+En el siguiente capítulo, exploraremos en detalle cómo GitHub Actions y los workflows pueden facilitar el desarrollo de software.
 
 Enlaces de interés:
 - [GitHub Pricing](https://github.com/pricing)
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
 - [GitHub Marketplace](https://github.com/marketplace?type=actions)
 - [GitHub Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)
+
