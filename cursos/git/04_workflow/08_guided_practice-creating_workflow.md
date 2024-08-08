@@ -191,5 +191,5 @@ Parabéns! 🎉 Chegaches ó final deste capítulo. Agora podes seguir practican
 
 - [Actions Runners Controller (ARC)](https://github.com/actions/actions-runner-controller) - operador de Kubernetes que orquestra e escala executores autoaloxados para GitHub Actions.
 - [Dagger](https://dagger.io/) - linguaxe de programación de fluxo de traballo de código aberto que permite ós desarrolladores definir fluxos de traballo de CI/CD coma código. Temos un [curso de Dagger](https://prefapp.github.io/formacion/cursos/dagger/#/) en Prefapp.
-- [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - Github Actions ten soporte nativo en Docker, co cal podes probalo en local ou integralo con outras ferramentas como Kubernetes ou Jenkins.
+- [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - GitHub Actions ten soporte nativo en Docker, co cal podes probalo en local ou integralo con outras ferramentas como Kubernetes ou Jenkins.
 - [Características avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora a documentación de Github, que paga moito a pena: almacenamento de segredos, jobs dependentes, matrices de variables, caché, etc

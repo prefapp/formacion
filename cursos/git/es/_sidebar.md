@@ -18,7 +18,7 @@
 
 - Capítulo 4 - Worflows
   - [¿Qué es un workflow?](./04_workflow/01_what_is_workflow.md)
-  - [Github Actions avanzado](./04_workflow/02_advanced_github_actions.md)
+  - [GitHub Actions avanzado](./04_workflow/02_advanced_github_actions.md)
   - [Workflows utilizados en Prefapp](./04_workflow/03_used_in_prefapp.md)
   - [Workflows utilizados en Prefapp: release-please](./04_workflow/04_release-please.md)
   - [Workflows utilizados en Prefapp: release-pipeline](./04_workflow/05_release-pipeline.md)

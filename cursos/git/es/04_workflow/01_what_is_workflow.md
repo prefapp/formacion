@@ -64,7 +64,7 @@ Comprender estos conceptos es crucial para diseñar y gestionar workflows eficac
 
 ## Servidores para la automatización
 
-Existen diferentes servidores que permiten la automatización de tareas. Este curso se centrará en Github Actions, ya que es el más usado en Prefapp, pero veamos en una tabla comparativo con otros servidores que también utilizamos.
+Existen diferentes servidores que permiten la automatización de tareas. Este curso se centrará en GitHub Actions, ya que es el más usado en Prefapp, pero veamos en una tabla comparativo con otros servidores que también utilizamos.
 
 
 <table>
@@ -90,7 +90,7 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
     <thead>
         <tr>
             <th></th>
-            <th>Github Actions</th>
+            <th>GitHub Actions</th>
             <th>Gitlab CI/CD</th>
             <th>Jenkins</th>
             <th>Apache Airflow</th>
@@ -299,22 +299,22 @@ Existen diferentes servidores que permiten la automatización de tareas. Este cu
 Más info: https://en.wikipedia.org/wiki/Comparison_of_source-code-hosting_facilities
 
 
-### Github Actions
+### GitHub Actions
 
-Ahora, centrándonos en Github Actions, vamos a ver una descripción básica. Como hemos comentado, es un servicio de integración continua y entrega continua (CI/CD) que permite automatizar tareas en un repositorio de Github. Se basa en la ejecución de workflows, que son conjuntos de tareas que se ejecutan en un servidor de Github. Los workflows se definen en un archivo YAML que se almacena en el directorio `.github/workflows` del repositorio.
+Ahora, centrándonos en Github Actions, vamos a ver una descripción básica. Como hemos comentado, es un servicio de integración continua y entrega continua (CI/CD) que permite automatizar tareas en un repositorio de GitHub. Se basa en la ejecución de workflows, que son conjuntos de tareas que se ejecutan en un servidor de GitHub. Los workflows se definen en un archivo YAML que se almacena en el directorio `.github/workflows` del repositorio.
 
 Es un servicio gratuito para repositorios públicos y privados, con un límite de 2000 minutos de ejecución al mes para los repositorios privados. Para los repositorios públicos, no hay límite de tiempo de ejecución.
 
-Github Actions se integra con Github, lo que permite ejecutar workflows en respuesta a eventos de Github, como la creación de un pull request, el push de un commit, la creación de un tag, etc. También se pueden ejecutar workflows de forma manual o programada.
+GitHub Actions se integra con GitHub, lo que permite ejecutar workflows en respuesta a eventos de GitHub, como la creación de un pull request, el push de un commit, la creación de un tag, etc. También se pueden ejecutar workflows de forma manual o programada.
 
 Proporciona un conjunto de acciones predefinidas que se pueden utilizar en los workflows, así como la posibilidad de crear acciones personalizadas.
 
-También existe la posibilidad de crear runners en un servidor propio. Los runners de Github son máquinas virtuales alojadas por Github que ejecutan los workflows, pero la posibilidad de configurarlos en servidores propios o en la nube puede aportar ventajas.
+También existe la posibilidad de crear runners en un servidor propio. Los runners de GitHub son máquinas virtuales alojadas por GitHub que ejecutan los workflows, pero la posibilidad de configurarlos en servidores propios o en la nube puede aportar ventajas.
 
-En el siguiente capítulo, vamos a ver más en detalle cómo funcionan los workflows de Github Actions y cómo nos puede facilitar la vida el CI/CD para el desarrollo de software propio o de nuestros clientes.
+En el siguiente capítulo, vamos a ver más en detalle cómo funcionan los workflows de GitHub Actions y cómo nos puede facilitar la vida el CI/CD para el desarrollo de software propio o de nuestros clientes.
 
 Enlaces de interés:
-- [Github Pricing](https://github.com/pricing)
-- [Github Actions Docs](https://docs.github.com/en/actions)
-- [Github Marketplace](https://github.com/marketplace?type=actions)
-- [Github Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)
+- [GitHub Pricing](https://github.com/pricing)
+- [GitHub Actions Docs](https://docs.github.com/en/actions)
+- [GitHub Marketplace](https://github.com/marketplace?type=actions)
+- [GitHub Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)

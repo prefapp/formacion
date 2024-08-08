@@ -33,7 +33,7 @@ Xenial! Con isto se automatizou case todo o ciclo de vida do software, dende a c
 
 Antes de seguir, é recomendable unha lectura das boas prácticas para crear workflows en GitHub Actions:
 
-- Fortalecer a seguridade en Github Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions 👀
+- Fortalecer a seguridade en GitHub Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions 👀
 
 Imos examinar algúns dos workflows máis usados en Prefapp para poder introducirnos no mundo da automatización de GitHub Actions:
 

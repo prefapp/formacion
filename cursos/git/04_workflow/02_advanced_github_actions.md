@@ -1,19 +1,19 @@
 
-# Github Actions avanzado
+# GitHub Actions avanzado
 
 ![](../_media/04_workflow/github_actions.webp)
 
 
-Vimos de ver brevemente que son as Github Actions, pero agora imos afondar un pouco máis nelas. Neste capítulo exploraremos como se configuran, como se executan e como se poden personalizar para satisfacer necesidades específicas.
+Vimos de ver brevemente que son as GitHub Actions, pero agora imos afondar un pouco máis nelas. Neste capítulo exploraremos como se configuran, como se executan e como se poden personalizar para satisfacer necesidades específicas.
 
 GitHub Actions é unha plataforma de integración continua e entrega continua (CI/CD) que automatiza as pipelines de construción, proba e despregamento. Permíteche crear fluxos de traballo que constrúen e proban tódalas pull requests a un repositorio, ou despregar pull requests fusionadas no teu entorno de produción.
 
 Os workflows defínense no directorio .github/workflow do repositorio. Podes definir múltiples workflows, cada un realizando un conxunto diferente de accións. Por exemplo, un workflow pode especificar como crear e probar unha pull request, mentres que outro workflow pode despregar automaticamente unha aplicación cando se crea unha nova release.
 
-Para unha referencia máis detallada, podes consultar a [documentación oficial de Github Actions](https://docs.github.com/en/actions/using-workflows).
+Para unha referencia máis detallada, podes consultar a [documentación oficial de GitHub Actions](https://docs.github.com/en/actions/using-workflows).
 
 
-## Conceptos dos workflows en Github Actions
+## Conceptos dos workflows en GitHub Actions
 
 ### Workflow Triggers
 
@@ -60,7 +60,7 @@ Se un job ou workflow concorrente está na cola e outro job ou workflow está en
 
 ## Exemplos de Workflows de GitHub Actions: sintaxe e comandos
 
-### Sintaxe das Github Actions
+### Sintaxe das GitHub Actions
 
 Os workflows en GitHub Actions escríbense en sintaxe YAML. Polo tanto, os arquivos de workflow teñen unha extensión .yml ou .yaml.
 
@@ -256,7 +256,7 @@ Isto amosará a seguinte saída no rexistro:
 
 Os workflows de inicio son modelos de workflows que os usuarios poden personalizar segundo as súas necesidades e pór en uso. GitHub proporciona moitos workflows de inicio para categorías como despregamento continuo, automatización e seguridade para axudar ós usuarios a comezar.
 
-Doc Github: https://docs.github.com/en/actions/learn-github-actions/using-starter-workflows 
+Doc GitHub: https://docs.github.com/en/actions/learn-github-actions/using-starter-workflows 
 
 Para crear un novo workflow de inicio:
 

@@ -11,7 +11,7 @@ A continuación, instalaremos Git en los diferentes tipos de sistemas operativos
 Para instalar Git en Windows tenemos dos opciones principales:
 1. **mysisGit**: debemos ir al enlace [Git para Windows](https://git-scm.com/download/win), elegir nuestro instalador o tipo de instalador y proceder con la descarga.
 
-2. **Github para Windows** es otra forma de instalar Git en nuestra computadora con Windows. Este instalador además del CLI incluye una interfaz de usuario muy completa e intuitiva, que puede facilitar mucho el trabajo.
+2. **GitHub para Windows** es otra forma de instalar Git en nuestra computadora con Windows. Este instalador además del CLI incluye una interfaz de usuario muy completa e intuitiva, que puede facilitar mucho el trabajo.
 
 > Lo mejor es comenzar con Git CLI para familiarizarse con los comandos.
 
@@ -67,7 +67,7 @@ Veamos las formas más comunes:
     $ sudo port install git
     ```
 
-4. Instalador de Git en OS X en el sitio web [Github Desktop](https://desktop.github.com/).
+4. Instalador de Git en OS X en el sitio web [GitHub Desktop](https://desktop.github.com/).
 
 ### 1.4 Instalación en VSCode
 

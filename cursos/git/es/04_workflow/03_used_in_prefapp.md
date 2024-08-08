@@ -33,7 +33,7 @@ Ya hemos visto una pequeña explicación de lo que es GitOps, ahora vamos a ver 
 
 Antes de seguir, es recomendable una lectura de las buenas prácticas para crear workflows en GitHub Actions:
 
-- Fortalecer la seguridad en Github Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions 👀
+- Fortalecer la seguridad en GitHub Actions: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions 👀
 
 Vamos a examinar algunos de los workflows más usados en Prefapp para poder introducirnos en el mundo de la automatización de GitHub Actions:
 

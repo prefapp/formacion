@@ -3,7 +3,7 @@
 
 Ya hemos visto opciones avanzadas en los anteriores ejemplos de [Workflows utilizados en Prefapp](./04_workflow/03_used_in_prefapp). Ahora vamos a hacer una práctica sencilla que nos servirá para repasar conceptos creando un workflow en GitHub Actions desde 0.
 
-Para empezar, simplemente enviaremos un saludo a la consola que podremos ver en el panel de Github Action. Estará coloreado y se ejecutará en respuesta a un evento "pull request". Con esta base, iremos añadiendo complejidad.
+Para empezar, simplemente enviaremos un saludo a la consola que podremos ver en el panel de GitHub Action. Estará coloreado y se ejecutará en respuesta a un evento "pull request". Con esta base, iremos añadiendo complejidad.
 
 ⚠️ *Recordad que el workflow se debe guardar en la carpeta* `.github/workflows` *de vuestro repositorio.*
 
@@ -192,5 +192,5 @@ Ficheros:
 
 - [Actions Runners Controller (ARC)](https://github.com/actions/actions-runner-controller) - es un operador de Kubernetes que orquesta y escala ejecutores autoalojados para GitHub Actions. 
 - [Dagger](https://dagger.io/) - es un lenguaje de programación de flujo de trabajo de código abierto que permite a los desarrolladores definir flujos de trabajo de CI/CD como código. Tenemos un [curso de Dagger](https://prefapp.github.io/formacion/cursos/dagger/#/) en Prefapp.
-- [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - Github Actions tiene soporte nativo en Docker, con lo cuál puedes probarlo en local o integrarlo con otras herramientas como Kubernetes o Jenkins.
-- [Características avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora la documentación de Github que merece mucho la pena: Almacenamiento de secretos, jobs dependientes, matrices de variables, caché, etc
+- [GitHub Actions con Docker](https://github.com/marketplace?type=actions&query=docker+) - GitHub Actions tiene soporte nativo en Docker, con lo cuál puedes probarlo en local o integrarlo con otras herramientas como Kubernetes o Jenkins.
+- [Características avanzadas](https://docs.github.com/en/actions/using-workflows/about-workflows#advanced-workflow-features) - Explora la documentación de GitHub que merece mucho la pena: Almacenamiento de secretos, jobs dependientes, matrices de variables, caché, etc

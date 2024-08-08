@@ -34,7 +34,7 @@ Las GitHub Issues son una forma de realizar un seguimiento de las tareas, mejora
 
 Si ves alguna necesidad en el código, alguna mejora o, simplemente, un error, puedes abrir una issue en GitHub para que el equipo pueda abordarla. Las issues son una forma efectiva de comunicar y gestionar el trabajo en un proyecto de software. Es importante que refleje **"La motivación"** y los **"Criterios de aceptación"** para que el equipo pueda entender y trabajar en la issue de manera efectiva. También puedes añadir observaciones, dejar la evolución de la tarea, documentación, etc. 
 
-Puedes crear tu propias templates para las issues. Revisa la documentación de Github: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+Puedes crear tu propias templates para las issues. Revisa la documentación de GitHub: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
 
 
 ## Procedimientos
@@ -73,7 +73,7 @@ En Prefapp, vinculamos nuestras tareas de GitHub Issues con pull requests (PRs) 
 
 Al utilizar GitHub Projects de esta manera, podemos mantener un seguimiento claro del trabajo pendiente, colaborar de manera efectiva en el desarrollo de software y garantizar la entrega oportuna de proyectos de alta calidad.
 
-Además, con las keywords de github, podemos relacionar las issues con las PRs, de manera que se cierre automáticamente la issue al hacer merge de la PR.
+Además, con las keywords de GitHub, podemos relacionar las issues con las PRs, de manera que se cierre automáticamente la issue al hacer merge de la PR.
 
 Doc: 
 - "Using keywords in issues and pull requests" https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests

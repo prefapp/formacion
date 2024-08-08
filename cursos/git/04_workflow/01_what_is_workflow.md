@@ -69,7 +69,7 @@ Existen distintos servidores que permiten a automatización de tarefas. Este cur
     <thead>
         <tr>
             <th>Característica</th>
-            <th>Github Actions</th>
+            <th>GitHub Actions</th>
             <th>Gitlab CI/CD</th>
             <th>Jenkins</th>
             <th>Apache Airflow</th>
@@ -267,7 +267,7 @@ Existen distintos servidores que permiten a automatización de tarefas. Este cur
 Máis info: https://en.wikipedia.org/wiki/Comparison_of_source-code-hosting_facilities
 
 
-### Github Actions
+### GitHub Actions
 
 Agora, centrándonos en GitHub Actions, imos ver unha descrición básica. Como comentamos, é un servizo de integración continua e entrega continua (CI/CD) que permite automatizar tarefas nun repositorio de GitHub. Baséase na execución de workflows, que son conxuntos de tarefas que se executan nun servidor de GitHub. Os workflows defínense nun arquivo YAML que se almacena no directorio `.github/workflows` do repositorio.
 
@@ -282,7 +282,7 @@ Tamén existe a posibilidade de crear runners nun servidor propio. Os runners de
 No seguinte capítulo imos ver máis en detalle como funcionan os workflows de GitHub Actions e como pode facilitarnos a vida o CI/CD para o desenvolvemento de software propio ou dos nosos clientes.
 
 Enlaces de interés:
-- [Github Pricing](https://github.com/pricing)
-- [Github Actions Docs](https://docs.github.com/en/actions)
-- [Github Marketplace](https://github.com/marketplace?type=actions)
-- [Github Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)
+- [GitHub Pricing](https://github.com/pricing)
+- [GitHub Actions Docs](https://docs.github.com/en/actions)
+- [GitHub Marketplace](https://github.com/marketplace?type=actions)
+- [GitHub Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)
