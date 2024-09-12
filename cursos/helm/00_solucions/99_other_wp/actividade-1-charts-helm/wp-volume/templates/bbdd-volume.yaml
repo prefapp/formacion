@@ -1,0 +1,13 @@
+#bbdd-volume.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-db-pv-claim
+  labels:
+    app: deploy-wp-bbdd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+            storage: 2Gi

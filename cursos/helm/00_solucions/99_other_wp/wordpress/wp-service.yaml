@@ -1,0 +1,12 @@
+# wp-service.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-wp
+spec:
+  selector:
+    app: deploy-wp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

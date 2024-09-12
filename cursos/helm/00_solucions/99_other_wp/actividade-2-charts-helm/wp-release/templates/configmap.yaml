@@ -1,0 +1,12 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    tipo: "practica"
+data:
+  MYSQL_HOST: servicio-{{ .Release.Name }}-bbdd
+  MYSQL_USER: {{ .Values.mysql.DB_USER }}
+  MYSQL_DATABASE: {{ .Values.mysql.DB_BBDD }}
