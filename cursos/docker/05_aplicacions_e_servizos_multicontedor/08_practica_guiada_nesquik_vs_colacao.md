@@ -1,10 +1,10 @@
-# Práctica guiada: Nesquik vs ColaCao
+# Práctica guiada: Perros vs Gatos
 
 > Baseada neste [exemplo](https://github.com/dockersamples/example-voting-app).
 
 ## Explicación do proxecto
 
-Imos crear unha aplicación de voto para saber de qué somos: de Nesquik ou de Cola Cao. O plantexamento é sinxelo:
+Imos crear unha aplicación de voto para saber de qué somos: de Perros ou de Gatos. O plantexamento é sinxelo:
 
 Trátase dunha aplicación que ten dúas partes:
 
@@ -70,17 +70,15 @@ Imos agora expresar toda esta infraestructura no DSL de docker-compose.
 
 As imaxes a empregar serán:
 
-- Worker: (**.Net**) [prefapp/votacion_worker](https://hub.docker.com/r/prefapp/votacion_worker/).
-- Votos: (**Python**) [prefapp/votacion_votar](https://hub.docker.com/r/prefapp/votacion_votar/).
-- Resultados: (**NodeJS**) [prefapp/votacion_resultados](https://hub.docker.com/r/prefapp/votacion_resultados/).
-- Bbdd resultados: (**PostgreSQL**) [postgres:9.4](https://hub.docker.com/_/postgres/).
+- Worker: (**.Net**) [dockersamples/examplevotingapp_worker](https://hub.docker.com/r/dockersamples/examplevotingapp_worker).
+- Votos: (**Python**) [dockersamples/examplevotingapp_vote](https://hub.docker.com/r/dockersamples/examplevotingapp_vote).
+- Resultados: (**NodeJS**) [dockersamples/examplevotingapp_result](https://hub.docker.com/r/dockersamples/examplevotingapp_result).
+- Bbdd resultados: (**PostgreSQL**) [postgres:15-alpine](https://hub.docker.com/_/postgres/).
 - Bbdd: (**Redis**) [redis:alpine](https://hub.docker.com/_/redis/).
 
 Para definir a parte de **redes**, quedaría como segue:
 
 ```yml
-version: '3'
-
 networks:
   rede-privada:
   rede-publica:
@@ -89,8 +87,6 @@ networks:
 Vemos que creamos dúas redes, unha pública e outra privada. Na parte de **volumes**, imos a crear un volume que despois asociaremos ó servizo de PostgreSQL:
 
 ```yml
-version: '3'
-
 volumes:
   bbdd-datos:
 
@@ -107,15 +103,13 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    port:
-      - "6379"
     networks:
       - rede-privada
 
-  bbdd:
-    image: postgres:9.4
-    container_name: bbdd
-    valumes:
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    volumes:
       - "bbdd-datos:/var/lib/postgresql/data"
     networks:
       - rede-privada
@@ -130,24 +124,24 @@ environment:
   POSTGRES_PASSWORD: "postgres"
 ```
 
-Vemos como se conectan ambos servizos á rede privada. Ademáis, o servizo de bbdd (postgresql) vincula o directorio de datos ó volume creado. Isto otorga persistencia en caso de sucesivos reinicios do sistema. 
-
-Apréciase tamén a exposición do porto de redis [6379] para conexións (sempre dende a rede privada).
+Vemos como se conectan ambos servizos á rede privada. Ademáis, o servizo de db (postgresql) vincula o directorio de datos ó volume creado. Isto otorga persistencia en caso de sucesivos reinicios do sistema. 
 
 Vexamos agora o servizo do **worker**:
 
 ```yml
 worker:
-  image: prefapp/votacion_worker
+  image: dockersamples/examplevotingapp_worker
+  container_name: worker
   depends_on:
-    - "redis"
+    - redis
+    - db
 networks:
   - rede-privada
 ```
 
 O worker tamén está na rede privada. Vemos a etiqueta [**depends_on**](https://docs.docker.com/compose/compose-file/#depends_on) que establece a orde de arranque dos servizos (dos contedores).
 
-Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do Redis esté en funcionamento.
+Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do redis e o de db estén en funcionamento.
 
 Pasamos agora á definición do **servizo de votacións**:
 
@@ -155,10 +149,12 @@ Pasamos agora á definición do **servizo de votacións**:
 services:
 
   votacions:
-    image: prefapp/votacion_votar
-    command: python app.py
+    image: dockersamples/examplevotingapp_vote
+    container_name: votos
+    depends_on:
+      - redis
     ports:
-      - "8000:80"
+      - "8080:80"
     networks:
       - rede-privada
       - rede-publica
@@ -166,7 +162,7 @@ services:
 
 O servizo de votacións non ten moita sorpresa. Está asociado a ambas redes, a pública e a privada.
 
-Asocia o porto 8000 do host ó porto 80 do contedor para asegurá-la conectividade co exterior.
+Asocia o porto 8080 do host ó porto 80 do contedor para asegurá-la conectividade co exterior.
 
 Por último, imos ver o **servizo de resultados**:
 
@@ -174,17 +170,16 @@ Por último, imos ver o **servizo de resultados**:
 services:
 
   resultados:
-    image: prefapp/votacion_resultados
-    command: nodemon server.js
+    image: dockersamples/examplevotingapp_result
+    container_name: resultados
     ports:
-      - "8001:80"
-      - "5858:5858"
+      - "8081:80"
     networks:
       - rede-privada
       - rede-publica
 ```
 
-O servizo de resultados tampouco ten moito que comentar. O porto 8001 é o de escoita do servidor e por onde haberá que conectarse para ve-la páxina web coa información.
+O servizo de resultados tampouco ten moito que comentar. O porto 8081 é o de escoita do servidor e por onde haberá que conectarse para ve-la páxina web coa información.
 
 Escribimos un docker-compose.yaml con toda esa información e facemos:
 
@@ -192,7 +187,7 @@ Escribimos un docker-compose.yaml con toda esa información e facemos:
 docker-compose up -d
 ```
 
-Et voila!! No [localhost:8000](localhost:8000) teríamos a votación e no [localhost:8001](localhost:8001) teremos os resultados.
+Et voila!! No [localhost:8080](localhost:8080) teríamos a votación e no [localhost:8081](localhost:8081) teremos os resultados.
 
 Se abrimos duas lapelas, unha por cada parte, e votamos, veremos como cambian os resultados en tempo real e sen necesidade de recargar nada.
 
