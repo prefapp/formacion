@@ -79,8 +79,6 @@ As imaxes a empregar serán:
 Para definir a parte de **redes**, quedaría como segue:
 
 ```yml
-version: '3'
-
 networks:
   rede-privada:
   rede-publica:
@@ -89,14 +87,8 @@ networks:
 Vemos que creamos dúas redes, unha pública e outra privada. Na parte de **volumes**, imos a crear un volume que despois asociaremos ó servizo de PostgreSQL:
 
 ```yml
-version: '3'
-
 volumes:
   bbdd-datos:
-
-networks:
-  rede-privada:
-  rede-publica:
 ```
 
 Pasemos á definición dos **servizos**, comezamos cos de bbdd:
@@ -107,15 +99,15 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    port:
+    ports:
       - "6379"
     networks:
       - rede-privada
 
-  bbdd:
+  db:
     image: postgres:9.4
     container_name: bbdd
-    valumes:
+    volumes:
       - "bbdd-datos:/var/lib/postgresql/data"
     networks:
       - rede-privada
@@ -139,15 +131,17 @@ Vexamos agora o servizo do **worker**:
 ```yml
 worker:
   image: prefapp/votacion_worker
+  container_name: worker
   depends_on:
-    - "redis"
+    - redis
+    - db
 networks:
   - rede-privada
 ```
 
 O worker tamén está na rede privada. Vemos a etiqueta [**depends_on**](https://docs.docker.com/compose/compose-file/#depends_on) que establece a orde de arranque dos servizos (dos contedores).
 
-Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do Redis esté en funcionamento.
+Tal e como está expresado nesta liña, o contedor do worker **non se pode iniciar** antes de que o do redis e da db estén en funcionamento.
 
 Pasamos agora á definición do **servizo de votacións**:
 
@@ -156,6 +150,7 @@ services:
 
   votacions:
     image: prefapp/votacion_votar
+    container_name: votacions
     command: python app.py
     ports:
       - "8000:80"
@@ -175,6 +170,7 @@ services:
 
   resultados:
     image: prefapp/votacion_resultados
+    container_name: resultados
     command: nodemon server.js
     ports:
       - "8001:80"
@@ -185,8 +181,69 @@ services:
 ```
 
 O servizo de resultados tampouco ten moito que comentar. O porto 8001 é o de escoita do servidor e por onde haberá que conectarse para ve-la páxina web coa información.
+Escribimos un docker-compose.yaml con toda esa información:
 
-Escribimos un docker-compose.yaml con toda esa información e facemos:
+```yml
+services:
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379"
+    networks:
+      - rede-privada
+
+  db:
+    image: postgres:9.4
+    container_name: bbdd
+    volumes:
+      - "bbdd-datos:/var/lib/postgresql/data"
+    networks:
+      - rede-privada
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  worker:
+    image: prefapp/votacion_worker
+    container_name: worker
+    depends_on:
+      - redis
+      - db
+    networks:
+      - rede-privada
+
+  votacions:
+    image: prefapp/votacion_votar
+    container_name: votacions
+    command: python app.py
+    ports:
+      - "8000:80"
+    networks:
+      - rede-privada
+      - rede-publica
+
+  resultados:
+    image: prefapp/votacion_resultados
+    container_name: resultados
+    command: nodemon server.js
+    ports:
+      - "8001:80"
+      - "5858:5858"
+    networks:
+      - rede-privada
+      - rede-publica
+
+volumes:
+  bbdd-datos:
+
+networks:
+  rede-privada:
+  rede-publica:
+```
+
+E facemos:
 
 ```shell
 docker-compose up -d
