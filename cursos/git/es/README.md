@@ -2,7 +2,7 @@
 
 Git es el SCV (sistema de control de versiones) de código abierto más utilizado más utilizado en el mundo. Diseñado por Linus Torvalds, su propósito es llevar registro de los cambios en archivos de computadora. A diferencia de Subversion, Git es distribuido, con lo que permite la coordinación del trabajo entre varias personas sobre archivos compartidos en un repositorio de código. Las empresas y los programadores suelen utilizar Git para colaborar en el desarrollo de software y aplicaciones.
 
-Git es un proyecto de código abierto maduro y con un mantenimiento activo, y es la base de grandes plataformas de servicios de alojamiento web para proyectos, también llamados repositorios remotos o forjas, como pueden ser Github, Gitlab, Bitbucket, Gitea, Gogs, etc.
+Git es un proyecto de código abierto maduro y con un mantenimiento activo, y es la base de grandes plataformas de servicios de alojamiento web para proyectos, también llamados repositorios remotos o forjas, como pueden ser GitHub, Gitlab, Bitbucket, Gitea, Gogs, etc.
 
 Un asombroso número de proyectos de software dependen de Git para el control de versiones, incluidos proyectos comerciales y de código abierto. Los desarrolladores que han trabajado con Git cuentan con una buena representación en la base de talentos disponibles para el desarrollo de software, y este sistema funciona a la perfección en una amplia variedad de sistemas operativos e IDE (entornos de desarrollo integrados).
 

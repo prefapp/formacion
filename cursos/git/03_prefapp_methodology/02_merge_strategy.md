@@ -78,7 +78,7 @@ Para realizar un squash en Prefapp, seguimos estes pasos básicos:
 
 2. **Fusionar a rama**: cando estea todo listo e os cambios confirmados na rama, fusiónase a rama de característica á rama principal usando `git merge --squash`, o que crea un único commit con tódolos cambios.
 
-En github, pódese realizar un squash merge directamente dende a interface gráfica dunha Pull request ó fusionar unha rama de característica na rama principal.
+En GitHub, pódese realizar un squash merge directamente dende a interface gráfica dunha Pull request ó fusionar unha rama de característica na rama principal.
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
@@ -88,4 +88,4 @@ En github, pódese realizar un squash merge directamente dende a interface gráf
   </div>
 </div>
 
-Documentación de Github sobre as fusións nas PRs: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges
+Documentación de GitHub sobre as fusións nas PRs: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges
