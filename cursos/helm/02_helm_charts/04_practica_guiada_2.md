@@ -84,12 +84,12 @@ Debemos seguir los siguiente pasos para configurar todo correctamente:
   ...
   dependencies:
   - name: ingress-nginx
-    version: "3.23.0"
+    version: "4.11.3"
     repository: https://kubernetes.github.io/ingress-nginx
   ...
   ```
 
-1. Configurar el ingress para que trabaje dentro de nuestro *namespace* y se adpate a nuestro cluster: 
+2. Configurar el ingress para que trabaje dentro de nuestro *namespace* y se adpate a nuestro cluster: 
 
   ```yaml
   #values.yaml
@@ -109,29 +109,34 @@ Debemos seguir los siguiente pasos para configurar todo correctamente:
   ...
   ```
   En este tutorial estamos mostrando los ajustes para trabajar en un cluster GKE, puedes consultar qué valores necesitas para tu cluster en la [documentación de la Chart](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx).
+  
+  Nota:
+  Para desplegar el ingress en local en un cluster de kind no es necesario añadir nada a nuestro values.yaml
 
-1. Dentro de `/templastes` debemos crear un artefacto de kubernetes de tipo *Ingress* donde definiremos las reglas de redireccionamiento:
+3. Dentro de `/templates` debemos crear un artefacto de kubernetes de tipo *Ingress* donde definiremos las reglas de redireccionamiento:
   ```yaml
   #templates/ingress.yaml
   apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
     name: {{ .Release.Name }}-ingress
-    annotations:
-      kubernetes.io/ingress.class: nginx
   spec:
+    ingressClassName: "nginx"
     rules:
     - http:
         paths:
         - path: /
+          pathType: Prefix
           backend:
-            serviceName: servizo-{{ .Release.Name }}-php
-            servicePort: 80
+            service:
+              name: servizo-{{ .Release.Name }}-php
+              port:
+                number: 80
   ```
   En nuesto caso estamos redireccionando cualquier path al servidor meiga, pues no tenemos ningún otro servicio, pero podríamos crear reglas de reverse-proxy mucho más complejas utilizando hostname, paths y diferentes *services*.
 
 
-1. Por último, antes de hacer el `helm install` de nuestro proyecto debemos lanzar el comando:
+4. Por último, antes de hacer el `helm install` de nuestro proyecto debemos lanzar el comando:
   ```shell
   $ helm dependency update
   ```
@@ -143,6 +148,41 @@ $ kubectl describe ing <release_name>-ingress -n <namespace>
 ```
 
 Deberiamos obtener la información del ingress que acabamos de crear. Ahí nos aparecerá la dirección que podemos utilizar para acceder a nuestra web Meiga-php.
+
+5. Si estás trabajando en local con un cluster de Kind te habrás dado cuenta que al desplegar la chart el servicio del ingress controller nunca llega a recibir EXTERNAL-IP
+```shell
+$ kubectl get svc -n <namespace>
+```
+Esto es normal ya que no existe un cloud provider que haga este trabajo, como sí tienen Amazon, Azure o Google.
+Sin embargo podemos ejecutar nuestro propio cloud provider para que trabaje con nuestros clusters de Kind y así llegar a emular dicho comportamiento.
+
+Para ello es necesario instalar el cloud provider que se encuentra en esta [url](https://github.com/kubernetes-sigs/cloud-provider-kind) siguiendo las instrucciones.
+```shell
+$ go install sigs.k8s.io/cloud-provider-kind@latest
+```
+Nota: A lo mejor no tienes instalado go en tu sistema. Si es el caso debes hacerlo antes o elegir cualquiera de los otros métodos de instalación disponibles. Si estás usando Ubuntu debes hacer lo siguiente
+```shell
+$ sudo apt update
+$ sudo apt install golang -y
+```
+
+Una vez ejecutado el go install habremos instalado nuestro binario en $GOBIN (normalmente en ~/go/bin). Si queremos que sea accesible desde el terminal podemos ejecutar
+```shell
+$ sudo install ~/go/bin/cloud-provider-kind /usr/local/bin
+```
+
+Ahora ya podemos lanzar desde otra terminal nuestro cloud provider
+```shell
+$ sudo cloud-provider-kind
+```
+Podrás observar como arranca y lista los clusters de kind que tengamos y va asignando ips a los servicios de tipo LoadBalancer que encuentre
+
+Si volvemos a nuestra terminal inicial y listamos nuestros servicios podrás observar como ahora sí tiene EXTERNAL-IP
+```shell
+$ kubectl get svc -n <namespace>
+```
+Si accedes a esa ip desde tu navegador podrás ver nuestra aplicacion meiga funcionando
+
 
 ## Crear un NOTES.txt 
 Ahora que ya tenemos nuestro proyecto expuesto al exterior, vamos utilizar lo que aprendimos en el [capítulo 2](https://prefapp.github.io/formacion/cursos/helm/#/./02_helm_charts/02_creacion_de_charts?id=notestxt) para crear un archivo `NOTES.txt` dentro de la carpeta `templates/` que mostrará al administrador un mensaje al instalar la *Chart*. 
