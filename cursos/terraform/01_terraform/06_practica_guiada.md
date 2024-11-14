@@ -319,7 +319,7 @@ resource "aws_eip" "one" {
   domain                    = "vpc"
   network_interface         = aws_network_interface.nic_servidor_web.id
   associate_with_private_ip = "10.0.1.50"
-  depends_on                = [aws_internet_gateway.gw]
+  depends_on                = [aws_internet_gateway.gw, aws_instance.meu_servidor]
 }
 ```
 
@@ -327,7 +327,7 @@ Nos valores deixamos `vpc = true` xa que o EIP está dentro dunha VPC, referenci
 
 > Como comentamos antes, Terraform non precisa dunha orde concreta na declaración dos recursos xa que é o suficientemente intelixente para figurar como ir desplegando, **SALVO EXCEPCIÓNS**:
 >
-> Na [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) indícase que o EIP require que o IGW sexa deploiado primeiro. Para solventar ese problema engadimos a flag `depends_on` e referenciamos unha lista co obxeto, neste caso o IGW.
+> Na [documentación](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) indícase que o EIP require que tanto o IGW como a instance sexan deploiados primeiro. Para solventar ese problema engadimos a flag `depends_on` e referenciamos unha lista cos obxetos.
 
 ### 11. Key pairs
 
@@ -365,13 +365,13 @@ resource "aws_instance" "meu_servidor" {
     network_interface_id = aws_network_interface.nic_servidor_web.id
   }
   
-  user_data = <<-EOF
-                #!/bin/bash
-                sudo apt update -y
-                sudo apt install apache2 -y
-                sudo systemctl start apache2
-                sudo bash -c 'echo O meu primer server > /var/www/html/index.html'
-              EOF
+  user_data = <<EOF
+#!/bin/bash
+sudo apt update -y
+sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo bash -c 'echo O meu primer server > /var/www/html/index.html'
+EOF
   tags = {
     Name = "meu-servidor"
   }
