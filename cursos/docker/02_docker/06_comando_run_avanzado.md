@@ -15,7 +15,7 @@ docker run --rm prefapp/debian-formacion cat /etc/issue
 Isto nos sacará por pantalla, a seguinte información:
 
 ```shell
-Debian GNU/Linux 8 \n \l
+Debian GNU/Linux 12 \n \l
 ```
 
 O que acaba de pasar é o seguinte:
