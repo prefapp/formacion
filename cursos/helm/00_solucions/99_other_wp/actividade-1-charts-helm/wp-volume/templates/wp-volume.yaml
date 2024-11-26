@@ -1,0 +1,13 @@
+# wp-volume.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: deploy-wp
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

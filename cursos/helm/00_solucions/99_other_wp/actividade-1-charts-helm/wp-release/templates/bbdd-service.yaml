@@ -1,0 +1,12 @@
+# bbdd-service.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-wp-bbdd
+spec:
+  selector:  
+    app: wp-mysql
+  ports:  # esta é a parte de especificación propia
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
