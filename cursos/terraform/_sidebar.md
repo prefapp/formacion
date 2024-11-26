@@ -3,6 +3,5 @@
   - [Infraestructura como código](./01_terraform/02_infraestructura_como_codigo.md)
   - [Estados en terraform](./01_terraform/03_estados_en_terraform.md)
   - [Providers & resources](./01_terraform/04_providers_y_recursos.md)
-  - [Example](01_terraform/example.md)
   - [👨‍🏫 Práctica guiada](./01_terraform/05_practica_guiada.md)
   - [👨‍🏫 Práctica guiada II](01_terraform/06_practica_guiada.md)
