@@ -18,7 +18,7 @@ Algunas de las forjas de código abierto más populares son:
 
 Nos vamos a centrar en Github, ya que es la más utilizada y la que vamos a utilizar en el curso. Haremos un recorrido por la documentación que sí o sí tienes que leer para el buen uso de la plataforma.
 
-## Github 
+## GitHub 
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">
@@ -44,7 +44,7 @@ Características:
 
 - **[Opción en línea de comandos](https://docs.github.com/es/github-cli)**: GitHub también ofrece una herramienta en línea de comandos (CLI) que permite a los usuarios interactuar con la plataforma de GitHub directamente desde la línea de comandos. La CLI de GitHub admite una amplia gama de comandos y opciones para interactuar con repositorios, problemas, solicitudes de extracción y más.
 
-Como hemos visto en los anteriores hipervínculos, en la [documentación de Github](https://docs.github.com/es) podrás encontrar multitud de información sobre la plataforma, sus funcionalidades, etc., así como una serie de tutoriales que te pueden ayudar a comenzar con la plataforma y con Git si es tu primera vez. Es interesante revisar la documentación para extraer las buenas prácticas que se recomiendan.
+Como hemos visto en los anteriores hipervínculos, en la [documentación de GitHub](https://docs.github.com/es) podrás encontrar multitud de información sobre la plataforma, sus funcionalidades, etc., así como una serie de tutoriales que te pueden ayudar a comenzar con la plataforma y con Git si es tu primera vez. Es interesante revisar la documentación para extraer las buenas prácticas que se recomiendan.
 
 ## Protección de ramas
 
@@ -60,7 +60,7 @@ Algunas buenas prácticas para proteger las ramas principales son:
 
 - **Limita el acceso a las ramas**: solo los miembros del equipo o los colaboradores que necesiten acceder a una rama deberían tener permiso para hacerlo. Esto se puede lograr a través de la configuración de permisos en GitHub.
 
-- **Usa herramientas de integración continua**: usa herramientas de integración continua, como Travis CI o CircleCI, para realizar pruebas automáticas en cada commit y pull request. Esto te permitirá detectar y solucionar errores rápidamente. Más adelante veremos las Github Actions.
+- **Usa herramientas de integración continua**: usa herramientas de integración continua, como Travis CI o CircleCI, para realizar pruebas automáticas en cada commit y pull request. Esto te permitirá detectar y solucionar errores rápidamente. Más adelante veremos las GitHub Actions.
 
 - **Limita el acceso a las credenciales**: limita el acceso a las credenciales, como claves SSH o contraseñas de acceso a la cuenta de GitHub. Solo los miembros del equipo que necesiten acceder a estas credenciales deberían tener permiso para hacerlo.
 
@@ -79,7 +79,7 @@ Repositorio con una colección de plantillas de `.gitignore` para diferentes len
 
 El buen uso de `.gitattributes` implica utilizarlo para establecer los atributos correctos para los archivos del proyecto, de tal manera que se puedan manejar adecuadamente en Git. Por ejemplo, si trabajas en un proyecto que utiliza diferentes sistemas operativos, se puede utilizar `.gitattributes` para establecer el tipo de final de línea que debe ser utilizado, asegurando la compatibilidad entre los diferentes sistemas operativos.
 
-## Lectura de buenas prácticas en Github
+## Lectura de buenas prácticas en GitHub
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">

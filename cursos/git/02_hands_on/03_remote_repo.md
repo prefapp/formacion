@@ -16,9 +16,9 @@ Algunhas das forxas de código aberto máis coñecidas son:
 
 - **[Gitea](https://gitea.io/en-us/)**: oferta servizos de aloxamento de repositorios Git, xestión de proxectos e control de versións. Tamén é compatible con outros sistemas de control de versións, coma Mercurial ou Subversion.
 
-Nós ímonos centrar en Github, xa que é a máis utilizada e a que vamos a usar durante o curso. Faremos un recorrido pola documentación que si ou si tes que ler para o bo uso da plataforma.
+Nós ímonos centrar en GitHub, xa que é a máis utilizada e a que vamos a usar durante o curso. Faremos un recorrido pola documentación que si ou si tes que ler para o bo uso da plataforma.
 
-## Github 
+## GitHub 
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;max-width:280px;">
