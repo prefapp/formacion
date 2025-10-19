@@ -179,7 +179,7 @@ nginx-deployment-7769f8f85b-cz9db   1/1     Running   0          18h   10.244.2.
 nginx-deployment-7769f8f85b-tjn6d   1/1     Running   0          18s   10.244.1.4   cluster-test-pdb-worker    <none>           <none>
 ```
 Agora temos 3 `pod` en worker e outros 3 en worker2
-¿E o noso `PodDisruptionBudget`? Ben, nunca chegou a activarse e polo tanto non mantuvimos a dispoñibilidade desexada.
+¿E o noso `PodDisruptionBudget`? Ben, nunca chegou a activarse e polo tanto non mantivemos a dispoñibilidade desexada.
 
 Podemos usar `kubectl drain` para expulsar de forma segura todos os `pod` dun nodo. Os desafiuzamentos seguros permiten que os contedores do `pod` rematen ben e respectarán as condicións que especificaches no `PodDisruptionBudget`.
 ```shell
