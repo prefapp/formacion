@@ -162,7 +162,12 @@ Events:                   <none>
 Vemos como en `current` lista os 6 `pod` que temos actualmente despregados e cumpren as condicións do `PodDisruptionBudget`. En `desired` vemos as replicas mínimas que debe manter dispoñibles.
 ¿Cómo podemos provocar que actúe o noso `PodDisruptionBudget`? Ben, provocando unha interrupción voluntaria.
 
-Tamén debemos lembrar que non todas as interrupcións voluntarias están restrinxidas polo `PodDisruptionBudget`. De feito, para comprobar isto podemos eliminar un dos nodos con `kubectl delete node <node-name>`
+Tamén debemos lembrar que non todas as interrupcións voluntarias están restrinxidas polo `PodDisruptionBudget`.
+
+> ⚠️ **Aviso importante:** Eliminar directamente un nodo con `kubectl delete node <node-name>` **non representa un fluxo recomendado de 'interrupción voluntaria segura'**. Esta acción non pasa polo mecanismo de evictions, ignora o `PodDisruptionBudget` e é máis semellante a unha perda abrupta do nodo, como un fallo físico ou apagado inesperado.  
+> Para probar a protección dun `PodDisruptionBudget` de forma segura e controlada, **debe empregarse** `kubectl drain <node-name>` (previo `kubectl cordon <node-name>`), que realiza a evacuación dos pods respectando o PDB.
+
+De feito, se eliminamos un dos nodos con `kubectl delete node <node-name>`, observamos que:
 ```shell
 kubectl delete node cluster-test-pdb-worker3
 node "cluster-test-pdb-worker3" deleted
