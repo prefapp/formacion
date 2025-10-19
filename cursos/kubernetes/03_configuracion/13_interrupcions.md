@@ -223,7 +223,7 @@ nginx-deployment-7769f8f85b-rhsj7   1/1     Running   0          21m   10.244.1.
 nginx-deployment-7769f8f85b-tjn6d   1/1     Running   0          69m   10.244.1.4   cluster-test-pdb-worker   <none>           <none>
 ```
 Agora os `pod` están todos despregados no nodo worker e conseguímolo sen perder a nosa dispoñibilidade desexada gracias ao `PodDisruptionBudget`
-Se queremos desacordoar o noso nodo e que volva a recibir asignacións de `pod` debemos executar `kubectl uncordon`
+Se queremos desacordonar o noso nodo e que volva a recibir asignacións de `pod` debemos executar `kubectl uncordon`
 ```shell
 kubectl uncordon cluster-test-pdb-worker2
 node/cluster-test-pdb-worker2 uncordoned
