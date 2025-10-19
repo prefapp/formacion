@@ -51,10 +51,12 @@ spec:
     matchLabels:
       app: myapp
 ```
-Neste manifesto, definimos un `PodDisruptionBudget` con `name: my-pdb` que garante que nos `pod` con label `app: myapp` sempre haxa polo menos 2 dispoñibles e nunca máis de 1 non dispoñible
+Neste manifesto, definimos un `PodDisruptionBudget` con `name: my-pdb` que garante que nos `pod` con label `app: myapp` sempre haxa polo menos 2 dispoñibles.
 - `minAvailable`: especifica o número mínimo de `pod` que deben permanecer dispoñibles, expresable como un número absoluto ou unha porcentaxe do total de `pod`.
 - `maxUnavailable`: define o número máximo de `pod` que poden non estar dispoñibles durante a interrupción, expresado tamén como un número absoluto ou unha porcentaxe.
 - `selector`: determina a que `pod` se aplica o `PodDisruptionBudget`, usando etiquetas para seleccionar os `pod` relevantes.
+
+Importante: Só se pode definir UN dos campos `minAvailable` ou `maxUnavailable` nun `PodDisruptionBudget`, nunca ambos á vez.
 
 ## 3. Práctica guiada
 
