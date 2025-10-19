@@ -32,7 +32,7 @@ Contra as interrupcións voluntarias Kubernetes pon a nosa disposición un recur
 Atención:
 Non todas as interrupcións voluntarias son restrinxidas polos `PodDisruptionBudget`. Por exemplo, a eliminación de deployments ou pods non os teñen en conta.
 
-## 2. Pod disruption budgets (PBD)
+## 2. Pod disruption budgets (PDB)
 O obxectivo principal dun `PodDisruptionBudget` é garantir que un número mínimo especificado de `pod` estea sempre dispoñible e mantendo a dispoñibilidade e fiabilidade xerais do servizo. Isto é especialmente crítico para aplicacións que requiren alta dispoñibilidade, xa que evita que o sistema non estea dispoñible ou reduza a súa capacidade por debaixo dun nivel que a empresa considere aceptable.
 
 Isto significa que cando iniciamos unha interrupción voluntaria, Kubernetes comproba os nosos `PodDisruptionBudget` para garantir que a operación non fará que a dispoñibilidade da nosa aplicación caia por debaixo dos niveis especificados.
