@@ -159,7 +159,7 @@ Status:
     Total:                6
 Events:                   <none>
 ```
-Vemos como en `current` lista os 6 `pod` que temos actualmente despregados e cumplen as condicións do `PodDisruptionBudget`. En `desired` vemos as replicas mínimas que debe manter dispoñibles.
+Vemos como en `current` lista os 6 `pod` que temos actualmente despregados e cumpren as condicións do `PodDisruptionBudget`. En `desired` vemos as replicas mínimas que debe manter dispoñibles.
 ¿Cómo podemos provocar que actúe o noso `PodDisruptionBudget`? Ben, provocando unha interrupción voluntaria.
 
 Tamén debemos lembrar que non todas as interrupcións voluntarias están restrinxidas polo `PodDisruptionBudget`. De feito, para comprobar isto podemos eliminar un dos nodos con `kubectl delete node <node-name>`
