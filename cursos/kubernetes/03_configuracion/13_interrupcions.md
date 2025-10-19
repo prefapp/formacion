@@ -200,10 +200,10 @@ evicting pod default/nginx-deployment-7769f8f85b-9zf2h
 pod/nginx-deployment-7769f8f85b-9zf2h evicted
 node/cluster-test-pdb-worker2 drained
 ```
-Vemos como ao drenar o nodo worker2 inténtanse desfiuzar os 3 `pod`.
+Vemos como ao drenar o nodo worker2 inténtanse desafiuzar os 3 `pod`.
 O primeiro de eles faino sen problema porque pasamos de 6 a 5 `pod` disponibles.
 Os outros dos dan un error porque violaría as condicións do noso `PodDisruptionBudget` que dice que non pode haber nunca menos de 5 `pod` disponibles.
-E así volve a intentalo cada 5 segundos hasta que poida desfiuzalos todos.
+E así volve a intentalo cada 5 segundos hasta que poida desafiuzalos todos.
 ```shell
 kubectl get nodes
 NAME                             STATUS                     ROLES           AGE   VERSION
