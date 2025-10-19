@@ -47,7 +47,6 @@ metadata:
   name: my-pdb
 spec:
   minAvailable: 2
-  maxUnavailable: 1
   selector:
     matchLabels:
       app: myapp
