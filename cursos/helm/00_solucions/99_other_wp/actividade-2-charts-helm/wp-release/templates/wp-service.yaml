@@ -1,0 +1,13 @@
+# wp-service.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-{{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: deploy-{{ .Release.Name }}
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

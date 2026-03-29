@@ -1,0 +1,11 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wp-config
+  labels:
+    tipo: "practica"
+data:
+  MYSQL_HOST: servicio-wp-bbdd
+  MYSQL_USER: "root"
+  MYSQL_DATABASE: "wp-db"
