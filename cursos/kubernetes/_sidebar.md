@@ -24,6 +24,7 @@
   - [Helm: o marionetista de Kubernetes](/03_configuracion/07_Helm.md)
   - [HPA: exprimindo o rendemento do noso k8s](/03_configuracion/08_Adaptandose_as_demandas.md)
   - [Asignación de Pods a Nodos](03_configuracion/11_Assigning_Pods_to_Nodes.md)
+  - [Interrupcións](03_configuracion/13_interrupcions.md)
   - [👨‍🏫 Práctica guiada de Kind](/03_configuracion/10_practica_guiada_kind.md)
   - [👨‍🏫 Práctica guiada de HPA](/03_configuracion/09_practica_guiada_HPA.md)
   - [👨‍🏫 Práctica guiada: Asignar Pods a nodos](03_configuracion/12_practica_guiada_assing_pods_to_nodes.md)
