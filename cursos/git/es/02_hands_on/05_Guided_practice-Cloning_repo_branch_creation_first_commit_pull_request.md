@@ -2,9 +2,9 @@
 
 Hemos pasado por unas largas lecturas teóricas, así que esta práctica será muy corta. En esta práctica guiada vamos a clonar un repositorio, crear una rama, realizar un primer commit y crear un pull request.
 
-## Crear una cuenta en Github
+## Crear una cuenta en GitHub
 
-Para poder realizar esta práctica, será necesario tener un usuario en una plataforma para repositorios remotos. Si no lo tienes todavía, puedes crearlo en Github, accediendo a [https://github.com/signup](https://github.com/signup).
+Para poder realizar esta práctica, será necesario tener un usuario en una plataforma para repositorios remotos. Si no lo tienes todavía, puedes crearlo en GitHub, accediendo a [https://github.com/signup](https://github.com/signup).
 
 <div style="text-align: center;">
   <div style="margin: 0 auto;">
@@ -16,7 +16,7 @@ Para poder realizar esta práctica, será necesario tener un usuario en una plat
 
 ## Crear un nuevo repositorio
 
-Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra máquina. En Github, los pasos a seguir son:
+Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra máquina. En GitHub, los pasos a seguir son:
 
 - En la esquina superior derecha de cualquier página, seleccionar la opción '+' > New repository.
 
@@ -91,4 +91,4 @@ Necesitamos tener un repositorio para poder trabajar sobre él desde nuestra má
   </div>
 </div>
 
-Espero que también hayas practicado el resto de los comandos de git que se explican en el [capítulo 2 - Manos a la obra](02_basic_commands.md). La recomendación para este capítulo es que repases una y otra vez la documentación git y de github para poder tener una visión general del trabajo con los repositorios, tanto en local como en remoto.
+Espero que también hayas practicado el resto de los comandos de git que se explican en el [capítulo 2 - Manos a la obra](02_basic_commands.md). La recomendación para este capítulo es que repases una y otra vez la documentación git y de GitHub para poder tener una visión general del trabajo con los repositorios, tanto en local como en remoto.
